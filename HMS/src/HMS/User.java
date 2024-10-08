@@ -1,4 +1,4 @@
-package HMS;
+package hms;
 
 public class User {
     private Password password;
