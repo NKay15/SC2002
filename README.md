@@ -10,3 +10,5 @@ contatins the password and methods relating to password
 User :
 super class of all roles in the hospital
     password : Password - the password class for user
+    role : int - number to indicate the role
+    login() : int - return the role number if login is successful otherwise -1
