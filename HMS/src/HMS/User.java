@@ -19,6 +19,11 @@ public class User {
     private int role;
 
     /**
+     * ID of user
+     */
+    private int ID;
+
+    /**
      * String that contains the name of the user
      */
     private String name;
@@ -30,6 +35,14 @@ public class User {
      * 2 - Female
      */
     private int gender;
+
+    /**
+     * Accessors method of ID
+     * @return
+     */
+    public int getID() {
+        return ID;
+    }
 
     /**
      * A function to login. It will ask for password.
