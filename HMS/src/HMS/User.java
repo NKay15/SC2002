@@ -21,7 +21,7 @@ public class User {
     /**
      * ID of user
      */
-    private int ID;
+    private String ID;
 
     /**
      * String that contains the name of the user
