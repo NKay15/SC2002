@@ -7,6 +7,13 @@ public class Password {
     private String password;
 
     /**
+     * Contructor of Password to set the password to the default password
+     */
+    public Password() {
+        password = "password";
+    }
+
+    /**
      * Method to change the password and nothing else.
      * @param newPassword the string of the new password
      */

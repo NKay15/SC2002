@@ -19,6 +19,19 @@ public class User {
     private int role;
 
     /**
+     * String that contains the name of the user
+     */
+    private String name;
+
+    /**
+     * An integer to store the gender
+     * 0 - Unknow
+     * 1 - Male
+     * 2 - Female
+     */
+    private int gender;
+
+    /**
      * A function to login. It will ask for password.
      * @return role if login is successful otherwise -1
      */
@@ -28,5 +41,12 @@ public class User {
         String value = sc.next();
         if (password.checkPassword(value)) return role;
         else return -1;
+    }
+
+    /**
+     * Menu method for user. To be overiden by subclass for their specific menu.
+     */
+    public void menu(){
+        System.out.println("User has no menu");
     }
 }

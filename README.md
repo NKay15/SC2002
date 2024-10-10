@@ -11,4 +11,7 @@ User :
 super class of all roles in the hospital
     password : Password - the password class for user
     role : int - number to indicate the role
+    name : String - name of user
+    gender : int - gender of user
     login() : int - return the role number if login is successful otherwise -1
+    menu() : void - menu method for user to be overiden by subclass
