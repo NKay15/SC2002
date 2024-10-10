@@ -63,7 +63,7 @@ public class MedicalRecord {
         dob.print();
 
         System.out.print("Gender : ");
-        switch (gender) {;
+        switch (gender) {
             case 1 : System.out.println("Male");
             break;
             case 2 : System.out.println("Female");
@@ -99,6 +99,22 @@ public class MedicalRecord {
         }
 
         System.out.println("-----End of Medical Record-----")
+    }
+
+    /**
+     * Mutator of phone
+     * @param newPhone new phone number
+     */
+    public void setPhone(int newPhone) {
+        phone = newPhone;
+    }
+
+    /**
+     * Mutator of email
+     * @param newEmail new email address
+     */
+    public void setEmail(String newEmail) {
+        email = newEmail;
     }
 
     /**
