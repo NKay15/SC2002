@@ -40,7 +40,7 @@ public class User {
      * Accessors method of ID
      * @return
      */
-    public int getID() {
+    public String getID() {
         return ID;
     }
 
