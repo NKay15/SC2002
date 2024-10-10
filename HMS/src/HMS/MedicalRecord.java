@@ -93,12 +93,12 @@ public class MedicalRecord {
             break;
         }
 
-        System.out.println("Medical History : ")
+        System.out.println("Medical History : ");
         for(int i = 0; i < medicalHistory.size(); i++) {
             System.out.println(i + " : " + medicalHistory.get(i));
         }
 
-        System.out.println("-----End of Medical Record-----")
+        System.out.println("-----End of Medical Record-----");
     }
 
     /**

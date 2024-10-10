@@ -2,7 +2,7 @@
 Hospital Management System Notes
 
 I am still writing the skeleton of the code. Once that is done, you can write each User class without needing to write other things hopefully. Documentation is in the code itself.
+Should we have a class for the medication?
 
 TODO : 
 1. Whoever is writing patient class, please finish the contructor of Medical Record
-2. Finished the 2 appointment class
