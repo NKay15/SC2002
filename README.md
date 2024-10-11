@@ -6,3 +6,4 @@ I am still writing the skeleton of the code. Once that is done, you can write ea
 TODO : 
 1. Whoever is writing patient class, please finish the contructor of Medical Record
 2. Finish the constructor of Appointment Outcome Report
+3. Finish Inventory
