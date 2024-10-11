@@ -16,7 +16,7 @@ public class AppointmentOutcomeRecord {
     /**
      * Prescription
      */
-    private String prescription;
+    private Medicine prescription;
 
     /**
      * integer to store the status of prescription 1 - pending 2 - dispense
@@ -38,8 +38,9 @@ public class AppointmentOutcomeRecord {
         date = new Date(t);
         System.out.print("Enter the service provided : ");
         service = sc.nextLine();
-        System.out.print("Enter the prescription : ");
-        prescription = sc.nextLine();
+        /*
+         * Generate Medicine object for prescription
+         */
         System.out.print("Enter the consultation notes : ");
         notes = sc.nextLine();
         status = 1;
@@ -53,8 +54,8 @@ public class AppointmentOutcomeRecord {
         System.out.print("Date : ");
         date.print();
         System.out.println("Service provided : " + service);
-        System.out.println("Prescription : " + prescription);
-        
+        System.out.print("Prescription : ");
+        prescription.print();
         System.out.print("Status of prescription : ");
         if (status == 1) System.out.println("pending");
         else System.out.println("dispensed");
