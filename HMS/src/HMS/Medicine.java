@@ -51,6 +51,22 @@ public class Medicine {
         else return false;
     }
 
+    public void restock(int quantity) {
+        amount += quantity;
+    }
+
+    /**
+     * Used by inventory to request restock
+     * @param no number of medicine
+     * @return medicine to be added to request
+     */
+    public Medicine copy(int no) {
+        return new Medicine(name, no);
+    }
+
+    /**
+     * Print medicine and amount
+     */
     public void print() {
         System.out.println(name + " : " + amount);
     }

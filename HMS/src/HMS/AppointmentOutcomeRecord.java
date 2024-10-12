@@ -47,6 +47,18 @@ public class AppointmentOutcomeRecord {
     }
 
     /**
+     * Accessor of prescription
+     * @return prescription
+     */
+    public Medicine getprescription() {
+        return prescription;
+    }
+
+    public boolean isDispensed() {
+        return (status == 2);
+    }
+
+    /**
      * Print the content of Appointment Outcome Record
      */
     public void print() {
