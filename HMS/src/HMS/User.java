@@ -45,6 +45,14 @@ public class User {
     }
 
     /**
+     * Accessor of role
+     * @return role number
+     */
+    public int getRole() {
+        return role;
+    }
+
+    /**
      * A function to login. It will ask for password.
      * @return role if login is successful otherwise -1
      */
