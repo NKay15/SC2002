@@ -1,6 +1,6 @@
 package hms;
 
-public class Date {
+public class Date implements Comparable<Date> {
 
     /**
      * Day of the date
@@ -74,17 +74,17 @@ public class Date {
     }
 
     /**
-     * Compare this date with another date
+     * Implements compareTo from Comparable
      * @param cmpDate date to compare to
-     * @return 1 if this date is earlier, -1 if later and 0 if they are the same
+     * @return -1 if this date is earlier, 1 if later and 0 if they are the same
      */
-    public int compare(Date cmpDate) {
-        if (year > cmpDate.year()) return 1;
-        else if (year < cmpDate.year()) return -1;
-        else if (month > cmpDate.month()) return 1;
-        else if (month < cmpDate.month()) return -1;
-        else if (day > cmpDate.day()) return 1;
-        else if (day < cmpDate.day()) return -1;
+    public int compareTo(Date cmpDate) {
+        if (year > cmpDate.year()) return -1;
+        else if (year < cmpDate.year()) return 1;
+        else if (month > cmpDate.month()) return -1;
+        else if (month < cmpDate.month()) return 1;
+        else if (day > cmpDate.day()) return -1;
+        else if (day < cmpDate.day()) return 1;
         else return 0;
     }
 
