@@ -54,7 +54,7 @@ public class AppointmentOutcomeRecord {
         return prescription;
     }
 
-    public boolean isDispensed() {
+    public Boolean isDispensed() {
         return (status == 2);
     }
 

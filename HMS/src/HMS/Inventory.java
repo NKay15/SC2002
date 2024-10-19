@@ -61,7 +61,7 @@ public class Inventory {
      * @param aop AppointmentOutcomeRecord of the appointmet
      * @return true if successful false otherwise
      */
-    public boolean dispense(AppointmentOutcomeRecord aop) {
+    public Boolean dispense(AppointmentOutcomeRecord aop) {
         if(aop.isDispensed()) return false;
         int idx = findIndex(aop.getprescription());
         if(catalog.get(idx).prescribe(aop.getprescription().amount())) {
