@@ -16,7 +16,7 @@ public class AppointmentOutcomeRecord {
     /**
      * Prescription
      */
-    private Medicine prescription;
+    private Medicine[] prescription;
 
     /**
      * integer to store the status of prescription 1 - pending 2 - dispense
@@ -50,7 +50,7 @@ public class AppointmentOutcomeRecord {
      * Accessor of prescription
      * @return prescription
      */
-    public Medicine getprescription() {
+    public Medicine[] getprescription() {
         return prescription;
     }
 
@@ -67,7 +67,7 @@ public class AppointmentOutcomeRecord {
         date.print();
         System.out.println("Service provided : " + service);
         System.out.print("Prescription : ");
-        prescription.print();
+        for(Medicine n : prescription) n.print();
         System.out.print("Status of prescription : ");
         if (status == 1) System.out.println("pending");
         else System.out.println("dispensed");

@@ -76,13 +76,14 @@ public class Appointment {
     }
 
     /**
-     * Change the date and time of appointment
+     * Change the date and time of appointment and change the status to pending
      * @param date
      * @param time
      */
     public void changeDate(Date date, int time) {
         this.date = date;
         timeSlot = time;
+        status = 1;
     }
 
     /**

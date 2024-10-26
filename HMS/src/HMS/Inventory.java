@@ -63,18 +63,26 @@ public class Inventory {
      */
     public Boolean dispense(AppointmentOutcomeRecord aop) {
         if(aop.isDispensed()) return false;
-        int idx = findIndex(aop.getprescription());
-        if(catalog.get(idx).prescribe(aop.getprescription().amount())) {
-            aop.dispense();
-            return true;
+
+        for(Medicine n : aop.getprescription()) {
+            int idx = findIndex(n);
+            if(catalog.get(idx).amount() < n.amount()) return false;
         }
-        else return false;
+
+        for(Medicine n : aop.getprescription()) {
+            int idx = findIndex(n);
+            catalog.get(idx).prescribe(n.amount());
+        }
+
+        aop.dispense();
+
+        return true;
     }
 
     /**
      * Used by pharamacist to request a restock
      */
-    public void creatRequest() {
+    public void createRequest() {
         printCurrentInvetory();
         System.out.print("Enter index of medicine (0 to exit) : ");
         Scanner sc = new Scanner(System.in);
