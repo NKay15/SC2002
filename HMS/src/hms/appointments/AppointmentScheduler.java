@@ -113,5 +113,22 @@ public class AppointmentScheduler {
         return -1;
     }
 
+    /**
+     * Prints all appointments for the patient with a given patient ID.
+     *
+     * @param patientID the ID of the patient whose appointments need to be printed
+     */
+    public void printPatientAppointment(String patientID){
+        for (Appointment appointment : appointments) {
+            if (appointment.getPatientID().equals(patientID)) {
+                System.out.println("Doctor ID: " + appointment.getDoctorID());
+                System.out.println("Date: " + appointment.getDate());
+                System.out.println("Time Slot: " + appointment.getTimeSlot());
+                System.out.print("Status: ");
+                appointment.printStatus();
+                System.out.println("-------------");
+            }
+        }
+    }
 
 }
