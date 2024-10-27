@@ -1,4 +1,7 @@
-package hms;
+package hms.appointments;
+
+import hms.utils.Date;
+import hms.medicalRecords.AppointmentOutcomeRecord;
 
 public class Appointment {
     /**
@@ -51,7 +54,7 @@ public class Appointment {
      * Accessor of patientID
      * @return patientID
      */
-    public String getpatientID() {
+    public String getPatientID() {
         return patientID;
     }
 
@@ -59,7 +62,7 @@ public class Appointment {
      * Accessor of doctorID
      * @return doctorID
      */
-    public String getdoctorID() {
+    public String getDoctorID() {
         return doctorID;
     }
 
@@ -67,11 +70,11 @@ public class Appointment {
      * Accessor of date
      * @return date
      */
-    public Date getdate() {
+    public Date getDate() {
         return date;
     }
 
-    public int gettimeSlot() {
+    public int getTimeSlot() {
         return timeSlot;
     }
 
