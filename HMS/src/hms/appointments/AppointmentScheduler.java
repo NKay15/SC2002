@@ -131,4 +131,13 @@ public class AppointmentScheduler {
         }
     }
 
+    /**
+     * Returns the number of appointments in the list.
+     *
+     * @return the number of appointments
+     */
+    public int getAppointmentsCount() {
+        return appointments.size();
+    }
+
 }
