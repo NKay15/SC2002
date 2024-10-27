@@ -53,6 +53,14 @@ public class MedicalRecord {
     public MedicalRecord(Patient patient) {
         medicalHistory = new ArrayList<String>();
         // who ever writing patient class pls finish this;
+
+        patientID = patient.getID();
+        name = patient.getName();
+        dob = patient.getDob();
+        gender = patient.getGender();
+        phone = patient.getPhone();
+        email = patient.getEmail();
+        bloodType = patient.getBloodType();
     }
 
     /**
