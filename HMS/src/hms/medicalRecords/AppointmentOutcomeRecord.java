@@ -1,4 +1,7 @@
-package hms;
+package hms.medicalRecords;
+
+import hms.utils.Date;
+import hms.Medicine;
 
 import java.util.Scanner;
 

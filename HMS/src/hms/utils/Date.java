@@ -1,4 +1,4 @@
-package hms;
+package hms.utils;
 
 public class Date implements Comparable<Date> {
 
