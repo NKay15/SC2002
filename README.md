@@ -9,14 +9,27 @@ Date is now a comparable. You can use sort on date now.
 ## Need to write
 1. MainApp - nc
 2. Patient - lqx(trying)
-3. Doctor -
-4. Pharamacist - 
-5. Administrator - 
-6. Schedule (d,31) - lyx 
-7. UserList (d,27) - nc 
+
+   Stuck
+
+   Methods need (in appointmentScheduler - LYX):
+
+   (1) printAvailableList
+
+   (2) printStatueList
+
+   (3) printCompletedList
+
+   Can do: write patientAPPS, and doctorAPPS(similar to APPS), or delete print in APPS
+
+4. Doctor -
+5. Pharamacist - 
+6. Administrator - 
+7. Schedule (d,31) - lyx 
+8. UserList (d,27) - nc 
 
 ## TODO : 
-- [ ] Whoever is writing patient class, please finish the contructor of Medical Record
+- [ done ] Whoever is writing patient class, please finish the contructor of Medical Record
 - [ ] Finish the constructor of Appointment Outcome Report
 
 ### LYX
