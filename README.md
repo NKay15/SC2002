@@ -29,7 +29,7 @@ Date is now a comparable. You can use sort on date now.
 8. UserList (d,27) - nc 
 
 ## TODO : 
-- [ done ] Whoever is writing patient class, please finish the contructor of Medical Record
+- [x] Whoever is writing patient class, please finish the contructor of Medical Record
 - [ ] Finish the constructor of Appointment Outcome Report
 
 ### LYX
