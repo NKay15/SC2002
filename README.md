@@ -15,15 +15,9 @@ Date is now a comparable. You can use sort on date now.
 6. Schedule (d,31) - lyx 
 7. UserList (d,27) - nc 
 
-<<<<<<< HEAD
 ## TODO : 
 - [ ] Whoever is writing patient class, please finish the contructor of Medical Record
 - [ ] Finish the constructor of Appointment Outcome Report
 
 ### LYX
 - [ ] DoctorScheduleManager
-=======
-TODO : 
-1. Whoever is writing patient class, please finish the contructor of Medical Record
-2. Finish the constructor of Appointment Outcome Report
->>>>>>> 373c21cfd833c55c494530996e3e58352217b224
