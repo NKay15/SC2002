@@ -16,5 +16,5 @@ Need to write
 7. UserList (d,27) - nc 
 
 TODO : 
-1. Whoever is writing patient class, please finish the contructor of Medical Record
-2. Finish the constructor of Appointment Outcome Report
+- [ ] Whoever is writing patient class, please finish the contructor of Medical Record
+- [ ] Finish the constructor of Appointment Outcome Report

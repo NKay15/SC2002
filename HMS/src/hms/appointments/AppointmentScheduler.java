@@ -69,7 +69,7 @@ public class AppointmentScheduler {
      * @return true if the slot is available, false otherwise
      */
     private boolean isSlotAvailable(Appointment appointment) {
-        return isSlotAvailable(appointment.getDoctorID(), appointment.getDate());
+        return isSlotAvailable(appointment.getDoctorID(), appointment.getTimeSlot());
     }
 
     /**
@@ -79,9 +79,9 @@ public class AppointmentScheduler {
      * @return true if the slot is available, false otherwise
      */
 
-    private boolean isSlotAvailable(String doctorID, Date time) {
+    private boolean isSlotAvailable(String doctorID, int time) {
         for (Appointment appointment : appointments) {
-            if (appointment.getDoctorID().equals(doctorID) && appointment.getDate().compareTo(time) == 0) {
+            if (appointment.getDoctorID().equals(doctorID) && appointment.getTimeSlot() == time) {
                 return false;
             }
         }
@@ -94,7 +94,7 @@ public class AppointmentScheduler {
      * @return The index of the appointment if found, or -1 if not found
      */
     private int findAppointment(Appointment appointment) {
-        return findAppointment(appointment.getPatientID(), appointment.getDate());
+        return findAppointment(appointment.getPatientID(), appointment.getTimeSlot());
     }
 
     /**
@@ -103,10 +103,10 @@ public class AppointmentScheduler {
      * @param time The date and time of the appointment
      * @return The index of the appointment if found, or -1 if not found
      */
-    private int findAppointment(String patientID, Date time) {
+    private int findAppointment(String patientID, int time) {
         for (int i = 0; i < appointments.size(); i++) {
             Appointment appointment = appointments.get(i);
-            if (appointment.getPatientID().equals(patientID) && appointment.getDate().compareTo(time) == 0) {
+            if (appointment.getPatientID().equals(patientID) && appointment.getTimeSlot() == time) {
                 return i;
             }
         }
