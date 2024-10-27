@@ -7,6 +7,7 @@ public class PatientScheduleManager {
      * Prints all appointments for the patient with a given patient ID.
      *
      * @param patientID the ID of the patient whose appointments need to be printed
+     * @param Scheduler the Scheduler of current appointment
      */
     public void printPatientAppointment(String patientID, AppointmentScheduler Scheduler){
         for (Appointment appointment : Scheduler.getAppointments()) {
