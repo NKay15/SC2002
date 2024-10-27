@@ -8,7 +8,7 @@ Date is now a comparable. You can use sort on date now.
 
 Need to write
 1. MainApp - nc
-2. Patient -
+2. Patient - lqx(trying)
 3. Doctor -
 4. Pharamacist - 
 5. Administrator - 
