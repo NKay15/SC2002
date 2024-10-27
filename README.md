@@ -3,10 +3,10 @@ Hospital Management System Notes
 
 I am still writing the skeleton of the code. Once that is done, you can write each User class without needing to write other things hopefully. Documentation is in the code itself.
 
-Note:
+## Note:
 Date is now a comparable. You can use sort on date now.
 
-Need to write
+## Need to write
 1. MainApp - nc
 2. Patient -
 3. Doctor -
@@ -15,6 +15,9 @@ Need to write
 6. Schedule (d,31) - lyx 
 7. UserList (d,27) - nc 
 
-TODO : 
+## TODO : 
 - [ ] Whoever is writing patient class, please finish the contructor of Medical Record
 - [ ] Finish the constructor of Appointment Outcome Report
+
+### LYX
+- [ ] DoctorScheduleManager
