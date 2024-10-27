@@ -8,16 +8,22 @@ Date is now a comparable. You can use sort on date now.
 
 ## Need to write
 1. MainApp - nc
-2. Patient -
+2. Patient - lqx(trying)
 3. Doctor -
 4. Pharamacist - 
 5. Administrator - 
 6. Schedule (d,31) - lyx 
 7. UserList (d,27) - nc 
 
+<<<<<<< HEAD
 ## TODO : 
 - [ ] Whoever is writing patient class, please finish the contructor of Medical Record
 - [ ] Finish the constructor of Appointment Outcome Report
 
 ### LYX
 - [ ] DoctorScheduleManager
+=======
+TODO : 
+1. Whoever is writing patient class, please finish the contructor of Medical Record
+2. Finish the constructor of Appointment Outcome Report
+>>>>>>> 373c21cfd833c55c494530996e3e58352217b224
