@@ -2,7 +2,7 @@ package hms.users;
 
 import hms.medicalRecords.MedicalRecord;
 import hms.utils.Date;
-import hms.appointments.PatientScheduleManager;
+import hms.appointments.*;
 
 import java.util.Scanner;
 
@@ -42,12 +42,6 @@ public class Patient extends User{
      * 5 - AB+ 6 - AB- 7 - O+ 8 - O-
      */
     private int bloodType;
-	
-	/**
-	 * Medical records of patient
-	 */
-	private MedicalRecord mr;
-
 
 	/**
 	 * appointmentScheduler for a specific patient
@@ -55,7 +49,12 @@ public class Patient extends User{
 	private PatientScheduleManager patientSchedule;
 	
 	/**
-	 * Constructor
+	 * medical record
+	 * */
+	private MedicalRecord mr;
+	
+	/**
+	 * Constructor for patient
 	 * */
 	public Patient(String patientID, String name, Date dob, int gender, int phone, String email, int bloodType) {
 		this.patientID = patientID;
@@ -122,7 +121,7 @@ public class Patient extends User{
 	 * print patient menu
 	 * */
 	public void menu() {
-		System.out.println("Patient Menu:");
+		System.out.println("-----Patient Menu-----");
 		System.out.println("1.View Medical Record ");
 		System.out.println("2.Update Personal Information ");
 		System.out.println("3.View Available Appointment Slots ");
@@ -148,17 +147,17 @@ public class Patient extends User{
 	 * update phone number
 	 * */
 	public void updatePhone(int phone) {
-		this.phone = phone;
+		this.phone = phone;	
 		mr.setPhone(phone);
 	}
 	
-	/**
-	 * print medical record
-	 * */
-    public void viewMedicalRecord() {
-    	mr.print();
-    }
-    
+	public void viewMedicalRecord() {
+		mr.print();
+	}
+	
+	public void addMedicalRecord(String add) {
+		mr.newMedicalHistory(add);
+	}
     
     /**
      * Update Personal Information
@@ -191,9 +190,7 @@ public class Patient extends User{
      * View Available Appointment Slots
      * @param APPS Global AppointmentScheduler
      * */
-    public void viewAvailableAppointmentSlots(AppointmentScheduler APPS) { 
-    	//need appointmentScheduler be able to print appointment available list
-    	
+    public void viewAvailableAppointmentSlots(AppointmentScheduler APPS) {
     	APPS.printAvailableList();
     }
     
@@ -205,9 +202,7 @@ public class Patient extends User{
     public void scheduleAppointment(AppointmentScheduler APPS, Appointment appointment) {
     	if(APPS.scheduleAppointment(appointment) == true) {
     		patientSchedule.schedulePatientAppointment(appointment);
-    		System.out.println("Successfully scheduled.");
     	}
-    	System.out.println("Current slot is not available.");
     }
     
     /**
@@ -219,9 +214,7 @@ public class Patient extends User{
     public void rescheduleAppointment(AppointmentScheduler APPS, Appointment existingAppointment, Appointment newAppointment) {
     	if(APPS.rescheduleAppointment(existingAppointment, newAppointment) == true) {
     		patientSchedule.reschedulePatientAppointment(existingAppointment, newAppointment);
-    		System.out.println("Successfully rescheduled.");
     	}
-    	System.out.println("New time slot is not available.");
     }
     
     /**
@@ -232,17 +225,13 @@ public class Patient extends User{
     public void cancelAppointment(AppointmentScheduler APPS, Appointment appointment) {
     	if(APPS.cancelAppointment(appointment) != null) {
     		patientSchedule.cancelPatientAppointment(appointment);
-    		System.out.println("Successfully cancelled.");
     	}
-    	System.out.println("Can't find slot.");
     }
     
     /**
      * View status of scheduled appointments
      * */
     public void viewScheduledAppointments() {
-    	//need appointmentScheduler be able to print appointment statue list
-    	
     	patientSchedule.printPatientAppointment();
     }
     
@@ -250,8 +239,6 @@ public class Patient extends User{
      * View past appointment outcome records
      * */
     public void viewPastAppointmentOutcomeRecords() {
-    	//need appointmentScheduler be able to print appointment completed list
-    	
-    	patientSchedule.printMedicalRecord();
+    	patientSchedule.printAppointmentOutcomeRecord();
     }
 }
