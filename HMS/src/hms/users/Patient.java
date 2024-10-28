@@ -1,13 +1,9 @@
 package hms.users;
 
-import hms.User;
-import hms.medicalRecords.AppointmentOutcomeRecord;
 import hms.medicalRecords.MedicalRecord;
 import hms.utils.Date;
 import hms.appointments.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Patient extends User{
