@@ -1,0 +1,10 @@
+#+title: Todo
+
+* Li Yuxiao
+** NEXT DoctorScheduleManager
+** NEXT print available slots of doctors
+- [X] Basic implementation
+** STRT Rescheduling system
+- [X] Basic implementation
+- [ ] requires clarification
+- [ ] doctor confirmation
