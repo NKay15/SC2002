@@ -1,6 +1,7 @@
 package hms.medicalRecords;
 
 import hms.utils.Date;
+import hms.users.*;
 
 import java.util.ArrayList;
 

@@ -1,10 +1,13 @@
 package hms.users;
 
 import hms.User;
+import hms.medicalRecords.AppointmentOutcomeRecord;
 import hms.medicalRecords.MedicalRecord;
 import hms.utils.Date;
 import hms.appointments.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Patient extends User{
@@ -48,12 +51,13 @@ public class Patient extends User{
 	 * Medical records of patient
 	 */
 	private MedicalRecord mr;
-	
-	
+
+
+	private static List<AppointmentOutcomeRecord> appointmentOutcomeRecords = new ArrayList<>();
 	/**
 	 * appointmentScheduler for a specific patient
 	 * */
-	private AppointmentScheduler patientAPPS;
+	private PatientScheduleManager patientSchedule;
 	
 	/**
 	 * Constructor
@@ -67,7 +71,7 @@ public class Patient extends User{
 		this.email = email;
 		this.bloodType = bloodType;
 		mr = new MedicalRecord(this);
-		patientAPPS = new AppointmentScheduler();
+		patientSchedule = new PatientScheduleManager(this);
 	}
 	
 	/**
@@ -205,7 +209,7 @@ public class Patient extends User{
      * */
     public void scheduleAppointment(AppointmentScheduler APPS, Appointment appointment) {
     	if(APPS.scheduleAppointment(appointment) == true) {
-    		patientAPPS.scheduleAppointment(appointment);
+    		patientSchedule.schedulePatientAppointment(appointment);
     		System.out.println("Successfully scheduled.");
     	}
     	System.out.println("Current slot is not available.");
@@ -219,7 +223,7 @@ public class Patient extends User{
      * */
     public void rescheduleAppointment(AppointmentScheduler APPS, Appointment existingAppointment, Appointment newAppointment) {
     	if(APPS.rescheduleAppointment(existingAppointment, newAppointment) == true) {
-    		patientAPPS.rescheduleAppointment(existingAppointment, newAppointment);
+    		patientSchedule.reschedulePatientAppointment(existingAppointment, newAppointment);
     		System.out.println("Successfully rescheduled.");
     	}
     	System.out.println("New time slot is not available.");
@@ -231,8 +235,8 @@ public class Patient extends User{
      * @param appointment The appointment to be canceled
      * */
     public void cancelAppointment(AppointmentScheduler APPS, Appointment appointment) {
-    	if(APPS.cancelAppointment(appointment) == true) {
-    		patientAPPS.cancelAppointment(appointment);
+    	if(APPS.cancelAppointment(appointment) != null) {
+    		patientSchedule.cancelPatientAppointment(appointment);
     		System.out.println("Successfully cancelled.");
     	}
     	System.out.println("Can't find slot.");
@@ -244,7 +248,7 @@ public class Patient extends User{
     public void viewScheduledAppointments() {
     	//need appointmentScheduler be able to print appointment statue list
     	
-    	patientAPPS.printStatueList();
+    	patientSchedule.printPatientAppointment();
     }
     
     /**
@@ -253,6 +257,6 @@ public class Patient extends User{
     public void viewPastAppointmentOutcomeRecords() {
     	//need appointmentScheduler be able to print appointment completed list
     	
-    	patientAPPS.printCompletedList();
+    	patientSchedule.printMedicalRecord();
     }
 }

@@ -1,0 +1,21 @@
+#+title: Todo
+
+* Li Yuxiao
+** STRT DoctorScheduleManager
+:LOGBOOK:
+- State "STRT"       from "NEXT"       [2024-10-28 Mon 10:21]
+:END:
+- [X] Basic implementation
+** NEXT print available slots of doctors
+- [X] Basic implementation
+** STRT Rescheduling system
+- [X] Basic implementation
+- [ ] requires clarification
+- [ ] rewrite rescheduling behavior
+- [ ] doctor confirmation
+** TODO appointment outcome record
+:LOGBOOK:
+- State "STRT"       from              [2024-10-28 Mon 10:21]
+CLOCK: [2024-10-28 Mon 10:21]
+:END:
+** TODO time management: currently, time is not considered for upcoming events, etc.

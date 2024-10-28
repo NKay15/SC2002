@@ -91,6 +91,9 @@ public class Date implements Comparable<Date> {
     /**
      * Print date in dd/mm/yyyy format
      */
+    public String get() {
+        return day + "/" + month + "/" + year;
+    }
     public void print() {
         System.out.println(day + "/" + month + "/" + year);
     }
