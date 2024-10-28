@@ -3,6 +3,7 @@ package hms.appointments;
 import hms.utils.Date;
 import hms.users.*;
 import hms.medicalRecords.AppointmentOutcomeRecord;
+
 import java.util.*;
 
 public class Appointment {
@@ -17,6 +18,8 @@ public class Appointment {
      */
     private String doctorID;
 
+    private Patient patient;
+    private Doctor doctor;
     /**
      * Integer to store the status of appointment 1 - pending 2 - confirmed 3 - canceled 4 - completed 5 - reschedule
      */
@@ -36,6 +39,7 @@ public class Appointment {
      * Appointmet Outcome Record to be created after appointment is completed
      */
     private AppointmentOutcomeRecord aop;
+    private Appointment rescheduled;
 
     /**
      * Constructor of appointment
@@ -53,12 +57,17 @@ public class Appointment {
         timeSlot = time;
         status = 1;
         aop = null;
+        this.patient = patient;
+        this.doctor = doctor;
+        rescheduled = null;
     }
 
     public void setAop() {
         aop = new AppointmentOutcomeRecord();
     }
-
+    public void setRescheduled(Appointment appointment){
+        rescheduled = appointment;
+    }
     /**
      * Accessor of patientID
      *
@@ -75,6 +84,18 @@ public class Appointment {
      */
     public String getDoctorID() {
         return doctorID;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public Doctor getDoctor() {
+        return doctor;
     }
 
     /**
@@ -157,7 +178,9 @@ public class Appointment {
     public int getStatus() {
         return status;
     }
-
+    public Appointment getRescheduled(){
+        return rescheduled;
+    }
 
     /**
      * Print the Appointment Outcome Record if appointment is completed

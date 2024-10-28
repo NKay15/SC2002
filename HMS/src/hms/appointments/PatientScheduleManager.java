@@ -26,11 +26,10 @@ public class PatientScheduleManager {
      * @param appointment
      */
     public void schedulePatientAppointment(Appointment appointment) {
-        if (!patient.getPatientID().equals(appointment.getPatientID())) {
-            System.out.println("This is not your appointment");
-            return;
+        updatePatientData();
+        if (scheduler.findAppointment(appointment, appointmentList) != null) {
+            scheduler.scheduleAppointment(appointment);
         }
-        scheduler.scheduleAppointment(appointment);
     }
 
     /**
@@ -40,11 +39,9 @@ public class PatientScheduleManager {
      * @param newAppointment
      */
     public void reschedulePatientAppointment(Appointment existingAppointment, Appointment newAppointment) {
-        if (!patient.getPatientID().equals(existingAppointment.getPatientID())) {
-            System.out.println("This is not your appointment");
-            return;
-        }
-        scheduler.rescheduleAppointment(existingAppointment, newAppointment);
+        updatePatientData();
+        if (scheduler.findAppointment(existingAppointment, appointmentList) != null)
+            scheduler.rescheduleAppointment(existingAppointment, newAppointment);
     }
 
     /**
@@ -53,17 +50,16 @@ public class PatientScheduleManager {
      * @param appointment
      */
     public void cancelPatientAppointment(Appointment appointment) {
-        if (!patient.getPatientID().equals(appointment.getPatientID())) {
-            System.out.println("This is not your appointment");
-            return;
-        }
-        scheduler.cancelAppointment(appointment);
+        updatePatientData();
+        if (scheduler.findAppointment(appointment, appointmentList) != null)
+            scheduler.cancelAppointment(appointment);
     }
 
     /**
      * Prints all appointments for the patient with a given patient.
      */
     public void printPatientAppointment() {
+        updatePatientData();
         for (Appointment appointment : appointmentList) {
             System.out.println("Doctor ID: " + appointment.getDoctorID());
             System.out.println("Date: " + appointment.getDate());
@@ -86,6 +82,7 @@ public class PatientScheduleManager {
     }
 
     public void printAppointmentOutcomeRecord() {
+        updatePatientData();
         for (Appointment appointment : appointmentList) {
             if (appointment.getStatus() == 4) {
                 System.out.println("Appointment Outcome Record for patient: " + appointment.getPatientID());
@@ -93,5 +90,9 @@ public class PatientScheduleManager {
                 System.out.println("-------------");
             }
         }
+    }
+
+    public void updatePatientData(){
+        appointmentList = scheduler.getAppointments(patient);
     }
 }

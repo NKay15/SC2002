@@ -6,18 +6,16 @@
 - State "STRT"       from "NEXT"       [2024-10-28 Mon 10:21]
 :END:
 - [X] Basic implementation
-** NEXT print available slots of doctors
+** DONE print available slots of doctors
 - [X] Basic implementation
-** STRT Rescheduling system
-- [X] Basic implementation
-- [ ] requires clarification
-- [ ] rewrite rescheduling behavior
-- [ ] doctor confirmation
-** DONE appointment outcome record
-CLOSED: [2024-10-28 Mon 10:39]
+** DONE Rescheduling system
+CLOSED: [2024-10-28 Mon 17:49]
 :LOGBOOK:
-- State "DONE"       from "TODO"       [2024-10-28 Mon 10:39]
-- State "STRT"       from              [2024-10-28 Mon 10:21]
-CLOCK: [2024-10-28 Mon 10:21]--[2024-10-28 Mon 10:39] =>  0:18
+- State "DONE"       from "STRT"       [2024-10-28 Mon 17:49]
 :END:
-** TODO time management: currently, time is not considered for upcoming events, etc.
+- [X] Basic implementation
+- [X] requires clarification
+- [X] rewrite rescheduling behavior
+- [X] doctor confirmation
+** DONE time management: currently, time is not considered for upcoming events, etc.
+- [x] change from 100' to 60'

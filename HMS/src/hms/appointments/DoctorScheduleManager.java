@@ -15,23 +15,28 @@ public class DoctorScheduleManager {
 
 
     public DoctorScheduleManager(Doctor doctor) {
+        updateDoctorData();
         this.doctor = doctor;
         appointmentList = scheduler.getAppointments(doctor);
         pendingList = scheduler.getPendingAppointments(doctor);
     }
-    public void acceptAppointments(int appointmentId) {
-        if (appointmentId >= 0 && appointmentId < pendingList.size())
-            scheduler.acceptAppointment(appointmentId);
-        else System.out.println("Slot not found.");
+
+    public void acceptAppointments(Appointment appointment) {
+        updateDoctorData();
+        if (scheduler.findAppointment(appointment, pendingList) != null) {
+            scheduler.acceptAppointment(appointment);
+        }
+
     }
 
-    public void declineAppointments(int appointmentId) {
-        if (appointmentId >= 0 && appointmentId < pendingList.size())
-            scheduler.declineAppointment(appointmentId);
-        else System.out.println("Slot not found.");
+    public void declineAppointments(Appointment appointment) {
+        updateDoctorData();
+        if (scheduler.findAppointment(appointment, pendingList) != null) {
+            scheduler.declineAppointment(appointment);
+        }
     }
 
-    public void completeAppointments(Appointment appointment){
+    public void completeAppointments(Appointment appointment) {
         appointment.complete();
         updateAppointmentOutcomeRecord(appointment);
     }
@@ -45,6 +50,7 @@ public class DoctorScheduleManager {
     }
 
     public void printPendingSlots(Doctor doctor) {
+        updateDoctorData();
         for (Appointment appointment : pendingList) {
             System.out.println("Doctor ID: " + doctor.getDoctorID() + "'s pending slots are:");
             if (appointment.getDoctorID().equals(doctor.getDoctorID())) {
@@ -57,6 +63,7 @@ public class DoctorScheduleManager {
     }
 
     public void printUpcomingSlots(Doctor doctor) {
+        updateDoctorData();
         for (Appointment appointment : appointmentList) {
             if (appointment.getStatus() == 2) {
                 System.out.println("Doctor ID: " + doctor.getDoctorID() + "'s upcoming slots are:");
@@ -67,6 +74,9 @@ public class DoctorScheduleManager {
         }
     }
 
-
+    public void updateDoctorData(){
+        appointmentList = scheduler.getAppointments(doctor);
+        pendingList = scheduler.getPendingAppointments(doctor);
+    }
 
 }
