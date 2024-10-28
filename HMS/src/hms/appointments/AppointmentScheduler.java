@@ -38,17 +38,16 @@ public class AppointmentScheduler {
      */
     public void acceptAppointment(Appointment pendingAppointment) {
         Appointment appointment = cancelAppointment(pendingAppointment, pendingAppointments);
+        if (appointment == null){
+            System.out.println("No such appointmnet");
+            return;
+        }
         if (appointment.getStatus() == 5) {
-            Appointment rescheduledAppointment = findAppointment(appointment.getRescheduled().getUuid(), appointments);
-            rescheduledAppointment.cancel();
+            Appointment rescheduledAppointment = findAppointment(appointment.getRescheduled(), appointments);
             cancelAppointment(rescheduledAppointment, appointments);
-            appointment.confirm();
-            appointments.add(appointment);
         }
-        if (appointment != null) {
-            appointment.confirm();
-            appointments.add(appointment);
-        }
+        appointment.confirm();
+        appointments.add(appointment);
     }
 
     /**
@@ -106,6 +105,7 @@ public class AppointmentScheduler {
         for (Appointment tempAppointment : appointmentList) {
             if (findAppointment(appointment.getUuid(), appointmentList) != null) {
                 appointment.cancel();
+                return appointment;
             }
         }
         System.out.println("Can't find slot.");
