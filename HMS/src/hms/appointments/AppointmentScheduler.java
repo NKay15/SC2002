@@ -42,6 +42,7 @@ public class AppointmentScheduler {
         Appointment appointment = pendingAppointments.remove(appointmentId);
         appointment.confirm();
         appointments.add(appointment);
+        System.out.println("Appointment accepted.");
         return true;
     }
 
@@ -54,6 +55,7 @@ public class AppointmentScheduler {
     public boolean declineAppointment(int appointmentId) {
         Appointment appointment = pendingAppointments.remove(appointmentId);
         appointment.cancel();
+        System.out.println("Appointment rejected.");
         return true;
     }
 
@@ -66,9 +68,13 @@ public class AppointmentScheduler {
      */
     public boolean rescheduleAppointment(Appointment existingAppointment, Appointment newAppointment) {
         if (isSlotAvailable(newAppointment)) {
-            if (cancelAppointment(existingAppointment)) {
+            Appointment tempAppointment = cancelAppointment(existingAppointment);
+            if (tempAppointment != null) {
                 scheduleAppointment(newAppointment);
                 System.out.println("Successfully rescheduled.");
+                tempAppointment.reschedule();
+                appointments.add(tempAppointment);
+                pendingAppointments.add(tempAppointment);
                 return true;
             }
             System.out.println("No exisitng appointment found. Make sure it's not in the pending state.");
@@ -85,19 +91,17 @@ public class AppointmentScheduler {
      * @return true if canceled successfully, false otherwise
      */
 
-    public boolean cancelAppointment(Appointment appointment) {
+    public Appointment cancelAppointment(Appointment appointment) {
         List<Appointment> targetList = appointment.getStatus() == 1 ? pendingAppointments : appointments;
         int appointmentNum = findAppointment(appointment, targetList);
         if (appointmentNum != -1) {
-            targetList.remove(appointmentNum);
             System.out.println("Successfully cancelled.");
-            return true;
+            return targetList.remove(appointmentNum);
         } else {
             System.out.println("Can't find slot.");
-            return false;
+            return null;
         }
     }
-
 
     /**
      * Check if a slot is available for a certain appointment.
@@ -154,6 +158,15 @@ public class AppointmentScheduler {
     }
 
     /**
+     * @param date
+     * @param doctor
+     */
+    public void printAvailableSlot(Date date, Doctor doctor) {
+        // Single doctor version calls the array version
+        printAvailableSlot(date, new Doctor[]{doctor});
+    }
+
+    /**
      * print available slots, assume each slot is 30 min and schedule as shown.
      *
      * @param date
@@ -183,9 +196,8 @@ public class AppointmentScheduler {
             }
             System.out.println("-----------------------------------");
         }
-
-
     }
+
 
     /**
      * Returns the number of appointments in the list.
@@ -194,6 +206,15 @@ public class AppointmentScheduler {
      */
     public int getAppointmentsCount() {
         return appointments.size();
+    }
+
+    /**
+     * Returns the number of pending appointments in the list.
+     *
+     * @return
+     */
+    public int getPendingAppointmentCount() {
+        return pendingAppointments.size();
     }
 
     /**
@@ -211,6 +232,36 @@ public class AppointmentScheduler {
      */
     public List<Appointment> getAppointments() {
         return appointments;
+    }
+
+    public List<Appointment> getAppointments(Doctor doctor) {
+        List<Appointment> appointmentsForDoctor = new ArrayList<>();
+        for (Appointment appointment : appointments) {
+            if (appointment.getDoctorID().equals(doctor.getDoctorID())) {
+                appointmentsForDoctor.add(appointment);
+            }
+        }
+        return appointmentsForDoctor;
+    }
+
+    public List<Appointment> getAppointments(Patient patient) {
+        List<Appointment> appointmentsForPatient = new ArrayList<>();
+        for (Appointment appointment : appointments) {
+            if (appointment.getPatientID().equals(patient.getPatientID())) {
+                appointmentsForPatient.add(appointment);
+            }
+        }
+        return appointmentsForPatient;
+    }
+
+    public List<Appointment> getPendingAppointments(Doctor doctor) {
+        List<Appointment> pendingAppointmentsForDoctor = new ArrayList<>();
+        for (Appointment appointment : pendingAppointments) {
+            if (appointment.getDoctorID().equals(doctor.getDoctorID())) {
+                pendingAppointmentsForDoctor.add(appointment);
+            }
+        }
+        return pendingAppointmentsForDoctor;
     }
 
 }

@@ -1,10 +1,13 @@
 package hms.users;
 
 import hms.User;
+import hms.medicalRecords.AppointmentOutcomeRecord;
 import hms.medicalRecords.MedicalRecord;
 import hms.utils.Date;
 import hms.appointments.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Patient extends User{
@@ -48,8 +51,9 @@ public class Patient extends User{
 	 * Medical records of patient
 	 */
 	private MedicalRecord mr;
-	
-	
+
+
+	private static List<AppointmentOutcomeRecord> appointmentOutcomeRecords = new ArrayList<>();
 	/**
 	 * appointmentScheduler for a specific patient
 	 * */
@@ -231,7 +235,7 @@ public class Patient extends User{
      * @param appointment The appointment to be canceled
      * */
     public void cancelAppointment(AppointmentScheduler APPS, Appointment appointment) {
-    	if(APPS.cancelAppointment(appointment) == true) {
+    	if(APPS.cancelAppointment(appointment) != null) {
     		patientSchedule.cancelPatientAppointment(appointment);
     		System.out.println("Successfully cancelled.");
     	}

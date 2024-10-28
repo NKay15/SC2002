@@ -3,12 +3,14 @@ package hms.appointments;
 import hms.utils.Date;
 import hms.users.*;
 import hms.medicalRecords.AppointmentOutcomeRecord;
+import java.util.*;
 
 public class Appointment {
     /**
      * ID of patient
      */
 
+    private UUID uuid;
     private String patientID;
     /**
      * ID of doctor
@@ -44,12 +46,17 @@ public class Appointment {
      * @param time    Time Slot of appointment
      */
     public Appointment(Patient patient, Doctor doctor, Date date, int time) {
+        uuid = UUID.randomUUID();
         patientID = patient.getPatientID();
         doctorID = doctor.getDoctorID();
         this.date = date;
         timeSlot = time;
         status = 1;
         aop = null;
+    }
+
+    public void setAop() {
+        aop = new AppointmentOutcomeRecord();
     }
 
     /**
@@ -150,6 +157,7 @@ public class Appointment {
     public int getStatus() {
         return status;
     }
+
 
     /**
      * Print the Appointment Outcome Record if appointment is completed
