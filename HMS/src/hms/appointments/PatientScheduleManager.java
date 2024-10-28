@@ -3,20 +3,17 @@ package hms.appointments;
 import java.util.ArrayList;
 import java.util.List;
 
-import hms.medicalRecords.*;
 import hms.users.*;
 import hms.utils.*;
 
 public class PatientScheduleManager {
 
     private Patient patient;
-    private MedicalRecord medicalRecord;
     private AppointmentScheduler scheduler = AppointmentScheduler.getInstance();
     private List<Appointment> appointmentList = new ArrayList<>();
 
     public PatientScheduleManager(Patient patient) {
         this.patient = patient;
-        this.medicalRecord = new MedicalRecord(patient);
         appointmentList = scheduler.getAppointments(patient);
     }
 
@@ -70,12 +67,6 @@ public class PatientScheduleManager {
         }
     }
 
-    /**
-     * Prints all medical records for the patient with a given patient.
-     */
-    public void printMedicalRecord() {
-        medicalRecord.print();
-    }
 
     public void printAvailableSlots(Date date, Doctor[] doctors) {
         scheduler.printAvailableSlot(date, doctors);

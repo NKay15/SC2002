@@ -2,7 +2,7 @@ package hms.users;
 
 import hms.medicalRecords.MedicalRecord;
 import hms.utils.Date;
-import hms.appointments.*;
+import hms.appointments.PatientScheduleManager;
 
 import java.util.Scanner;
 
