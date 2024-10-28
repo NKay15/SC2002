@@ -191,7 +191,7 @@ public class Patient extends User{
      * @param APPS Global AppointmentScheduler
      * */
     public void viewAvailableAppointmentSlots(AppointmentScheduler APPS) {
-    	APPS.printAvailableList();
+    	APPS.printAvailableSlot();
     }
     
     /**
@@ -200,7 +200,7 @@ public class Patient extends User{
      * @param appointment The appointment to be scheduled
      * */
     public void scheduleAppointment(AppointmentScheduler APPS, Appointment appointment) {
-    	if(APPS.scheduleAppointment(appointment) == true) {
+    	if(APPS.scheduleAppointment(appointment) != null) {
     		patientSchedule.schedulePatientAppointment(appointment);
     	}
     }

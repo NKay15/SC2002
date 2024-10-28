@@ -2,16 +2,41 @@ package hms.users;
 
 import hms.appointments.DoctorScheduleManager;
 import hms.appointments.*;
+import hms.utils.*;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class Doctor extends User {
+	.
+	/**
+	 * Doctor's ID
+	 */
     private String doctorID;
+
+	/**
+	 * name of doctor
+	 */
     private String name;
+	
+	/**
+	 * gender of doctor
+	 */
     private int gender;
+
+	/**
+	 * age of doctor
+	 */
     private int age;
+
+	/**
+	 * doctor scheduler
+	 */
     private DoctorScheduleManager doctorScheduler;
+
+	/**
+	 * patient list of doctor
+	 */
     private List<Patient> patientList;
     
     public Doctor(String doctorID, String name, int gender, int age) {
@@ -81,8 +106,59 @@ public class Doctor extends User {
     public void setAvailabilityforAppointments(Date date) {
     	doctorScheduler.addOneSlot(Date);
     }
+
+	private boolean isInPatientList(Patient keyPatient){
+		for(Patient patient : patientList){
+			if(patient.getID() == keyPatient.getID())return true;
+		}
+		return false;
+	}
+
+	private void updatePatientList(Patient patient, int op){
+		if( ( op == 1 ) && ( isInPatientList(patient) == false ) ){
+			patientList.add(patient);
+		}else if( ( op == -1 ) && ( isInPatientList(patient) == true ) ) {
+			patientList.remove(patient);
+		}
+	}
     
     public void acceptOrDeclineAppointmentRequests(AppointmentScheduler APPS) {
-    	
+		List<Appointment> appointmentList = APPS.getPendingAppointments(this);
+		int id = 0;
+		Scanner scan = new Scanner(System.in);
+		for(Appointment appointment : appointmentList){
+			Patient patient = appointment.getPatient();
+			Date date = appointment.getDate();
+			int Time = appointment.getTimeSlot();
+
+			++id;
+			System.out.println("-----Request " + id + "-----");
+			System.out.println("patient:" + patient.getName());
+			date.print();
+			System.out.println("Time: " + Time);
+			System.out.println("-----End of Request " + id + "-----");
+			System.out.println("1. Accept");
+			System.out.println("2. Decline");
+			System.out.println("3. Later");
+			int ch = scan.nextInt();
+			if(ch == 1){
+				doctorScheduler.acceptAppointments(appointment);
+				updatePatientList(patient, 1);
+				System.out.println("Successfully Accepted!");
+			}else if(ch == 2){
+				doctorScheduler.declineAppointments(appointment);
+				System.out.println("Successfully Declined!");
+			}else{
+				System.out.println("This request is still in your pending list. Please don't forget to reply later");
+			}
+		}
     }
+
+	public void viewUpcomingAppointments(){
+		doctorScheduler.printUpcomingSlots(this);
+	}
+
+	public void recordAppointmentOutcome(Appointment appointment){
+		doctorScheduler.updateAppointmentOutcomeRecord(appointment);
+	}
 }
