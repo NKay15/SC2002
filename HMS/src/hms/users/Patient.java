@@ -3,10 +3,10 @@ package hms.users;
 import hms.medicalRecords.MedicalRecord;
 import hms.utils.Date;
 import hms.appointments.*;
-import hms.UserList;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.List;
 
 public class Patient extends User {
 	 /**
@@ -189,7 +189,7 @@ public class Patient extends User {
     /**
      * View Available Appointment Slots
      * @param APPS Global AppointmentScheduler
-	 * @param doctors Globle doctor user list
+	 * @param doctors Global doctor user list
 	 * @param date Date that patient want to make appointment
      * */
     public void viewAvailableAppointmentSlots(AppointmentScheduler APPS, ArrayList<Doctor> doctors, Date date) {
@@ -227,9 +227,10 @@ public class Patient extends User {
      * Cancle appointment
      * @param APPS Global AppointmentScheduler
      * @param appointment The appointment to be canceled
+	 * @param appointmentList comfirmed appointment list for a patient(actually I do not really understand whats going on here)
      * */
-    public void cancelAppointment(AppointmentScheduler APPS, Appointment appointment) {
-    	if(APPS.cancelAppointment(appointment) != null) {
+    public void cancelAppointment(AppointmentScheduler APPS, Appointment appointment, List<Appointment> appointmentList) {
+    	if(APPS.cancelAppointment(appointment, appointmentList) != null) {
     		patientSchedule.cancelPatientAppointment(appointment);
     	}
     }

@@ -129,7 +129,7 @@ public class Doctor extends User {
     
 	/**
 	 * Accept Or Decline Appointment Requests
-	 * @param APPS Globle Scheduler
+	 * @param APPS Global Scheduler
 	 */
     public void acceptOrDeclineAppointmentRequests(AppointmentScheduler APPS) {
 		List<Appointment> appointmentList = APPS.getPendingAppointments(this);
