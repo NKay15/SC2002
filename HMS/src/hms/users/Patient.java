@@ -6,7 +6,7 @@ import hms.appointments.*;
 
 import java.util.Scanner;
 
-public class Patient extends User{
+public class Patient extends User {
 	 /**
      * PatientID
      */

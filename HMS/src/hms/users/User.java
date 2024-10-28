@@ -37,7 +37,23 @@ public class User {
      * 2 - Female
      */
     private int gender;
+    
+    /**
+     * Age of user
+     */
+    private int age;
 
+    /**
+     * Constuctor for User
+     */
+    public User(String ID, String name, int role, int gender, int age) {
+    	this.ID = ID;
+    	this.name = name;
+    	this.role = role;
+    	this.gender = gender;
+    	this.age = age;
+    }
+    
     /**
      * Accessors method of ID
      * @return
@@ -52,6 +68,14 @@ public class User {
      */
     public int getRole() {
         return role;
+    }
+    
+    /**
+     * Accessor of age
+     * @return age
+     */
+    public int getAge() {
+    	return age;
     }
 
     /**
