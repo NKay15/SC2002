@@ -1,7 +1,12 @@
 package hms.users;
 
-public class Doctor {
+import hms.users.User;
+
+public class Doctor extends User {
     private String doctorID;
-    public String getDoctorID() {return doctorID};
+
+    public String getDoctorID() {
+        return doctorID;
+    }
 
 }
