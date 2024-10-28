@@ -133,7 +133,7 @@ public class AppointmentScheduler {
     private boolean isSlotAvailable(Doctor doctor, int time, Date date) {
         if (!Time.checkTime(time)) return false;
         for (Appointment appointment : appointments) {
-            if (appointment.getDoctorID().equals(doctor.getDoctorID()) && appointment.getTimeSlot() == time && appointment.getDate().equals(date)) {
+            if (appointment.getDoctorID().equals(doctor.getDoctorID()) && appointment.getTimeSlot() == time && appointment.getDate().equals(date) && appointment.getStatus() == 2) {
                 return false;
             }
         }

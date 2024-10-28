@@ -12,13 +12,14 @@ public class DoctorScheduleManager {
     private AppointmentScheduler scheduler = AppointmentScheduler.getInstance();
     private List<Appointment> appointmentList = new ArrayList<>();
     private List<Appointment> pendingList = new ArrayList<>();
-
+    private DoctorSchedule doctorSchedule;
 
     public DoctorScheduleManager(Doctor doctor) {
         updateDoctorData();
         this.doctor = doctor;
         appointmentList = scheduler.getAppointments(doctor);
         pendingList = scheduler.getPendingAppointments(doctor);
+        doctorSchedule = new DoctorSchedule(doctor);
     }
 
     public void acceptAppointments(Appointment appointment) {
