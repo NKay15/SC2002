@@ -26,7 +26,7 @@ Date is now a comparable. You can use sort on date now.
    done, and its STATUSLIST
 
    Can do: write patientAPPS, and doctorAPPS(similar to APPS), or delete print in APPS
-3. Doctor -
+3. Doctor - lqx(trying)
 4. Pharamacist -
 5. Administrator -
 6. Schedule (d,31) - lyx
