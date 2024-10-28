@@ -37,7 +37,14 @@ public class AppointmentScheduler {
      * @param pendingAppointment
      */
     public void acceptAppointment(Appointment pendingAppointment) {
-        Appointment appointment = cancelAppointment(pendingAppointment);
+        Appointment appointment = cancelAppointment(pendingAppointment, pendingAppointments);
+        if (appointment.getStatus() == 5) {
+            Appointment rescheduledAppointment = findAppointment(appointment.getRescheduled().getUuid(), appointments);
+            rescheduledAppointment.cancel();
+            cancelAppointment(rescheduledAppointment, appointments);
+            appointment.confirm();
+            appointments.add(appointment);
+        }
         if (appointment != null) {
             appointment.confirm();
             appointments.add(appointment);
@@ -56,8 +63,7 @@ public class AppointmentScheduler {
             return;
         }
         findAppointment(appointment.getRescheduled().getUuid(), appointments).confirm();
-        appointment.cancel();
-        cancelAppointment(appointment);
+        cancelAppointment(appointment, pendingAppointments);
     }
 
     /**
@@ -67,26 +73,26 @@ public class AppointmentScheduler {
      * @param newAppointment      The new appointment with updated time slot
      * @return true if rescheduled successfully, false otherwise
      */
-    public boolean rescheduleAppointment(Appointment existingAppointment, Appointment newAppointment) {
+    public Appointment rescheduleAppointment(Appointment existingAppointment, Appointment newAppointment) {
         if (isSlotAvailable(newAppointment)) {
-            if (existingAppointment.getStatus() == 1) {
-                if (cancelAppointment(existingAppointment) != null) {
-                    scheduleAppointment(newAppointment);
-                    return true;
-                }
+            List<Appointment> tempList = findWhichList(existingAppointment);
+            if (tempList == null) {
+                System.out.println("No existing appointment found.");
+                return null;
             }
-            for (Appointment appointment : appointments) {
-                if (appointment.getUuid().equals(existingAppointment.getUuid())) {
-                    appointment.reschedule();
-                    newAppointment.reschedule();
-                    newAppointment.setRescheduled(existingAppointment);
-                    pendingAppointments.add(newAppointment);
-                    return true;
-                }
+            if (tempList.equals(pendingAppointments)) {
+                scheduleAppointment(newAppointment);
+                cancelAppointment(existingAppointment, pendingAppointments);
+                return newAppointment;
             }
+            existingAppointment.reschedule();
+            newAppointment.reschedule();
+            newAppointment.setRescheduled(existingAppointment);
+            scheduleAppointment(newAppointment);
+            return newAppointment;
         }
         System.out.println("New time slot is not available.");
-        return false;
+        return null;
     }
 
     /**
@@ -96,16 +102,14 @@ public class AppointmentScheduler {
      * @return true if canceled successfully, false otherwise
      */
 
-    public Appointment cancelAppointment(Appointment appointment) {
-        List<Appointment> targetList = appointment.getStatus() == 1 ? pendingAppointments : appointments;
-        int appointmentNum = findAppointmentAlt(appointment, targetList);
-        if (appointmentNum != -1) {
-            System.out.println("Successfully cancelled.");
-            return targetList.remove(appointmentNum);
-        } else {
-            System.out.println("Can't find slot.");
-            return null;
+    public Appointment cancelAppointment(Appointment appointment, List<Appointment> appointmentList) {
+        for (Appointment tempAppointment : appointmentList) {
+            if (findAppointment(appointment.getUuid(), appointmentList) != null) {
+                appointment.cancel();
+            }
         }
+        System.out.println("Can't find slot.");
+        return null;
     }
 
     /**
@@ -156,23 +160,17 @@ public class AppointmentScheduler {
         return null;
     }
 
-    /**
-     * Find index of findAppointment
-     *
-     * @param appointment
-     * @param appointments
-     * @return
-     */
-    private int findAppointmentAlt(Appointment appointment, List<Appointment> appointments) {
-        for (int i = 0; i < appointments.size(); i++) {
-            Appointment tempAppointment = appointments.get(i);
-            if (appointment.getUuid().equals(tempAppointment.getUuid())) {
-                return i;
-            }
-        }
-        return -1;
-    }
 
+    public List<Appointment> findWhichList(Appointment appointment) {
+        for (Appointment tempAppointment : appointments) {
+            if (findAppointment(appointment, appointments) != null) return appointments;
+        }
+        for (Appointment tempApointment : pendingAppointments) {
+            if (findAppointment(appointment, pendingAppointments) != null) return pendingAppointments;
+        }
+        System.out.println("Not in lists.");
+        return null;
+    }
 
     /**
      * Returns the number of appointments in the list.
@@ -207,6 +205,10 @@ public class AppointmentScheduler {
      */
     public List<Appointment> getAppointments() {
         return appointments;
+    }
+
+    public List<Appointment> getPendingAppointments() {
+        return pendingAppointments;
     }
 
     public List<Appointment> getAppointments(Patient patient) {

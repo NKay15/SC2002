@@ -37,7 +37,7 @@ public class PatientScheduleManager {
      */
     public void reschedulePatientAppointment(Appointment existingAppointment, Appointment newAppointment) {
         updatePatientData();
-        if (scheduler.findAppointment(existingAppointment, appointmentList) != null)
+        if (scheduler.findWhichList(existingAppointment) != null)
             scheduler.rescheduleAppointment(existingAppointment, newAppointment);
     }
 
@@ -48,8 +48,11 @@ public class PatientScheduleManager {
      */
     public void cancelPatientAppointment(Appointment appointment) {
         updatePatientData();
-        if (scheduler.findAppointment(appointment, appointmentList) != null)
-            scheduler.cancelAppointment(appointment);
+        if (scheduler.findAppointment(appointment, scheduler.findWhichList(appointment)) != null) {
+                scheduler.cancelAppointment(appointment, scheduler.findWhichList(appointment));
+        } else {
+            System.out.println("Slot not found");
+        }
     }
 
     /**
@@ -83,7 +86,7 @@ public class PatientScheduleManager {
         }
     }
 
-    public void updatePatientData(){
+    public void updatePatientData() {
         appointmentList = scheduler.getAppointments(patient);
     }
 }
