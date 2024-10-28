@@ -1,4 +1,6 @@
-package hms;
+package hms.users;
+
+import hms.Password;
 
 import java.util.Scanner;
 

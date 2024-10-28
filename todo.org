@@ -1,0 +1,21 @@
+#+title: Todo
+
+* Li Yuxiao
+** STRT DoctorScheduleManager
+:LOGBOOK:
+- State "STRT"       from "NEXT"       [2024-10-28 Mon 10:21]
+:END:
+- [X] Basic implementation
+** DONE print available slots of doctors
+- [X] Basic implementation
+** DONE Rescheduling system
+CLOSED: [2024-10-28 Mon 17:49]
+:LOGBOOK:
+- State "DONE"       from "STRT"       [2024-10-28 Mon 17:49]
+:END:
+- [X] Basic implementation
+- [X] requires clarification
+- [X] rewrite rescheduling behavior
+- [X] doctor confirmation
+** DONE time management: currently, time is not considered for upcoming events, etc.
+- [x] change from 100' to 60'
