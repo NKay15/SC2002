@@ -38,7 +38,7 @@ public class AppointmentScheduler {
      */
     public void acceptAppointment(Appointment pendingAppointment) {
         Appointment appointment = cancelAppointment(pendingAppointment, pendingAppointments);
-        if (appointment == null){
+        if (appointment == null) {
             System.out.println("No such appointmnet");
             return;
         }
@@ -101,12 +101,14 @@ public class AppointmentScheduler {
      * @return true if canceled successfully, false otherwise
      */
 
+    public void cancelAppointment(Appointment appointment) {
+        cancelAppointment(appointment, findWhichList(appointment));
+    }
+
     public Appointment cancelAppointment(Appointment appointment, List<Appointment> appointmentList) {
-        for (Appointment tempAppointment : appointmentList) {
-            if (findAppointment(appointment.getUuid(), appointmentList) != null) {
-                appointment.cancel();
-                return appointment;
-            }
+        if (findAppointment(appointment.getUuid(), appointmentList) != null) {
+            appointment.cancel();
+            return appointment;
         }
         System.out.println("Can't find slot.");
         return null;
