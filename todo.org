@@ -13,9 +13,11 @@
 - [ ] requires clarification
 - [ ] rewrite rescheduling behavior
 - [ ] doctor confirmation
-** TODO appointment outcome record
+** DONE appointment outcome record
+CLOSED: [2024-10-28 Mon 10:39]
 :LOGBOOK:
+- State "DONE"       from "TODO"       [2024-10-28 Mon 10:39]
 - State "STRT"       from              [2024-10-28 Mon 10:21]
-CLOCK: [2024-10-28 Mon 10:21]
+CLOCK: [2024-10-28 Mon 10:21]--[2024-10-28 Mon 10:39] =>  0:18
 :END:
 ** TODO time management: currently, time is not considered for upcoming events, etc.

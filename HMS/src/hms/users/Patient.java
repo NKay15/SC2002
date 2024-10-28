@@ -53,7 +53,6 @@ public class Patient extends User{
 	private MedicalRecord mr;
 
 
-	private static List<AppointmentOutcomeRecord> appointmentOutcomeRecords = new ArrayList<>();
 	/**
 	 * appointmentScheduler for a specific patient
 	 * */

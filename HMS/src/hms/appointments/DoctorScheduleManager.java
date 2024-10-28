@@ -4,15 +4,21 @@ import hms.medicalRecords.AppointmentOutcomeRecord;
 import hms.users.*;
 import hms.utils.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DoctorScheduleManager {
     private Doctor doctor;
     private AppointmentScheduler scheduler = AppointmentScheduler.getInstance();
-    private List<Appointment> appointmentList = scheduler.getAppointments(doctor);
-    private List<Appointment> pendingList = scheduler.getPendingAppointments(doctor);
+    private List<Appointment> appointmentList = new ArrayList<>();
+    private List<Appointment> pendingList = new ArrayList<>();
 
 
+    public DoctorScheduleManager(Doctor doctor) {
+        this.doctor = doctor;
+        appointmentList = scheduler.getAppointments(doctor);
+        pendingList = scheduler.getPendingAppointments(doctor);
+    }
     public void acceptAppointments(int appointmentId) {
         if (appointmentId >= 0 && appointmentId < pendingList.size())
             scheduler.acceptAppointment(appointmentId);
