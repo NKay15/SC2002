@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Doctor extends User {
-	.
 	/**
 	 * Doctor's ID
 	 */
@@ -39,10 +38,8 @@ public class Doctor extends User {
 	 */
     private List<Patient> patientList;
     
-    public Doctor(String doctorID, String name, int gender, int age) {
-    	this.doctorID = doctorID;
-    	this.name = name;
-    	this.gender = gender;
+    public Doctor(String doctorID, String name,	int role, int gender, int age) {
+    	super(doctorID, name, role, gender);
     	this.age = age;
     	doctorScheduler = new DoctorScheduleManager(this);
     }
@@ -90,6 +87,10 @@ public class Doctor extends User {
     	scan.close();
     }
     
+	/**
+	 * Update Patient Medical Records
+	 * @param patient Patient that the doctor want to add
+	 */
     public void updatePatientMedicalRecords(Patient patient) {
     	Scanner scan = new Scanner(System.in);
     	
@@ -103,6 +104,10 @@ public class Doctor extends User {
     	doctorScheduler.printUpcomingSlots(this);
     }
     
+	/**
+	 * Set Availability for Appointments
+	 * @param date Date that doctor want to set
+	 */
     public void setAvailabilityforAppointments(Date date) {
     	doctorScheduler.addOneSlot(Date);
     }
@@ -122,6 +127,10 @@ public class Doctor extends User {
 		}
 	}
     
+	/**
+	 * Accept Or Decline Appointment Requests
+	 * @param APPS Global Scheduler
+	 */
     public void acceptOrDeclineAppointmentRequests(AppointmentScheduler APPS) {
 		List<Appointment> appointmentList = APPS.getPendingAppointments(this);
 		int id = 0;
@@ -152,6 +161,7 @@ public class Doctor extends User {
 				System.out.println("This request is still in your pending list. Please don't forget to reply later");
 			}
 		}
+		scan.close();
     }
 
 	public void viewUpcomingAppointments(){

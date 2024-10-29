@@ -4,7 +4,9 @@ import hms.medicalRecords.MedicalRecord;
 import hms.utils.Date;
 import hms.appointments.*;
 
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.List;
 
 public class Patient extends User {
 	 /**
@@ -56,11 +58,9 @@ public class Patient extends User {
 	/**
 	 * Constructor for patient
 	 * */
-	public Patient(String patientID, String name, Date dob, int gender, int phone, String email, int bloodType) {
-		this.patientID = patientID;
-		this.name = name;
+	public Patient(String patientID, String name, int role, int gender, Date dob, int phone, String email, int bloodType) {
+		super(patientID, name, role, gender);
 		this.dob = dob;
-		this.gender = gender;
 		this.phone = phone;
 		this.email = email;
 		this.bloodType = bloodType;
@@ -189,9 +189,15 @@ public class Patient extends User {
     /**
      * View Available Appointment Slots
      * @param APPS Global AppointmentScheduler
+	 * @param doctors Global doctor user list
+	 * @param date Date that patient want to make appointment
      * */
-    public void viewAvailableAppointmentSlots(AppointmentScheduler APPS) {
-    	APPS.printAvailableSlot();
+    public void viewAvailableAppointmentSlots(AppointmentScheduler APPS, ArrayList<Doctor> doctors, Date date) {
+    	for(Doctor doctor : doctors){
+			System.out.println("Dr. " + doctor.getName() + "'s available appointment slots are: ");
+			APPS.printAvailableSlot(date, doctor);
+			System.out.println("-----End of Dr. " + doctor.getName() + "'s Available slots-----");
+		}
     }
     
     /**
@@ -212,7 +218,7 @@ public class Patient extends User {
      * @param newAppointment The new appointment with updated time slot
      * */
     public void rescheduleAppointment(AppointmentScheduler APPS, Appointment existingAppointment, Appointment newAppointment) {
-    	if(APPS.rescheduleAppointment(existingAppointment, newAppointment) == true) {
+    	if(APPS.rescheduleAppointment(existingAppointment, newAppointment) != null) {
     		patientSchedule.reschedulePatientAppointment(existingAppointment, newAppointment);
     	}
     }
@@ -221,9 +227,10 @@ public class Patient extends User {
      * Cancle appointment
      * @param APPS Global AppointmentScheduler
      * @param appointment The appointment to be canceled
+	 * @param appointmentList comfirmed appointment list for a patient(actually I do not really understand whats going on here)
      * */
-    public void cancelAppointment(AppointmentScheduler APPS, Appointment appointment) {
-    	if(APPS.cancelAppointment(appointment) != null) {
+    public void cancelAppointment(AppointmentScheduler APPS, Appointment appointment, List<Appointment> appointmentList) {
+    	if(APPS.cancelAppointment(appointment, appointmentList) != null) {
     		patientSchedule.cancelPatientAppointment(appointment);
     	}
     }
