@@ -38,7 +38,7 @@ public class AppointmentScheduler {
      */
     public void acceptAppointment(Appointment pendingAppointment) {
         Appointment appointment = cancelAppointment(pendingAppointment, pendingAppointments);
-        if (appointment == null){
+        if (appointment == null) {
             System.out.println("No such appointmnet");
             return;
         }
@@ -101,12 +101,14 @@ public class AppointmentScheduler {
      * @return true if canceled successfully, false otherwise
      */
 
+    public void cancelAppointment(Appointment appointment) {
+        cancelAppointment(appointment, findWhichList(appointment));
+    }
+
     public Appointment cancelAppointment(Appointment appointment, List<Appointment> appointmentList) {
-        for (Appointment tempAppointment : appointmentList) {
-            if (findAppointment(appointment.getUuid(), appointmentList) != null) {
-                appointment.cancel();
-                return appointment;
-            }
+        if (findAppointment(appointment) != null) {
+            appointment.cancel();
+            return appointment;
         }
         System.out.println("Can't find slot.");
         return null;
@@ -130,14 +132,20 @@ public class AppointmentScheduler {
      * @return true if the slot is available, false otherwise
      */
 
-    private boolean isSlotAvailable(Doctor doctor, int time, Date date) {
-        if (!Time.checkTime(time)) return false;
-        for (Appointment appointment : appointments) {
-            if (appointment.getDoctorID().equals(doctor.getDoctorID()) && appointment.getTimeSlot() == time && appointment.getDate().equals(date)) {
-                return false;
-            }
+    private boolean isSlotAvailable(Doctor doctor, Time time, Date date) {
+        return doctor.getDoctorSchedules().isDoctorAvailable(date, time);
+    }
+
+    public Appointment findAppointment(Appointment appointment) {
+        if (findWhichList(appointment) != null) {
+            findAppointment(appointment, findWhichList(appointment));
+            return appointment;
         }
-        return true;
+        return null;
+    }
+
+    public void printAppointment(Doctor doctor, Date date){
+        doctor.viewAvailability(date);
     }
 
     /**
@@ -162,12 +170,8 @@ public class AppointmentScheduler {
 
 
     public List<Appointment> findWhichList(Appointment appointment) {
-        for (Appointment tempAppointment : appointments) {
-            if (findAppointment(appointment, appointments) != null) return appointments;
-        }
-        for (Appointment tempApointment : pendingAppointments) {
-            if (findAppointment(appointment, pendingAppointments) != null) return pendingAppointments;
-        }
+        if (findAppointment(appointment, appointments) != null) return appointments;
+        if (findAppointment(appointment, pendingAppointments) != null) return pendingAppointments;
         System.out.println("Not in lists.");
         return null;
     }
@@ -242,46 +246,5 @@ public class AppointmentScheduler {
         return pendingAppointmentsForDoctor;
     }
 
-    /**
-     * @param date
-     * @param doctor
-     */
-    public void printAvailableSlot(Date date, Doctor doctor) {
-        printAvailableSlot(date, new Doctor[]{doctor});
-    }
-
-    /**
-     * print available slots, assume each slot is 30 min and schedule as shown.
-     *
-     * @param date
-     * @param doctors
-     */
-    public void printAvailableSlot(Date date, Doctor[] doctors) {
-        int startTime = 800;
-        int endTime = 1800;
-        int breakStart = 1200;
-        int breakEnd = 1330;
-
-        for (Doctor doctor : doctors) {
-            System.out.println("Doctor ID: " + doctor.getDoctorID() + "'s avaialble slots are:");
-
-            for (int time = startTime; time < endTime; time += 30) {
-                if (time >= breakStart && time < breakEnd) {
-                    if (time == breakStart) {
-                        time = breakEnd - 30;
-                    }
-                    continue;
-                }
-
-                if (time % 100 == 60) time += 40;
-
-                if (isSlotAvailable(doctor, time, date)) {
-                    String slotTime = String.format("%02d:%02d", time / 100, time % 100);
-                    System.out.println(slotTime);
-                }
-            }
-            System.out.println("-----------------------------------");
-        }
-    }
 
 }

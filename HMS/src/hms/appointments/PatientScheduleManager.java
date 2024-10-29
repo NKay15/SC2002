@@ -49,7 +49,7 @@ public class PatientScheduleManager {
     public void cancelPatientAppointment(Appointment appointment) {
         updatePatientData();
         if (scheduler.findAppointment(appointment, scheduler.findWhichList(appointment)) != null) {
-                scheduler.cancelAppointment(appointment, scheduler.findWhichList(appointment));
+                scheduler.cancelAppointment(appointment);
         } else {
             System.out.println("Slot not found");
         }
@@ -70,9 +70,10 @@ public class PatientScheduleManager {
         }
     }
 
-
-    public void printAvailableSlots(Date date, Doctor[] doctors) {
-        scheduler.printAvailableSlot(date, doctors);
+    public void printAvailableSlots(Date date, List<Doctor> doctors) {
+        for (Doctor doctor:doctors){
+            doctor.getDoctorSchedules().printAvailableSlot(date);
+        }
     }
 
     public void printAppointmentOutcomeRecord() {

@@ -38,11 +38,4 @@ Date is now a comparable. You can use sort on date now.
 - [ ]  Finish the constructor of Appointment Outcome Report
 
 ### LYX
-
-- [ ]  DoctorScheduleManager
-  - [ ]  Change appointment status according to doctor
-
-- [-]  print available slots of doctors
-  - [X]  Basic Implementation
-  - [ ]
-- [-]  Rescheduling
+See todo.org

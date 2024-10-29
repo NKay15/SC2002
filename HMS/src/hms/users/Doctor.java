@@ -5,6 +5,7 @@ import hms.appointments.*;
 import hms.utils.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Doctor extends User {
@@ -27,6 +28,7 @@ public class Doctor extends User {
 	 * age of doctor
 	 */
     private int age;
+	private DoctorSchedules doctorSchedules;
 
 	/**
 	 * doctor scheduler
@@ -41,7 +43,7 @@ public class Doctor extends User {
     public Doctor(String doctorID, String name,	int role, int gender, int age) {
     	super(doctorID, name, role, gender);
     	this.age = age;
-    	doctorScheduler = new DoctorScheduleManager(this);
+		doctorSchedules = new DoctorSchedules(this);
     }
     
     public String getDoctorID() {
@@ -59,8 +61,12 @@ public class Doctor extends User {
     public int getAge() {
     	return age;
     }
-    
-    public void menu() {
+
+	public DoctorSchedules getDoctorSchedules() {
+		return doctorSchedules;
+	}
+
+	public void menu() {
     	System.out.println("-----Doctor Menu-----");
     	System.out.println("1.View Patient Medical Records ");
     	System.out.println("2.Update Patient Medical Records");
@@ -106,15 +112,14 @@ public class Doctor extends User {
     
 	/**
 	 * Set Availability for Appointments
-	 * @param date Date that doctor want to set
 	 */
-    public void setAvailabilityforAppointments(Date date) {
-    	doctorScheduler.addOneSlot(Date);
+    public void setAvailabilityforAppointments() {
+    	doctorSchedules.setDoctorSchedule();
     }
 
 	private boolean isInPatientList(Patient keyPatient){
 		for(Patient patient : patientList){
-			if(patient.getID() == keyPatient.getID())return true;
+			if(Objects.equals(patient.getID(), keyPatient.getID()))return true;
 		}
 		return false;
 	}
@@ -138,7 +143,7 @@ public class Doctor extends User {
 		for(Appointment appointment : appointmentList){
 			Patient patient = appointment.getPatient();
 			Date date = appointment.getDate();
-			int Time = appointment.getTimeSlot();
+			Time Time = appointment.getTimeSlot();
 
 			++id;
 			System.out.println("-----Request " + id + "-----");
@@ -170,5 +175,9 @@ public class Doctor extends User {
 
 	public void recordAppointmentOutcome(Appointment appointment){
 		doctorScheduler.updateAppointmentOutcomeRecord(appointment);
+	}
+
+	public void viewAvailability(Date date){
+		doctorSchedules.printAvailableSlot(date);
 	}
 }
