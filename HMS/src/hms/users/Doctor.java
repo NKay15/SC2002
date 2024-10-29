@@ -5,6 +5,7 @@ import hms.appointments.*;
 import hms.utils.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Doctor extends User {
@@ -111,15 +112,14 @@ public class Doctor extends User {
     
 	/**
 	 * Set Availability for Appointments
-	 * @param date Date that doctor want to set
 	 */
-    public void setAvailabilityforAppointments(Date date) {
+    public void setAvailabilityforAppointments() {
     	doctorSchedules.setDoctorSchedule();
     }
 
 	private boolean isInPatientList(Patient keyPatient){
 		for(Patient patient : patientList){
-			if(patient.getID() == keyPatient.getID())return true;
+			if(Objects.equals(patient.getID(), keyPatient.getID()))return true;
 		}
 		return false;
 	}
@@ -143,7 +143,7 @@ public class Doctor extends User {
 		for(Appointment appointment : appointmentList){
 			Patient patient = appointment.getPatient();
 			Date date = appointment.getDate();
-			int Time = appointment.getTimeSlot();
+			Time Time = appointment.getTimeSlot();
 
 			++id;
 			System.out.println("-----Request " + id + "-----");

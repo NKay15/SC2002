@@ -70,7 +70,7 @@ public class PatientScheduleManager {
         }
     }
 
-    public void printAvailableSlots(Date date, Doctor[] doctors) {
+    public void printAvailableSlots(Date date, List<Doctor> doctors) {
         for (Doctor doctor:doctors){
             doctor.getDoctorSchedules().printAvailableSlot(date);
         }

@@ -15,6 +15,10 @@ public class DoctorSchedule {
     private int breakCount;
     private Time[][] breaks;
 
+    /**
+     *
+     * @param doctor
+     */
     public DoctorSchedule(Doctor doctor) {
         this.doctor = doctor;
         System.out.println("Hello! How would you like to schedule your day.");
