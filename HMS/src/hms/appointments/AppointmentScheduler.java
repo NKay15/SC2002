@@ -106,7 +106,7 @@ public class AppointmentScheduler {
     }
 
     public Appointment cancelAppointment(Appointment appointment, List<Appointment> appointmentList) {
-        if (findAppointment(appointment.getUuid(), appointmentList) != null) {
+        if (findAppointment(appointment) != null) {
             appointment.cancel();
             return appointment;
         }
@@ -142,6 +142,14 @@ public class AppointmentScheduler {
         return true;
     }
 
+    public Appointment findAppointment(Appointment appointment) {
+        if (findWhichList(appointment) != null) {
+            findAppointment(appointment, findWhichList(appointment));
+            return appointment;
+        }
+        return null;
+    }
+
     /**
      * Find the index of an appointment in the list.
      *
@@ -164,12 +172,8 @@ public class AppointmentScheduler {
 
 
     public List<Appointment> findWhichList(Appointment appointment) {
-        for (Appointment tempAppointment : appointments) {
-            if (findAppointment(appointment, appointments) != null) return appointments;
-        }
-        for (Appointment tempApointment : pendingAppointments) {
-            if (findAppointment(appointment, pendingAppointments) != null) return pendingAppointments;
-        }
+        if (findAppointment(appointment, appointments) != null) return appointments;
+        if (findAppointment(appointment, pendingAppointments) != null) return pendingAppointments;
         System.out.println("Not in lists.");
         return null;
     }
