@@ -43,7 +43,7 @@ public class Medicine {
      * @param given amount of medince
      * @return true if successful otherwise false and amount remain unchange
      */
-    public Boolean prescribe(int given) {
+    public boolean prescribe(int given) {
         if(amount >= given){
             amount -= given;
             return true;

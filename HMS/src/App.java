@@ -4,18 +4,21 @@ import java.util.ArrayList;
 import java.util.Iterator; 
 import java.util.Scanner;
 
-import org.apache.poi.ss.usermodel.Cell;  
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.Row;  
 import org.apache.poi.xssf.usermodel.XSSFSheet;  
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import hms.User;
+import hms.users.User;
 import hms.UserList;
 import hms.users.Administrator;
 import hms.users.Doctor;
 import hms.users.Patient;
 import hms.users.Pharmacist;
-import hms.utils.Date;  
+import hms.utils.Date;
+import hms.Inventory; 
+import hms.GlobalData; 
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -33,6 +36,14 @@ public class App {
     			userList.addAdministrator((Administrator) user);
     		}
     	}
+
+		/* Load data into inventory */
+		Inventory inventory = getInventory();
+
+		/* Set Global Data */
+		GlobalData gd = GlobalData.getInstance();
+		gd.userList = userList;
+		gd.inventory = inventory;
     	
     	Scanner sc = new Scanner(System.in);
     	
@@ -262,4 +273,41 @@ public class App {
             return null;
         }  
     }
+
+	/**
+	 * Read medicine from file and generate initial inventory
+	 * @return initial inventory
+	 */
+	public static Inventory getInventory() {
+		try {
+			Inventory setup = new Inventory();
+
+			File file = new File("HMS/src/data/Medicine_List.xlsx");
+			FileInputStream fis = new FileInputStream(file);
+			XSSFWorkbook wb = new XSSFWorkbook(fis);   
+			XSSFSheet sheet = wb.getSheetAt(0);
+			Iterator<Row> itr = sheet.iterator();
+			itr.next(); // Skip header
+
+			while(itr.hasNext()) {
+				Row row = itr.next();  
+				Iterator<Cell> cellIterator = row.cellIterator();   //iterating over each column  
+					
+				Cell name = cellIterator.next();  
+					
+				Cell amount = cellIterator.next();
+					
+				Cell low = cellIterator.next();
+
+				setup.addNewMedicine(name.toString(), (int) amount.getNumericCellValue(), (int) low.getNumericCellValue());
+			}
+
+			return setup;
+		}
+		catch(Exception e)  
+        {  
+            e.printStackTrace();
+            return new Inventory();
+        }
+	}
 }

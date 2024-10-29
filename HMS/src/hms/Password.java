@@ -26,7 +26,7 @@ public class Password {
      * @param check string to check the passowrd
      * @return true if the password is correct otherwise false
      */
-    public Boolean checkPassword(String check) {
+    public boolean checkPassword(String check) {
         return password.equals(check);
     }
 }

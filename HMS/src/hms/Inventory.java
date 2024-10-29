@@ -13,6 +13,12 @@ public class Inventory {
     private ArrayList<Medicine> catalog;
 
     /**
+     * Low level stock level
+     */
+
+    private ArrayList<Medicine> lowlevel;
+
+    /**
      * List of medicine that have been request to be restock
      */
     private ArrayList<Medicine> request;
@@ -55,7 +61,29 @@ public class Inventory {
         System.out.print("Enter initial amount : ");
         int amount = sc.nextInt();
         catalog.add(new Medicine(name, amount));
-        System.out.println(amount + " of " + name + " has been added");
+        System.out.print("Enter low level alert : ");
+        int level = sc.nextInt();
+        lowlevel.add(new Medicine(name, amount));
+        System.out.println(amount + " of " + name + " has been added. Low level warning at " + level);
+    }
+
+    /**
+     * Adding new medicine to the inventory when data is available to pass in
+     * @param name name of medicine
+     * @param amount amount of medicine
+     * @param level low level alert
+     * @return true if successfully added. false when it is already present in the inventory and not added in
+     */
+    public boolean addNewMedicine(String name, int amount, int level) {
+        for(int i = 0; i < catalog.size(); i++) {
+            if(name.equals(catalog.get(i).name())) {
+                return false;
+            }
+        }
+
+        catalog.add(new Medicine(name, amount));
+        lowlevel.add(new Medicine(name, amount));
+        return true;
     }
 
     /**
@@ -63,7 +91,7 @@ public class Inventory {
      * @param aop AppointmentOutcomeRecord of the appointmet
      * @return true if successful false otherwise
      */
-    public Boolean dispense(AppointmentOutcomeRecord aop) {
+    public boolean dispense(AppointmentOutcomeRecord aop) {
         if(aop.isDispensed()) return false;
 
         for(Medicine n : aop.getprescription()) {
@@ -74,6 +102,9 @@ public class Inventory {
         for(Medicine n : aop.getprescription()) {
             int idx = findIndex(n);
             catalog.get(idx).prescribe(n.amount());
+
+            if(catalog.get(idx).amount() <= lowlevel.get(idx).amount())
+                System.out.println(catalog.get(idx).name() + "is at low amount of " + catalog.get(idx).amount() + ". Please restock");
         }
 
         aop.dispense();
@@ -101,6 +132,29 @@ public class Inventory {
         }
         request.add(catalog.get(med-1).copy(quantity));
         System.out.print("Restock Request has been created : ");
+    }
+
+    /**
+     * Change the low level amount of a medicine
+     */
+    public void setNewLowLevel() {
+        printCurrentInvetory();
+        System.out.print("Enter index of medicine (0 to exit) : ");
+        Scanner sc = new Scanner(System.in);
+        int med = sc.nextInt();
+        while(med < 0 || med > catalog.size()) {
+            System.out.print("Invaild input. Try again : ");
+            med = sc.nextInt();
+        }
+        System.out.print("Enter new low level: ");
+        int quantity = sc.nextInt();
+        while(quantity < 0 ) {
+            System.out.print("Invaild input. Try again : ");
+            quantity = sc.nextInt();
+        }
+        lowlevel.get(med).prescribe(lowlevel.get(med).amount());
+        lowlevel.get(med).restock(quantity);
+        System.out.print("Low level amount alert updated");
     }
 
     /**
@@ -135,7 +189,10 @@ public class Inventory {
      */
     public void printCurrentInvetory() {
         for(int i = 0; i < catalog.size(); i++) {
-            System.err.println((i+1) + ". " + catalog.get(i).name() + " : " + catalog.get(i).amount());
+            System.out.print((i+1) + ". " + catalog.get(i).name() + " : " + catalog.get(i).amount());
+            if(catalog.get(i).amount() <= lowlevel.get(i).amount())
+                System.out.println(" **LOW PLEASE RESTOCK**");
+            else System.out.println();
         }
     }
 
@@ -144,7 +201,7 @@ public class Inventory {
      */
     public void printRestockRequest() {
         for(int i = 0; i < request.size(); i++) {
-            System.err.println((i+1) + ". " + request.get(i).name() + " : " + request.get(i).amount());
+            System.out.println((i+1) + ". " + request.get(i).name() + " : " + request.get(i).amount());
         }
     }
 }

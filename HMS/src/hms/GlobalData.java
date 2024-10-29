@@ -1,6 +1,5 @@
 package hms;
 
-import java.util.ArrayList;
 import hms.UserList;
 import hms.Inventory;
 
@@ -33,7 +32,7 @@ public class GlobalData {
      * @return GlobalData to excess data
      */
     public static GlobalData getInstance(){
-        if(single = null){
+        if(single == null){
             single = new GlobalData();
         }
 
