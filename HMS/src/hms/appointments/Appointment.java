@@ -3,6 +3,7 @@ package hms.appointments;
 import hms.utils.Date;
 import hms.users.*;
 import hms.medicalRecords.AppointmentOutcomeRecord;
+import hms.utils.Time;
 
 import java.util.*;
 
@@ -33,7 +34,7 @@ public class Appointment {
     /**
      * Time slot of appointment
      */
-    private int timeSlot;
+    private Time timeSlot;
 
     /**
      * Appointmet Outcome Record to be created after appointment is completed
@@ -49,7 +50,7 @@ public class Appointment {
      * @param date    Date of appointment
      * @param time    Time Slot of appointment
      */
-    public Appointment(Patient patient, Doctor doctor, Date date, int time) {
+    public Appointment(Patient patient, Doctor doctor, Date date, Time time) {
         uuid = UUID.randomUUID();
         patientID = patient.getPatientID();
         doctorID = doctor.getDoctorID();
@@ -107,8 +108,8 @@ public class Appointment {
         return date;
     }
 
-    public int getTimeSlot() {
-        return timeSlot;
+    public Time getTimeSlot() {
+        return timeSlot.getTime();
     }
 
     /**
@@ -117,7 +118,7 @@ public class Appointment {
      * @param date
      * @param time
      */
-    public void changeDate(Date date, int time) {
+    public void changeDate(Date date, Time time) {
         this.date = date;
         timeSlot = time;
         status = 1;

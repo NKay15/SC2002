@@ -27,6 +27,7 @@ public class Doctor extends User {
 	 * age of doctor
 	 */
     private int age;
+	private DoctorSchedules doctorSchedules;
 
 	/**
 	 * doctor scheduler
@@ -41,7 +42,7 @@ public class Doctor extends User {
     public Doctor(String doctorID, String name,	int role, int gender, int age) {
     	super(doctorID, name, role, gender);
     	this.age = age;
-    	doctorScheduler = new DoctorScheduleManager(this);
+		doctorSchedules = new DoctorSchedules(this);
     }
     
     public String getDoctorID() {
@@ -59,8 +60,12 @@ public class Doctor extends User {
     public int getAge() {
     	return age;
     }
-    
-    public void menu() {
+
+	public DoctorSchedules getDoctorSchedules() {
+		return doctorSchedules;
+	}
+
+	public void menu() {
     	System.out.println("-----Doctor Menu-----");
     	System.out.println("1.View Patient Medical Records ");
     	System.out.println("2.Update Patient Medical Records");
@@ -109,7 +114,7 @@ public class Doctor extends User {
 	 * @param date Date that doctor want to set
 	 */
     public void setAvailabilityforAppointments(Date date) {
-    	doctorScheduler.addOneSlot(Date);
+    	doctorSchedules.setDoctorSchedule();
     }
 
 	private boolean isInPatientList(Patient keyPatient){
@@ -170,5 +175,9 @@ public class Doctor extends User {
 
 	public void recordAppointmentOutcome(Appointment appointment){
 		doctorScheduler.updateAppointmentOutcomeRecord(appointment);
+	}
+
+	public void viewAvailability(Date date){
+		doctorSchedules.printAvailableSlot(date);
 	}
 }

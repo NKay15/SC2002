@@ -71,7 +71,9 @@ public class PatientScheduleManager {
     }
 
     public void printAvailableSlots(Date date, Doctor[] doctors) {
-        scheduler.printAvailableSlot(date, doctors);
+        for (Doctor doctor:doctors){
+            doctor.getDoctorSchedules().printAvailableSlot(date);
+        }
     }
 
     public void printAppointmentOutcomeRecord() {
