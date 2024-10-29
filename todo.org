@@ -1,9 +1,3 @@
 #+title: Todo
 
 * Li Yuxiao
-** STRT DoctorScheduleManager
-:LOGBOOK:
-- State "STRT"       from "NEXT"       [2024-10-28 Mon 10:21]
-:END:
-- [X] Basic implementation
-- [ ] Doctor should be able to create their own time for work and their own break time

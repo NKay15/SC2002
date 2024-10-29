@@ -55,3 +55,19 @@ CLOSED: [2024-10-28 Mon 17:49]
 :ARCHIVE_TODO: DONE
 :END:
 - [x] change from 100' to 60'
+
+* DONE DoctorScheduleManager
+CLOSED: [2024-10-29 Tue 12:36]
+:PROPERTIES:
+:ARCHIVE_TIME: 2024-10-29 Tue 12:36
+:ARCHIVE_FILE: ~/Documents/Rindel-Code/sc2002/SC2002/todo.org
+:ARCHIVE_OLPATH: Li Yuxiao
+:ARCHIVE_CATEGORY: todo
+:ARCHIVE_TODO: DONE
+:END:
+:LOGBOOK:
+- State "DONE"       from "STRT"       [2024-10-29 Tue 12:36]
+- State "STRT"       from "NEXT"       [2024-10-28 Mon 10:21]
+:END:
+- [X] Basic implementation
+- [X] Doctor should be able to create their own time for work and their own break time
