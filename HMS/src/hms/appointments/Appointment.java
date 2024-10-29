@@ -190,4 +190,12 @@ public class Appointment {
         if (status == 4) aop.print();
         else System.out.println("Appointment is not completed");
     }
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Appointment that = (Appointment) o;
+        return Objects.equals(uuid, that.uuid);
+    }
+
 }

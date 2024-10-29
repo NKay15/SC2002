@@ -47,7 +47,9 @@ public class AppointmentScheduler {
             cancelAppointment(rescheduledAppointment, appointments);
         }
         appointment.confirm();
+        pendingAppointments.remove(appointment);
         appointments.add(appointment);
+
     }
 
     /**
@@ -59,10 +61,12 @@ public class AppointmentScheduler {
         if (appointment.getStatus() == 1) {
             appointment.cancel();
             System.out.println("Appointment rejected.");
-            return;
+        } else if (appointment.getStatus() == 5){
+            findAppointment(appointment.getRescheduled().getUuid(), appointments).confirm();
+            cancelAppointment(appointment, pendingAppointments);
+        } else {
+            System.out.println("Appointment not pending or rescheduled");
         }
-        findAppointment(appointment.getRescheduled().getUuid(), appointments).confirm();
-        cancelAppointment(appointment, pendingAppointments);
     }
 
     /**
@@ -137,8 +141,9 @@ public class AppointmentScheduler {
     }
 
     public Appointment findAppointment(Appointment appointment) {
-        if (findWhichList(appointment) != null) {
-            findAppointment(appointment, findWhichList(appointment));
+        List<Appointment> tempList = findWhichList(appointment);
+        if (tempList != null) {
+            findAppointment(appointment, tempList);
             return appointment;
         }
         return null;
