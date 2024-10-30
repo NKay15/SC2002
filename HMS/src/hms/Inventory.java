@@ -149,7 +149,7 @@ public class Inventory {
                 med = sc.nextInt();
             }
             for(int i = 0; i < ret.size(); i++) {
-                if (ret.get(i).name().equals(catalog.get(med).name())) {
+                if (ret.get(i).name().equals(catalog.get(med-1).name())) {
                     System.out.print("Medicine is already prescribe");
                     continue;
                 }
@@ -157,7 +157,7 @@ public class Inventory {
                 amount = sc.nextInt();
                 if(amount <= 0) continue;
 
-                ret.add(new Medicine(catalog.get(med).name(), amount));
+                ret.add(new Medicine(catalog.get(med-1).name(), amount));
             }
         }
 
@@ -187,8 +187,8 @@ public class Inventory {
             System.out.print("Invaild input. Try again : ");
             quantity = sc.nextInt();
         }
-        lowlevel.get(med).prescribe(lowlevel.get(med).amount());
-        lowlevel.get(med).restock(quantity);
+        lowlevel.get(med-1).prescribe(lowlevel.get(med-1).amount());
+        lowlevel.get(med-1).restock(quantity);
         System.out.print("Low level amount alert updated");
     }
 

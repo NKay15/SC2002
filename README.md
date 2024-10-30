@@ -2,11 +2,7 @@
 
 Hospital Management System Notes
 
-I am still writing the skeleton of the code. Once that is done, you can write each User class without needing to write other things hopefully. Documentation is in the code itself.
-
-## Note:
-
-Date is now a comparable. You can use sort on date now.
+Global data has been set up. import hms.GlobalData to access it. Use GlobalData.getInstance() to access it. userList and inventory are both public members you can use.
 
 ## Need to write
 
