@@ -134,6 +134,41 @@ public class Inventory {
         System.out.print("Restock Request has been created : ");
     }
 
+    public Medicine[] generatePrescription(){
+        printCurrentInvetory();
+        ArrayList<Medicine> ret = new ArrayList<Medicine>();
+        int med = 1;
+        int amount;
+        
+        while(med < 0 || med >= catalog.size()) {
+            System.out.print("Enter index of medicine to prescribe (0 to exit) : ");
+            Scanner sc = new Scanner(System.in);
+            med = sc.nextInt();
+            while(med < 0 || med >= catalog.size()) {
+                System.out.print("Invaild input. Try again : ");
+                med = sc.nextInt();
+            }
+            for(int i = 0; i < ret.size(); i++) {
+                if (ret.get(i).name().equals(catalog.get(med).name())) {
+                    System.out.print("Medicine is already prescribe");
+                    continue;
+                }
+                System.out.print("Enter amount (0 to back) : ");
+                amount = sc.nextInt();
+                if(amount <= 0) continue;
+
+                ret.add(new Medicine(catalog.get(med).name(), amount));
+            }
+        }
+
+        Medicine[] arr = new Medicine[ret.size()];
+        for(int i = 0; i < ret.size(); i++) {
+            arr[i] = ret.get(i);
+        }
+
+        return arr;
+    }
+
     /**
      * Change the low level amount of a medicine
      */

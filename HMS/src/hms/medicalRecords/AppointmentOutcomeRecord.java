@@ -2,6 +2,8 @@ package hms.medicalRecords;
 
 import hms.utils.Date;
 import hms.Medicine;
+import hms.GlobalData;
+import hms.Inventory;
 
 import java.util.Scanner;
 
@@ -41,9 +43,7 @@ public class AppointmentOutcomeRecord {
         date = new Date(t);
         System.out.print("Enter the service provided : ");
         service = sc.nextLine();
-        /*
-         * Generate Medicine object for prescription
-         */
+        prescription = GlobalData.getInstance().inventory.generatePrescription();
         System.out.print("Enter the consultation notes : ");
         notes = sc.nextLine();
         status = 1;

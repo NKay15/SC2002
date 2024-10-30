@@ -35,7 +35,7 @@ Date is now a comparable. You can use sort on date now.
 ## TODO :
 
 - [X]  Whoever is writing patient class, please finish the contructor of Medical Record
-- [ ]  Finish the constructor of Appointment Outcome Report
+- [X]  Finish the constructor of Appointment Outcome Report
 
 ### LYX
 See todo.org
