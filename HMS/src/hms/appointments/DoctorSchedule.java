@@ -5,6 +5,11 @@ import hms.utils.*;
 
 import java.util.Scanner;
 
+/**
+ * The DoctorSchedule class is responsible for managing a doctor's schedule for a given date,
+ * including working hours and breaks. It allows a doctor to input their availability, which
+ * can be queried later to check if they are available at specific times.
+ */
 public class DoctorSchedule {
     private Time breakStart;
     private Time breakEnd;
@@ -16,8 +21,11 @@ public class DoctorSchedule {
     private Time[][] breaks;
 
     /**
+     * Constructs a DoctorSchedule object for a specified doctor.
+     * Prompts the doctor to input their preferred schedule details including date, start time,
+     * end time, and break times, and initializes the necessary fields.
      *
-     * @param doctor
+     * @param doctor The Doctor object representing the doctor whose schedule is being created.
      */
     public DoctorSchedule(Doctor doctor) {
         this.doctor = doctor;
@@ -62,29 +70,76 @@ public class DoctorSchedule {
         }
     }
 
+    /**
+     * Gets the date of the doctor's schedule.
+     *
+     * @return The Date object representing the scheduled day.
+     */
     public Date getDate() {
         return date;
     }
 
+    /**
+     * Gets the doctor of the doctor's schedule.
+     *
+     * @return The doctor object representing the scheduled doctor.
+     */
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    /**
+     * Gets the start time of the doctor's work.
+     *
+     * @return The Time object representing the start time.
+     */
     public Time getStartTime() {
         return startTime;
     }
 
+    /**
+     * Gets the end time of the doctor's work.
+     *
+     * @return The Time object representing the end time.
+     */
     public Time getEndTime() {
         return endTime;
     }
 
+    /**
+     * Gets the breaks scheduled for the doctor.
+     *
+     * @return A 2D array of Time objects, where each row contains the start and end time of a break.
+     */
     public Time[][] getBreaks() {
         return breaks;
     }
 
+    /**
+     * Gets the number of breaks scheduled for the doctor.
+     *
+     * @return The integer count of breaks.
+     */
     public int getBreakCount() {
         return breakCount;
     }
 
+    /**
+     * Checks if the doctor is available at a specific time represented by an integer.
+     * Note: The implementation does not currently perform any actions.
+     *
+     * @param time The time to check availability for, represented as an integer.
+     */
     public void isDoctorAvailable(int time){
         Time temptTime = new Time(time);
     }
+
+    /**
+     * Checks if the doctor is available at a specific time.
+     *
+     * @param time The Time object representing the time to check availability for.
+     * @return A boolean indicating whether the doctor is available (true) or not (false).
+     */
     public boolean isDoctorAvailable(Time time) {
         for (int i = 0; i < breakCount; i++) {
             if (time.compareTo(breaks[i][0]) > 0 && time.compareTo(breaks[i][1]) < 0) {
@@ -98,7 +153,4 @@ public class DoctorSchedule {
         }
         return true;
     }
-
-
-
 }
