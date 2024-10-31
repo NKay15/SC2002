@@ -27,9 +27,24 @@ public class DoctorSchedules {
     /**
      * Sets the doctor's schedule by adding a new DoctorSchedule for the doctor.
      */
-    public void setDoctorSchedule() {
-        DoctorSchedule doctorSchedule = new DoctorSchedule(doctor);
-        doctorSchedules.add(doctorSchedule);
+    public void setDoctorSchedule(Date date) {
+        if (findDateSchedule(date)!=null) {
+            System.out.println("Schedule exists, do you want to rewrite it? (y/n)");
+            Scanner scanner = new Scanner(System.in);
+            char sc = scanner.next().charAt(0);
+            if (Objects.equals(sc,"y")) {
+                doctorSchedules.remove(findDateSchedule(date));
+                DoctorSchedule doctorSchedule = new DoctorSchedule(doctor);
+                doctorSchedules.add(doctorSchedule);
+            }
+            else {
+                System.out.println("Add another date.");
+            }
+        }
+        else {
+            DoctorSchedule doctorSchedule = new DoctorSchedule(doctor);
+            doctorSchedules.add(doctorSchedule);
+        }
     }
 
     /**

@@ -3,6 +3,7 @@ package hms.appointments;
 import hms.users.*;
 import hms.utils.*;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -153,4 +154,12 @@ public class DoctorSchedule {
         }
         return true;
     }
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DoctorSchedule that = (DoctorSchedule) o;
+        return Objects.equals(date, that.date);
+    }
+
 }

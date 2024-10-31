@@ -114,7 +114,9 @@ public class Doctor extends User {
 	 * Set Availability for Appointments
 	 */
     public void setAvailabilityforAppointments() {
-    	doctorSchedules.setDoctorSchedule();
+		Scanner scanner = new Scanner(System.in);
+		Date date =  new Date(scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+    	doctorSchedules.setDoctorSchedule(date);
     }
 
 	private boolean isInPatientList(Patient keyPatient){
