@@ -179,7 +179,7 @@ public class App {
                 
                 Cell email = cellIterator.next();
                 
-                Patient newPatient = new Patient(id.toString(), name.toString(), dateFormat, genderNo, 0, email.toString(), bloodTypeNo);
+                Patient newPatient = new Patient(id.toString(), name.toString(), 1, genderNo, dateFormat, 0, email.toString(), bloodTypeNo);
                 patientArray.add(newPatient);
             }
             
@@ -236,9 +236,9 @@ public class App {
                 	genderNo = 2;
                 }
                 
-                Cell age = cellIterator.next();
+                // Cell age = cellIterator.next();
                 
-                User newUser = new User(id.toString(), name.toString(), roleNo, genderNo, Integer.parseInt(age));
+                User newUser = new User(id.toString(), name.toString(), roleNo, genderNo);
                 staffArray.add(newUser);
             }
             

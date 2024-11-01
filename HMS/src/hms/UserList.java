@@ -1,9 +1,6 @@
 package hms;
 
-import hms.users.Patient;
-import hms.users.Doctor;
-import hms.users.Pharmacist;
-import hms.users.Administrator;
+import hms.users.*;
 
 import java.util.ArrayList;
 

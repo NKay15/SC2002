@@ -39,7 +39,11 @@ public class User {
     private int gender;
 
     /**
-     * Constuctor for User
+     * Constructor for user
+     * @param ID id
+     * @param name name
+     * @param role role number
+     * @param gender gender number
      */
     public User(String ID, String name, int role, int gender) {
     	this.ID = ID;
