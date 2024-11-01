@@ -91,6 +91,30 @@ public class PatientScheduleManager {
     }
 
     /**
+     * Prints available time slots for a doctor on a given date.
+     * @param date the date for which available slots are printed
+     * @param doctor the specific doctor to check availability
+     */
+    public void printAvailableSlots(Date date, Doctor doctor) {
+        doctor.getDoctorSchedules().printAvailableSlot(date);
+    }
+
+    /**
+     * Generate an appointment if the doctor is available.
+     * @param patient patient of the appointment
+     * @param doctor doctor of the appointment
+     * @param date date of the appointment
+     * @param time time of the appointment
+     * @return appointment if doctor is free otherwise null will be return
+     */
+    public Appointment generateAppointment(Patient patient, Doctor doctor, Date date, Time time) {
+        if(doctor.getDoctorSchedules().isDoctorAvailable(date, time)) {
+            return new Appointment(patient, doctor, date, time);
+        }
+        else return null;
+    }
+
+    /**
      * Prints outcome records for appointments with status indicating completion.
      */
     public void printAppointmentOutcomeRecord() {

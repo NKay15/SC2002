@@ -32,7 +32,7 @@ Global data has been set up. import hms.GlobalData to access it. Use GlobalData.
 
 - [X]  Whoever is writing patient class, please finish the contructor of Medical Record
 - [X]  Finish the constructor of Appointment Outcome Report
-- [ ]  Finish menu case 3&4 for patient
+- [X]  Finish menu case 3&4 for patient
 
 ### LYX
 See todo.org
