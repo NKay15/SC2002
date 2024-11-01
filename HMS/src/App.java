@@ -139,7 +139,7 @@ public class App {
                 Cell name = cellIterator.next();
                 
                 Cell dob = cellIterator.next();
-                Date dateFormat = dob.getDateCellValue();
+                Date dateFormat = new Date(dob.getDateCellValue().getDate(), dob.getDateCellValue().getMonth(), dob.getDateCellValue().getYear());
                 
                 Cell gender = cellIterator.next();
                 int genderNo = 0;
