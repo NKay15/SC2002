@@ -4,6 +4,7 @@ import hms.medicalRecords.MedicalRecord;
 import hms.utils.*;
 import hms.appointments.*;
 import hms.GlobalData;
+import hms.UserList;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -264,7 +265,7 @@ public class Patient extends User {
     /**
      * Update Personal Information
      */
-    public void updatePersonalInformation() {
+    public Patient updatePersonalInformation() {
         System.out.println("What information do you want to update?");
         System.out.println("1. Update Email");
         System.out.println("2. Update Phone Number");
@@ -286,6 +287,7 @@ public class Patient extends User {
         }
 
         scan.close();
+        return this;
     }
 
     /**

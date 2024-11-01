@@ -1,5 +1,6 @@
 package hms.users;
 
-public class Administrator extends User {
+import hms.users.*;
 
+public class Administrator extends Staff {
 }
