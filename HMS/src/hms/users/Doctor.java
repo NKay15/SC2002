@@ -1,33 +1,13 @@
 package hms.users;
 
-import hms.appointments.DoctorScheduleManager;
 import hms.appointments.*;
 import hms.utils.*;
-
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class Doctor extends User {
-	/**
-	 * Doctor's ID
-	 */
-    private String doctorID;
+public class Doctor extends Staff {
 
-	/**
-	 * name of doctor
-	 */
-    private String name;
-	
-	/**
-	 * gender of doctor
-	 */
-    private int gender;
-
-	/**
-	 * age of doctor
-	 */
-    private int age;
 	private DoctorSchedules doctorSchedules;
 
 	/**
@@ -41,25 +21,8 @@ public class Doctor extends User {
     private List<Patient> patientList;
     
     public Doctor(String doctorID, String name,	int role, int gender, int age) {
-    	super(doctorID, name, role, gender);
-    	this.age = age;
+    	super(doctorID, name, role, gender, age);
 		doctorSchedules = new DoctorSchedules(this);
-    }
-    
-    public String getDoctorID() {
-        return doctorID;
-    }
-   
-    public String getName() {
-    	return name;
-    }
-    
-    public int getGender() {
-    	return gender;
-    }
-    
-    public int getAge() {
-    	return age;
     }
 
 	public DoctorSchedules getDoctorSchedules() {
