@@ -3,6 +3,7 @@ package hms.users;
 import hms.medicalRecords.MedicalRecord;
 import hms.utils.Date;
 import hms.appointments.*;
+import hms.GlobalData;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -132,6 +133,61 @@ public class Patient extends User {
         System.out.println("8.View Past Appointment Outcome Records");
         System.out.println("9.Logout ");
         System.out.println("-----End of Menu-----");
+
+        Scanner sc = new Scanner(System.in);
+        int choice = 1;
+        while(choice != 9) {
+            choice = sc.nextInt();
+            switch(choice) {
+                case 1:
+                    viewMedicalRecord();
+                    break;
+                case 2:
+                    updatePersonalInformation();
+                    break;
+                case 3:
+                    int date3;
+                    System.out.print("Enter date to view slots (ddmmyyyy): ");
+                    date3 = sc.nextInt();
+                    viewAvailableAppointmentSlots(GlobalData.getInstance().userList.getDoctors(), new Date(date3));
+                    break;
+                case 4:
+                    /*
+                     * Get appointmet to reschedule
+                     */
+                    scheduleAppointment();
+                    break;
+                case 5:
+                    System.out.println("Select appointment to reschedule (0 : exit):");
+                    patientSchedule.printPatientAppointment();
+                    choice = sc.nextInt();
+                    Appointment old = patientSchedule.getUpcomingAppointment(choice-1);
+                    if (old == null) break;
+                    /*
+                     * Get new appointment
+                     */
+	    			rescheduleAppointment(null, null);
+	    			break;
+	    		case 6:
+                    System.out.println("Select appointment to cancel (0 : exit):");
+                    patientSchedule.printPatientAppointment();
+                    choice = sc.nextInt();
+                    Appointment cancel = patientSchedule.getUpcomingAppointment(choice-1);
+                    if(old == null) break;
+	    			cancelAppointment(cancel);
+	    			break;
+	    		case 7:
+	    			viewScheduledAppointments();
+	    			break;
+	    		case 8:
+	    			viewPastAppointmentOutcomeRecords();
+	    			break;
+	    		default:
+                    choice = 9;
+                    System.out.println("Loggin out");
+	    			break;
+	    	}
+        }
     }
 
     /**

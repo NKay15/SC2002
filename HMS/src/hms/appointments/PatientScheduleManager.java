@@ -65,13 +65,16 @@ public class PatientScheduleManager {
      */
     public void printPatientAppointment() {
         updatePatientData();
+        int i = 1;
         for (Appointment appointment : appointmentList) {
+            System.out.println((i+1) +" :");
             System.out.println("Doctor ID: " + appointment.getDoctorID());
             System.out.println("Date: " + appointment.getDate());
             System.out.println("Time Slot: " + appointment.getTimeSlot());
             System.out.print("Status: ");
             appointment.printStatus();
             System.out.println("-------------");
+            i++;
         }
     }
 
@@ -106,5 +109,15 @@ public class PatientScheduleManager {
      */
     public void updatePatientData() {
         appointmentList = scheduler.getAppointments(patient);
+    }
+
+    /**
+     * Accessor of upcoming appointment
+     * @param i index of appointmnet
+     * @return null if index does not exist
+     */
+    public Appointment getUpcomingAppointment(int i) {
+        if(i < 0 || i > appointmentList.size()) return null;
+        else return appointmentList.get(i);
     }
 }

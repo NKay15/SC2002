@@ -77,6 +77,65 @@ public class Doctor extends User {
     	System.out.println("7.Record Appointment Outcome ");
     	System.out.println("8.Logout ");
     	System.out.println("-----End of Menu-----");
+
+		Scanner sc = new Scanner(System.in);
+		int choice = 1;
+
+		while (choice != 8) {
+			choice = sc.nextInt();
+			switch(choice) {
+				case 1 : 
+					viewPatientMedicalRecords();
+					break;
+
+				case 2 :
+					System.out.println("Select patient (0 : exit): ");
+					for(int i = 0; i < patientList.size(); i++) {
+						System.out.println((i+1) + " : " + patientList.get(i).getName());
+					}
+					choice = sc.nextInt();
+					if(choice < 1 || choice > patientList.size()) {
+						choice = 2;
+						break;
+					}
+					updatePatientMedicalRecords(patientList.get(choice-1));
+					choice = 2;
+					break;
+
+				case 3 :
+					viewPersonalSchedule();
+					break;
+
+				case 4 :
+					setAvailabilityforAppointments();
+					break;
+
+				case 5 :
+					acceptOrDeclineAppointmentRequests(AppointmentScheduler.getInstance());
+					break;
+
+				case 6 :
+					viewUpcomingAppointments();
+					break;
+
+				case 7 :
+					System.out.println("Select Appointment (0 : exit) :");
+					viewUpcomingAppointments();
+					choice = sc.nextInt();
+					Appointment choiceAppointment = doctorScheduler.getUpcomingAppointment(choice-1);
+					if(choiceAppointment == null) {
+						choice = 7;
+						break;
+					}
+					recordAppointmentOutcome(choiceAppointment);
+					choice = 7;
+					break;
+
+				default :
+					choice = 8;
+					System.out.println("Logging out");
+			}
+		}
     }
     
     public void viewPatientMedicalRecords() {

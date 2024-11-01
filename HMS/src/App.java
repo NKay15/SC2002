@@ -91,41 +91,18 @@ public class App {
 	    		}
 	    		
 	    		currentPatient.menu();
-	    		int choice = sc.nextInt();
-	    		switch(choice) {
-	    		case 1:
-	    			currentPatient.viewMedicalRecord();
-	    			break;
-	    		case 2:
-	    			currentPatient.updatePersonalInformation();
-	    			break;
-	    		case 3:
-	    			currentPatient.viewAvailableAppointmentSlots(null);
-	    			break;
-	    		case 4:
-	    			currentPatient.scheduleAppointment(null, null);
-	    			break;
-	    		case 5:
-	    			currentPatient.rescheduleAppointment(null, null, null);
-	    			break;
-	    		case 6:
-	    			currentPatient.cancelAppointment(null, null);
-	    			break;
-	    		case 7:
-	    			currentPatient.viewScheduledAppointments();
-	    			break;
-	    		case 8:
-	    			currentPatient.viewPastAppointmentOutcomeRecords();
-	    			break;
-	    		case 9:
-	    			exit = true;
-	    			break;
-	    		default:
-	    			break;
-	    		}
 	    		
 	    		break;
 	    	case 2: // Doctor
+				Doctor currentDoctor = null;
+				for (Doctor doctor : userList.getDoctors()) {
+		    		if (doctor.getID() == currentUser.getID()) {
+		    			currentDoctor = doctor;
+		    			break;
+		    		}
+	    		}
+
+				currentDoctor.menu();
 	    		break;
 	    	case 3: // Pharmacist
 	    		break;
