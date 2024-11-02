@@ -65,7 +65,7 @@ public class UserList {
      */
     public void removeDoctorByID(String ID) {
         for (Doctor doctor : doctors) {
-            if (doctor.getID() == ID) {
+            if (doctor.getID().equals(ID)) {
                 doctors.remove(doctor);
                 break;
             }
@@ -79,7 +79,7 @@ public class UserList {
     public void updateDoctorByID(String ID) {
         Doctor curDoctor = null;
         for (Doctor doctor : doctors) {
-            if (doctor.getID() == ID) {
+            if (doctor.getID().equals(ID)) {
                 curDoctor = doctor;
                 break;
             }
@@ -151,7 +151,7 @@ public class UserList {
      */
     public void removePatientByID(String ID) {
         for (Patient patient : patients) {
-            if (patient.getID() == ID) {
+            if (patient.getID().equals(ID)) {
                 patients.remove(patient);
                 break;
             }
@@ -165,7 +165,7 @@ public class UserList {
     public void updatePatientByID(String ID) {
         Patient curPatient = null;
         for (Patient patient : patients) {
-            if (patient.getID() == ID) {
+            if (patient.getID().equals(ID)) {
                 curPatient = patient;
                 break;
             }
@@ -213,7 +213,7 @@ public class UserList {
      */
     public void removePharmacistByID(String ID) {
         for (Pharmacist pharmacist : pharmacists) {
-            if (pharmacist.getID() == ID) {
+            if (pharmacist.getID().equals(ID)) {
                 pharmacists.remove(pharmacist);
                 break;
             }
@@ -227,7 +227,7 @@ public class UserList {
     public void updatePharmacistByID(String ID) {
         Pharmacist curPharmacist = null;
         for (Pharmacist pharmacist : pharmacists) {
-            if (pharmacist.getID() == ID) {
+            if (pharmacist.getID().equals(ID)) {
                 curPharmacist = pharmacist;
                 break;
             }
@@ -299,7 +299,7 @@ public class UserList {
      */
     public void removeAdministratorByID(String ID) {
         for (Administrator administrator : administrators) {
-            if (administrator.getID() == ID) {
+            if (administrator.getID().equals(ID)) {
                 administrators.remove(administrator);
                 break;
             }
@@ -313,7 +313,7 @@ public class UserList {
     public void updateAdministratorByID(String ID) {
         Administrator curAdministrator = null;
         for (Administrator administrator : administrators) {
-            if (administrator.getID() == ID) {
+            if (administrator.getID().equals(ID)) {
                 curAdministrator = administrator;
                 break;
             }
