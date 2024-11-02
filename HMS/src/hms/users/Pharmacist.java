@@ -1,6 +1,6 @@
 package hms.users;
 
-import hms.User;
+import hms.users.*;
 
 public class Pharmacist extends Staff {
 	
