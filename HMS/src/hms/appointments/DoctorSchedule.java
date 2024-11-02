@@ -3,6 +3,8 @@ package hms.appointments;
 import hms.users.*;
 import hms.utils.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -12,64 +14,87 @@ import java.util.Scanner;
  * can be queried later to check if they are available at specific times.
  */
 public class DoctorSchedule {
-    private Time breakStart;
-    private Time breakEnd;
-    private Time startTime;
-    private Time endTime;
-    private Date date;
-    private Doctor doctor;
-    private int breakCount;
-    private Time[][] breaks;
 
-    /**
-     * Constructs a DoctorSchedule object for a specified doctor.
-     * Prompts the doctor to input their preferred schedule details including date, start time,
-     * end time, and break times, and initializes the necessary fields.
-     *
-     * @param doctor The Doctor object representing the doctor whose schedule is being created.
-     */
-    public DoctorSchedule(Doctor doctor) {
-        this.doctor = doctor;
-        System.out.println("Hello! How would you like to schedule your day.");
-        System.out.println("What day you want to schedule? Input your date in dd mm yy");
-        Scanner sc = new Scanner(System.in);
-        int day = sc.nextInt();
-        int month = sc.nextInt();
-        int year = sc.nextInt();
-        date = new Date(day, month, year);
-        date.print();
-        System.out.println("When do you want prefer to work?");
-        int hour, minute;
-        System.out.println("Input your start time, in hh mm");
-        hour = sc.nextInt();
-        minute = sc.nextInt();
-        startTime = new Time(hour, minute);
+      private Time startTime;
+      private Time endTime;
+      private Date date;
+      private Doctor doctor;
+      private List<Time[]> breaks;
 
-        System.out.println("Input your end time, in hh mm");
-        hour = sc.nextInt();
-        minute = sc.nextInt();
-        endTime = new Time(hour, minute);
+      private int breakCount;
+      public DoctorSchedule(Doctor doctor, Date date) {
+          this.doctor = doctor;
+          this.breaks = new ArrayList<>();
+          this.date = date;
+          setWorkingTime();
+          setBreaks();
+      }
 
-        System.out.println("How many breaks would you have?");
-        breakCount = sc.nextInt();
-        breaks = new Time[breakCount][2];
-        for (int i = 0; i <= breakCount; i++) {
-            do {
-                System.out.println("Input your break start time, in hh mm");
-                hour = sc.nextInt();
-                minute = sc.nextInt();
-                breakStart = new Time(hour, minute);
+      public void setWorkingTime() {
+          Scanner sc = new Scanner(System.in);
+          System.out.println("When do you want to work? Input your start time, in hh mm");
+          int hour = sc.nextInt();
+          int minute = sc.nextInt();
+          startTime = new Time(hour, minute);
 
-                System.out.println("Input your break end time, in hh mm");
-                hour = sc.nextInt();
-                minute = sc.nextInt();
-                breakEnd = new Time(hour, minute);
+          System.out.println("Input your end time, in hh mm");
+          hour = sc.nextInt();
+          minute = sc.nextInt();
+          endTime = new Time(hour, minute);
+      }
 
-            } while (breakStart.compareTo(breakEnd) < 0);
-            breaks[i][0] = breakStart;
-            breaks[i][1] = breakEnd;
-        }
-    }
+      public void setBreaks() {
+          Scanner sc = new Scanner(System.in);
+
+          System.out.println("How many breaks would you like to add?");
+          breakCount = sc.nextInt();
+          for (int i = 0; i < breakCount; i++) {
+              Time breakStart, breakEnd;
+
+              do {
+                  System.out.println("Input your break start time, in hh mm");
+                  int hour = sc.nextInt();
+                  int minute = sc.nextInt();
+                  breakStart = new Time(hour, minute);
+
+                  System.out.println("Input your break end time, in hh mm");
+                  hour = sc.nextInt();
+                  minute = sc.nextInt();
+                  breakEnd = new Time(hour, minute);
+              } while (breakStart.compareTo(breakEnd) >= 0);
+
+              mergeBreaks(breakStart, breakEnd);
+          }
+      }
+
+      private void mergeBreaks(Time newBreakStart, Time newBreakEnd) {
+          List<Time[]> updatedBreaks = new ArrayList<>();
+          boolean merged = false;
+
+          for (Time[] existingBreak : breaks) {
+              Time existingStart = existingBreak[0];
+              Time existingEnd = existingBreak[1];
+
+              if (newBreakEnd.compareTo(existingStart) < 0) {
+                  if (!merged) {
+                      updatedBreaks.add(new Time[]{newBreakStart, newBreakEnd});
+                      merged = true;
+                  }
+                  updatedBreaks.add(existingBreak);
+              } else if (newBreakStart.compareTo(existingEnd) > 0) {
+                  updatedBreaks.add(existingBreak);
+              } else {
+                  newBreakStart = Time.min(existingStart, newBreakStart);
+                  newBreakEnd = Time.max(existingEnd, newBreakEnd);
+              }
+          }
+
+          if (!merged) {
+              updatedBreaks.add(new Time[]{newBreakStart, newBreakEnd});
+          }
+          breaks = updatedBreaks;
+      }
+
 
     /**
      * Gets the date of the doctor's schedule.
@@ -112,7 +137,7 @@ public class DoctorSchedule {
      *
      * @return A 2D array of Time objects, where each row contains the start and end time of a break.
      */
-    public Time[][] getBreaks() {
+    public List getBreaks() {
         return breaks;
     }
 
@@ -143,7 +168,7 @@ public class DoctorSchedule {
      */
     public boolean isDoctorAvailable(Time time) {
         for (int i = 0; i < breakCount; i++) {
-            if (time.compareTo(breaks[i][0]) > 0 && time.compareTo(breaks[i][1]) < 0) {
+            if (time.compareTo(breaks.get(i)[0]) > 0 && time.compareTo(breaks.get(i)[1]) < 0) {
                 System.out.println("Doctor at break!");
                 return false;
             }
