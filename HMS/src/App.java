@@ -58,8 +58,8 @@ public class App {
 	    	String ID = sc.next();
 	    	
 	    	boolean found = false;
-	    	for (User user : userList.getUsersIDSorted()) {
-	    		if (user.getID() == ID) {
+	    	for (User user : userList.getUsersRoleSorted()) {
+	    		if (user.getID().equals(ID)) {
 	    			found = true;
 	    			currentUser = user;
 	    			break;
@@ -77,41 +77,38 @@ public class App {
 	    	System.out.println("Password is incorrect");
     	} while (accessLevel == -1);
     	
-    	/* Menu */
-    	boolean exit = false;
-    	do {
-	    	switch(accessLevel) {
-	    	case 1: // Patient
-	    		Patient currentPatient = null;
-	    		for (Patient patient : userList.getPatients()) {
-		    		if (patient.getID() == currentUser.getID()) {
-		    			currentPatient = patient;
-		    			break;
-		    		}
+	/* Menu */
+    	switch(accessLevel) {
+    	case 1: // Patient
+    		Patient currentPatient = null;
+    		for (Patient patient : userList.getPatients()) {
+	    		if (patient.getID().equals(currentUser.getID())) {
+	    			currentPatient = patient;
+	    			break;
 	    		}
-	    		
-	    		currentPatient.menu();
-	    		
-	    		break;
-	    	case 2: // Doctor
-				Doctor currentDoctor = null;
-				for (Doctor doctor : userList.getDoctors()) {
-		    		if (doctor.getID() == currentUser.getID()) {
-		    			currentDoctor = doctor;
-		    			break;
-		    		}
+    		}
+    		
+    		currentPatient.menu();
+    		
+    		break;
+    	case 2: // Doctor
+			Doctor currentDoctor = null;
+			for (Doctor doctor : userList.getDoctors()) {
+	    		if (doctor.getID().equals(currentUser.getID())) {
+	    			currentDoctor = doctor;
+	    			break;
 	    		}
+    		}
 
-				currentDoctor.menu();
-	    		break;
-	    	case 3: // Pharmacist
-	    		break;
-	    	case 4: // Administrator
-	    		break;
-	    	default:
-	    		break;
-	    	}
-    	} while (!exit);
+			currentDoctor.menu();
+    		break;
+    	case 3: // Pharmacist
+    		break;
+    	case 4: // Administrator
+    		break;
+    	default:
+    		break;
+    	}
     }
     
     /**
@@ -139,7 +136,7 @@ public class App {
                 Cell name = cellIterator.next();
                 
                 Cell dob = cellIterator.next();
-                Date dateFormat = new Date(dob.getDateCellValue().getDate(), dob.getDateCellValue().getMonth(), dob.getDateCellValue().getYear());
+                Date dateFormat = new Date(Integer.valueOf(dob.toString().substring(0, 4)), Integer.valueOf(dob.toString().substring(5, 7)), Integer.valueOf(dob.toString().substring(8,10)));
                 
                 Cell gender = cellIterator.next();
                 int genderNo = 0;
