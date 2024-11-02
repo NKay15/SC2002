@@ -65,13 +65,16 @@ public class PatientScheduleManager {
      */
     public void printPatientAppointment() {
         updatePatientData();
+        int i = 1;
         for (Appointment appointment : appointmentList) {
+            System.out.println((i+1) +" :");
             System.out.println("Doctor ID: " + appointment.getDoctorID());
             System.out.println("Date: " + appointment.getDate());
             System.out.println("Time Slot: " + appointment.getTimeSlot());
             System.out.print("Status: ");
             appointment.printStatus();
             System.out.println("-------------");
+            i++;
         }
     }
 
@@ -85,6 +88,30 @@ public class PatientScheduleManager {
         for (Doctor doctor : doctors) {
             doctor.getDoctorSchedules().printAvailableSlot(date);
         }
+    }
+
+    /**
+     * Prints available time slots for a doctor on a given date.
+     * @param date the date for which available slots are printed
+     * @param doctor the specific doctor to check availability
+     */
+    public void printAvailableSlots(Date date, Doctor doctor) {
+        doctor.getDoctorSchedules().printAvailableSlot(date);
+    }
+
+    /**
+     * Generate an appointment if the doctor is available.
+     * @param patient patient of the appointment
+     * @param doctor doctor of the appointment
+     * @param date date of the appointment
+     * @param time time of the appointment
+     * @return appointment if doctor is free otherwise null will be return
+     */
+    public Appointment generateAppointment(Patient patient, Doctor doctor, Date date, Time time) {
+        if(doctor.getDoctorSchedules().isDoctorAvailable(date, time)) {
+            return new Appointment(patient, doctor, date, time);
+        }
+        else return null;
     }
 
     /**
@@ -106,5 +133,15 @@ public class PatientScheduleManager {
      */
     public void updatePatientData() {
         appointmentList = scheduler.getAppointments(patient);
+    }
+
+    /**
+     * Accessor of upcoming appointment
+     * @param i index of appointmnet
+     * @return null if index does not exist
+     */
+    public Appointment getUpcomingAppointment(int i) {
+        if(i < 0 || i > appointmentList.size()) return null;
+        else return appointmentList.get(i);
     }
 }

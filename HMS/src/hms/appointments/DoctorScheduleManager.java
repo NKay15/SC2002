@@ -62,12 +62,12 @@ public class DoctorScheduleManager {
     }
 
     /**
-     * Updates the appointment outcome record for a given appointment.
+     * Updates the appointment outcome record for a given appointment and set it as complete.
      *
      * @param appointment the Appointment object to update.
      */
     public void updateAppointmentOutcomeRecord(Appointment appointment) {
-        appointment.setAop();
+        appointment.complete();
     }
 
     /**
@@ -95,12 +95,14 @@ public class DoctorScheduleManager {
      */
     public void printUpcomingSlots(Doctor doctor) {
         updateDoctorData();
+        int i = 1;
         for (Appointment appointment : appointmentList) {
             if (appointment.getStatus() == 2) {
                 System.out.println("Doctor ID: " + doctor.getDoctorID() + "'s upcoming slots are:");
                 int time = appointment.getTimeSlot().getIntTime();
                 String slotTime = String.format("%02d:%02d", time / 100, time % 100);
-                System.out.println(appointment.getDate().get() + slotTime);
+                System.out.println(i + " " +appointment.getDate().get() + slotTime);
+                i++;
             }
         }
     }
@@ -121,5 +123,15 @@ public class DoctorScheduleManager {
      */
     public void printAvailableSlot(Date date, Doctor doctor) {
         doctor.getDoctorSchedules().printAvailableSlot(date);
+    }
+
+    /**
+     * Accessor of upcoming appointment
+     * @param i index of appointmnet
+     * @return null if index does not exist
+     */
+    public Appointment getUpcomingAppointment(int i) {
+        if(i < 0 || i > appointmentList.size()) return null;
+        else return appointmentList.get(i);
     }
 }

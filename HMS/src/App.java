@@ -91,41 +91,18 @@ public class App {
 	    		}
 	    		
 	    		currentPatient.menu();
-	    		int choice = sc.nextInt();
-	    		switch(choice) {
-	    		case 1:
-	    			currentPatient.viewMedicalRecord();
-	    			break;
-	    		case 2:
-	    			currentPatient.updatePersonalInformation();
-	    			break;
-	    		case 3:
-	    			currentPatient.viewAvailableAppointmentSlots(null);
-	    			break;
-	    		case 4:
-	    			currentPatient.scheduleAppointment(null, null);
-	    			break;
-	    		case 5:
-	    			currentPatient.rescheduleAppointment(null, null, null);
-	    			break;
-	    		case 6:
-	    			currentPatient.cancelAppointment(null, null);
-	    			break;
-	    		case 7:
-	    			currentPatient.viewScheduledAppointments();
-	    			break;
-	    		case 8:
-	    			currentPatient.viewPastAppointmentOutcomeRecords();
-	    			break;
-	    		case 9:
-	    			exit = true;
-	    			break;
-	    		default:
-	    			break;
-	    		}
 	    		
 	    		break;
 	    	case 2: // Doctor
+				Doctor currentDoctor = null;
+				for (Doctor doctor : userList.getDoctors()) {
+		    		if (doctor.getID() == currentUser.getID()) {
+		    			currentDoctor = doctor;
+		    			break;
+		    		}
+	    		}
+
+				currentDoctor.menu();
 	    		break;
 	    	case 3: // Pharmacist
 	    		break;
@@ -162,7 +139,7 @@ public class App {
                 Cell name = cellIterator.next();
                 
                 Cell dob = cellIterator.next();
-                Date dateFormat = dob.getDateCellValue();
+                Date dateFormat = new Date(dob.getDateCellValue().getDate(), dob.getDateCellValue().getMonth(), dob.getDateCellValue().getYear());
                 
                 Cell gender = cellIterator.next();
                 int genderNo = 0;
@@ -202,7 +179,7 @@ public class App {
                 
                 Cell email = cellIterator.next();
                 
-                Patient newPatient = new Patient(id.toString(), name.toString(), dateFormat, genderNo, 0, email.toString(), bloodTypeNo);
+                Patient newPatient = new Patient(id.toString(), name.toString(), 1, genderNo, dateFormat, 0, email.toString(), bloodTypeNo);
                 patientArray.add(newPatient);
             }
             
@@ -259,9 +236,9 @@ public class App {
                 	genderNo = 2;
                 }
                 
-                Cell age = cellIterator.next();
+                // Cell age = cellIterator.next();
                 
-                User newUser = new User(id.toString(), name.toString(), roleNo, genderNo, Integer.parseInt(age));
+                User newUser = new User(id.toString(), name.toString(), roleNo, genderNo);
                 staffArray.add(newUser);
             }
             

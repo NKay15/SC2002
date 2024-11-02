@@ -1,7 +1,6 @@
 package hms.users;
 
 import hms.Password;
-
 import java.util.Scanner;
 
 public class User {
@@ -39,7 +38,11 @@ public class User {
     private int gender;
 
     /**
-     * Constuctor for User
+     * Constructor for user
+     * @param ID id
+     * @param name name
+     * @param role role number
+     * @param gender gender number
      */
     public User(String ID, String name, int role, int gender) {
     	this.ID = ID;
@@ -63,6 +66,46 @@ public class User {
     public int getRole() {
         return role;
     }
+
+    /**
+     * Set role
+     * @param role
+     */
+    public void setRole(int role) {
+        this.role = role;
+    }
+
+    /**
+     * Get name of staff
+     * @return name
+     */
+    public String getName() {
+    	return name;
+    }
+
+    /**
+     * Set name of staff
+     * @param name
+     */
+	public void setName(String name)  {
+		this.name = name;
+	}
+
+    /**
+     * Get gender of staff
+     * @return gender
+     */
+    public int getGender() {
+    	return gender;
+    }
+
+    /**
+     * Set gender of staff
+     * @param gender
+     */
+	public void setGender(int gender) {
+		this.gender = gender;
+	}
 
     /**
      * A function to login. It will ask for password.
