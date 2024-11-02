@@ -258,8 +258,6 @@ public class Patient extends User {
 
     /**
      * View Available Appointment Slots
-     *
-     * @param APPS    Global AppointmentScheduler
      * @param doctors Global doctor user list
      * @param date    Date that patient want to make appointment
      */

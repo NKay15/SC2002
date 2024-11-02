@@ -88,6 +88,11 @@ public class DoctorScheduleManager {
         }
     }
 
+    public List<Appointment> returnPendingList(){
+        updateDoctorData();
+        return pendingList;
+    }
+
     /**
      * Prints upcoming slots for the specified doctor.
      *
