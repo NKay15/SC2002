@@ -1,6 +1,8 @@
 package hms;
 
-public class Password {
+import hms.utils.MD5;
+
+public class Password implements MD5 {
     /**
      * For now just a string for the password.
      */
@@ -10,7 +12,7 @@ public class Password {
      * Contructor of Password to set the password to the default password
      */
     public Password() {
-        password = "password";
+        this.password = MD5.getMd5("password");
     }
 
     /**
@@ -18,7 +20,7 @@ public class Password {
      * @param newPassword the string of the new password
      */
     public void changePassword(String newPassword) {
-        password = newPassword;
+        password = MD5.getMd5(newPassword);
     }
 
     /**
@@ -27,6 +29,6 @@ public class Password {
      * @return true if the password is correct otherwise false
      */
     public boolean checkPassword(String check) {
-        return password.equals(check);
+        return password.equals(MD5.getMd5(check));
     }
 }
