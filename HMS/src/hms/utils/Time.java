@@ -2,7 +2,7 @@ package hms.utils;
 
 import java.util.Scanner;
 
-public class Time {
+public class Time implements Comparable<Time>{
     public static int startTime = 800;
     public static int endTime = 1800;
     public static int breakStart = 1200;
