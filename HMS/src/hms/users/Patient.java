@@ -11,25 +11,11 @@ import java.util.Scanner;
 import java.util.List;
 
 public class Patient extends User {
-    /**
-     * PatientID
-     */
-    private String patientID;
-
-    /**
-     * Name
-     */
-    private String name;
 
     /**
      * Date of birth
      */
     private Date dob;
-
-    /**
-     * Gender see User
-     */
-    private int gender;
 
     /**
      * Phone number
@@ -71,31 +57,10 @@ public class Patient extends User {
     }
 
     /**
-     * return patientID
-     */
-    public String getPatientID() {
-        return patientID;
-    }
-
-    /**
-     * return name of patient
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
      * return Date of birth
      */
     public Date getDob() {
         return dob;
-    }
-
-    /**
-     * return gender of patient
-     */
-    public int getGender() {
-        return gender;
     }
 
     /**
@@ -121,6 +86,7 @@ public class Patient extends User {
 
     /**
      * print patient menu
+     * @return break
      */
     public void menu() {
         System.out.println("-----Patient Menu-----");

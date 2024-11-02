@@ -52,8 +52,8 @@ public class Appointment {
      */
     public Appointment(Patient patient, Doctor doctor, Date date, Time time) {
         uuid = UUID.randomUUID();
-        patientID = patient.getPatientID();
-        doctorID = doctor.getDoctorID();
+        patientID = patient.getID();
+        doctorID = doctor.getID();
         this.date = date;
         timeSlot = time;
         status = 1;
