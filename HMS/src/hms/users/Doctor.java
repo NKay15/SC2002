@@ -102,7 +102,7 @@ public class Doctor extends Staff {
     }
     
     public void viewPatientMedicalRecords() {
-    	System.out.println("Hi, Doc. " + this.name + ". Here is your patient list:");
+    	System.out.println("Hi, Doc. " + this.getName() + ". Here is your patient list:");
     	int id = 0;
     	for(Patient patient : patientList) {
     		++id;
