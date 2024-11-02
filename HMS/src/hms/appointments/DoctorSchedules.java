@@ -28,21 +28,38 @@ public class DoctorSchedules {
      * Sets the doctor's schedule by adding a new DoctorSchedule for the doctor.
      */
     public void setDoctorSchedule(Date date) {
-        if (findDateSchedule(date)!=null) {
-            System.out.println("Schedule exists, do you want to rewrite it? (y/n)");
+        DoctorSchedule doctorSchedule = findDateSchedule(date);
+        if (doctorSchedule != null) {
+            System.out.println("Schedule exists, do you want to \n" +
+                    "1. add breaks." +
+                    "2. change working time." +
+                    "3. rewrite it.");
             Scanner scanner = new Scanner(System.in);
-            char sc = scanner.next().charAt(0);
-            if (Objects.equals(sc,"y")) {
-                doctorSchedules.remove(findDateSchedule(date));
-                DoctorSchedule doctorSchedule = new DoctorSchedule(doctor);
-                doctorSchedules.add(doctorSchedule);
+            int sc = scanner.nextInt();
+            switch (sc) {
+                case 1:
+                    doctorSchedule.setBreaks();
+                    break;
+
+                case 2:
+                    System.out.println("Changing working time...");
+                    doctorSchedule.setWorkingTime();  
+                    break;
+
+                case 3:
+                    // Code to rewrite the schedule
+                    System.out.println("Rewriting schedule...");
+                    doctorSchedules.remove(findDateSchedule(date));
+                    doctorSchedule = new DoctorSchedule(doctor, date);
+                    doctorSchedules.add(doctorSchedule);
+                    break;
+
+                default:
+                    System.out.println("Invalid option. Please choose 1, 2, or 3.");
+                    break;
             }
-            else {
-                System.out.println("Add another date.");
-            }
-        }
-        else {
-            DoctorSchedule doctorSchedule = new DoctorSchedule(doctor);
+        } else {
+            doctorSchedule = new DoctorSchedule(doctor, date);
             doctorSchedules.add(doctorSchedule);
         }
     }

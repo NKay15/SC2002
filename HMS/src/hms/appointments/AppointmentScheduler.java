@@ -50,6 +50,10 @@ public class AppointmentScheduler {
         }
         if (appointment.getStatus() == 5) {
             Appointment rescheduledAppointment = findAppointment(appointment.getRescheduled(), appointments);
+            if (rescheduledAppointment == null){
+                System.out.println("Can't find related events need to be rescheduled.");
+                return;
+            }
             cancelAppointment(rescheduledAppointment, appointments);
         }
         appointment.confirm();

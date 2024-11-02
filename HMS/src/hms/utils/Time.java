@@ -76,4 +76,14 @@ public class Time {
         else return 0;
     }
 
+    // Static method to get the minimum of two Time objects
+    public static Time min(Time t1, Time t2) {
+        return (t1.compareTo(t2) <= 0) ? t1 : t2;
+    }
+
+    // Static method to get the maximum of two Time objects
+    public static Time max(Time t1, Time t2) {
+        return (t1.compareTo(t2) >= 0) ? t1 : t2;
+    }
+
 }
