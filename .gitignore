@@ -397,6 +397,12 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 *.iml
+.idea
+.idea/*
 
 # macOS default
 .DS_Store
+
+# emacs
+*.html
+\#*

@@ -68,32 +68,36 @@ public class DoctorSchedule {
       }
 
       private void mergeBreaks(Time newBreakStart, Time newBreakEnd) {
-          List<Time[]> updatedBreaks = new ArrayList<>();
-          boolean merged = false;
+      List<Time[]> updatedBreaks = new ArrayList<>();
+      int breakCountAdjustment = 0;
+      boolean merged = false;
 
-          for (Time[] existingBreak : breaks) {
-              Time existingStart = existingBreak[0];
-              Time existingEnd = existingBreak[1];
+      for (Time[] existingBreak : breaks) {
+          Time existingStart = existingBreak[0];
+          Time existingEnd = existingBreak[1];
 
-              if (newBreakEnd.compareTo(existingStart) < 0) {
-                  if (!merged) {
-                      updatedBreaks.add(new Time[]{newBreakStart, newBreakEnd});
-                      merged = true;
-                  }
-                  updatedBreaks.add(existingBreak);
-              } else if (newBreakStart.compareTo(existingEnd) > 0) {
-                  updatedBreaks.add(existingBreak);
-              } else {
-                  newBreakStart = Time.min(existingStart, newBreakStart);
-                  newBreakEnd = Time.max(existingEnd, newBreakEnd);
+          if (newBreakEnd.compareTo(existingStart) < 0) {
+              if (!merged) {
+                  updatedBreaks.add(new Time[]{newBreakStart, newBreakEnd});
+                  merged = true;
               }
+              updatedBreaks.add(existingBreak);
+          } else if (newBreakStart.compareTo(existingEnd) > 0) {
+              updatedBreaks.add(existingBreak);
+          } else {
+              breakCountAdjustment++;
+              newBreakStart = Time.min(existingStart, newBreakStart);
+              newBreakEnd = Time.max(existingEnd, newBreakEnd);
           }
-
-          if (!merged) {
-              updatedBreaks.add(new Time[]{newBreakStart, newBreakEnd});
-          }
-          breaks = updatedBreaks;
       }
+
+      if (!merged) {
+          updatedBreaks.add(new Time[]{newBreakStart, newBreakEnd});
+      }
+      breaks = updatedBreaks;
+      breakCount -= breakCountAdjustment;
+
+  }
 
 
     /**
