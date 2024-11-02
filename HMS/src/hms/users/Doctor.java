@@ -20,8 +20,8 @@ public class Doctor extends Staff {
 	 */
     private List<Patient> patientList;
     
-    public Doctor(String doctorID, String name,	int role, int gender, int age) {
-    	super(doctorID, name, role, gender, age);
+    public Doctor(String doctorID, String name, int gender, int age) {
+    	super(doctorID, name, 2, gender, age);
 		doctorSchedules = new DoctorSchedules(this);
     }
 
