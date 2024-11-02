@@ -58,7 +58,7 @@ public class App {
 	    	String ID = sc.next();
 	    	
 	    	boolean found = false;
-	    	for (User user : userList.getUsers()) {
+	    	for (User user : userList.getUsersIDSorted()) {
 	    		if (user.getID() == ID) {
 	    			found = true;
 	    			currentUser = user;
