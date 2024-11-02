@@ -4,11 +4,9 @@ import hms.medicalRecords.MedicalRecord;
 import hms.utils.*;
 import hms.appointments.*;
 import hms.GlobalData;
-import hms.UserList;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.List;
 
 public class Patient extends User {
 
@@ -46,8 +44,8 @@ public class Patient extends User {
     /**
      * Constructor for patient
      */
-    public Patient(String patientID, String name, int role, int gender, Date dob, int phone, String email, int bloodType) {
-        super(patientID, name, role, gender);
+    public Patient(String patientID, String name, int gender, Date dob, int phone, String email, int bloodType) {
+        super(patientID, name, 1, gender);
         this.dob = dob;
         this.phone = phone;
         this.email = email;
