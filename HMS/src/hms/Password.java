@@ -2,7 +2,7 @@ package hms;
 
 import hms.utils.MD5;
 
-public class Password implements MD5 {
+public class Password extends MD5 {
     /**
      * For now just a string for the password.
      */

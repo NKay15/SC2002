@@ -3,10 +3,10 @@ package hms.utils;
 import java.util.Scanner;
 
 public class Time {
-    static int startTime = 800;
-    static int endTime = 1800;
-    static int breakStart = 1200;
-    static int breakEnd = 1330;
+    public static int startTime = 800;
+    public static int endTime = 1800;
+    public static int breakStart = 1200;
+    public static int breakEnd = 1330;
     private int hour;
     private int minute;
     private int time;
@@ -18,8 +18,8 @@ public class Time {
         while (!checkTime()) {
             System.out.println("This time is not available.");
             Scanner sc = new Scanner(System.in);
-            hour = sc.nextInt();
-            minute = sc.nextInt();
+            int hour = sc.nextInt();
+            int minute = sc.nextInt();
             this.minute = minute;
             this.hour = hour;
             time = 100 * this.hour + this.minute;

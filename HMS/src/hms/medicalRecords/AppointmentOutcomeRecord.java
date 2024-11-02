@@ -3,7 +3,6 @@ package hms.medicalRecords;
 import hms.utils.Date;
 import hms.Medicine;
 import hms.GlobalData;
-import hms.Inventory;
 
 import java.util.Scanner;
 

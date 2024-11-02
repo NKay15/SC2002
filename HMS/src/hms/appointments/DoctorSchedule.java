@@ -137,7 +137,7 @@ public class DoctorSchedule {
      *
      * @return A 2D array of Time objects, where each row contains the start and end time of a break.
      */
-    public List getBreaks() {
+    public List<Time[]> getBreaks() {
         return breaks;
     }
 
