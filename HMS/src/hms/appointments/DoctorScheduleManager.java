@@ -88,11 +88,6 @@ public class DoctorScheduleManager {
         }
     }
 
-    public List<Appointment> returnPendingList(){
-        updateDoctorData();
-        return pendingList;
-    }
-
     /**
      * Prints upcoming slots for the specified doctor.
      *
@@ -110,6 +105,22 @@ public class DoctorScheduleManager {
                 i++;
             }
         }
+    }
+
+    /**
+    * Retrieves the list of appointments for this doctor.
+    *
+    */
+    public List<Appointment> getAppointmentsDoctor() {
+        return getAppointments(doctor);
+    }
+
+    /**
+    * Retrieves the list of pending appointments for this doctor.
+    *
+    */
+    public List<Appointment> getPendingAppointmentsDoctor() {
+        return getPendingAppointments(doctor);
     }
 
     /**

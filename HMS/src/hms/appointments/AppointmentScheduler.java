@@ -283,6 +283,12 @@ public class AppointmentScheduler {
         return appointmentsForPatient;
     }
 
+    /**
+     * Retrieves a list of pending appointments for the specified patient.
+     *
+     * @param patient the Patient whose pending appointments are to be retrieved
+     * @return a List of Appointment objects that are pending for the given patient
+     */
     public List<Appointment> getPendingAppointments(Patient patient) {
         List<Appointment> pendingAppointmentsForPatient = new ArrayList<>();
         for (Appointment appointment : pendingAppointments) {
