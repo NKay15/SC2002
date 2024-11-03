@@ -7,11 +7,6 @@ import java.util.ArrayList;
 
 public class MedicalRecord {
     /**
-     * PatientID
-     */
-    private String patientID;
-
-    /**
      * Name
      */
     private String name;
@@ -53,9 +48,7 @@ public class MedicalRecord {
      */
     public MedicalRecord(Patient patient) {
         medicalHistory = new ArrayList<String>();
-        // who ever writing patient class pls finish this;
 
-        patientID = patient.getID();
         name = patient.getName();
         dob = patient.getDob();
         gender = patient.getGender();

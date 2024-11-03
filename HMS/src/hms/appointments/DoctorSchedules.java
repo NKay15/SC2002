@@ -43,7 +43,7 @@ public class DoctorSchedules {
 
                 case 2:
                     System.out.println("Changing working time...");
-                    doctorSchedule.setWorkingTime();  
+                    doctorSchedule.setWorkingTime();
                     break;
 
                 case 3:

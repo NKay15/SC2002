@@ -15,85 +15,114 @@ import java.util.Scanner;
  */
 public class DoctorSchedule {
 
-      private Time startTime;
-      private Time endTime;
-      private Date date;
-      private Doctor doctor;
-      private List<Time[]> breaks;
+    private Time startTime;
+    private Time endTime;
+    private Date date;
+    private Doctor doctor;
+    private List<Time[]> breaks;
 
-      private int breakCount;
-      public DoctorSchedule(Doctor doctor, Date date) {
-          this.doctor = doctor;
-          this.breaks = new ArrayList<>();
-          this.date = date;
-          setWorkingTime();
-          setBreaks();
-      }
+    private int breakCount;
 
-      public void setWorkingTime() {
-          Scanner sc = new Scanner(System.in);
-          System.out.println("When do you want to work? Input your start time, in hh mm");
-          int hour = sc.nextInt();
-          int minute = sc.nextInt();
-          startTime = new Time(hour, minute);
+    public DoctorSchedule(Doctor doctor, Date date) {
+        this.doctor = doctor;
+        this.breaks = new ArrayList<>();
+        this.date = date;
+        setWorkingTime();
+        setBreaks();
+    }
 
-          System.out.println("Input your end time, in hh mm");
-          hour = sc.nextInt();
-          minute = sc.nextInt();
-          endTime = new Time(hour, minute);
-      }
+    /**
+     * Sets the working time by prompting the user for the start and end times.
+     * The user is asked to input the times in the format of hours and minutes.
+     * The input values are then used to create Time objects for startTime and endTime.
+     */
+    public void setWorkingTime() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("When do you want to work? Input your start time, in hh mm");
+        int hour = sc.nextInt();
+        int minute = sc.nextInt();
+        startTime = new Time(hour, minute);
 
-      public void setBreaks() {
-          Scanner sc = new Scanner(System.in);
+        System.out.println("Input your end time, in hh mm");
+        hour = sc.nextInt();
+        minute = sc.nextInt();
+        endTime = new Time(hour, minute);
+    }
 
-          System.out.println("How many breaks would you like to add?");
-          breakCount = sc.nextInt();
-          for (int i = 0; i < breakCount; i++) {
-              Time breakStart, breakEnd;
+    /**
+     * Prompts the user to input the number of breaks they would like to add,
+     * and collects the start and end times for each break. The method ensures
+     * that the break start time is before the break end time and calls the
+     * {@link #mergeBreaks(Time, Time)} method to process each valid break.
+     */
+    public void setBreaks() {
+        Scanner sc = new Scanner(System.in);
 
-              do {
-                  System.out.println("Input your break start time, in hh mm");
-                  int hour = sc.nextInt();
-                  int minute = sc.nextInt();
-                  breakStart = new Time(hour, minute);
+        System.out.println("How many breaks would you like to add?");
+        breakCount = sc.nextInt();
+        for (int i = 0; i < breakCount; i++) {
+            Time breakStart, breakEnd;
 
-                  System.out.println("Input your break end time, in hh mm");
-                  hour = sc.nextInt();
-                  minute = sc.nextInt();
-                  breakEnd = new Time(hour, minute);
-              } while (breakStart.compareTo(breakEnd) >= 0);
+            do {
+                System.out.println("Input your break start time, in hh mm");
+                int hour = sc.nextInt();
+                int minute = sc.nextInt();
+                breakStart = new Time(hour, minute);
 
-              mergeBreaks(breakStart, breakEnd);
-          }
-      }
+                System.out.println("Input your break end time, in hh mm");
+                hour = sc.nextInt();
+                minute = sc.nextInt();
+                breakEnd = new Time(hour, minute);
+            } while (breakStart.compareTo(breakEnd) >= 0);
 
-      private void mergeBreaks(Time newBreakStart, Time newBreakEnd) {
-          List<Time[]> updatedBreaks = new ArrayList<>();
-          boolean merged = false;
+            mergeBreaks(breakStart, breakEnd);
+        }
+    }
 
-          for (Time[] existingBreak : breaks) {
-              Time existingStart = existingBreak[0];
-              Time existingEnd = existingBreak[1];
+    /**
+     * Merges a new break time into the existing breaks.
+     * <p>
+     * This method checks for overlaps between the new break represented by
+     * {@code newBreakStart} and {@code newBreakEnd} with the existing breaks.
+     * If overlaps are found, it merges the overlapping breaks and adjusts the
+     * list of breaks accordingly. It also keeps track of the number of breaks,
+     * updating the count after the merge.
+     *
+     * @param newBreakStart the start time of the new break
+     * @param newBreakEnd   the end time of the new break
+     */
 
-              if (newBreakEnd.compareTo(existingStart) < 0) {
-                  if (!merged) {
-                      updatedBreaks.add(new Time[]{newBreakStart, newBreakEnd});
-                      merged = true;
-                  }
-                  updatedBreaks.add(existingBreak);
-              } else if (newBreakStart.compareTo(existingEnd) > 0) {
-                  updatedBreaks.add(existingBreak);
-              } else {
-                  newBreakStart = Time.min(existingStart, newBreakStart);
-                  newBreakEnd = Time.max(existingEnd, newBreakEnd);
-              }
-          }
+    private void mergeBreaks(Time newBreakStart, Time newBreakEnd) {
+        List<Time[]> updatedBreaks = new ArrayList<>();
+        int breakCountAdjustment = 0;
+        boolean merged = false;
 
-          if (!merged) {
-              updatedBreaks.add(new Time[]{newBreakStart, newBreakEnd});
-          }
-          breaks = updatedBreaks;
-      }
+        for (Time[] existingBreak : breaks) {
+            Time existingStart = existingBreak[0];
+            Time existingEnd = existingBreak[1];
+
+            if (newBreakEnd.compareTo(existingStart) < 0) {
+                if (!merged) {
+                    updatedBreaks.add(new Time[]{newBreakStart, newBreakEnd});
+                    merged = true;
+                }
+                updatedBreaks.add(existingBreak);
+            } else if (newBreakStart.compareTo(existingEnd) > 0) {
+                updatedBreaks.add(existingBreak);
+            } else {
+                breakCountAdjustment++;
+                newBreakStart = Time.min(existingStart, newBreakStart);
+                newBreakEnd = Time.max(existingEnd, newBreakEnd);
+            }
+        }
+
+        if (!merged) {
+            updatedBreaks.add(new Time[]{newBreakStart, newBreakEnd});
+        }
+        breaks = updatedBreaks;
+        breakCount -= breakCountAdjustment;
+
+    }
 
 
     /**
@@ -137,7 +166,7 @@ public class DoctorSchedule {
      *
      * @return A 2D array of Time objects, where each row contains the start and end time of a break.
      */
-    public List getBreaks() {
+    public List<Time[]> getBreaks() {
         return breaks;
     }
 
@@ -156,7 +185,7 @@ public class DoctorSchedule {
      *
      * @param time The time to check availability for, represented as an integer.
      */
-    public void isDoctorAvailable(int time){
+    public void isDoctorAvailable(int time) {
         Time temptTime = new Time(time);
     }
 

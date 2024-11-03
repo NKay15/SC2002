@@ -284,6 +284,22 @@ public class AppointmentScheduler {
     }
 
     /**
+     * Retrieves a list of pending appointments for the specified patient.
+     *
+     * @param patient the Patient whose pending appointments are to be retrieved
+     * @return a List of Appointment objects that are pending for the given patient
+     */
+    public List<Appointment> getPendingAppointments(Patient patient) {
+        List<Appointment> pendingAppointmentsForPatient = new ArrayList<>();
+        for (Appointment appointment : pendingAppointments) {
+            if (appointment.getPatientID().equals(patient.getID())) {
+                pendingAppointmentsForPatient.add(appointment);
+            }
+        }
+        return pendingAppointmentsForPatient;
+    }
+
+     /**
      * Retrieves the list of appointments for a specific doctor.
      *
      * @param doctor The doctor for whom to retrieve appointments
@@ -298,7 +314,7 @@ public class AppointmentScheduler {
         }
         return appointmentsForDoctor;
     }
-
+  
     /**
      * Retrieves the list of pending appointments for a specific doctor.
      *
@@ -314,4 +330,5 @@ public class AppointmentScheduler {
         }
         return pendingAppointmentsForDoctor;
     }
+
 }

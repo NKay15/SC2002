@@ -11,28 +11,31 @@ public class UserList {
     /**
      * List of Doctors in the system
      */
-    private ArrayList<Doctor> doctors = new ArrayList<Doctor>();
+    private ArrayList<Doctor> doctors;
 
     /**
      * List of Patients in the system
      */
-    private ArrayList<Patient> patients = new ArrayList<Patient>();
+    private ArrayList<Patient> patients;
 
     /**
      * List of Pharmacist in the system
      */
-    private ArrayList<Pharmacist> pharmacists = new ArrayList<Pharmacist>();
+    private ArrayList<Pharmacist> pharmacists;
 
     /**
      * List of Administrator in the system
      */
-    private ArrayList<Administrator> administrators = new ArrayList<Administrator>();
+    private ArrayList<Administrator> administrators;
 
     /**
      * Constructor
      */
     public UserList() {
-    	
+    	patients = new ArrayList<Patient>();
+        pharmacists = new ArrayList<Pharmacist>();
+        administrators = new ArrayList<Administrator>();
+        doctors = new ArrayList<Doctor>();
     }
     
     /**

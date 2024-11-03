@@ -7,7 +7,7 @@ import java.security.NoSuchAlgorithmException;
 /** Hashing using MD5
  * @author rin
  */
-public interface MD5 {
+public abstract class MD5 {
     public static String getMd5(String input)
     {
         try {

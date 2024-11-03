@@ -119,6 +119,22 @@ public class DoctorScheduleManager {
     }
 
     /**
+    * Retrieves the list of appointments for this doctor.
+    *
+    */
+    public List<Appointment> getAppointmentsDoctor() {
+        return scheduler.getAppointments(doctor);
+    }
+
+    /**
+    * Retrieves the list of pending appointments for this doctor.
+    *
+    */
+    public List<Appointment> getPendingAppointmentsDoctor() {
+        return scheduler.getPendingAppointments(doctor);
+    }
+
+    /**
      * Updates the doctor's appointment data for the current instance.
      */
     public void updateDoctorData() {

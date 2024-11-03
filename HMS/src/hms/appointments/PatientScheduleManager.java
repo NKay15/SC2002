@@ -144,4 +144,20 @@ public class PatientScheduleManager {
         if(i < 0 || i > appointmentList.size()) return null;
         else return appointmentList.get(i);
     }
+
+    /**
+    * Retrieves the list of appointments for this patient.
+    *
+    */
+    public List<Appointment> getAppointments() {
+        return scheduler.getAppointments(patient);
+    }
+
+    /**
+    * Retrieves the list of pending appointments for this patient.
+    *
+    */
+    public List<Appointment> getPendingAppointments() {
+        return scheduler.getPendingAppointments(patient);
+    }
 }
