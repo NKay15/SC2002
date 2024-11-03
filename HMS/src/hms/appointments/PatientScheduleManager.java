@@ -150,7 +150,7 @@ public class PatientScheduleManager {
     *
     */
     public List<Appointment> getAppointments() {
-        return getAppointments(patient);
+        return scheduler.getAppointments(patient);
     }
 
     /**
@@ -158,6 +158,6 @@ public class PatientScheduleManager {
     *
     */
     public List<Appointment> getPendingAppointments() {
-        return getPendingAppointments(patient);
+        return scheduler.getPendingAppointments(patient);
     }
 }

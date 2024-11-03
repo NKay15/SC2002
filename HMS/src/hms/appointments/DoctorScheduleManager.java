@@ -112,7 +112,7 @@ public class DoctorScheduleManager {
     *
     */
     public List<Appointment> getAppointmentsDoctor() {
-        return getAppointments(doctor);
+        return scheduler.getAppointments(doctor);
     }
 
     /**
@@ -120,7 +120,7 @@ public class DoctorScheduleManager {
     *
     */
     public List<Appointment> getPendingAppointmentsDoctor() {
-        return getPendingAppointments(doctor);
+        return scheduler.getPendingAppointments(doctor);
     }
 
     /**
