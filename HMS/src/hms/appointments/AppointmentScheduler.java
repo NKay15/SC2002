@@ -283,20 +283,14 @@ public class AppointmentScheduler {
         return appointmentsForPatient;
     }
 
-    /**
-     * Retrieves the list of appointments for a specific doctor.
-     *
-     * @param doctor The doctor for whom to retrieve appointments
-     * @return The list of appointments for the given doctor
-     */
-    public List<Appointment> getAppointments(Doctor doctor) {
-        List<Appointment> appointmentsForDoctor = new ArrayList<>();
-        for (Appointment appointment : appointments) {
-            if (appointment.getDoctorID().equals(doctor.getDoctorID())) {
-                appointmentsForDoctor.add(appointment);
+    public List<Appointment> getPendingAppointments(Patient patient) {
+        List<Appointment> pendingAppointmentsForPatient = new ArrayList<>();
+        for (Appointment appointment : pendingAppointments) {
+            if (appointment.getPatientID().equals(patient.getPatientID())) {
+                pendingAppointmentsForPatient.add(appointment);
             }
         }
-        return appointmentsForDoctor;
+        return pendingAppointmentsForPatient;
     }
 
     /**
@@ -314,4 +308,22 @@ public class AppointmentScheduler {
         }
         return pendingAppointmentsForDoctor;
     }
+
+
+    /**
+     * Retrieves the list of appointments for a specific doctor.
+     *
+     * @param doctor The doctor for whom to retrieve appointments
+     * @return The list of appointments for the given doctor
+     */
+    public List<Appointment> getAppointments(Doctor doctor) {
+        List<Appointment> appointmentsForDoctor = new ArrayList<>();
+        for (Appointment appointment : appointments) {
+            if (appointment.getDoctorID().equals(doctor.getDoctorID())) {
+                appointmentsForDoctor.add(appointment);
+            }
+        }
+        return appointmentsForDoctor;
+    }
+
 }
