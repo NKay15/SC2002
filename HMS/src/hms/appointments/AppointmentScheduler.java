@@ -286,7 +286,7 @@ public class AppointmentScheduler {
     public List<Appointment> getPendingAppointments(Patient patient) {
         List<Appointment> pendingAppointmentsForPatient = new ArrayList<>();
         for (Appointment appointment : pendingAppointments) {
-            if (appointment.getPatientID().equals(patient.getPatientID())) {
+            if (appointment.getPatientID().equals(patient.getID())) {
                 pendingAppointmentsForPatient.add(appointment);
             }
         }
@@ -302,7 +302,7 @@ public class AppointmentScheduler {
     public List<Appointment> getAppointments(Doctor doctor) {
         List<Appointment> appointmentsForDoctor = new ArrayList<>();
         for (Appointment appointment : appointments) {
-            if (appointment.getDoctorID().equals(doctor.getDoctorID())) {
+            if (appointment.getDoctorID().equals(doctor.getID())) {
                 appointmentsForDoctor.add(appointment);
             }
         }
@@ -324,8 +324,5 @@ public class AppointmentScheduler {
         }
         return pendingAppointmentsForDoctor;
     }
-
-
-
 
 }
