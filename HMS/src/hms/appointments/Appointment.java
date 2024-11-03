@@ -13,11 +13,6 @@ public class Appointment {
      */
 
     private UUID uuid;
-    private String patientID;
-    /**
-     * ID of doctor
-     */
-    private String doctorID;
 
     private Patient patient;
     private Doctor doctor;
@@ -52,8 +47,6 @@ public class Appointment {
      */
     public Appointment(Patient patient, Doctor doctor, Date date, Time time) {
         uuid = UUID.randomUUID();
-        patientID = patient.getPatientID();
-        doctorID = doctor.getDoctorID();
         this.date = date;
         timeSlot = time;
         status = 1;
@@ -75,7 +68,7 @@ public class Appointment {
      * @return patientID
      */
     public String getPatientID() {
-        return patientID;
+        return patient.getID();
     }
 
     /**
@@ -84,7 +77,7 @@ public class Appointment {
      * @return doctorID
      */
     public String getDoctorID() {
-        return doctorID;
+        return doctor.getID();
     }
 
     public Patient getPatient() {

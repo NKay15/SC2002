@@ -4,32 +4,16 @@ import hms.medicalRecords.MedicalRecord;
 import hms.utils.*;
 import hms.appointments.*;
 import hms.GlobalData;
-import hms.UserList;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.List;
 
 public class Patient extends User {
-    /**
-     * PatientID
-     */
-    private String patientID;
-
-    /**
-     * Name
-     */
-    private String name;
 
     /**
      * Date of birth
      */
     private Date dob;
-
-    /**
-     * Gender see User
-     */
-    private int gender;
 
     /**
      * Phone number
@@ -60,8 +44,8 @@ public class Patient extends User {
     /**
      * Constructor for patient
      */
-    public Patient(String patientID, String name, int role, int gender, Date dob, int phone, String email, int bloodType) {
-        super(patientID, name, role, gender);
+    public Patient(String patientID, String name, int gender, Date dob, int phone, String email, int bloodType) {
+        super(patientID, name, 1, gender);
         this.dob = dob;
         this.phone = phone;
         this.email = email;
@@ -71,31 +55,10 @@ public class Patient extends User {
     }
 
     /**
-     * return patientID
-     */
-    public String getPatientID() {
-        return patientID;
-    }
-
-    /**
-     * return name of patient
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
      * return Date of birth
      */
     public Date getDob() {
         return dob;
-    }
-
-    /**
-     * return gender of patient
-     */
-    public int getGender() {
-        return gender;
     }
 
     /**
@@ -121,6 +84,7 @@ public class Patient extends User {
 
     /**
      * print patient menu
+     * @return break
      */
     public void menu() {
         System.out.println("-----Patient Menu-----");
@@ -292,8 +256,6 @@ public class Patient extends User {
 
     /**
      * View Available Appointment Slots
-     *
-     * @param APPS    Global AppointmentScheduler
      * @param doctors Global doctor user list
      * @param date    Date that patient want to make appointment
      */

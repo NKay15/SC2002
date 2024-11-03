@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.Row;  
 import org.apache.poi.xssf.usermodel.XSSFSheet;  
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -16,6 +15,7 @@ import hms.users.Administrator;
 import hms.users.Doctor;
 import hms.users.Patient;
 import hms.users.Pharmacist;
+import hms.users.Staff;
 import hms.utils.Date;
 import hms.Inventory; 
 import hms.GlobalData; 
@@ -25,18 +25,21 @@ public class App {
     	/* Load data into userList */
     	UserList userList = new UserList();
     	userList.setPatients(getPatientData());
-    	ArrayList<User> temUser = new ArrayList<User>();
+    	ArrayList<Staff> temUser = new ArrayList<Staff>();
     	temUser = getStaffData();
-    	for (User user : temUser) {
+    	for (Staff user : temUser) {
     		if (user.getRole() == 2) {
-    			userList.addDoctor((Doctor) user);
+    			Doctor temDoc = new Doctor(user.getID(), user.getName(), user.getGender(), user.getAge());
+    			userList.addDoctor(temDoc);
     		} else if (user.getRole() == 3) {
-    			userList.addPharmacist((Pharmacist) user);
+    			Pharmacist temPhar = new Pharmacist(user.getID(), user.getName(), user.getGender(), user.getAge());
+    			userList.addPharmacist(temPhar);
     		} else if (user.getRole() == 4) {
-    			userList.addAdministrator((Administrator) user);
+    			Administrator temAdmin = new Administrator(user.getID(), user.getName(), user.getGender(), user.getAge());
+    			userList.addAdministrator(temAdmin);
     		}
     	}
-
+    	
 		/* Load data into inventory */
 		Inventory inventory = getInventory();
 
@@ -58,8 +61,8 @@ public class App {
 	    	String ID = sc.next();
 	    	
 	    	boolean found = false;
-	    	for (User user : userList.getUsers()) {
-	    		if (user.getID() == ID) {
+	    	for (User user : userList.getUsersRoleSorted()) {
+	    		if (user.getID().equals(ID)) {
 	    			found = true;
 	    			currentUser = user;
 	    			break;
@@ -77,41 +80,38 @@ public class App {
 	    	System.out.println("Password is incorrect");
     	} while (accessLevel == -1);
     	
-    	/* Menu */
-    	boolean exit = false;
-    	do {
-	    	switch(accessLevel) {
-	    	case 1: // Patient
-	    		Patient currentPatient = null;
-	    		for (Patient patient : userList.getPatients()) {
-		    		if (patient.getID() == currentUser.getID()) {
-		    			currentPatient = patient;
-		    			break;
-		    		}
+	/* Menu */
+    	switch(accessLevel) {
+    	case 1: // Patient
+    		Patient currentPatient = null;
+    		for (Patient patient : userList.getPatients()) {
+	    		if (patient.getID().equals(currentUser.getID())) {
+	    			currentPatient = patient;
+	    			break;
 	    		}
-	    		
-	    		currentPatient.menu();
-	    		
-	    		break;
-	    	case 2: // Doctor
-				Doctor currentDoctor = null;
-				for (Doctor doctor : userList.getDoctors()) {
-		    		if (doctor.getID() == currentUser.getID()) {
-		    			currentDoctor = doctor;
-		    			break;
-		    		}
+    		}
+    		
+    		currentPatient.menu();
+    		
+    		break;
+    	case 2: // Doctor
+			Doctor currentDoctor = null;
+			for (Doctor doctor : userList.getDoctors()) {
+	    		if (doctor.getID().equals(currentUser.getID())) {
+	    			currentDoctor = doctor;
+	    			break;
 	    		}
+    		}
 
-				currentDoctor.menu();
-	    		break;
-	    	case 3: // Pharmacist
-	    		break;
-	    	case 4: // Administrator
-	    		break;
-	    	default:
-	    		break;
-	    	}
-    	} while (!exit);
+			currentDoctor.menu();
+    		break;
+    	case 3: // Pharmacist
+    		break;
+    	case 4: // Administrator
+    		break;
+    	default:
+    		break;
+    	}
     }
     
     /**
@@ -139,7 +139,7 @@ public class App {
                 Cell name = cellIterator.next();
                 
                 Cell dob = cellIterator.next();
-                Date dateFormat = new Date(dob.getDateCellValue().getDate(), dob.getDateCellValue().getMonth(), dob.getDateCellValue().getYear());
+                Date dateFormat = new Date(Integer.valueOf(dob.toString().substring(0, 4)), Integer.valueOf(dob.toString().substring(5, 7)), Integer.valueOf(dob.toString().substring(8,10)));
                 
                 Cell gender = cellIterator.next();
                 int genderNo = 0;
@@ -179,7 +179,7 @@ public class App {
                 
                 Cell email = cellIterator.next();
                 
-                Patient newPatient = new Patient(id.toString(), name.toString(), 1, genderNo, dateFormat, 0, email.toString(), bloodTypeNo);
+                Patient newPatient = new Patient(id.toString(), name.toString(), genderNo, dateFormat, 0, email.toString(), bloodTypeNo);
                 patientArray.add(newPatient);
             }
             
@@ -195,10 +195,10 @@ public class App {
     /**
      * Get Staff Data
      */
-    public static ArrayList<User> getStaffData() {
+    public static ArrayList<Staff> getStaffData() {
     	try
         {  
-    		ArrayList<User> staffArray = new ArrayList<User>();
+    		ArrayList<Staff> staffArray = new ArrayList<Staff>();
     		
             File file = new File("HMS/src/data/Staff_List.xlsx");
             FileInputStream fis = new FileInputStream(file);
@@ -218,13 +218,13 @@ public class App {
                 
                 Cell role = cellIterator.next();
                 int roleNo = 0;
-                if (role.toString() == "Doctor") {
+                if (role.toString().equals("Doctor")) {
                 	roleNo = 2;
                 }
-                if (role.toString() == "Pharmacist") {
+                if (role.toString().equals("Pharmacist")) {
                 	roleNo = 3;
                 }
-                if (role.toString() == "Administrator") {
+                if (role.toString().equals("Administrator")) {
                 	roleNo = 4;
                 }
                 
@@ -236,9 +236,9 @@ public class App {
                 	genderNo = 2;
                 }
                 
-                // Cell age = cellIterator.next();
+                Cell age = cellIterator.next();
                 
-                User newUser = new User(id.toString(), name.toString(), roleNo, genderNo);
+                Staff newUser = new Staff(id.toString(), name.toString(), roleNo, genderNo, (int) Math.floor(age.getNumericCellValue()));
                 staffArray.add(newUser);
             }
             

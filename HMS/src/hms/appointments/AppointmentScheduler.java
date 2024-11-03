@@ -276,7 +276,7 @@ public class AppointmentScheduler {
     public List<Appointment> getAppointments(Patient patient) {
         List<Appointment> appointmentsForPatient = new ArrayList<>();
         for (Appointment appointment : appointments) {
-            if (appointment.getPatientID().equals(patient.getPatientID())) {
+            if (appointment.getPatientID().equals(patient.getID())) {
                 appointmentsForPatient.add(appointment);
             }
         }
@@ -293,24 +293,7 @@ public class AppointmentScheduler {
         return pendingAppointmentsForPatient;
     }
 
-    /**
-     * Retrieves the list of pending appointments for a specific doctor.
-     *
-     * @param doctor The doctor for whom to retrieve pending appointments
-     * @return The list of pending appointments for the given doctor
-     */
-    public List<Appointment> getPendingAppointments(Doctor doctor) {
-        List<Appointment> pendingAppointmentsForDoctor = new ArrayList<>();
-        for (Appointment appointment : pendingAppointments) {
-            if (appointment.getDoctorID().equals(doctor.getDoctorID())) {
-                pendingAppointmentsForDoctor.add(appointment);
-            }
-        }
-        return pendingAppointmentsForDoctor;
-    }
-
-
-    /**
+     /**
      * Retrieves the list of appointments for a specific doctor.
      *
      * @param doctor The doctor for whom to retrieve appointments
@@ -325,5 +308,24 @@ public class AppointmentScheduler {
         }
         return appointmentsForDoctor;
     }
+  
+    /**
+     * Retrieves the list of pending appointments for a specific doctor.
+     *
+     * @param doctor The doctor for whom to retrieve pending appointments
+     * @return The list of pending appointments for the given doctor
+     */
+    public List<Appointment> getPendingAppointments(Doctor doctor) {
+        List<Appointment> pendingAppointmentsForDoctor = new ArrayList<>();
+        for (Appointment appointment : pendingAppointments) {
+            if (appointment.getDoctorID().equals(doctor.getID())) {
+                pendingAppointmentsForDoctor.add(appointment);
+            }
+        }
+        return pendingAppointmentsForDoctor;
+    }
+
+
+
 
 }

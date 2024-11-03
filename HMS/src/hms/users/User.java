@@ -49,6 +49,7 @@ public class User {
     	this.name = name;
     	this.role = role;
     	this.gender = gender;
+    	this.password = new Password();
     }
     
     /**

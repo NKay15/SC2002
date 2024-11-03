@@ -119,7 +119,7 @@ public class DoctorSchedules {
      * @param date The date for which to print available slots.
      */
     public void printAvailableSlot(Date date) {
-        System.out.println("Doctor ID: " + doctor.getDoctorID() + "'s available slots are:");
+        System.out.println("Doctor ID: " + doctor.getID() + "'s available slots are:");
         DoctorSchedule schedule = findDateSchedule(date);
         Time startTime = schedule.getStartTime();
         Time endTime = schedule.getEndTime();

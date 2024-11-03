@@ -20,8 +20,8 @@ public class Doctor extends Staff {
 	 */
     private List<Patient> patientList;
     
-    public Doctor(String doctorID, String name,	int role, int gender, int age) {
-    	super(doctorID, name, role, gender, age);
+    public Doctor(String doctorID, String name, int gender, int age) {
+    	super(doctorID, name, 2, gender, age);
 		doctorSchedules = new DoctorSchedules(this);
     }
 
@@ -74,7 +74,7 @@ public class Doctor extends Staff {
 					break;
 
 				case 5 :
-					acceptOrDeclineAppointmentRequests(AppointmentScheduler.getInstance());
+					acceptOrDeclineAppointmentRequests();
 					break;
 
 				case 6 :
@@ -102,7 +102,7 @@ public class Doctor extends Staff {
     }
     
     public void viewPatientMedicalRecords() {
-    	System.out.println("Hi, Doc. " + this.name + ". Here is your patient list:");
+    	System.out.println("Hi, Doc. " + this.getName() + ". Here is your patient list:");
     	int id = 0;
     	for(Patient patient : patientList) {
     		++id;
@@ -158,10 +158,9 @@ public class Doctor extends Staff {
     
 	/**
 	 * Accept Or Decline Appointment Requests
-	 * @param APPS Global Scheduler
 	 */
-    public void acceptOrDeclineAppointmentRequests(AppointmentScheduler APPS) {
-		List<Appointment> appointmentList = APPS.getPendingAppointments(this);
+    public void acceptOrDeclineAppointmentRequests() {
+		List<Appointment> appointmentList = doctorScheduler.returnPendingList();
 		int id = 0;
 		Scanner scan = new Scanner(System.in);
 		for(Appointment appointment : appointmentList){
@@ -173,7 +172,7 @@ public class Doctor extends Staff {
 			System.out.println("-----Request " + id + "-----");
 			System.out.println("patient:" + patient.getName());
 			date.print();
-			System.out.println("Time: " + Time);
+			System.out.println("Time: " + Time.getHour() + ":" + Time.getMinute());
 			System.out.println("-----End of Request " + id + "-----");
 			System.out.println("1. Accept");
 			System.out.println("2. Decline");

@@ -3,34 +3,39 @@ package hms;
 import hms.users.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class UserList {
     /**
      * List of Doctors in the system
      */
-    private ArrayList<Doctor> doctors = new ArrayList<Doctor>();
+    private ArrayList<Doctor> doctors;
 
     /**
      * List of Patients in the system
      */
-    private ArrayList<Patient> patients = new ArrayList<Patient>();
+    private ArrayList<Patient> patients;
 
     /**
      * List of Pharmacist in the system
      */
-    private ArrayList<Pharmacist> pharmacists = new ArrayList<Pharmacist>();
+    private ArrayList<Pharmacist> pharmacists;
 
     /**
      * List of Administrator in the system
      */
-    private ArrayList<Administrator> administrators = new ArrayList<Administrator>();
+    private ArrayList<Administrator> administrators;
 
     /**
      * Constructor
      */
     public UserList() {
-    	
+    	patients = new ArrayList<Patient>();
+        pharmacists = new ArrayList<Pharmacist>();
+        administrators = new ArrayList<Administrator>();
+        doctors = new ArrayList<Doctor>();
     }
     
     /**
@@ -63,7 +68,7 @@ public class UserList {
      */
     public void removeDoctorByID(String ID) {
         for (Doctor doctor : doctors) {
-            if (doctor.getID() == ID) {
+            if (doctor.getID().equals(ID)) {
                 doctors.remove(doctor);
                 break;
             }
@@ -77,7 +82,7 @@ public class UserList {
     public void updateDoctorByID(String ID) {
         Doctor curDoctor = null;
         for (Doctor doctor : doctors) {
-            if (doctor.getID() == ID) {
+            if (doctor.getID().equals(ID)) {
                 curDoctor = doctor;
                 break;
             }
@@ -149,7 +154,7 @@ public class UserList {
      */
     public void removePatientByID(String ID) {
         for (Patient patient : patients) {
-            if (patient.getID() == ID) {
+            if (patient.getID().equals(ID)) {
                 patients.remove(patient);
                 break;
             }
@@ -163,7 +168,7 @@ public class UserList {
     public void updatePatientByID(String ID) {
         Patient curPatient = null;
         for (Patient patient : patients) {
-            if (patient.getID() == ID) {
+            if (patient.getID().equals(ID)) {
                 curPatient = patient;
                 break;
             }
@@ -211,7 +216,7 @@ public class UserList {
      */
     public void removePharmacistByID(String ID) {
         for (Pharmacist pharmacist : pharmacists) {
-            if (pharmacist.getID() == ID) {
+            if (pharmacist.getID().equals(ID)) {
                 pharmacists.remove(pharmacist);
                 break;
             }
@@ -225,7 +230,7 @@ public class UserList {
     public void updatePharmacistByID(String ID) {
         Pharmacist curPharmacist = null;
         for (Pharmacist pharmacist : pharmacists) {
-            if (pharmacist.getID() == ID) {
+            if (pharmacist.getID().equals(ID)) {
                 curPharmacist = pharmacist;
                 break;
             }
@@ -297,7 +302,7 @@ public class UserList {
      */
     public void removeAdministratorByID(String ID) {
         for (Administrator administrator : administrators) {
-            if (administrator.getID() == ID) {
+            if (administrator.getID().equals(ID)) {
                 administrators.remove(administrator);
                 break;
             }
@@ -311,7 +316,7 @@ public class UserList {
     public void updateAdministratorByID(String ID) {
         Administrator curAdministrator = null;
         for (Administrator administrator : administrators) {
-            if (administrator.getID() == ID) {
+            if (administrator.getID().equals(ID)) {
                 curAdministrator = administrator;
                 break;
             }
@@ -354,14 +359,148 @@ public class UserList {
     }
 
     /**
-     * Get all users
+     * Get all users (By selection)
+     * @return list of users
      */
-    public ArrayList<User> getUsers() {
+    public ArrayList<User> getUsersSorted() {
+        System.out.println("-----Sort Users By-----");
+    	System.out.println("1.Role");
+    	System.out.println("2.Gender");
+        System.out.println("3.Name");
+        System.out.println("4.ID");
+
+        Scanner sc = new Scanner(System.in);
+        int choice = 0;
+
+        do {
+            choice = sc.nextInt();
+            switch(choice) {
+                case 1:
+                    return getUsersRoleSorted();
+                case 2:
+                    break;
+                case 3:
+                    break;
+                default:
+                    System.out.println("Input is invalid");
+                    break;
+            }
+        } while (choice<1 || choice>3);
+
+        return null;
+    }
+
+    /**
+     * Get all users by role
+     * @return list of users
+     */
+    public ArrayList<User> getUsersRoleSorted() {
         ArrayList<User> userArray = new ArrayList<User>();
-        userArray.addAll(doctors);
         userArray.addAll(patients);
+        userArray.addAll(doctors);
         userArray.addAll(pharmacists);
         userArray.addAll(administrators);
+        return userArray;
+    }
+
+    /**
+     * Get all users by gender
+     * @return list of users
+     */
+    public ArrayList<User> getUsersGenderSorted() {
+        ArrayList<User> userArray = new ArrayList<User>();
+        ArrayList<User> temAr1 = new ArrayList<User>();
+        ArrayList<User> temAr2 = new ArrayList<User>();
+        ArrayList<User> temAr3 = new ArrayList<User>();
+
+        for (Patient patient : patients) {
+            if (patient.getGender() == 1) {
+                temAr1.add(patient);
+            } else if (patient.getGender() == 2) {
+                temAr2.add(patient);
+            } else {
+                temAr3.add(patient);
+            }
+        }
+
+        for (Doctor doctor : doctors) {
+            if (doctor.getGender() == 1) {
+                temAr1.add(doctor);
+            } else if (doctor.getGender() == 2) {
+                temAr2.add(doctor);
+            } else {
+                temAr3.add(doctor);
+            }
+        }
+
+        for (Pharmacist pharmacist : pharmacists) {
+            if (pharmacist.getGender() == 1) {
+                temAr1.add(pharmacist);
+            } else if (pharmacist.getGender() == 2) {
+                temAr2.add(pharmacist);
+            } else {
+                temAr3.add(pharmacist);
+            }
+        }
+
+        for (Administrator administrator : administrators) {
+            if (administrator.getGender() == 1) {
+                temAr1.add(administrator);
+            } else if (administrator.getGender() == 2) {
+                temAr2.add(administrator);
+            } else {
+                temAr3.add(administrator);
+            }
+        }
+
+        userArray.addAll(temAr1);
+        userArray.addAll(temAr2);
+        userArray.addAll(temAr3);
+
+        return userArray;
+    }
+
+    /**
+     * Get all users by Name
+     * @return list of users
+     */
+    public ArrayList<User> getUsersNameSorted() {
+        ArrayList<User> userArray = new ArrayList<User>();
+        userArray.addAll(patients);
+        userArray.addAll(doctors);
+        userArray.addAll(pharmacists);
+        userArray.addAll(administrators);
+
+        // Sort by name in ascending order
+        Collections.sort(userArray, new Comparator<User>() {
+            @Override
+            public int compare(User p1, User p2) {
+                return p1.getName().compareTo(p2.getName());
+            }
+        });
+
+        return userArray;
+    }
+
+    /**
+     * Get all users by ID
+     * @return list of users
+     */
+    public ArrayList<User> getUsersIDSorted() {
+        ArrayList<User> userArray = new ArrayList<User>();
+        userArray.addAll(patients);
+        userArray.addAll(doctors);
+        userArray.addAll(pharmacists);
+        userArray.addAll(administrators);
+
+        // Sort by name in ascending order
+        Collections.sort(userArray, new Comparator<User>() {
+            @Override
+            public int compare(User p1, User p2) {
+                return p1.getID().compareTo(p2.getID());
+            }
+        });
+
         return userArray;
     }
 
@@ -370,7 +509,7 @@ public class UserList {
      * @param user
      */
     public User getUserByID(String ID) {
-        ArrayList<User> userlist = getUsers();
+        ArrayList<User> userlist = getUsersRoleSorted();
         for (User user : userlist) {
             if (user.getID() == ID) {
                 return user;
