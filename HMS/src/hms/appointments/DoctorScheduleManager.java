@@ -77,20 +77,26 @@ public class DoctorScheduleManager {
      */
     public void printPendingSlots(Doctor doctor) {
         updateDoctorData();
+        System.out.println("Doctor ID: " + doctor.getID() + "'s pending slots are:");
         for (Appointment appointment : pendingList) {
-            System.out.println("Doctor ID: " + doctor.getID() + "'s pending slots are:");
             if (appointment.getDoctorID().equals(doctor.getID())) {
                 int time = appointment.getTimeSlot().getIntTime();
                 String slotTime = String.format("%02d:%02d", time / 100, time % 100);
                 System.out.println(appointment.getDate().get() + slotTime);
             }
-            System.out.println("-----------------------------------");
         }
+        System.out.println("-----------------------------------");
     }
 
     public List<Appointment> returnPendingList(){
         updateDoctorData();
-        return pendingList;
+        List<Appointment> docPendingList = new ArrayList<>();
+        for (Appointment appointment : pendingList) {
+            if (appointment.getDoctorID().equals(doctor.getID())) {
+                docPendingList.add(appointment);
+            }
+        }
+        return docPendingList;
     }
 
     /**
@@ -101,9 +107,9 @@ public class DoctorScheduleManager {
     public void printUpcomingSlots(Doctor doctor) {
         updateDoctorData();
         int i = 1;
+        System.out.println("Doctor ID: " + doctor.getID() + "'s upcoming slots are:");
         for (Appointment appointment : appointmentList) {
             if (appointment.getStatus() == 2) {
-                System.out.println("Doctor ID: " + doctor.getID() + "'s upcoming slots are:");
                 int time = appointment.getTimeSlot().getIntTime();
                 String slotTime = String.format("%02d:%02d", time / 100, time % 100);
                 System.out.println(i + " " +appointment.getDate().get() + slotTime);
