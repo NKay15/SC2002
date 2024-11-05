@@ -80,7 +80,7 @@ public class App {
 	    	System.out.println("Password is incorrect");
     	} while (accessLevel == -1);
     	
-	/* Menu */
+		/* Menu */
     	switch(accessLevel) {
     	case 1: // Patient
     		Patient currentPatient = null;

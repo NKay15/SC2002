@@ -30,6 +30,7 @@ public class Doctor extends Staff {
 	}
 
 	public void menu() {
+		if(!super.menu(0)) return;
     	System.out.println("-----Doctor Menu-----");
     	System.out.println("1.View Patient Medical Records ");
     	System.out.println("2.Update Patient Medical Records");

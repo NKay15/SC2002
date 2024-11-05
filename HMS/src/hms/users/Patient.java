@@ -87,6 +87,7 @@ public class Patient extends User {
      * @return break
      */
     public void menu() {
+        if(!super.menu(0)) return;
         System.out.println("-----Patient Menu-----");
         System.out.println("1.View Medical Record ");
         System.out.println("2.Update Personal Information ");

@@ -121,9 +121,64 @@ public class User {
     }
 
     /**
-     * Menu method for user. To be overiden by subclass for their specific menu.
+     * Method to call menu. To be override by
      */
-    public void menu(){
-        System.out.println("User has no menu");
+    public void menu() {
+        return;
+    }
+
+    /**
+     * Menu method for user menu
+     * @param not used
+     * @return true if user menu selected and false to exit
+     */
+    public boolean menu(int i) {
+        System.out.println("-----Menu-----");
+        System.out.println("1. Enter User Menu");
+        System.out.println("2. Enter User Settings");
+        System.out.println("3. Log out");
+        Scanner sc = new Scanner(System.in);
+        int choice = 1;
+        while(choice > 0 || choice < 4) {
+            choice = sc.nextInt();
+            switch(choice) {
+                case 1 : return true;
+                case 2 : settings();
+                break;
+                default :
+                return false;
+            }
+        }
+
+        return false;
+    }
+
+    /** */
+    private void settings(){
+        System.out.println("-----Settings-----");
+        System.out.println("1. Change Password");
+        System.out.println("2. Exit");
+        Scanner sc = new Scanner(System.in);
+        int choice = 1;
+        while(choice > 0 || choice < 3) {
+            choice = sc.nextInt();
+            switch(choice) {
+                case 1 : 
+                    System.out.print("Enter old password : ");
+                    String change = sc.next();
+                    if(!password.checkPassword(change)) {
+                        System.out.println("Wrong password! Exiting");
+                        break;
+                    }
+                    System.out.print("Enter new password");
+                    change = sc.next();
+                    password.changePassword(change);
+                    System.out.println("Password has change successfully");
+                    break;
+                default :
+                    System.out.println("Exiting");
+                    return;
+            }
+        }
     }
 }
