@@ -197,7 +197,7 @@ public class AppointmentScheduler {
      * @param appointments The list of appointments to search in
      * @return The found appointment if successful; otherwise null
      */
-    private Appointment findAppointment(UUID uuid, List<Appointment> appointments) {
+    public Appointment findAppointment(UUID uuid, List<Appointment> appointments) {
         for (Appointment appointment : appointments) {
             if (appointment.getUuid().equals(uuid)) {
                 return appointment;

@@ -21,7 +21,7 @@ public class Inventory {
     /**
      * List of medicine that have been request to be restock
      */
-    private ArrayList<Medicine> request;
+    private ArrayList<Medicine> requests;
 
     /**
      * Return the index of a medicine
@@ -41,14 +41,14 @@ public class Inventory {
      */
     public Inventory() {
         catalog = new ArrayList<Medicine>();
-        request = new ArrayList<Medicine>();
+        requests = new ArrayList<Medicine>();
     }
 
     /**
      * Adding new medicine to the inventory
      */
     public void addNewMedicine() {
-        System.out.print("Enter name of medicine : ");
+        System.out.print("Enter name of medicine: ");
         Scanner sc = new Scanner(System.in);
         String name = sc.next();
         for(int i = 0; i < catalog.size(); i++) {
@@ -58,10 +58,10 @@ public class Inventory {
             }
         }
 
-        System.out.print("Enter initial amount : ");
+        System.out.print("Enter initial amount: ");
         int amount = sc.nextInt();
         catalog.add(new Medicine(name, amount));
-        System.out.print("Enter low level alert : ");
+        System.out.print("Enter low level alert: ");
         int level = sc.nextInt();
         lowlevel.add(new Medicine(name, amount));
         System.out.println(amount + " of " + name + " has been added. Low level warning at " + level);
@@ -88,7 +88,7 @@ public class Inventory {
 
     /**
      * Used by pharmacist to dispense medication
-     * @param aop AppointmentOutcomeRecord of the appointmet
+     * @param aop AppointmentOutcomeRecord of the appointment
      * @return true if successful false otherwise
      */
     public boolean dispense(AppointmentOutcomeRecord aop) {
@@ -113,39 +113,46 @@ public class Inventory {
     }
 
     /**
-     * Used by pharamacist to request a restock
+     * Used by pharmacist to request a restock
      */
     public void createRequest() {
-        printCurrentInvetory();
-        System.out.print("Enter index of medicine (0 to exit) : ");
+        System.out.print("Enter index of medicine (0 to cancel): ");
         Scanner sc = new Scanner(System.in);
         int med = sc.nextInt();
+        if (med == 0) {
+            System.out.println("Operation cancelled. Returning to menu...");
+            return;
+        }
         while(med < 0 || med > catalog.size()) {
-            System.out.print("Invaild input. Try again : ");
+            System.out.print("Invalid input. Try again: ");
             med = sc.nextInt();
         }
-        System.out.print("Enter amoount of medicine : ");
+        System.out.print("Enter amount of medicine (0 to cancel): ");
         int quantity = sc.nextInt();
-        while(quantity < 0 ) {
-            System.out.print("Invaild input. Try again : ");
+        if (quantity == 0) {
+            System.out.println("Operation cancelled. Returning to menu...");
+            return;
+        }
+        while(quantity < 0) {
+            System.out.print("Invalid input. Try again: ");
             quantity = sc.nextInt();
         }
-        request.add(catalog.get(med-1).copy(quantity));
-        System.out.print("Restock Request has been created : ");
+        requests.add(catalog.get(med-1).copy(quantity));
+        System.out.print("Restock request created!");
     }
 
     public Medicine[] generatePrescription(){
-        printCurrentInvetory();
+        printCurrentInventory();
         ArrayList<Medicine> ret = new ArrayList<Medicine>();
         int med = 1;
         int amount;
         
         while(med < 0 || med >= catalog.size()) {
-            System.out.print("Enter index of medicine to prescribe (0 to exit) : ");
+            System.out.print("Enter index of medicine to prescribe: ");
             Scanner sc = new Scanner(System.in);
             med = sc.nextInt();
             while(med < 0 || med >= catalog.size()) {
-                System.out.print("Invaild input. Try again : ");
+                System.out.print("Invalid input. Try again: ");
                 med = sc.nextInt();
             }
             for(int i = 0; i < ret.size(); i++) {
@@ -173,23 +180,31 @@ public class Inventory {
      * Change the low level amount of a medicine
      */
     public void setNewLowLevel() {
-        printCurrentInvetory();
-        System.out.print("Enter index of medicine (0 to exit) : ");
+        printCurrentInventory();
+        System.out.print("Enter index of medicine (0 to cancel): ");
         Scanner sc = new Scanner(System.in);
         int med = sc.nextInt();
+        if (med == 0) {
+            System.out.println("Operation cancelled. Returning to menu...");
+            return;
+        }
         while(med < 0 || med > catalog.size()) {
-            System.out.print("Invaild input. Try again : ");
+            System.out.print("Invalid input. Try again: ");
             med = sc.nextInt();
         }
-        System.out.print("Enter new low level: ");
+        System.out.print("Enter new low level (0 to cancel): ");
         int quantity = sc.nextInt();
-        while(quantity < 0 ) {
-            System.out.print("Invaild input. Try again : ");
+        if (quantity == 0) {
+            System.out.println("Operation cancelled. Returning to menu...");
+            return;
+        }
+        while(quantity < 0) {
+            System.out.print("Invalid input. Try again: ");
             quantity = sc.nextInt();
         }
         lowlevel.get(med-1).prescribe(lowlevel.get(med-1).amount());
         lowlevel.get(med-1).restock(quantity);
-        System.out.print("Low level amount alert updated");
+        System.out.print("Low level amount alert updated!");
     }
 
     /**
@@ -197,24 +212,24 @@ public class Inventory {
      */
     public void manageRestock() {
         printRestockRequest();
-        System.out.print("Enter index of request (0 to exit) : ");
+        System.out.print("Enter index of request (0 to exit): ");
         Scanner sc = new Scanner(System.in);
         int req = sc.nextInt();
-        while(req < 0 || req > request.size()) {
-            System.out.print("Invaild input. Try again : ");
+        while(req < 0 || req > requests.size()) {
+            System.out.print("Invalid input. Try again: ");
             req = sc.nextInt();
         }
-        int idx = findIndex(request.get(req-1));
-        System.out.print("Enter 0 to exit, 1 to approve and 2 to reject : ");
+        int idx = findIndex(requests.get(req-1));
+        System.out.print("Enter 0 to exit, 1 to approve and 2 to reject: ");
         int choice = sc.nextInt();
         if (choice == 1) {
-            catalog.get(idx).restock(request.get(req-1).amount());
-            request.remove(req-1);
-            System.out.println("Request approved");
+            catalog.get(idx).restock(requests.get(req-1).amount());
+            requests.remove(req-1);
+            System.out.println("Request approved!");
         }
         else if (choice == 2) {
-            request.remove(req-1);
-            System.out.println("Request rejected");
+            requests.remove(req-1);
+            System.out.println("Request rejected!");
         }
         else System.out.println("Exiting");
     }
@@ -222,7 +237,7 @@ public class Inventory {
     /**
      * Print current inventory
      */
-    public void printCurrentInvetory() {
+    public void printCurrentInventory() {
         for(int i = 0; i < catalog.size(); i++) {
             System.out.print((i+1) + ". " + catalog.get(i).name() + " : " + catalog.get(i).amount());
             if(catalog.get(i).amount() <= lowlevel.get(i).amount())
@@ -235,8 +250,8 @@ public class Inventory {
      * Print restock request
      */
     public void printRestockRequest() {
-        for(int i = 0; i < request.size(); i++) {
-            System.out.println((i+1) + ". " + request.get(i).name() + " : " + request.get(i).amount());
+        for(int i = 0; i < requests.size(); i++) {
+            System.out.println((i+1) + ". " + requests.get(i).name() + " : " + requests.get(i).amount());
         }
     }
 }

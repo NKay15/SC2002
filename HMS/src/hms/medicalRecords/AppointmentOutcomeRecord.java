@@ -79,7 +79,7 @@ public class AppointmentOutcomeRecord {
     }
 
     /**
-     * For pharamacist to dispense the medicine
+     * For pharmacist to dispense the medicine
      */
     public void dispense() {
         status = 2;

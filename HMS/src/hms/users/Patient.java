@@ -83,6 +83,13 @@ public class Patient extends User {
     }
 
     /**
+     * return schedule of patient
+     */
+    public PatientScheduleManager getPatientSchedule() {
+        return patientSchedule;
+    }
+
+    /**
      * print patient menu
      * @return break
      */

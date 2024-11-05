@@ -32,7 +32,7 @@ public class Appointment {
     private Time timeSlot;
 
     /**
-     * Appointmet Outcome Record to be created after appointment is completed
+     * Appointment Outcome Record to be created after appointment is completed
      */
     private AppointmentOutcomeRecord aop;
     private Appointment rescheduled;
@@ -92,6 +92,10 @@ public class Appointment {
         return doctor;
     }
 
+    public AppointmentOutcomeRecord getAop(){
+        return aop;
+    }
+
     /**
      * Accessor of date
      *
@@ -118,7 +122,7 @@ public class Appointment {
     }
 
     /**
-     * For doctor to accept the appointmemt
+     * For doctor to accept the appointment
      */
     public void confirm() {
         status = 2;
@@ -177,11 +181,11 @@ public class Appointment {
     }
 
     /**
-     * Print the Appointment Outcome Record if appointment is completed
+     * Print the Appointment Outcome Record if appointment has been completed
      */
     public void printAOP() {
         if (status == 4) aop.print();
-        else System.out.println("Appointment is not completed");
+        else System.out.println("Appointment has not been completed!");
     }
 
     public boolean equals(Object o) {

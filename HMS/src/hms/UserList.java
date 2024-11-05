@@ -190,7 +190,7 @@ public class UserList {
      * Accessor of Pharmacist
      * @return list of Pharamacists
      */
-    public ArrayList<Pharmacist> getPharmacist() {
+    public ArrayList<Pharmacist> getPharmacists() {
         return pharmacists;
     }
 

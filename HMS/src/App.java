@@ -90,10 +90,9 @@ public class App {
 	    			break;
 	    		}
     		}
-    		
     		currentPatient.menu();
-    		
     		break;
+
     	case 2: // Doctor
 			Doctor currentDoctor = null;
 			for (Doctor doctor : userList.getDoctors()) {
@@ -102,13 +101,23 @@ public class App {
 	    			break;
 	    		}
     		}
-
 			currentDoctor.menu();
     		break;
+
     	case 3: // Pharmacist
+			Pharmacist currentPharmacist = null;
+			for (Pharmacist pharmacist : userList.getPharmacists()) {
+				if (pharmacist.getID().equals(currentUser.getID())) {
+					currentPharmacist = pharmacist;
+					break;
+				}
+			}
+			currentPharmacist.menu();
     		break;
+
     	case 4: // Administrator
     		break;
+			
     	default:
     		break;
     	}
