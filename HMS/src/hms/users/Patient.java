@@ -86,8 +86,7 @@ public class Patient extends User {
      * print patient menu
      * @return break
      */
-    public void menu() {
-        if(!super.menu(0)) return;
+    public void menu() {    
         System.out.println("-----Patient Menu-----");
         System.out.println("1.View Medical Record ");
         System.out.println("2.Update Personal Information ");
@@ -97,7 +96,7 @@ public class Patient extends User {
         System.out.println("6.Cancel an Appointment ");
         System.out.println("7.View Scheduled Appointments ");
         System.out.println("8.View Past Appointment Outcome Records");
-        System.out.println("9.Logout ");
+        super.menu(9);
         System.out.println("-----End of Menu-----");
 
         Scanner sc = new Scanner(System.in);
@@ -195,9 +194,10 @@ public class Patient extends User {
 	    			break;
 
 	    		default:
-                    choice = 9;
-                    System.out.println("Loggin out");
-	    			break;
+                    if(!super.useroptions(choice-8)) {
+                        System.out.println("Logging out");
+                        return;
+                    }
 	    	}
         }
     }

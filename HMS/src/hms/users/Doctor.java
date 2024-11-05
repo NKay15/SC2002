@@ -30,7 +30,6 @@ public class Doctor extends Staff {
 	}
 
 	public void menu() {
-		if(!super.menu(0)) return;
     	System.out.println("-----Doctor Menu-----");
     	System.out.println("1.View Patient Medical Records ");
     	System.out.println("2.Update Patient Medical Records");
@@ -39,7 +38,7 @@ public class Doctor extends Staff {
     	System.out.println("5.Accept or Decline Appointment Requests");
     	System.out.println("6.View Upcoming Appointments");
     	System.out.println("7.Record Appointment Outcome ");
-    	System.out.println("8.Logout ");
+    	super.menu(8);
     	System.out.println("-----End of Menu-----");
 
 		Scanner sc = new Scanner(System.in);
@@ -96,8 +95,10 @@ public class Doctor extends Staff {
 					break;
 
 				default :
-					choice = 8;
-					System.out.println("Logging out");
+					if(!super.useroptions(choice-7)) {
+						System.out.println("Logging out");
+						return;
+					}
 			}
 		}
     }

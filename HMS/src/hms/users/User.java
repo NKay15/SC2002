@@ -37,6 +37,20 @@ public class User {
      */
     private int gender;
 
+    private void changePassword(){
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter old password : ");
+        String old = sc.next();
+        if(!password.checkPassword(old)) {
+            System.out.print("Incorrect Password! Exiting ");
+            return;
+        }
+        System.out.print("Enter new password : ");
+        old = sc.next();
+        password.changePassword(old);
+        System.out.print("Password has been change");
+    }
+
     /**
      * Constructor for user
      * @param ID id
@@ -124,61 +138,29 @@ public class User {
      * Method to call menu. To be override by
      */
     public void menu() {
-        return;
+        menu(1);
     }
 
     /**
-     * Menu method for user menu
-     * @param not used
-     * @return true if user menu selected and false to exit
+     * Menu method to print user menu
+     * @param index to start
      */
-    public boolean menu(int i) {
-        System.out.println("-----Menu-----");
-        System.out.println("1. Enter User Menu");
-        System.out.println("2. Enter User Settings");
-        System.out.println("3. Log out");
-        Scanner sc = new Scanner(System.in);
-        int choice = 1;
-        while(choice > 0 || choice < 4) {
-            choice = sc.nextInt();
-            switch(choice) {
-                case 1 : return true;
-                case 2 : settings();
-                break;
-                default :
-                return false;
-            }
-        }
-
-        return false;
+    public void menu(int i) {
+        System.out.println((i++) + ". Change Password");
+        System.out.println((i++) + ". Log out");
     }
 
-    /** */
-    private void settings(){
-        System.out.println("-----Settings-----");
-        System.out.println("1. Change Password");
-        System.out.println("2. Exit");
-        Scanner sc = new Scanner(System.in);
-        int choice = 1;
-        while(choice > 0 || choice < 3) {
-            choice = sc.nextInt();
-            switch(choice) {
-                case 1 : 
-                    System.out.print("Enter old password : ");
-                    String change = sc.next();
-                    if(!password.checkPassword(change)) {
-                        System.out.println("Wrong password! Exiting");
-                        break;
-                    }
-                    System.out.print("Enter new password");
-                    change = sc.next();
-                    password.changePassword(change);
-                    System.out.println("Password has change successfully");
-                    break;
-                default :
-                    System.out.println("Exiting");
-                    return;
-            }
+    /**
+     * Process options for user choice
+     * @param choice number chosen in the user menu and need to be ofset by the number of options in supclass
+     * @return if false log out
+     */
+    public boolean useroptions(int choice){
+        switch(choice) {
+            case 1 : changePassword();
+            break;
+            default : return false;
         }
+        return true;
     }
 }
