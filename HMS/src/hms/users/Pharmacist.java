@@ -17,7 +17,6 @@ public class Pharmacist extends Staff {
 	}
 
 	public void menu() {
-
 		boolean patientFound;
 		boolean appointmentFound;
 		boolean alreadyTried;
@@ -44,6 +43,16 @@ public class Pharmacist extends Staff {
 			appointmentFound = false;
 			alreadyTried = false;
 			appointment = null;
+
+			System.out.println("-----Pharmacist Menu-----");
+			System.out.println("1.Search for Appointment Outcome Record by Appointment ID");
+			System.out.println("2.Update Prescription Status");
+			System.out.println("3.View Medication Inventory");
+			System.out.println("4.Submit Replenishment Requests");
+			super.menu(5);
+			System.out.println("-----End of Menu-----");
+			System.out.print("Enter your choice: ");
+
 			choice = sc.nextInt(); sc.nextLine();
 			System.out.println();
 
@@ -204,7 +213,7 @@ public class Pharmacist extends Staff {
 						}
 					}
 					break;
-
+					
 				default:
 					if(!super.useroptions(choice-4)) {
 						if (choice == 6) {
