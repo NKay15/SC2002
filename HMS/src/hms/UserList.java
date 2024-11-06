@@ -506,7 +506,7 @@ public class UserList {
 
     /**
      * Find user by ID
-     * @param user
+     * @param ID
      */
     public User getUserByID(String ID) {
         ArrayList<User> userlist = getUsersRoleSorted();
@@ -520,7 +520,7 @@ public class UserList {
 
     /**
      * Remove from userlist
-     * @param User
+     * @param ID
      */
     public void removeUserByID(String ID) {
         User curUser = getUserByID(ID);

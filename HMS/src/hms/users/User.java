@@ -31,7 +31,7 @@ public class User {
 
     /**
      * An integer to store the gender
-     * 0 - Unknow
+     * 0 - Unknown
      * 1 - Male
      * 2 - Female
      */
@@ -39,16 +39,16 @@ public class User {
 
     private void changePassword(){
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter old password : ");
-        String old = sc.next();
+        System.out.print("Enter Old Password: ");
+        String old = sc.next(); sc.nextLine();
         if(!password.checkPassword(old)) {
-            System.out.print("Incorrect Password! Exiting ");
+            System.out.print("Incorrect Password! Returning to Menu...\n ");
             return;
         }
-        System.out.print("Enter new password : ");
-        old = sc.next();
+        System.out.print("Enter New Password: ");
+        old = sc.next(); sc.nextLine();
         password.changePassword(old);
-        System.out.print("Password has been change");
+        System.out.print("Password Successfully Changed! Returning to Menu...\n ");
     }
 
     /**
@@ -143,7 +143,7 @@ public class User {
 
     /**
      * Menu method to print user menu
-     * @param index to start
+     * @param i to start
      */
     public void menu(int i) {
         System.out.println((i++) + ". Change Password");
