@@ -18,8 +18,6 @@ public class Pharmacist extends Staff {
 	}
 
 	public void menu() {
-		if(!super.menu(0)) return;
-
 		boolean patientFound;
 		boolean appointmentFound;
 		boolean alreadyTried;
@@ -43,7 +41,7 @@ public class Pharmacist extends Staff {
 			System.out.println("2.Update Prescription Status");
 			System.out.println("3.View Medication Inventory");
 			System.out.println("4.Submit Replenishment Requests");
-			System.out.println("5.Logout");
+			super.menu(5);
 			System.out.println("-----End of Menu-----");
 			System.out.print("Enter your choice: ");
 
@@ -179,6 +177,7 @@ public class Pharmacist extends Staff {
 					}
 					break;
 
+				/*
 				default:
 					System.out.print("Confirm Log Out? Enter 1 to Log Out; " +
 							"or Enter any other number to return to menu.\nYour choice: ");
@@ -191,6 +190,13 @@ public class Pharmacist extends Staff {
 						choice = 1;
 						System.out.println("Returning to menu...\n");
 					}
+				*/
+
+				default:
+                    if(!super.useroptions(choice-4)) {
+                        System.out.println("Logging out");
+                        return;
+                    }
 			}
 		}
 	}
