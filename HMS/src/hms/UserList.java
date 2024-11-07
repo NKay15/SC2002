@@ -590,31 +590,21 @@ public class UserList {
      * @param choice Choice of sorting
      * @return list of users
      */
-    public ArrayList<User> getUsersSorted(Scanner sc) {
-        System.out.println("-----Sort Users By-----");
-    	System.out.println("1.Role");
-    	System.out.println("2.Gender");
-        System.out.println("3.Name");
-        System.out.println("4.ID");
-
-        int choice = 0;
-
-        do {
-            choice = sc.nextInt();
-            switch(choice) {
-                case 1:
-                    return getUsersRoleSorted();
-                case 2:
-                    break;
-                case 3:
-                    break;
-                default:
-                    System.out.println("Input is invalid");
-                    break;
-            }
-        } while (choice<1 || choice>3);
-
-        return null;
+    public ArrayList<User> getStaffSorted(int choice) {
+        switch (choice) {
+            case 1:
+                return getStaffRoleSorted();
+            case 2:
+                return getStaffGenderSorted();
+            case 3:
+                return getStaffNameSorted();
+            case 4:
+                return getStaffIDSorted();
+            case 5:
+                return getStaffAgeSorted();
+            default:
+                return null;
+        }
     }
 
     /**
