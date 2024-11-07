@@ -5,6 +5,7 @@ import hms.utils.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Manages the scheduling of appointments for a doctor.

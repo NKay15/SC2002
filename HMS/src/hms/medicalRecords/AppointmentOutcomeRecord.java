@@ -35,7 +35,8 @@ public class AppointmentOutcomeRecord {
     /**
      * Contructor of Appointment Outcome Record triggered by the completion of appointment
      */
-    public AppointmentOutcomeRecord(Scanner sc) {
+    public AppointmentOutcomeRecord() {
+        Scanner sc = new Scanner(System.in);
         System.out.print("Enter the date of appointment (ddmmyyyy) : ");
         int t = sc.nextInt();
         date = new Date(t);
@@ -63,18 +64,17 @@ public class AppointmentOutcomeRecord {
      * Print the content of Appointment Outcome Record
      */
     public void print() {
-        System.out.println("Appointment Outcome Record");
-        System.out.print("Date : ");
+        System.out.println("Appointment Outcome Record:");
+        System.out.print("Date: ");
         date.print();
-        System.out.println("Service provided : " + service);
-        System.out.print("Prescription : ");
+        System.out.println("\nService provided: " + service);
+        System.out.println("Prescription: ");
         for(Medicine n : prescription) n.print();
-        System.out.print("Status of prescription : ");
-        if (status == 1) System.out.println("pending");
-        else System.out.println("dispensed");
-
-        System.out.println("Consultation notes : " + notes);
-        System.out.println("End of Appointment Outcome Record");
+        System.out.print("Status of Prescription: ");
+        if (status == 1) System.out.println("Pending");
+        else System.out.println("Dispensed");
+        System.out.println("Consultation notes: " + notes);
+        System.out.println("End of Appointment Outcome Record.");
     }
 
     /**

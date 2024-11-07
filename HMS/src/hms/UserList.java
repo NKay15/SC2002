@@ -105,9 +105,10 @@ public class UserList {
     }
     /**
      * Update Doctor by ID
-     * @Param ID
+     * @param ID
+     * @param sc Scanner
      */
-    public boolean updateDoctorByID(String ID, Scanner sc) {
+    public boolean updateDoctorByIDMenu(String ID, Scanner sc) {
         Doctor curDoctor = null;
         for (Doctor doctor : doctors) {
             if (doctor.getID().equals(ID)) {
@@ -297,6 +298,7 @@ public class UserList {
     /**
      * Menu to Remove Pharmacist by ID (for Admins)
      * @param ID
+     * @param sc Scanner
      */
     public boolean removePharmacistByIDMenu(String ID, Scanner sc) {
         for (Pharmacist pharmacist : pharmacists) {
@@ -328,9 +330,10 @@ public class UserList {
 
     /**
      * Update Pharmacist by ID
-     * @Param ID
+     * @param ID
+     * @param sc Scanner
      */
-    public boolean updatePharmacistByID(String ID, Scanner sc) {
+    public boolean updatePharmacistByIDMenu(String ID, Scanner sc) {
         Pharmacist curPharmacist = null;
         for (Pharmacist pharmacist : pharmacists) {
             if (pharmacist.getID().equals(ID)) {
@@ -458,6 +461,7 @@ public class UserList {
     /**
      * Menu to Remove Pharmacist by ID (for Admins)
      * @param ID
+     * @param sc Scanner
      */
     public boolean removeAdministratorByIDMenu(String ID, Scanner sc) {
         for (Administrator administrator : administrators) {
@@ -488,9 +492,10 @@ public class UserList {
 
     /**
      * Update Administrator by ID
-     * @Param ID
+     * @param ID
+     * @param sc Scanner
      */
-    public boolean updateAdministratorByID(String ID, Scanner sc) {
+    public boolean updateAdministratorByIDMenu(String ID, Scanner sc) {
         Administrator curAdministrator = null;
         for (Administrator administrator : administrators) {
             if (administrator.getID().equals(ID)) {
@@ -581,6 +586,7 @@ public class UserList {
 
     /**
      * Get all users (By selection)
+     * @param sc Scanner
      * @return list of users
      */
     public ArrayList<User> getUsersSorted(Scanner sc) {

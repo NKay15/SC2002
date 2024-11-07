@@ -3,6 +3,7 @@ package hms.users;
 import hms.GlobalData;
 import hms.appointments.Appointment;
 import hms.appointments.AppointmentScheduler;
+import hms.medicalRecords.AppointmentOutcomeRecord;
 
 import java.util.Scanner;
 import java.util.UUID;
@@ -97,13 +98,12 @@ public class Pharmacist extends Staff {
 
 					// Print Record
 					if (appointmentFound){
-						System.out.println("Record Found!");
+						System.out.println("Record Found!\n");
 						appointment.printAOP();
+						System.out.print("\nEnter any number to Return to Menu: ");
+						sc.nextInt(); sc.nextLine();
+						System.out.println("Returning to Menu...\n");
 					}
-					// So the menu doesn't pop back up before pharmacist is done reading
-					System.out.print("\nEnter any number to Return to Menu: ");
-					sc.nextInt(); sc.nextLine();
-					System.out.println("Returning to Menu...\n");
 					break;
 
 				case 2:
@@ -145,8 +145,9 @@ public class Pharmacist extends Staff {
 
 					// Dispense Medication
 					if (appointmentFound){
-						if (appointment.getAop() != null) {
-							if (!appointment.getAop().isDispensed()) {
+						AppointmentOutcomeRecord aop = appointment.getAop();
+						if (aop != null) {
+							if (!aop.isDispensed()) {
 								System.out.println("Please ensure that all fields below are correct before confirming:");
 								System.out.println("Patient ID: " + patientID);
 								System.out.println("Appointment ID: " + appointmentID);
@@ -159,8 +160,10 @@ public class Pharmacist extends Staff {
 									confirmDispense = sc.nextInt(); sc.nextLine();
 									switch (confirmDispense) {
 										case 1:
-											appointment.getAop().dispense();
-											System.out.println("Medication Successfully Dispensed! Returning to Menu... \n");
+											if (GlobalData.getInstance().inventory.dispense(aop)) {
+												System.out.println("Medication Successfully Dispensed! Returning to Menu... \n");
+											}
+											else { System.out.println("Insufficient Medication. Please Restock! Returning to Menu...\n"); }
 											break;
 
 										case 2:
@@ -185,7 +188,7 @@ public class Pharmacist extends Staff {
 					break;
 
 				case 3:
-					System.out.println("Here's the Current Inventory:");
+					System.out.println("Current Inventory:");
 					GlobalData.getInstance().inventory.printCurrentInventory();
 					System.out.print("\nEnter any number to Return to Menu: ");
 					sc.nextInt(); sc.nextLine();
@@ -198,7 +201,7 @@ public class Pharmacist extends Staff {
 					int submitMore;
 					while (true) {
 						System.out.println("\n");
-						GlobalData.getInstance().inventory.createRequest(sc);
+						GlobalData.getInstance().inventory.createRequestMenu(sc);
 						System.out.print("Would you like to Submit More Restock Requests? " +
 								"1. Yes; 2. No\nEnter your choice: ");
 						submitMore = sc.nextInt(); sc.nextLine();

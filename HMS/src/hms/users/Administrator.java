@@ -1,8 +1,11 @@
 package hms.users;
 
 import hms.GlobalData;
+import hms.appointments.Appointment;
+import hms.appointments.AppointmentScheduler;
 
 import java.util.Scanner;
+import java.util.UUID;
 
 public class Administrator extends Staff {
 	
@@ -36,6 +39,29 @@ public class Administrator extends Staff {
 					break;
 
 				case 2:
+					boolean appointmentFound = false;
+					boolean alreadyTried = false;
+					Appointment appointment = null;
+					String appointmentID;
+
+					while (!appointmentFound) {
+						if (alreadyTried) { System.out.println("Invalid Appointment ID! Try again: "); }
+						System.out.print("Enter Appointment ID (0 to Cancel): ");
+						appointmentID = sc.nextLine();
+						if (appointmentID.equals("0")) {
+							System.out.println("Operation Cancelled. Returning to Menu...\n");
+							break;
+						}
+						if (AppointmentScheduler.getInstance().findAppointment(UUID.fromString(appointmentID),
+								AppointmentScheduler.getInstance().getAppointments()) != null){
+							appointment = AppointmentScheduler.getInstance().findAppointment(UUID.fromString(appointmentID),
+									AppointmentScheduler.getInstance().getAppointments());
+							appointmentFound = true;
+						}
+						alreadyTried = true;
+					}
+
+					if (appointmentFound) appointment.print();
 
 					break;
 
@@ -70,7 +96,7 @@ public class Administrator extends Staff {
 	}
 
 	public void staffMenu(Scanner sc) {
-		System.out.println("-----Staff Management-----");
+		System.out.println("\n-----Staff Management-----");
 		System.out.println("1. Add Staff Member");
 		System.out.println("2. Update Existing Staff Member");
 		System.out.println("3. Remove Staff Member");
@@ -99,7 +125,7 @@ public class Administrator extends Staff {
 								System.out.print("Operation Cancelled. Returning to menu...\n");
 								break;
 							}
-							while (!GlobalData.getInstance().userList.updateDoctorByID(doctorID, sc)){
+							while (!GlobalData.getInstance().userList.updateDoctorByIDMenu(doctorID, sc)){
 								System.out.print("Doctor Does Not Exist! Try again: ");
 								doctorID = sc.nextLine();
 							}
@@ -112,7 +138,7 @@ public class Administrator extends Staff {
 								System.out.print("Operation Cancelled. Returning to menu...\n");
 								break;
 							}
-							while (!GlobalData.getInstance().userList.updatePharmacistByID(pharmacistID, sc)){
+							while (!GlobalData.getInstance().userList.updatePharmacistByIDMenu(pharmacistID, sc)){
 								System.out.print("Pharmacist Does Not Exist! Try again: ");
 								pharmacistID = sc.nextLine();
 							}
@@ -125,7 +151,7 @@ public class Administrator extends Staff {
 								System.out.print("Operation Cancelled. Returning to menu...\n");
 								break;
 							}
-							while (!GlobalData.getInstance().userList.updatePharmacistByID(administratorID, sc)){
+							while (!GlobalData.getInstance().userList.updateAdministratorByIDMenu(administratorID, sc)){
 								System.out.print("Administrator Does Not Exist! Try again: ");
 								administratorID = sc.nextLine();
 							}
@@ -203,7 +229,7 @@ public class Administrator extends Staff {
 	}
 
 	public void inventoryMenu(Scanner sc) {
-		System.out.println("-----Inventory Management-----");
+		System.out.println("\n-----Inventory Management-----");
 		System.out.println("1. View Medication Inventory");
 		System.out.println("2. Add New Medication to Inventory");
 		System.out.println("3. Update Medication Stock Levels");
@@ -218,7 +244,7 @@ public class Administrator extends Staff {
 			inventoryChoice = sc.nextInt(); sc.nextLine();
 			switch (inventoryChoice) {
 				case 1:
-					System.out.println("Here's the Current Inventory:");
+					System.out.println("Current Inventory:");
 					GlobalData.getInstance().inventory.printCurrentInventory();
 					System.out.print("\nEnter any number to Return to Menu: ");
 					sc.nextInt(); sc.nextLine();
@@ -229,7 +255,7 @@ public class Administrator extends Staff {
 					int addMore;
 					while (true) {
 						System.out.println("\n");
-						GlobalData.getInstance().inventory.addNewMedicine(sc);
+						GlobalData.getInstance().inventory.addNewMedicineMenu(sc);
 						System.out.print("Would you like to Add More Medicines to the Inventory? " +
 								"1. Yes; 2. No\nEnter your choice: ");
 						addMore = sc.nextInt(); sc.nextLine();
@@ -245,14 +271,29 @@ public class Administrator extends Staff {
 					break;
 
 				case 3:
-
+					int updateMoreMeds;
+					while (true) {
+						System.out.println("\n");
+						GlobalData.getInstance().inventory.updateStockLevelMenu(sc);
+						System.out.print("Would you like to Update More Medication Stock Levels? " +
+								"1. Yes; 2. No\nEnter your choice: ");
+						updateMoreMeds = sc.nextInt(); sc.nextLine();
+						while (updateMoreMeds != 1 && updateMoreMeds != 2) {
+							System.out.print("Invalid choice! Try again: ");
+							updateMoreMeds = sc.nextInt(); sc.nextLine();
+						}
+						if (updateMoreMeds == 2) {
+							System.out.println("Returning to Menu...\n");
+							break;
+						}
+					}
 					break;
 
 				case 4:
 					int updateMoreAlerts;
 					while (true) {
 						System.out.println("\n");
-						GlobalData.getInstance().inventory.setNewLowLevel(sc);
+						GlobalData.getInstance().inventory.setNewLowLevelMenu(sc);
 						System.out.print("Would you like to Update More Low Levels? " +
 								"1. Yes; 2. No\nEnter your choice: ");
 						updateMoreAlerts = sc.nextInt(); sc.nextLine();
@@ -268,7 +309,7 @@ public class Administrator extends Staff {
 					break;
 
 				case 5:
-
+					GlobalData.getInstance().inventory.manageRestockRequestsMenu(sc);
 					break;
 
 				case 6:

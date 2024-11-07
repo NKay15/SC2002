@@ -56,12 +56,14 @@ public class Appointment {
         rescheduled = null;
     }
 
-    public void setAop(Scanner sc) {
-        aop = new AppointmentOutcomeRecord(sc);
+    public void setAop() {
+        aop = new AppointmentOutcomeRecord();
     }
+
     public void setRescheduled(Appointment appointment){
         rescheduled = appointment;
     }
+
     /**
      * Accessor of patientID
      *
@@ -142,9 +144,25 @@ public class Appointment {
     /**
      * Change the appointment to complete and generate the appointment outcome record
      */
-    public void complete(Scanner sc) {
+    public void complete() {
         status = 4;
-        aop = new AppointmentOutcomeRecord(sc);
+        aop = new AppointmentOutcomeRecord();
+    }
+
+    /**
+     * Print all details of appointment
+     */
+    public void print(){
+        System.out.println("Appointment UUID: " + uuid);
+        System.out.println("Patient ID: " + patient.getID());
+        System.out.println("Doctor ID: " + doctor.getID());
+        System.out.print("Status: "); printStatus();
+        System.out.println("Date: " + date.get());
+        System.out.println("Time: " + timeSlot.get());
+        if (status == 4) {
+            System.out.println();
+            aop.print();
+        }
     }
 
     /**
@@ -153,19 +171,19 @@ public class Appointment {
     public void printStatus() {
         switch (status) {
             case 1:
-                System.out.println("pending");
+                System.out.println("Pending");
                 break;
             case 2:
-                System.out.println("confirmed");
+                System.out.println("Confirmed");
                 break;
             case 3:
-                System.out.println("canceled");
+                System.out.println("Cancelled");
                 break;
             case 4:
-                System.out.println("completed");
+                System.out.println("Completed");
                 break;
             case 5:
-                System.out.println("rescheduled");
+                System.out.println("Rescheduled");
                 break;
         }
     }

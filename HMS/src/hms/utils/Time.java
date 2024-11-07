@@ -41,6 +41,8 @@ public class Time implements Comparable<Time>{
         }
     }
 
+    public String get() { return this.getHour() + ":" + this.getMinute(); }
+
     public int getHour() {
         return hour;
     }
