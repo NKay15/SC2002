@@ -155,7 +155,7 @@ public class Administrator extends Staff {
 								System.out.print("Administrator Does Not Exist! Try again: ");
 								doctorID = sc.nextLine();
 							}
-							brea
+							break;
 						case 2:
 							System.out.print("Enter Pharmacist's ID (0 to Cancel): ");
 							String pharmacistID = sc.nextLine();
