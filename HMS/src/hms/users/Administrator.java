@@ -112,7 +112,103 @@ public class Administrator extends Staff {
 			staffChoice = sc.nextInt(); sc.nextLine();
 			switch (staffChoice) {
 				case 1:
+					int addWho;
+					System.out.println("Select Role of New Staff Member:");
+					System.out.println("1. Doctor; 2. Pharmacist; 3. Administrator");
+					System.out.println("Enter any other number to Return to Menu.");
+					System.out.print("Enter your choice: ");
+					addWho = sc.nextInt(); sc.nextLine();
+					if (addWho < 1 || addWho > 3) {
+						System.out.println("Returning to Menu...\n");
+						break;
+					}
 
+					System.out.print("Enter ID: ");
+					String newID = sc.nextLine();
+					System.out.print("Enter Name: ");
+					String newName = sc.nextLine();
+					System.out.print("Enter Gender: ");
+					int newGender = sc.nextInt(); sc.nextLine();
+					System.out.print("Enter Age: ");
+					int newAge = sc.nextInt(); sc.nextLine();
+
+					System.out.println("\nPlease ensure that all fields below are correct before confirming:");
+					System.out.println("ID: " + newID);
+					System.out.println("Name: " + newName);
+					System.out.println("Gender: " + newGender);
+					System.out.println("Age: " + newAge);
+
+					int confirmAdd;
+					switch (addWho) {
+						case 1:
+							System.out.println("Confirm to Add New Doctor?");
+							System.out.print("Enter 1 to Confirm; or 2 to Cancel.");
+							System.out.print("Enter your choice: ");
+							confirmAdd = sc.nextInt(); sc.nextLine();
+							while (true) {
+								switch (confirmAdd) {
+									case 1:
+										Doctor newDoctor = new Doctor(newID, newName, newGender, newAge);
+										GlobalData.getInstance().userList.addDoctor(newDoctor);
+										System.out.println("New Doctor Successfully Added! Returning to Menu...\n");
+										break;
+									case 2:
+										System.out.println("Operation Cancelled. Returning to Menu...\n");
+										break;
+									default:
+										System.out.print("Invalid choice! Try again: ");
+										continue;
+								}
+								break;
+							}
+							break;
+
+						case 2:
+							System.out.println("Confirm to Add New Pharmacist?");
+							System.out.print("Enter 1 to Confirm; or 2 to Cancel.");
+							System.out.print("Enter your choice: ");
+							confirmAdd = sc.nextInt(); sc.nextLine();
+							while (true) {
+								switch (confirmAdd) {
+									case 1:
+										Pharmacist newPharmacist = new Pharmacist(newID, newName, newGender, newAge);
+										GlobalData.getInstance().userList.addPharmacist(newPharmacist);
+										System.out.println("New Pharmacist Successfully Added! Returning to Menu...\n");
+										break;
+									case 2:
+										System.out.println("Operation Cancelled. Returning to Menu...\n");
+										break;
+									default:
+										System.out.print("Invalid choice! Try again: ");
+										continue;
+								}
+								break;
+							}
+							break;
+
+						case 3:
+							System.out.println("Confirm to Add New Administrator?");
+							System.out.print("Enter 1 to Confirm; or 2 to Cancel.");
+							System.out.print("Enter your choice: ");
+							confirmAdd = sc.nextInt(); sc.nextLine();
+							while (true) {
+								switch (confirmAdd) {
+									case 1:
+										Administrator newAdministrator = new Administrator(newID, newName, newGender, newAge);
+										GlobalData.getInstance().userList.addAdministrator(newAdministrator);
+										System.out.println("New Administrator Successfully Added! Returning to Menu...\n");
+										break;
+									case 2:
+										System.out.println("Operation Cancelled. Returning to Menu...\n");
+										break;
+									default:
+										System.out.print("Invalid choice! Try again: ");
+										continue;
+								}
+								break;
+							}
+							break;
+					}
 					break;
 
 				case 2:
