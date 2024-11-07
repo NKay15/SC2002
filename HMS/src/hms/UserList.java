@@ -2,10 +2,7 @@ package hms;
 
 import hms.users.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Scanner;
+import java.util.*;
 
 public class UserList {
     /**
@@ -76,10 +73,42 @@ public class UserList {
     }
 
     /**
+     * Menu to Remove Pharmacist by ID (for Admins)
+     * @param ID
+     */
+    public boolean removeDoctorByIDMenu(String ID) {
+        for (Doctor doctor : doctors) {
+            if (doctor.getID().equals(ID)) {
+                Scanner sc = new Scanner(System.in);
+                System.out.println("Confirm to Remove Doctor?");
+                System.out.print("Enter 1 to Confirm; or 2 to Cancel.\nEnter your choice: ");
+                int choice;
+                while (true) {
+                    choice = sc.nextInt();
+                    sc.nextLine();
+                    switch (choice) {
+                        case 1:
+                            doctors.remove(doctor);
+                            System.out.println("Pharmacist Successfully Removed! Returning to Menu...\n");
+                            break;
+                        case 2:
+                            System.out.println("Operation Cancelled. Returning to Menu...\n");
+                            break;
+                        default:
+                            System.out.print("Invalid choice! Enter your choice: ");
+                            continue;
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    /**
      * Update Doctor by ID
      * @Param ID
      */
-    public void updateDoctorByID(String ID) {
+    public boolean updateDoctorByID(String ID) {
         Doctor curDoctor = null;
         for (Doctor doctor : doctors) {
             if (doctor.getID().equals(ID)) {
@@ -90,38 +119,84 @@ public class UserList {
 
         /* If there are no doctor found */
         if (curDoctor == null) {
-            return;
+            return false;
         }
 
         /* Menu */
         System.out.println("-----Doctor Update Menu-----");
-    	System.out.println("1.Update Name");
-    	System.out.println("2.Update Gender");
-        System.out.println("3.Update Age");
-
+        System.out.println("Doctor ID: " + curDoctor.getID());
+    	System.out.println("1. Update Name");
+    	System.out.println("2. Update Gender");
+        System.out.println("3. Update Age");
+        System.out.println("4. Cancel");
+        System.out.println("----------------------------");
+        System.out.print("Enter your choice: ");
         Scanner sc = new Scanner(System.in);
-        int choice = sc.nextInt();
+        int choice;
 
-        switch(choice) {
-            case 1:
-                System.out.println("Enter new name");
-                String name = sc.next();
-                curDoctor.setName(name);
-                break;
-            case 2:
-                System.out.println("Enter new gender");
-                int gender = sc.nextInt();
-                curDoctor.setGender(gender);
-                break;
-            case 3:
-                System.out.println("Enter new age");
-                int age = sc.nextInt();
-                curDoctor.setAge(age);
-                break;
+        while (true) {
+            choice = sc.nextInt(); sc.nextLine();
+            switch (choice) {
+                case 1:
+                    System.out.println("Enter New Name: ");
+                    String name = sc.nextLine();
+                    curDoctor.setName(name);
+                    break;
+
+                case 2:
+                    System.out.print("Enter New Gender: ");
+                    int gender = sc.nextInt();
+                    sc.nextLine();
+                    curDoctor.setGender(gender);
+                    break;
+
+                case 3:
+                    System.out.print("Enter New Age: ");
+                    int age = sc.nextInt();
+                    sc.nextLine();
+                    curDoctor.setAge(age);
+                    break;
+
+                case 4:
+                    System.out.println("Operation Cancelled. Returning to Menu...\n");
+                    sc.close();
+                    return true;
+
+                default:
+                    System.out.println("Invalid choice! Enter your choice: ");
+                    continue;
+            }
+            break;
         }
 
-        removeDoctorByID(ID);
-        addDoctor(curDoctor);
+        System.out.println("\nPlease ensure that all fields below are correct before confirming:\n");
+        System.out.println("Doctor ID: " + curDoctor.getID());
+        System.out.println("Name: " + curDoctor.getName());
+        System.out.println("Gender: " + curDoctor.getGender());
+        System.out.println("Age: " + curDoctor.getAge());
+        System.out.println("\nConfirm to Update Details? Enter 1 to Confirm; or 2 to Cancel.");
+        System.out.print("Enter your choice: ");
+
+        while (true) {
+            choice = sc.nextInt(); sc.nextLine();
+            switch (choice) {
+                case 1:
+                    removeDoctorByID(ID);
+                    addDoctor(curDoctor);
+                    System.out.println("Doctor Successfully Updated! Returning to Menu...\n");
+                    break;
+
+                case 2:
+                    System.out.println("Operation Cancelled. Returning to Menu...\n");
+                    break;
+
+                case 3:
+                    System.out.print("Invalid Choice! Enter your choice: ");
+                    continue;
+            }
+            sc.close();
+            return true;
+        }
     }
 
     /**
@@ -217,17 +292,50 @@ public class UserList {
     public void removePharmacistByID(String ID) {
         for (Pharmacist pharmacist : pharmacists) {
             if (pharmacist.getID().equals(ID)) {
-                pharmacists.remove(pharmacist);
+                doctors.remove(pharmacist);
                 break;
             }
         }
     }
 
     /**
+     * Menu to Remove Pharmacist by ID (for Admins)
+     * @param ID
+     */
+    public boolean removePharmacistByIDMenu(String ID) {
+        for (Pharmacist pharmacist : pharmacists) {
+            if (pharmacist.getID().equals(ID)) {
+                Scanner sc = new Scanner(System.in);
+                System.out.println("Confirm to Remove Pharmacist?");
+                System.out.print("Enter 1 to Confirm; or 2 to Cancel.\nEnter your choice: ");
+                int choice;
+                while (true) {
+                    choice = sc.nextInt();
+                    sc.nextLine();
+                    switch (choice) {
+                        case 1:
+                            pharmacists.remove(pharmacist);
+                            System.out.println("Pharmacist Successfully Removed! Returning to Menu...\n");
+                            break;
+                        case 2:
+                            System.out.println("Operation Cancelled. Returning to Menu...\n");
+                            break;
+                        default:
+                            System.out.print("Invalid choice! Enter your choice: ");
+                            continue;
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * Update Pharmacist by ID
      * @Param ID
      */
-    public void updatePharmacistByID(String ID) {
+    public boolean updatePharmacistByID(String ID) {
         Pharmacist curPharmacist = null;
         for (Pharmacist pharmacist : pharmacists) {
             if (pharmacist.getID().equals(ID)) {
@@ -238,38 +346,84 @@ public class UserList {
 
         /* If there are no doctor found */
         if (curPharmacist == null) {
-            return;
+            return false;
         }
 
         /* Menu */
         System.out.println("-----Pharmacist Update Menu-----");
+        System.out.println("Pharmacist ID: " + curPharmacist.getID());
     	System.out.println("1.Update Name");
     	System.out.println("2.Update Gender");
         System.out.println("3.Update Age");
-
+        System.out.println("4. Cancel");
+        System.out.println("----------------------------");
+        System.out.print("Enter your choice: ");
         Scanner sc = new Scanner(System.in);
-        int choice = sc.nextInt();
+        int choice;
 
-        switch(choice) {
-            case 1:
-                System.out.println("Enter new name");
-                String name = sc.next();
-                curPharmacist.setName(name);
-                break;
-            case 2:
-                System.out.println("Enter new gender");
-                int gender = sc.nextInt();
-                curPharmacist.setGender(gender);
-                break;
-            case 3:
-                System.out.println("Enter new age");
-                int age = sc.nextInt();
-                curPharmacist.setAge(age);
-                break;
+        while (true) {
+            choice = sc.nextInt(); sc.nextLine();
+            switch (choice) {
+                case 1:
+                    System.out.println("Enter New Name: ");
+                    String name = sc.nextLine();
+                    curPharmacist.setName(name);
+                    break;
+
+                case 2:
+                    System.out.print("Enter New Gender: ");
+                    int gender = sc.nextInt();
+                    sc.nextLine();
+                    curPharmacist.setGender(gender);
+                    break;
+
+                case 3:
+                    System.out.print("Enter New Age: ");
+                    int age = sc.nextInt();
+                    sc.nextLine();
+                    curPharmacist.setAge(age);
+                    break;
+
+                case 4:
+                    System.out.println("Operation Cancelled. Returning to Menu...\n");
+                    sc.close();
+                    return true;
+
+                default:
+                    System.out.println("Invalid choice! Enter your choice: ");
+                    continue;
+            }
+            break;
         }
 
-        removePharmacistByID(ID);
-        addPharmacist(curPharmacist);
+        System.out.println("\nPlease ensure that all fields below are correct before confirming:\n");
+        System.out.println("Pharmacist ID: " + curPharmacist.getID());
+        System.out.println("Name: " + curPharmacist.getName());
+        System.out.println("Gender: " + curPharmacist.getGender());
+        System.out.println("Age: " + curPharmacist.getAge());
+        System.out.println("\nConfirm to Update Details? Enter 1 to Confirm; or 2 to Cancel.");
+        System.out.print("Enter your choice: ");
+
+        while (true) {
+            choice = sc.nextInt(); sc.nextLine();
+            switch (choice) {
+                case 1:
+                    removePharmacistByID(ID);
+                    addPharmacist(curPharmacist);
+                    System.out.println("Pharmacist Successfully Updated! Returning to Menu...\n");
+                    break;
+
+                case 2:
+                    System.out.println("Operation Cancelled. Returning to Menu...\n");
+                    break;
+
+                case 3:
+                    System.out.print("Invalid Choice! Enter your choice: ");
+                    continue;
+            }
+            sc.close();
+            return true;
+        }
     }
 
     /**
@@ -297,23 +451,55 @@ public class UserList {
     }
 
     /**
-     * Remove Administrators by ID
+     * Remove Administrator by ID
      * @param ID
      */
     public void removeAdministratorByID(String ID) {
         for (Administrator administrator : administrators) {
             if (administrator.getID().equals(ID)) {
-                administrators.remove(administrator);
+                doctors.remove(administrator);
                 break;
             }
         }
     }
 
     /**
+     * Menu to Remove Pharmacist by ID (for Admins)
+     * @param ID
+     */
+    public boolean removeAdministratorByIDMenu(String ID) {
+        for (Administrator administrator : administrators) {
+            if (administrator.getID().equals(ID)) {
+                Scanner sc = new Scanner(System.in);
+                System.out.println("Confirm to Remove Administrator?");
+                System.out.print("Enter 1 to Confirm; or 2 to Cancel.\nEnter your choice: ");
+                int choice;
+                while (true) {
+                    choice = sc.nextInt(); sc.nextLine();
+                    switch (choice) {
+                        case 1:
+                            administrators.remove(administrator);
+                            System.out.println("Administrator Successfully Removed! Returning to Menu...\n");
+                            break;
+                        case 2:
+                            System.out.println("Operation Cancelled. Returning to Menu...\n");
+                            break;
+                        default:
+                            System.out.print("Invalid choice! Enter your choice: ");
+                            continue;
+                    }
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * Update Administrator by ID
      * @Param ID
      */
-    public void updateAdministratorByID(String ID) {
+    public boolean updateAdministratorByID(String ID) {
         Administrator curAdministrator = null;
         for (Administrator administrator : administrators) {
             if (administrator.getID().equals(ID)) {
@@ -324,38 +510,85 @@ public class UserList {
 
         /* If there are no doctor found */
         if (curAdministrator == null) {
-            return;
+            return false;
         }
 
         /* Menu */
         System.out.println("-----Administrator Update Menu-----");
+        System.out.println("Administrator ID: " + curAdministrator.getID());
     	System.out.println("1.Update Name");
     	System.out.println("2.Update Gender");
         System.out.println("3.Update Age");
-
+        System.out.println("4. Cancel");
+        System.out.println("----------------------------");
+        System.out.print("Enter your choice: ");
         Scanner sc = new Scanner(System.in);
-        int choice = sc.nextInt();
+        int choice;
 
-        switch(choice) {
-            case 1:
-                System.out.println("Enter new name");
-                String name = sc.next();
-                curAdministrator.setName(name);
-                break;
-            case 2:
-                System.out.println("Enter new gender");
-                int gender = sc.nextInt();
-                curAdministrator.setGender(gender);
-                break;
-            case 3:
-                System.out.println("Enter new age");
-                int age = sc.nextInt();
-                curAdministrator.setAge(age);
-                break;
+        while (true) {
+            choice = sc.nextInt(); sc.nextLine();
+            switch (choice) {
+                case 1:
+                    System.out.println("Enter New Name: ");
+                    String name = sc.nextLine();
+                    curAdministrator.setName(name);
+                    break;
+
+                case 2:
+                    System.out.print("Enter New Gender: ");
+                    int gender = sc.nextInt();
+                    sc.nextLine();
+                    curAdministrator.setGender(gender);
+                    break;
+
+                case 3:
+                    System.out.print("Enter New Age: ");
+                    int age = sc.nextInt();
+                    sc.nextLine();
+                    curAdministrator.setAge(age);
+                    break;
+
+                case 4:
+                    System.out.println("Operation Cancelled. Returning to Menu...\n");
+                    sc.close();
+                    return true;
+
+                default:
+                    System.out.println("Invalid Choice! Enter your choice: ");
+                    continue;
+            }
+            break;
         }
 
-        removeAdministratorByID(ID);
-        addAdministrator(curAdministrator);
+        System.out.println("\nPlease ensure that all fields below are correct before confirming:\n");
+        System.out.println("Administrator ID: " + curAdministrator.getID());
+        System.out.println("Name: " + curAdministrator.getName());
+        System.out.println("Gender: " + curAdministrator.getGender());
+        System.out.println("Age: " + curAdministrator.getAge());
+        System.out.println("\nConfirm to Update Details? Enter 1 to Confirm; or 2 to Cancel.");
+        System.out.print("Enter your choice: ");
+
+        while (true) {
+            choice = sc.nextInt();
+            sc.nextLine();
+            switch (choice) {
+                case 1:
+                    removeAdministratorByID(ID);
+                    addAdministrator(curAdministrator);
+                    System.out.println("Pharmacist Successfully Updated! Returning to Menu...\n");
+                    break;
+
+                case 2:
+                    System.out.println("Operation Cancelled. Returning to Menu...\n");
+                    break;
+
+                case 3:
+                    System.out.print("Invalid choice! Enter your choice: ");
+                    continue;
+            }
+            sc.close();
+            return true;
+        }
     }
 
     /**

@@ -90,11 +90,102 @@ public class Administrator extends Staff {
 					break;
 
 				case 2:
+					System.out.print("Enter 1 to Update Doctor; 2 to Update Pharmacist; 3 to Update Administrator; " +
+							"or Enter any other number to Return to Menu.\nEnter your choice: ");
+					int updateWho = sc.nextInt(); sc.nextLine();
+					switch (updateWho) {
+						case 1:
+							System.out.print("Enter Doctor's ID (0 to Cancel): ");
+							String doctorID = sc.nextLine();
+							if (doctorID.equals("0")) {
+								System.out.print("Operation Cancelled. Returning to menu...\n");
+								break;
+							}
+							while (!GlobalData.getInstance().userList.updateDoctorByID(doctorID)){
+								System.out.print("Doctor Does Not Exist! Try again: ");
+								doctorID = sc.nextLine();
+							}
+							break;
 
+						case 2:
+							System.out.print("Enter Pharmacist's ID (0 to Cancel): ");
+							String pharmacistID = sc.nextLine();
+							if (pharmacistID.equals("0")) {
+								System.out.print("Operation Cancelled. Returning to menu...\n");
+								break;
+							}
+							while (!GlobalData.getInstance().userList.updatePharmacistByID(pharmacistID)){
+								System.out.print("Pharmacist Does Not Exist! Try again: ");
+								pharmacistID = sc.nextLine();
+							}
+							break;
+
+						case 3:
+							System.out.print("Enter Administrator's ID (0 to Cancel): ");
+							String administratorID = sc.nextLine();
+							if (administratorID.equals("0")) {
+								System.out.print("Operation Cancelled. Returning to menu...\n");
+								break;
+							}
+							while (!GlobalData.getInstance().userList.updatePharmacistByID(administratorID)){
+								System.out.print("Administrator Does Not Exist! Try again: ");
+								administratorID = sc.nextLine();
+							}
+							break;
+
+						default:
+							System.out.println("Returning to Menu...\n");
+							break;
+					}
 					break;
 
 				case 3:
+					System.out.print("Enter 1 to Remove Doctor; 2 to Remove Pharmacist; 3 to Remove Administrator; " +
+							"or Enter any other number to Return to Menu.\nEnter your choice: ");
+					int removeWho = sc.nextInt(); sc.nextLine();
+					switch (removeWho) {
+						case 1:
+							System.out.print("Enter Doctor's ID (0 to Cancel): ");
+							String doctorID = sc.nextLine();
+							if (doctorID.equals("0")) {
+								System.out.print("Operation Cancelled. Returning to menu...\n");
+								break;
+							}
+							while (!GlobalData.getInstance().userList.removeDoctorByIDMenu(doctorID)){
+								System.out.print("Administrator Does Not Exist! Try again: ");
+								doctorID = sc.nextLine();
+							}
+							brea
+						case 2:
+							System.out.print("Enter Pharmacist's ID (0 to Cancel): ");
+							String pharmacistID = sc.nextLine();
+							if (pharmacistID.equals("0")) {
+								System.out.print("Operation Cancelled. Returning to menu...\n");
+								break;
+							}
+							while (!GlobalData.getInstance().userList.removePharmacistByIDMenu(pharmacistID)){
+								System.out.print("Administrator Does Not Exist! Try again: ");
+								pharmacistID = sc.nextLine();
+							}
+							break;
 
+						case 3:
+							System.out.print("Enter Administrator's ID (0 to Cancel): ");
+							String administratorID = sc.nextLine();
+							if (administratorID.equals("0")) {
+								System.out.print("Operation Cancelled. Returning to menu...\n");
+								break;
+							}
+							while (!GlobalData.getInstance().userList.removeAdministratorByIDMenu(administratorID)){
+								System.out.print("Administrator Does Not Exist! Try again: ");
+								administratorID = sc.nextLine();
+							}
+							break;
+
+						default:
+							System.out.println("Returning to Menu...\n");
+							break;
+					}
 					break;
 
 				case 4:

@@ -236,6 +236,7 @@ public class Pharmacist extends Staff {
 							break;
 						}
 					}
+					break;
 			}
 		}
 	}
