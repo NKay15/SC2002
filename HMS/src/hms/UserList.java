@@ -76,10 +76,9 @@ public class UserList {
      * Menu to Remove Pharmacist by ID (for Admins)
      * @param ID
      */
-    public boolean removeDoctorByIDMenu(String ID) {
+    public boolean removeDoctorByIDMenu(String ID, Scanner sc) {
         for (Doctor doctor : doctors) {
             if (doctor.getID().equals(ID)) {
-                Scanner sc = new Scanner(System.in);
                 System.out.println("Confirm to Remove Doctor?");
                 System.out.print("Enter 1 to Confirm; or 2 to Cancel.\nEnter your choice: ");
                 int choice;
@@ -108,7 +107,7 @@ public class UserList {
      * Update Doctor by ID
      * @Param ID
      */
-    public boolean updateDoctorByID(String ID) {
+    public boolean updateDoctorByID(String ID, Scanner sc) {
         Doctor curDoctor = null;
         for (Doctor doctor : doctors) {
             if (doctor.getID().equals(ID)) {
@@ -131,7 +130,6 @@ public class UserList {
         System.out.println("4. Cancel");
         System.out.println("----------------------------");
         System.out.print("Enter your choice: ");
-        Scanner sc = new Scanner(System.in);
         int choice;
 
         while (true) {
@@ -159,7 +157,6 @@ public class UserList {
 
                 case 4:
                     System.out.println("Operation Cancelled. Returning to Menu...\n");
-                    sc.close();
                     return true;
 
                 default:
@@ -194,7 +191,6 @@ public class UserList {
                     System.out.print("Invalid Choice! Enter your choice: ");
                     continue;
             }
-            sc.close();
             return true;
         }
     }
@@ -302,10 +298,9 @@ public class UserList {
      * Menu to Remove Pharmacist by ID (for Admins)
      * @param ID
      */
-    public boolean removePharmacistByIDMenu(String ID) {
+    public boolean removePharmacistByIDMenu(String ID, Scanner sc) {
         for (Pharmacist pharmacist : pharmacists) {
             if (pharmacist.getID().equals(ID)) {
-                Scanner sc = new Scanner(System.in);
                 System.out.println("Confirm to Remove Pharmacist?");
                 System.out.print("Enter 1 to Confirm; or 2 to Cancel.\nEnter your choice: ");
                 int choice;
@@ -335,7 +330,7 @@ public class UserList {
      * Update Pharmacist by ID
      * @Param ID
      */
-    public boolean updatePharmacistByID(String ID) {
+    public boolean updatePharmacistByID(String ID, Scanner sc) {
         Pharmacist curPharmacist = null;
         for (Pharmacist pharmacist : pharmacists) {
             if (pharmacist.getID().equals(ID)) {
@@ -358,7 +353,6 @@ public class UserList {
         System.out.println("4. Cancel");
         System.out.println("----------------------------");
         System.out.print("Enter your choice: ");
-        Scanner sc = new Scanner(System.in);
         int choice;
 
         while (true) {
@@ -386,7 +380,6 @@ public class UserList {
 
                 case 4:
                     System.out.println("Operation Cancelled. Returning to Menu...\n");
-                    sc.close();
                     return true;
 
                 default:
@@ -421,7 +414,6 @@ public class UserList {
                     System.out.print("Invalid Choice! Enter your choice: ");
                     continue;
             }
-            sc.close();
             return true;
         }
     }
@@ -430,7 +422,7 @@ public class UserList {
      * Accesspr of Administrators
      * @return list of administrators
      */
-    public ArrayList<Administrator> getAdministrator() {
+    public ArrayList<Administrator> getAdministrators() {
         return administrators;
     }
 
@@ -467,10 +459,9 @@ public class UserList {
      * Menu to Remove Pharmacist by ID (for Admins)
      * @param ID
      */
-    public boolean removeAdministratorByIDMenu(String ID) {
+    public boolean removeAdministratorByIDMenu(String ID, Scanner sc) {
         for (Administrator administrator : administrators) {
             if (administrator.getID().equals(ID)) {
-                Scanner sc = new Scanner(System.in);
                 System.out.println("Confirm to Remove Administrator?");
                 System.out.print("Enter 1 to Confirm; or 2 to Cancel.\nEnter your choice: ");
                 int choice;
@@ -499,7 +490,7 @@ public class UserList {
      * Update Administrator by ID
      * @Param ID
      */
-    public boolean updateAdministratorByID(String ID) {
+    public boolean updateAdministratorByID(String ID, Scanner sc) {
         Administrator curAdministrator = null;
         for (Administrator administrator : administrators) {
             if (administrator.getID().equals(ID)) {
@@ -522,7 +513,6 @@ public class UserList {
         System.out.println("4. Cancel");
         System.out.println("----------------------------");
         System.out.print("Enter your choice: ");
-        Scanner sc = new Scanner(System.in);
         int choice;
 
         while (true) {
@@ -550,7 +540,6 @@ public class UserList {
 
                 case 4:
                     System.out.println("Operation Cancelled. Returning to Menu...\n");
-                    sc.close();
                     return true;
 
                 default:
@@ -586,7 +575,6 @@ public class UserList {
                     System.out.print("Invalid choice! Enter your choice: ");
                     continue;
             }
-            sc.close();
             return true;
         }
     }
@@ -595,14 +583,13 @@ public class UserList {
      * Get all users (By selection)
      * @return list of users
      */
-    public ArrayList<User> getUsersSorted() {
+    public ArrayList<User> getUsersSorted(Scanner sc) {
         System.out.println("-----Sort Users By-----");
     	System.out.println("1.Role");
     	System.out.println("2.Gender");
         System.out.println("3.Name");
         System.out.println("4.ID");
 
-        Scanner sc = new Scanner(System.in);
         int choice = 0;
 
         do {

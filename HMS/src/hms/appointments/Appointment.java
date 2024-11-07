@@ -56,8 +56,8 @@ public class Appointment {
         rescheduled = null;
     }
 
-    public void setAop() {
-        aop = new AppointmentOutcomeRecord();
+    public void setAop(Scanner sc) {
+        aop = new AppointmentOutcomeRecord(sc);
     }
     public void setRescheduled(Appointment appointment){
         rescheduled = appointment;
@@ -142,9 +142,9 @@ public class Appointment {
     /**
      * Change the appointment to complete and generate the appointment outcome record
      */
-    public void complete() {
+    public void complete(Scanner sc) {
         status = 4;
-        aop = new AppointmentOutcomeRecord();
+        aop = new AppointmentOutcomeRecord(sc);
     }
 
     /**

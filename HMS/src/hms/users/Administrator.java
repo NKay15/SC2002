@@ -16,7 +16,6 @@ public class Administrator extends Staff {
 	public void menu() {
 		Scanner sc = new Scanner(System.in);
 		int choice = 1;
-
 		while (true) {
 			if (choice >= 1 && choice <= 3) {
 				System.out.println("-----Administrator Menu-----");
@@ -46,14 +45,13 @@ public class Administrator extends Staff {
 					break;
 
 				default:
-					if(!super.useroptions(choice-3)) {
+					if(!super.useroptions(choice-3, sc)) {
 						if (choice == 5) {
 							System.out.print("Confirm Log Out? Enter 1 to Log Out; " +
 									"or Enter any other number to Return to Menu.\nEnter your choice: ");
 							int confirmLogOut = sc.nextInt(); sc.nextLine();
 							if (confirmLogOut == 1) {
 								System.out.println("Logging out...\n");
-								sc.close();
 								return;
 							}
 							else {
@@ -101,7 +99,7 @@ public class Administrator extends Staff {
 								System.out.print("Operation Cancelled. Returning to menu...\n");
 								break;
 							}
-							while (!GlobalData.getInstance().userList.updateDoctorByID(doctorID)){
+							while (!GlobalData.getInstance().userList.updateDoctorByID(doctorID, sc)){
 								System.out.print("Doctor Does Not Exist! Try again: ");
 								doctorID = sc.nextLine();
 							}
@@ -114,7 +112,7 @@ public class Administrator extends Staff {
 								System.out.print("Operation Cancelled. Returning to menu...\n");
 								break;
 							}
-							while (!GlobalData.getInstance().userList.updatePharmacistByID(pharmacistID)){
+							while (!GlobalData.getInstance().userList.updatePharmacistByID(pharmacistID, sc)){
 								System.out.print("Pharmacist Does Not Exist! Try again: ");
 								pharmacistID = sc.nextLine();
 							}
@@ -127,7 +125,7 @@ public class Administrator extends Staff {
 								System.out.print("Operation Cancelled. Returning to menu...\n");
 								break;
 							}
-							while (!GlobalData.getInstance().userList.updatePharmacistByID(administratorID)){
+							while (!GlobalData.getInstance().userList.updatePharmacistByID(administratorID, sc)){
 								System.out.print("Administrator Does Not Exist! Try again: ");
 								administratorID = sc.nextLine();
 							}
@@ -151,7 +149,7 @@ public class Administrator extends Staff {
 								System.out.print("Operation Cancelled. Returning to menu...\n");
 								break;
 							}
-							while (!GlobalData.getInstance().userList.removeDoctorByIDMenu(doctorID)){
+							while (!GlobalData.getInstance().userList.removeDoctorByIDMenu(doctorID, sc)){
 								System.out.print("Administrator Does Not Exist! Try again: ");
 								doctorID = sc.nextLine();
 							}
@@ -163,7 +161,7 @@ public class Administrator extends Staff {
 								System.out.print("Operation Cancelled. Returning to menu...\n");
 								break;
 							}
-							while (!GlobalData.getInstance().userList.removePharmacistByIDMenu(pharmacistID)){
+							while (!GlobalData.getInstance().userList.removePharmacistByIDMenu(pharmacistID, sc)){
 								System.out.print("Administrator Does Not Exist! Try again: ");
 								pharmacistID = sc.nextLine();
 							}
@@ -176,7 +174,7 @@ public class Administrator extends Staff {
 								System.out.print("Operation Cancelled. Returning to menu...\n");
 								break;
 							}
-							while (!GlobalData.getInstance().userList.removeAdministratorByIDMenu(administratorID)){
+							while (!GlobalData.getInstance().userList.removeAdministratorByIDMenu(administratorID, sc)){
 								System.out.print("Administrator Does Not Exist! Try again: ");
 								administratorID = sc.nextLine();
 							}
@@ -231,7 +229,7 @@ public class Administrator extends Staff {
 					int addMore;
 					while (true) {
 						System.out.println("\n");
-						GlobalData.getInstance().inventory.addNewMedicine();
+						GlobalData.getInstance().inventory.addNewMedicine(sc);
 						System.out.print("Would you like to Add More Medicines to the Inventory? " +
 								"1. Yes; 2. No\nEnter your choice: ");
 						addMore = sc.nextInt(); sc.nextLine();
@@ -254,7 +252,7 @@ public class Administrator extends Staff {
 					int updateMoreAlerts;
 					while (true) {
 						System.out.println("\n");
-						GlobalData.getInstance().inventory.setNewLowLevel();
+						GlobalData.getInstance().inventory.setNewLowLevel(sc);
 						System.out.print("Would you like to Update More Low Levels? " +
 								"1. Yes; 2. No\nEnter your choice: ");
 						updateMoreAlerts = sc.nextInt(); sc.nextLine();

@@ -37,8 +37,7 @@ public class User {
      */
     private int gender;
 
-    private void changePassword(){
-        Scanner sc = new Scanner(System.in);
+    private void changePassword(Scanner sc){
         System.out.print("Enter Old Password: ");
         String old = sc.next(); sc.nextLine();
         if(!password.checkPassword(old)) {
@@ -155,9 +154,9 @@ public class User {
      * @param choice number chosen in the user menu and need to be ofset by the number of options in supclass
      * @return if false log out
      */
-    public boolean useroptions(int choice){
+    public boolean useroptions(int choice, Scanner sc){
         switch(choice) {
-            case 1 : changePassword();
+            case 1 : changePassword(sc);
             break;
             default : return false;
         }

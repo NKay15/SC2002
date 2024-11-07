@@ -95,7 +95,7 @@ public class Doctor extends Staff {
 					break;
 
 				default :
-					if(!super.useroptions(choice-7)) {
+					if(!super.useroptions(choice-7, sc)) {
 						System.out.println("Logging out");
 						return;
 					}

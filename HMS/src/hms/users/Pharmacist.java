@@ -26,7 +26,6 @@ public class Pharmacist extends Staff {
 
 		Scanner sc = new Scanner(System.in);
 		int choice = 1;
-
 		while (true) {
 			if (choice >= 1 && choice <= 6) {
 				System.out.println("-----Pharmacist Menu-----");
@@ -199,7 +198,7 @@ public class Pharmacist extends Staff {
 					int submitMore;
 					while (true) {
 						System.out.println("\n");
-						GlobalData.getInstance().inventory.createRequest();
+						GlobalData.getInstance().inventory.createRequest(sc);
 						System.out.print("Would you like to Submit More Restock Requests? " +
 								"1. Yes; 2. No\nEnter your choice: ");
 						submitMore = sc.nextInt(); sc.nextLine();
@@ -215,7 +214,7 @@ public class Pharmacist extends Staff {
 					break;
 					
 				default:
-					if(!super.useroptions(choice-4)) {
+					if(!super.useroptions(choice-4, sc)) {
 						if (choice == 6) {
 							System.out.print("Confirm Log Out? Enter 1 to Log Out; " +
 									"or Enter any other number to Return to Menu.\nEnter your choice: ");
@@ -223,7 +222,6 @@ public class Pharmacist extends Staff {
 							sc.nextLine();
 							if (confirmLogOut == 1) {
 								System.out.println("Logging out...\n");
-								sc.close();
 								return;
 							}
 							else {

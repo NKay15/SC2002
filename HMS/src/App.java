@@ -116,7 +116,15 @@ public class App {
     		break;
 
     	case 4: // Administrator
-    		break;
+			Administrator currentAdministrator = null;
+			for (Administrator administrator : userList.getAdministrators()) {
+				if (administrator.getID().equals(currentUser.getID())) {
+					currentAdministrator = administrator;
+					break;
+				}
+			}
+			currentAdministrator.menu();
+			break;
 			
     	default:
     		break;

@@ -201,7 +201,7 @@ public class Patient extends User {
 	    			break;
 
 	    		default:
-                    if(!super.useroptions(choice-8)) {
+                    if(!super.useroptions(choice-8, sc)) {
                         System.out.println("Logging out");
                         return;
                     }

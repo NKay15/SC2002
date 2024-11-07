@@ -47,9 +47,8 @@ public class Inventory {
     /**
      * Adding new medicine to the inventory
      */
-    public void addNewMedicine() {
+    public void addNewMedicine(Scanner sc) {
         boolean alreadyExists = true;
-        Scanner sc = new Scanner(System.in);
         System.out.print("Enter Name of New Medicine: ");
         String name = sc.next(); sc.nextLine();
 
@@ -98,7 +97,6 @@ public class Inventory {
                     catalog.add(new Medicine(name, amount));
                     lowlevel.add(new Medicine(name, amount));
                     System.out.println("New Medicine \"" + name + "\" Successfully Added to Inventory!");
-                    sc.close();
                     return;
 
                 case 2:
@@ -173,9 +171,8 @@ public class Inventory {
     /**
      * Used by pharmacist to request a restock
      */
-    public void createRequest() {
+    public void createRequest(Scanner sc) {
         System.out.print("Enter Index of Medicine: ");
-        Scanner sc = new Scanner(System.in);
         int med = sc.nextInt(); sc.nextLine();
         while(med < 0 || med > catalog.size()) {
             System.out.print("Invalid input! Try again: ");
@@ -200,7 +197,6 @@ public class Inventory {
                 case 1:
                     requests.add(catalog.get(med-1).copy(quantity));
                     System.out.print("Restock Request Successfully Created!");
-                    sc.close();
                     break;
 
                 case 2:
@@ -253,10 +249,9 @@ public class Inventory {
     /**
      * Change the low level amount of a medicine
      */
-    public void setNewLowLevel() {
+    public void setNewLowLevel(Scanner sc) {
         printCurrentInventory();
         System.out.print("Enter Index of Medicine (0 to cancel): ");
-        Scanner sc = new Scanner(System.in);
         int med = sc.nextInt(); sc.nextLine();
         if (med == 0) {
             System.out.println("Operation Cancelled. Returning to Menu...");
@@ -279,16 +274,14 @@ public class Inventory {
         lowlevel.get(med-1).prescribe(lowlevel.get(med-1).amount());
         lowlevel.get(med-1).restock(quantity);
         System.out.print("Low Level Alert Successfully Updated!");
-        sc.close();
     }
 
     /**
      * Used by ... to manage restock
      */
-    public void manageRestockRequests() {
+    public void manageRestockRequests(Scanner sc) {
         printRestockRequest();
         System.out.print("Enter Index of Request: ");
-        Scanner sc = new Scanner(System.in);
         int req = sc.nextInt(); sc.nextLine();
         while(req < 0 || req > requests.size()) {
             System.out.print("Invalid input! Try again: ");
