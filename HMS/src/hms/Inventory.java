@@ -48,7 +48,7 @@ public class Inventory {
      * Adding new medicine to the inventory
      * @param sc Scanner
      */
-    public void addNewMedicineMenu(Scanner sc) {
+    public void addNewMedicine() {
         boolean alreadyExists = true;
         System.out.print("Enter Name of New Medicine: ");
         String name = sc.next(); sc.nextLine();
@@ -146,7 +146,7 @@ public class Inventory {
      * Used by administrator to add quantity of medication
      * @param sc Scanner
      */
-    public void updateStockLevelMenu(Scanner sc) {
+    public void updateStockLevelMenu() {
         printCurrentInventory();
         System.out.print("Enter Index of Medicine: ");
         int med = sc.nextInt(); sc.nextLine();
@@ -217,7 +217,7 @@ public class Inventory {
      * Used by pharmacist to request a restock
      * @param sc Scanner
      */
-    public void createRequestMenu(Scanner sc) {
+    public void createRequest() {
         System.out.print("Enter Index of Medicine: ");
         int med = sc.nextInt(); sc.nextLine();
         while(med < 0 || med > catalog.size()) {
@@ -295,7 +295,7 @@ public class Inventory {
      * Change the low level amount of a medicine
      * @param sc Scanner
      */
-    public void setNewLowLevelMenu(Scanner sc) {
+    public void setNewLowLevel() {
         printCurrentInventory();
         System.out.print("Enter Index of Medicine (0 to cancel): ");
         int med = sc.nextInt(); sc.nextLine();
@@ -326,61 +326,35 @@ public class Inventory {
      * Used by ... to manage restock
      * @param sc Scanner
      */
-    public void manageRestockRequestsMenu(Scanner sc) {
+    public void manageRestockRequests() {
+        printRestockRequest();
+        System.out.print("Enter Index of Request: ");
+        Scanner sc = new Scanner(System.in);
+        int req = sc.nextInt(); sc.nextLine();
+        while(req < 0 || req > requests.size()) {
+            System.out.print("Invalid input! Try again: ");
+            req = sc.nextInt();
+        }
+        int idx = findIndex(requests.get(req-1));
+        System.out.print("Enter 1 to Exit; 2 to Approve; 3 to Reject.\nEnter your choice: ");
+        int choice;
         while (true) {
-            System.out.println("Pending Restock Requests: ");
-            printRestockRequests();
-            System.out.print("Enter Index of Restock Request to View & Manage: ");
-            int req = sc.nextInt();
-            sc.nextLine();
-            while (req < 0 || req > requests.size()) {
-                System.out.print("Invalid input! Try again: ");
-                req = sc.nextInt();
-            }
-            int idx = findIndex(requests.get(req - 1));
-
-            System.out.print("Enter 1 to Exit; 2 to Approve; 3 to Reject.\nEnter your choice: ");
-            int choice;
-            while (true) {
-                choice = sc.nextInt();
-                sc.nextLine();
-                switch (choice) {
-                    case 1:
-                        System.out.println("Returning to Menu...\n");
-                        break;
-                    case 2:
-                        catalog.get(idx).restock(requests.get(req - 1).amount());
-                        requests.remove(req - 1);
-                        System.out.println("Restock Request Successfully Approved! Returning to Menu...\n");
-                        break;
-                    case 3:
-                        requests.remove(req - 1);
-                        System.out.println("Restock Request Successfully Rejected! Returning to Menu...\n");
-                        break;
-                    default:
-                        System.out.print("Invalid choice! Try again: ");
-                        continue;
-                }
-                break;
-            }
-
-            System.out.println("Continue to Manage Restock Requests?");
-            System.out.print("Enter 1 to Continue; or 2 to Exit.\nEnter your choice: ");
-            while (true) {
-                choice = sc.nextInt();
-                sc.nextLine();
-                switch (choice) {
-                    case 1:
-                        System.out.println();
-                        break;
-                    case 2:
-                        System.out.println("Returning to Menu...\n");
-                        return;
-                    default:
-                        System.out.print("Invalid choice! Try again: ");
-                        continue;
-                }
-                break;
+            choice = sc.nextInt(); sc.nextLine();
+            switch (choice) {
+                case 1:
+                    return;
+                case 2:
+                    catalog.get(idx).restock(requests.get(req - 1).amount());
+                    requests.remove(req - 1);
+                    System.out.println("Request Successfully Approved!");
+                    return;
+                case 3:
+                    requests.remove(req - 1);
+                    System.out.println("Request Successfully Rejected!");
+                    return;
+                default:
+                    System.out.print("Invalid choice! Try again: ");
+                    break;
             }
         }
     }

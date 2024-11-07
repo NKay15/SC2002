@@ -76,7 +76,7 @@ public class UserList {
      * Menu to Remove Pharmacist by ID (for Admins)
      * @param ID
      */
-    public boolean removeDoctorByIDMenu(String ID, Scanner sc) {
+    public boolean removeDoctorByIDMenu(String ID) {
         for (Doctor doctor : doctors) {
             if (doctor.getID().equals(ID)) {
                 System.out.println("Confirm to Remove Doctor?");
@@ -108,7 +108,7 @@ public class UserList {
      * @param ID
      * @param sc Scanner
      */
-    public boolean updateDoctorByIDMenu(String ID, Scanner sc) {
+    public boolean updateDoctorByID(String ID) {
         Doctor curDoctor = null;
         for (Doctor doctor : doctors) {
             if (doctor.getID().equals(ID)) {
@@ -300,7 +300,7 @@ public class UserList {
      * @param ID
      * @param sc Scanner
      */
-    public boolean removePharmacistByIDMenu(String ID, Scanner sc) {
+    public boolean removePharmacistByIDMenu(String ID) {
         for (Pharmacist pharmacist : pharmacists) {
             if (pharmacist.getID().equals(ID)) {
                 System.out.println("Confirm to Remove Pharmacist?");
@@ -333,7 +333,7 @@ public class UserList {
      * @param ID
      * @param sc Scanner
      */
-    public boolean updatePharmacistByIDMenu(String ID, Scanner sc) {
+    public boolean updatePharmacistByID(String ID) {
         Pharmacist curPharmacist = null;
         for (Pharmacist pharmacist : pharmacists) {
             if (pharmacist.getID().equals(ID)) {
@@ -463,7 +463,7 @@ public class UserList {
      * @param ID
      * @param sc Scanner
      */
-    public boolean removeAdministratorByIDMenu(String ID, Scanner sc) {
+    public boolean removeAdministratorByIDMenu(String ID) {
         for (Administrator administrator : administrators) {
             if (administrator.getID().equals(ID)) {
                 System.out.println("Confirm to Remove Administrator?");
@@ -495,7 +495,7 @@ public class UserList {
      * @param ID
      * @param sc Scanner
      */
-    public boolean updateAdministratorByIDMenu(String ID, Scanner sc) {
+    public boolean updateAdministratorByID(String ID) {
         Administrator curAdministrator = null;
         for (Administrator administrator : administrators) {
             if (administrator.getID().equals(ID)) {
@@ -589,7 +589,7 @@ public class UserList {
      * @param sc Scanner
      * @return list of users
      */
-    public ArrayList<User> getUsersSorted(Scanner sc) {
+    public ArrayList<User> getUsersSorted() {
         System.out.println("-----Sort Users By-----");
     	System.out.println("1.Role");
     	System.out.println("2.Gender");

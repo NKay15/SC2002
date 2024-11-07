@@ -201,7 +201,7 @@ public class Pharmacist extends Staff {
 					int submitMore;
 					while (true) {
 						System.out.println("\n");
-						GlobalData.getInstance().inventory.createRequestMenu(sc);
+						GlobalData.getInstance().inventory.createRequest();
 						System.out.print("Would you like to Submit More Restock Requests? " +
 								"1. Yes; 2. No\nEnter your choice: ");
 						submitMore = sc.nextInt(); sc.nextLine();
@@ -217,7 +217,7 @@ public class Pharmacist extends Staff {
 					break;
 					
 				default:
-					if(!super.useroptions(choice-4, sc)) {
+					if(!super.useroptions(choice-4)) {
 						if (choice == 6) {
 							System.out.print("Confirm Log Out? Enter 1 to Log Out; " +
 									"or Enter any other number to Return to Menu.\nEnter your choice: ");
