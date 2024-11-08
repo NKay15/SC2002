@@ -121,6 +121,11 @@ public class User {
 		this.gender = gender;
 	}
 
+    public int getAge(){
+        if (this instanceof Staff) return ((Staff) this).getAge();
+        return 0;
+    }
+
     /**
      * A function to login. It will ask for password.
      * @return role if login is successful otherwise -1

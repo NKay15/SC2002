@@ -190,7 +190,7 @@ public class Inventory {
      * @param aop AppointmentOutcomeRecord of the appointment
      * @return true if successful false otherwise
      */
-    public boolean dispense(AppointmentOutcomeRecord aop){
+    public boolean dispense(AppointmentOutcomeRecord aop) {
         if(aop.isDispensed()) return false;
 
         for(Medicine n : aop.getprescription()) {

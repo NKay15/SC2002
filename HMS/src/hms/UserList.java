@@ -1,6 +1,7 @@
 package hms;
 
 import hms.users.*;
+import org.apache.poi.ss.usermodel.charts.ScatterChartSeries;
 
 import java.util.*;
 
@@ -350,9 +351,9 @@ public class UserList {
         /* Menu */
         System.out.println("-----Pharmacist Update Menu-----");
         System.out.println("Pharmacist ID: " + curPharmacist.getID());
-    	System.out.println("1.Update Name");
-    	System.out.println("2.Update Gender");
-        System.out.println("3.Update Age");
+    	System.out.println("1. Update Name");
+    	System.out.println("2. Update Gender");
+        System.out.println("3. Update Age");
         System.out.println("4. Cancel");
         System.out.println("----------------------------");
         System.out.print("Enter your choice: ");
@@ -512,9 +513,9 @@ public class UserList {
         /* Menu */
         System.out.println("-----Administrator Update Menu-----");
         System.out.println("Administrator ID: " + curAdministrator.getID());
-    	System.out.println("1.Update Name");
-    	System.out.println("2.Update Gender");
-        System.out.println("3.Update Age");
+    	System.out.println("1. Update Name");
+    	System.out.println("2. Update Gender");
+        System.out.println("3. Update Age");
         System.out.println("4. Cancel");
         System.out.println("----------------------------");
         System.out.print("Enter your choice: ");
@@ -586,10 +587,10 @@ public class UserList {
 
     /**
      * Get all users (By selection)
-     * @param sc Scanner
+     * @param choice Choice of sorting
      * @return list of users
      */
-    public ArrayList<User> getUsersSorted() {
+    public ArrayList<User> getUsersSorted(Scanner sc) {
         System.out.println("-----Sort Users By-----");
     	System.out.println("1.Role");
     	System.out.println("2.Gender");
@@ -623,6 +624,18 @@ public class UserList {
     public ArrayList<User> getUsersRoleSorted() {
         ArrayList<User> userArray = new ArrayList<User>();
         userArray.addAll(patients);
+        userArray.addAll(doctors);
+        userArray.addAll(pharmacists);
+        userArray.addAll(administrators);
+        return userArray;
+    }
+
+    /**
+     * Get all staff by role
+     * @return list of staff
+     */
+    public ArrayList<User> getStaffRoleSorted() {
+        ArrayList<User> userArray = new ArrayList<User>();
         userArray.addAll(doctors);
         userArray.addAll(pharmacists);
         userArray.addAll(administrators);
@@ -687,12 +700,80 @@ public class UserList {
     }
 
     /**
+     * Get all staff by gender
+     * @return list of staff
+     */
+    public ArrayList<User> getStaffGenderSorted() {
+        ArrayList<User> userArray = new ArrayList<User>();
+        ArrayList<User> temAr1 = new ArrayList<User>();
+        ArrayList<User> temAr2 = new ArrayList<User>();
+        ArrayList<User> temAr3 = new ArrayList<User>();
+
+        for (Doctor doctor : doctors) {
+            if (doctor.getGender() == 1) {
+                temAr1.add(doctor);
+            } else if (doctor.getGender() == 2) {
+                temAr2.add(doctor);
+            } else {
+                temAr3.add(doctor);
+            }
+        }
+
+        for (Pharmacist pharmacist : pharmacists) {
+            if (pharmacist.getGender() == 1) {
+                temAr1.add(pharmacist);
+            } else if (pharmacist.getGender() == 2) {
+                temAr2.add(pharmacist);
+            } else {
+                temAr3.add(pharmacist);
+            }
+        }
+
+        for (Administrator administrator : administrators) {
+            if (administrator.getGender() == 1) {
+                temAr1.add(administrator);
+            } else if (administrator.getGender() == 2) {
+                temAr2.add(administrator);
+            } else {
+                temAr3.add(administrator);
+            }
+        }
+
+        userArray.addAll(temAr1);
+        userArray.addAll(temAr2);
+        userArray.addAll(temAr3);
+
+        return userArray;
+    }
+
+    /**
      * Get all users by Name
      * @return list of users
      */
     public ArrayList<User> getUsersNameSorted() {
         ArrayList<User> userArray = new ArrayList<User>();
         userArray.addAll(patients);
+        userArray.addAll(doctors);
+        userArray.addAll(pharmacists);
+        userArray.addAll(administrators);
+
+        // Sort by name in ascending order
+        Collections.sort(userArray, new Comparator<User>() {
+            @Override
+            public int compare(User p1, User p2) {
+                return p1.getName().compareTo(p2.getName());
+            }
+        });
+
+        return userArray;
+    }
+
+    /**
+     * Get all staff by Name
+     * @return list of users
+     */
+    public ArrayList<User> getStaffNameSorted() {
+        ArrayList<User> userArray = new ArrayList<User>();
         userArray.addAll(doctors);
         userArray.addAll(pharmacists);
         userArray.addAll(administrators);
@@ -724,6 +805,51 @@ public class UserList {
             @Override
             public int compare(User p1, User p2) {
                 return p1.getID().compareTo(p2.getID());
+            }
+        });
+
+        return userArray;
+    }
+
+    /**
+     * Get all staff by ID
+     * @return list of users
+     */
+    public ArrayList<User> getStaffIDSorted() {
+        ArrayList<User> userArray = new ArrayList<User>();
+        userArray.addAll(doctors);
+        userArray.addAll(pharmacists);
+        userArray.addAll(administrators);
+
+        // Sort by name in ascending order
+        Collections.sort(userArray, new Comparator<User>() {
+            @Override
+            public int compare(User p1, User p2) {
+                return p1.getID().compareTo(p2.getID());
+            }
+        });
+
+        return userArray;
+    }
+
+    /**
+     * Get all staff by ID
+     * @return list of users
+     */
+    public ArrayList<User> getStaffAgeSorted() {
+        ArrayList<User> userArray = new ArrayList<User>();
+        userArray.addAll(doctors);
+        userArray.addAll(pharmacists);
+        userArray.addAll(administrators);
+
+        // Sort by name in ascending order
+        Collections.sort(userArray, new Comparator<User>() {
+            @Override
+            public int compare(User p1, User p2) {
+                int p1Age = 0, p2Age = 0;
+                if (p1 instanceof Staff) p1Age = ((Staff) p1).getAge();
+                if (p2 instanceof Staff) p1Age = ((Staff) p2).getAge();
+                return Integer.compare(p1Age, p2Age);
             }
         });
 
