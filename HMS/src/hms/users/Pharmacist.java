@@ -80,14 +80,14 @@ public class Pharmacist extends Staff {
 						}
 						else {
 							System.out.println("Completed Appointments for Patient " + patient.getID() + ":");
-							for (int i = 0; i < patient.getPatientSchedule().getAppointments().size(); i++) {
+							for (int i = 0, k = 1; i < patient.getPatientSchedule().getAppointments().size(); i++) {
 								appointment = patient.getPatientSchedule().getAppointments().get(i);
 								if (appointment.getStatus() == 4) {
 									int time = appointment.getTimeSlot().getIntTime();
 									String slotTime = String.format("%02d:%02d", time / 100, time % 100);
-									System.out.println((i + 1) + ". " + appointment.getDate().get()
+									System.out.println((k) + ". " + appointment.getDate().get()
 											+ " " + slotTime + ": " + appointment.getAop().getService());
-									i++;
+									k++;
 								}
 							}
 							System.out.print("Enter your choice: ");
@@ -131,16 +131,16 @@ public class Pharmacist extends Staff {
 						}
 						else {
 							System.out.println("Completed Appointments Requiring Medication for Patient " + patient.getID() + ":");
-							for (int i = 0; i < patient.getPatientSchedule().getAppointments().size(); i++) {
+							for (int i = 0, k = 1; i < patient.getPatientSchedule().getAppointments().size(); i++) {
 								appointment = patient.getPatientSchedule().getAppointments().get(i);
 								if (appointment.getStatus() == 4) {
 									if (!appointment.getAop().isDispensed()) {
 										if (appointment.getAop().getprescription().length != 0) {
 											int time = appointment.getTimeSlot().getIntTime();
 											String slotTime = String.format("%02d:%02d", time / 100, time % 100);
-											System.out.println((i + 1) + ". " + appointment.getDate().get()
+											System.out.println((k) + ". " + appointment.getDate().get()
 													+ " " + slotTime + ": " + appointment.getAop().getService());
-											i++;
+											k++;
 										}
 									}
 								}
