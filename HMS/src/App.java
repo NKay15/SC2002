@@ -301,7 +301,7 @@ public class App {
 					
 				Cell low = cellIterator.next();
 
-				setup.addNewMedicine(name.toString(), (int) Math.floor(amount.getNumericCellValue()), (int) Math.floor(low.getNumericCellValue()));
+				setup.addNewMedicine(name.toString(), (int) amount.getNumericCellValue(), (int) Math.floor(low.getNumericCellValue()));
 			}
 
 			return setup;

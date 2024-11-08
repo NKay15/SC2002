@@ -29,7 +29,7 @@ public class PatientScheduleManager {
      */
     public void schedulePatientAppointment(Appointment appointment) {
         updatePatientData();
-        if (scheduler.findAppointment(appointment, appointmentList) != null) {
+        if (scheduler.findAppointment(appointment, appointmentList) == null) {
             scheduler.scheduleAppointment(appointment);
         }
     }

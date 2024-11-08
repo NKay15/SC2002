@@ -40,6 +40,7 @@ public class AppointmentOutcomeRecord {
         System.out.print("Enter the date of appointment (ddmmyyyy) : ");
         int t = sc.nextInt();
         date = new Date(t);
+        service = sc.nextLine();
         System.out.print("Enter the service provided : ");
         service = sc.nextLine();
         prescription = GlobalData.getInstance().inventory.generatePrescription();

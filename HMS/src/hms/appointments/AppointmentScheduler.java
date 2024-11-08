@@ -322,6 +322,7 @@ public class AppointmentScheduler {
      * @return The list of pending appointments for the given doctor
      */
     public List<Appointment> getPendingAppointments(Doctor doctor) {
+        
         List<Appointment> pendingAppointmentsForDoctor = new ArrayList<>();
         for (Appointment appointment : pendingAppointments) {
             if (appointment.getDoctorID().equals(doctor.getID())) {

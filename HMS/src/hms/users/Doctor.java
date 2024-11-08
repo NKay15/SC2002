@@ -3,6 +3,8 @@ package hms.users;
 import hms.GlobalData;
 import hms.appointments.*;
 import hms.utils.*;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
@@ -24,6 +26,8 @@ public class Doctor extends Staff {
     public Doctor(String doctorID, String name, int gender, int age) {
     	super(doctorID, name, 2, gender, age);
 		doctorSchedules = new DoctorSchedules(this);
+		doctorScheduler = new DoctorScheduleManager(this);
+		patientList = new ArrayList<>();
     }
 
 	public DoctorSchedules getDoctorSchedules() {
@@ -31,6 +35,7 @@ public class Doctor extends Staff {
 	}
 
 	public void menu() {
+		doctorScheduler.updateDoctorData();
     	System.out.println("-----Doctor Menu-----");
     	System.out.println("1. View Patient Medical Records ");
     	System.out.println("2. Update Patient Medical Records");
@@ -137,10 +142,9 @@ public class Doctor extends Staff {
     		System.out.println(id + ". " + patient.getName());
     	}
     	System.out.println("Choose one you want to view.");
-    	Scanner scan = new Scanner(System.in);
+    	Scanner scan = GlobalData.getInstance().sc;
     	int ch = scan.nextInt();
     	patientList.get(ch-1).viewMedicalRecord();
-    	scan.close();
     }
     
 	/**
@@ -148,12 +152,11 @@ public class Doctor extends Staff {
 	 * @param patient Patient that the doctor want to add
 	 */
     public void updatePatientMedicalRecords(Patient patient) {
-    	Scanner scan = new Scanner(System.in);
+    	Scanner scan = GlobalData.getInstance().sc;
     	
     	System.out.println("Add a new medical record:");
     	String message = scan.nextLine();
     	patient.addMedicalRecord(message);
-    	scan.close();
     }
     
     public void viewPersonalSchedule() {
@@ -191,9 +194,10 @@ public class Doctor extends Staff {
 	 * Accept Or Decline Appointment Requests
 	 */
     public void acceptOrDeclineAppointmentRequests() {
+		doctorScheduler.updateDoctorData();
 		List<Appointment> appointmentList = doctorScheduler.returnPendingList();
 		int id = 0;
-		Scanner scan = new Scanner(System.in);
+		Scanner scan = GlobalData.getInstance().sc;
 		for(Appointment appointment : appointmentList){
 			Patient patient = appointment.getPatient();
 			Date date = appointment.getDate();
@@ -220,7 +224,6 @@ public class Doctor extends Staff {
 				System.out.println("This request is still in your pending list. Please don't forget to reply later");
 			}
 		}
-		scan.close();
     }
 
 	public void viewUpcomingAppointments(){

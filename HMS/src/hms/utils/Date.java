@@ -88,6 +88,10 @@ public class Date implements Comparable<Date> {
         else return 0;
     }
 
+    public boolean equals(Date cmpDate) {
+        return compareTo(cmpDate) == 0;
+    }
+
     /**
      * Print date in dd/mm/yyyy format
      */

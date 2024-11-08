@@ -13,8 +13,8 @@ public class Time implements Comparable<Time>{
 
     public Time(int time) {
         this.time = time;
-        this.minute = time/100;
-        this.hour = time%100;
+        this.minute = time%100;
+        this.hour = time/100;
         while (!checkTime()) {
             System.out.println("This time is not available.");
             Scanner sc = new Scanner(System.in);
@@ -59,12 +59,13 @@ public class Time implements Comparable<Time>{
     }
 
     public boolean checkTime() {
+
         if (minute % 100 != 0 && minute % 100 != 30 &&( minute >= 60 || minute < 0)) {
             System.out.println("Only 00/30 is allowed for minute.");
             return false;
         }
         if (hour >= 24 || hour <= 0) {
-            System.out.println("Invalid time.");
+            System.out.println("Invalid time."+ hour);
             return false;
         }
         return true;
