@@ -45,7 +45,8 @@ public class Doctor extends Staff {
 		Scanner sc = GlobalData.getInstance().sc;
 		int choice = 1;
 
-		while (choice != 8) {
+		while (true) {
+			System.out.print("Enter menu number : ");
 			choice = sc.nextInt();
 			switch(choice) {
 				case 1 : 
@@ -53,6 +54,10 @@ public class Doctor extends Staff {
 					break;
 
 				case 2 :
+					if(patientList == null) {
+						System.out.println("You have no patient.");
+						break;
+					}
 					System.out.println("Select patient (0 : exit): ");
 					for(int i = 0; i < patientList.size(); i++) {
 						System.out.println((i+1) + " : " + patientList.get(i).getName());
@@ -67,6 +72,10 @@ public class Doctor extends Staff {
 					break;
 
 				case 3 :
+					if(doctorScheduler == null) {
+						System.out.println("You have no upcoming appointment.");
+						break;
+					}
 					viewPersonalSchedule();
 					break;
 
@@ -75,14 +84,26 @@ public class Doctor extends Staff {
 					break;
 
 				case 5 :
+					if(doctorScheduler == null) {
+						System.out.println("You have no upcoming appointment request.");
+						break;
+					}
 					acceptOrDeclineAppointmentRequests();
 					break;
 
 				case 6 :
+					if(doctorScheduler == null) {
+						System.out.println("You have no upcoming appointment.");
+						break;
+					}
 					viewUpcomingAppointments();
 					break;
 
 				case 7 :
+					if(doctorScheduler == null) {
+						System.out.println("You have no appointment to view.");
+						break;
+					}
 					System.out.println("Select Appointment (0 : exit) :");
 					viewUpcomingAppointments();
 					choice = sc.nextInt();
@@ -105,6 +126,10 @@ public class Doctor extends Staff {
     }
     
     public void viewPatientMedicalRecords() {
+		if(patientList == null) {
+			System.out.println("Hi, Doc. " + this.getName() + ". You have no patient.");
+			return;
+		}
     	System.out.println("Hi, Doc. " + this.getName() + ". Here is your patient list:");
     	int id = 0;
     	for(Patient patient : patientList) {
@@ -140,7 +165,10 @@ public class Doctor extends Staff {
 	 */
     public void setAvailabilityforAppointments() {
 		Scanner scanner = GlobalData.getInstance().sc;
-		Date date =  new Date(scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+		int ddmmyyyy;
+		System.out.print("Enter the date (ddmmyyyy) : ");
+		ddmmyyyy = scanner.nextInt();
+		Date date =  new Date(ddmmyyyy);
     	doctorSchedules.setDoctorSchedule(date);
     }
 

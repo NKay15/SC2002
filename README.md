@@ -36,3 +36,11 @@ Global data has been set up. import hms.GlobalData to access it. Use GlobalData.
 
 ### LYX
 See todo.org
+
+## Test
+- [X] Test login and change password
+- [ ] Test doctor schedule
+- [ ] Test patient schedule
+- [ ] Test Doctor completing appointment
+- [ ] Test Pharamacist dispence and restock request
+- [ ] Test Admin approve restock and manage users

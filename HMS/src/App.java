@@ -53,82 +53,90 @@ public class App {
     	/* Login */
     	User currentUser = null;
     	int accessLevel = -1;
-    	do {
-	    	System.out.println("Hospital Management System (HMS)");
-	    	System.out.println("==============================");
-	    	System.out.println("Please login");
-	    	System.out.println("Enter your ID:");
-	    	String ID = sc.next();
-	    	
-	    	boolean found = false;
-	    	for (User user : userList.getUsersRoleSorted()) {
-	    		if (user.getID().equals(ID)) {
-	    			found = true;
-	    			currentUser = user;
-	    			break;
-	    		}
-	    	}
-	    	if (found == false) {
-	    		System.out.println("This user does not exist. Please check your ID again.");
-	    		continue;
-	    	}
-	    	
-	    	accessLevel = currentUser.login();
-	    	if(accessLevel != -1) {
-	    		break;
-	    	} 
-	    	System.out.println("Password is incorrect");
-    	} while (accessLevel == -1);
-    	
-		/* Menu */
-    	switch(accessLevel) {
-    	case 1: // Patient
-    		Patient currentPatient = null;
-    		for (Patient patient : userList.getPatients()) {
-	    		if (patient.getID().equals(currentUser.getID())) {
-	    			currentPatient = patient;
-	    			break;
-	    		}
-    		}
-    		currentPatient.menu();
-    		break;
+		while(true) {
+			do {
+				System.out.println("Hospital Management System (HMS)");
+				System.out.println("==============================");
+				System.out.println("Please login");
+				System.out.println("Enter your ID (0 to exit):");
+				String ID = sc.next();
 
-    	case 2: // Doctor
-			Doctor currentDoctor = null;
-			for (Doctor doctor : userList.getDoctors()) {
-	    		if (doctor.getID().equals(currentUser.getID())) {
-	    			currentDoctor = doctor;
-	    			break;
-	    		}
-    		}
-			currentDoctor.menu();
-    		break;
-
-    	case 3: // Pharmacist
-			Pharmacist currentPharmacist = null;
-			for (Pharmacist pharmacist : userList.getPharmacists()) {
-				if (pharmacist.getID().equals(currentUser.getID())) {
-					currentPharmacist = pharmacist;
-					break;
+				if(ID.equals("0")) {
+					accessLevel = -1;
 				}
-			}
-			currentPharmacist.menu();
-    		break;
-
-    	case 4: // Administrator
-			Administrator currentAdministrator = null;
-			for (Administrator administrator : userList.getAdministrators()) {
-				if (administrator.getID().equals(currentUser.getID())) {
-					currentAdministrator = administrator;
-					break;
+				
+				boolean found = false;
+				for (User user : userList.getUsersRoleSorted()) {
+					if (user.getID().equals(ID)) {
+						found = true;
+						currentUser = user;
+						break;
+					}
 				}
-			}
-			currentAdministrator.menu();
-			break;
+				if (found == false) {
+					System.out.println("This user does not exist. Please check your ID again.");
+					continue;
+				}
+				
+				accessLevel = currentUser.login();
+				if(accessLevel != -1) {
+					break;
+				} 
+				System.out.println("Password is incorrect");
+			} while (accessLevel == -1);
 			
-    	default:
-    		break;
-    	}
+			if(accessLevel == -1) break;
+
+			/* Menu */
+			switch(accessLevel) {
+			case 1: // Patient
+				Patient currentPatient = null;
+				for (Patient patient : userList.getPatients()) {
+					if (patient.getID().equals(currentUser.getID())) {
+						currentPatient = patient;
+						break;
+					}
+				}
+				currentPatient.menu();
+				break;
+
+			case 2: // Doctor
+				Doctor currentDoctor = null;
+				for (Doctor doctor : userList.getDoctors()) {
+					if (doctor.getID().equals(currentUser.getID())) {
+						currentDoctor = doctor;
+						break;
+					}
+				}
+				currentDoctor.menu();
+				break;
+
+			case 3: // Pharmacist
+				Pharmacist currentPharmacist = null;
+				for (Pharmacist pharmacist : userList.getPharmacists()) {
+					if (pharmacist.getID().equals(currentUser.getID())) {
+						currentPharmacist = pharmacist;
+						break;
+					}
+				}
+				currentPharmacist.menu();
+				break;
+
+			case 4: // Administrator
+				Administrator currentAdministrator = null;
+				for (Administrator administrator : userList.getAdministrators()) {
+					if (administrator.getID().equals(currentUser.getID())) {
+						currentAdministrator = administrator;
+						break;
+					}
+				}
+				currentAdministrator.menu();
+				break;
+				
+			default:
+				break;
+			}
+		}
     }
     
     /**

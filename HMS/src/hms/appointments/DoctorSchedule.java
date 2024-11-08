@@ -23,6 +23,7 @@ public class DoctorSchedule {
     private List<Time[]> breaks;
 
     private int breakCount;
+    public Object getDoctor;
 
     public DoctorSchedule(Doctor doctor, Date date) {
         this.doctor = doctor;

@@ -59,7 +59,7 @@ public class Time implements Comparable<Time>{
     }
 
     public boolean checkTime() {
-        if (minute % 100 != 0 || minute % 100 != 30) {
+        if (minute % 100 != 0 && minute % 100 != 30 &&( minute >= 60 || minute < 0)) {
             System.out.println("Only 00/30 is allowed for minute.");
             return false;
         }

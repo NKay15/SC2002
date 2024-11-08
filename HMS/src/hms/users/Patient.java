@@ -108,7 +108,8 @@ public class Patient extends User {
 
         Scanner sc = GlobalData.getInstance().sc;
         int choice = 1;
-        while(choice != 9) {
+        while(true) {
+            System.out.print("Enter menu number : ");
             choice = sc.nextInt();
             switch(choice) {
                 case 1:
