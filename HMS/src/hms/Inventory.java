@@ -233,7 +233,7 @@ public class Inventory {
             quantity = sc.nextInt(); sc.nextLine();
         }
 
-        System.out.println("\nConfirm to Submit Restock Request?");
+        System.out.println("Confirm to Submit Restock Request?");
         System.out.println("Enter 1 to Confirm; or 2 to Cancel.");
         System.out.print("Enter your choice: ");
         int confirmAdding;
@@ -243,7 +243,7 @@ public class Inventory {
             switch (confirmAdding) {
                 case 1:
                     requests.add(catalog.get(med-1).copy(quantity));
-                    System.out.print("Restock Request Successfully Created!\n");
+                    System.out.println("Restock Request Successfully Created!\n");
                     break;
 
                 case 2:

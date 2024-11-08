@@ -133,7 +133,7 @@ public class User {
      */
     public int login() {
         Scanner sc = GlobalData.getInstance().sc;
-        System.out.print("Enter password : ");
+        System.out.print("Enter password: ");
         String value = sc.next();
         if (password.checkPassword(value)) return role;
         else return -1;
