@@ -76,7 +76,7 @@ public class DoctorSchedules {
 
     public DoctorSchedule findDateSchedule(Date date, Doctor doctor) {
         for (DoctorSchedule doctorSchedule : doctorSchedules) {
-            if (doctorSchedule.getDate().equals(date) && doctorSchedule.getDoctor.equals(doctor))
+            if (doctorSchedule.getDate().equals(date) && doctorSchedule.getDoctor().getID().equals(doctor.getID()))
                 return doctorSchedule;
         }
         return null;
