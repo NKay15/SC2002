@@ -140,7 +140,7 @@ public class Patient extends User {
                         }
                     }
                     if(doc == null) {
-                        if(!docname.equals("!")) System.out.print("Doctor does not exists ! ");
+                        if(!docname.equals("!")) System.out.print("Doctor does not exist! ");
                         break;
                     }
                     System.out.print("Enter date in ddmmyyyy (O : exit): ");
@@ -151,7 +151,8 @@ public class Patient extends User {
                     if(time == 0) break;
                     Appointment toSchedule = patientSchedule.generateAppointment(this, doc, new Date(date), new Time(time));
                     if(toSchedule == null) {
-                        System.out.println(docname + "is not avaiable at your chosen time");
+                        System.out.println(docname + " " +
+                                "is not available at your chosen time!");
                         break;
                     }
                     scheduleAppointment(toSchedule);
@@ -177,7 +178,7 @@ public class Patient extends User {
                     if(newtime == 0) break;
                     Appointment toReschedule = patientSchedule.generateAppointment(this, old.getDoctor(), new Date(newdate), new Time(newtime));
                     if(toReschedule == null) {
-                        System.out.println(old.getDoctor().getName() + "is not available at your choosen time. Rescheduling failed.");
+                        System.out.println(old.getDoctor().getName() + "is not available at your chosen time. Rescheduling failed.");
                         break;
                     }
 	    			rescheduleAppointment(old, toReschedule);

@@ -1,7 +1,6 @@
 package hms.users;
 
 import hms.GlobalData;
-import hms.UserList;
 import hms.appointments.Appointment;
 import hms.appointments.AppointmentScheduler;
 
@@ -19,8 +18,16 @@ public class Administrator extends Staff {
 	}
 
 	public void menu() {
+		System.out.println("-----Administrator Menu-----");
+		System.out.println("1. Manage Staff");
+		System.out.println("2. View Appointment Records");
+		System.out.println("3. Manage Inventory");
+		super.menu(4);
+		System.out.println("-----End of Menu-----");
+		System.out.print("Enter your choice: ");
 		Scanner sc = GlobalData.getInstance().sc;
-		int choice = 1;
+		int choice = 0;
+
 		while (true) {
 			if (choice >= 1 && choice <= 5) {
 				System.out.println("-----Administrator Menu-----");
@@ -31,11 +38,11 @@ public class Administrator extends Staff {
 				System.out.println("-----End of Menu-----");
 				System.out.print("Enter your choice: ");
 			}
-			choice = sc.nextInt(); sc.nextLine();
+			choice = sc.nextInt();
+			sc.nextLine();
 
-			switch(choice) {
+			switch (choice) {
 				case 1:
-					// This sub-menu will not auto-loop
 					staffMenu();
 					break;
 
@@ -67,7 +74,6 @@ public class Administrator extends Staff {
 					break;
 
 				case 3:
-					// This sub-menu will not auto-loop
 					inventoryMenu();
 					break;
 
@@ -98,15 +104,7 @@ public class Administrator extends Staff {
 
 	public void staffMenu() {
 		Scanner sc = GlobalData.getInstance().sc;
-		System.out.println("\n-----Staff Management-----");
-		System.out.println("1. Add Staff Member");
-		System.out.println("2. Update Existing Staff Member");
-		System.out.println("3. Remove Staff Member");
-		System.out.println("4. Display All Staff Members");
-		System.out.println("5. Return to Main Menu");
-		System.out.println("--------------------------");
-		System.out.print("Enter your choice: ");
-		int staffChoice = 0;
+		int staffChoice = 1;
 
 		while (true) {
 			if (staffChoice >= 1 && staffChoice <= 5) {
@@ -370,8 +368,8 @@ public class Administrator extends Staff {
 							}
 							break;
 					}
-					System.out.print("\nEnter any number to Return to Menu: ");
-					sc.nextInt(); sc.nextLine();
+					System.out.print("\nEnter anything to Return to Menu: ");
+					sc.nextLine();
 					System.out.println("Returning to Menu...\n");
 					break;
 
@@ -388,16 +386,7 @@ public class Administrator extends Staff {
 
 	public void inventoryMenu() {
 		Scanner sc = GlobalData.getInstance().sc;
-		System.out.println("\n-----Inventory Management-----");
-		System.out.println("1. View Medication Inventory");
-		System.out.println("2. Add New Medication to Inventory");
-		System.out.println("3. Update Medication Stock Levels");
-		System.out.println("4. Update Low Stock Level Alert Line");
-		System.out.println("5. Manage Restock Requests");
-		System.out.println("6. Return to Main Menu");
-		System.out.println("------------------------------");
-		System.out.print("Enter your choice: ");
-		int inventoryChoice = 0;
+		int inventoryChoice = 1;
 
 		while (true) {
 			if (inventoryChoice >= 1 && inventoryChoice <= 6) {
@@ -416,8 +405,8 @@ public class Administrator extends Staff {
 				case 1:
 					System.out.println("Current Inventory:");
 					GlobalData.getInstance().inventory.printCurrentInventory();
-					System.out.print("Enter any number to Return to Menu: ");
-					sc.nextInt(); sc.nextLine();
+					System.out.print("Enter anything to Return to Menu: ");
+					sc.nextLine();
 					System.out.println("Returning to Menu...\n");
 					break;
 

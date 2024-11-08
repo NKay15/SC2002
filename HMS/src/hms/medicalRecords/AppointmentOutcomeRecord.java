@@ -4,6 +4,7 @@ import hms.utils.Date;
 import hms.Medicine;
 import hms.GlobalData;
 
+import java.security.Provider;
 import java.util.Scanner;
 
 public class AppointmentOutcomeRecord {
@@ -76,6 +77,13 @@ public class AppointmentOutcomeRecord {
         else System.out.println("Dispensed");
         System.out.println("Consultation notes: " + notes);
         System.out.println("End of Appointment Outcome Record.");
+    }
+
+    /**
+     * Get the service provided in the Appointment Outcome Record
+     */
+    public String getService() {
+        return service;
     }
 
     /**

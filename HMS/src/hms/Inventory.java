@@ -378,7 +378,7 @@ public class Inventory {
      */
     public void printCurrentInventory() {
         for(int i = 0; i < catalog.size(); i++) {
-            System.out.print((i+1) + ". " + catalog.get(i).name() + " : " + catalog.get(i).amount());
+            System.out.print((i+1) + ". " + catalog.get(i).name() + ": " + catalog.get(i).amount());
             if(catalog.get(i).amount() <= lowlevel.get(i).amount())
                 System.out.println(" **LOW, PLEASE RESTOCK!**");
             else System.out.println();
