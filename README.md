@@ -43,4 +43,4 @@ See todo.org
 - [ ] Test patient schedule
 - [ ] Test Doctor completing appointment
 - [ ] Test Pharamacist dispence and restock request
-- [ ] Test Admin approve restock and manage users
+- [X] Test Admin approve restock and manage users

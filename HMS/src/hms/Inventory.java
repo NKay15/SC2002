@@ -43,6 +43,7 @@ public class Inventory {
     public Inventory() {
         catalog = new ArrayList<Medicine>();
         requests = new ArrayList<Medicine>();
+        lowlevel = new ArrayList<Medicine>();
     }
 
     /**
@@ -140,7 +141,7 @@ public class Inventory {
         }
 
         catalog.add(new Medicine(name, amount));
-        lowlevel.add(new Medicine(name, amount));
+        lowlevel.add(new Medicine(name, level));
         return true;
     }
 
