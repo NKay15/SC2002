@@ -44,15 +44,6 @@ public class Pharmacist extends Staff {
 			alreadyTried = false;
 			appointment = null;
 
-			System.out.println("-----Pharmacist Menu-----");
-			System.out.println("1.Search for Appointment Outcome Record by Appointment ID");
-			System.out.println("2.Update Prescription Status");
-			System.out.println("3.View Medication Inventory");
-			System.out.println("4.Submit Replenishment Requests");
-			super.menu(5);
-			System.out.println("-----End of Menu-----");
-			System.out.print("Enter your choice: ");
-
 			choice = sc.nextInt(); sc.nextLine();
 			System.out.println();
 
@@ -190,7 +181,7 @@ public class Pharmacist extends Staff {
 				case 3:
 					System.out.println("Current Inventory:");
 					GlobalData.getInstance().inventory.printCurrentInventory();
-					System.out.print("\nEnter any number to Return to Menu: ");
+					System.out.print("Enter any number to Return to Menu: ");
 					sc.nextInt(); sc.nextLine();
 					System.out.println("Returning to Menu...\n");
 					break;
@@ -200,7 +191,6 @@ public class Pharmacist extends Staff {
 					GlobalData.getInstance().inventory.printCurrentInventory();
 					int submitMore;
 					while (true) {
-						System.out.println("\n");
 						GlobalData.getInstance().inventory.createRequest();
 						System.out.print("Would you like to Submit More Restock Requests? " +
 								"1. Yes; 2. No\nEnter your choice: ");

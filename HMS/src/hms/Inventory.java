@@ -48,7 +48,6 @@ public class Inventory {
 
     /**
      * Adding new medicine to the inventory
-     * @param sc Scanner
      */
     public void addNewMedicine() {
         Scanner sc = GlobalData.getInstance().sc;
@@ -147,7 +146,6 @@ public class Inventory {
 
     /**
      * Used by administrator to add quantity of medication
-     * @param sc Scanner
      */
     public void updateStockLevelMenu() {
         Scanner sc = GlobalData.getInstance().sc;
@@ -174,11 +172,11 @@ public class Inventory {
             switch (confirmAdding) {
                 case 1:
                     catalog.get(med-1).restock(quantity);
-                    System.out.print("Stock Level Successfully Restocked!");
+                    System.out.print("Stock Level Successfully Restocked!\n");
                     break;
 
                 case 2:
-                    System.out.println("Operation Cancelled.");
+                    System.out.println("Operation Cancelled.\n");
                     break;
 
                 default:
@@ -245,11 +243,11 @@ public class Inventory {
             switch (confirmAdding) {
                 case 1:
                     requests.add(catalog.get(med-1).copy(quantity));
-                    System.out.print("Restock Request Successfully Created!");
+                    System.out.print("Restock Request Successfully Created!\n");
                     break;
 
                 case 2:
-                    System.out.println("Operation Cancelled.");
+                    System.out.println("Operation Cancelled.\n");
                     break;
 
                 default:
@@ -339,6 +337,10 @@ public class Inventory {
      * Used by ... to manage restock
      */
     public void manageRestockRequests() {
+        if (requests.isEmpty()) {
+            System.out.println("No Pending Restock Requests!\n");
+            return;
+        }
         printRestockRequest();
         System.out.print("Enter Index of Request: ");
         Scanner sc = GlobalData.getInstance().sc;
@@ -358,11 +360,11 @@ public class Inventory {
                 case 2:
                     catalog.get(idx).restock(requests.get(req - 1).amount());
                     requests.remove(req - 1);
-                    System.out.println("Request Successfully Approved!");
+                    System.out.println("Request Successfully Approved!\n");
                     return;
                 case 3:
                     requests.remove(req - 1);
-                    System.out.println("Request Successfully Rejected!");
+                    System.out.println("Request Successfully Rejected!\n");
                     return;
                 default:
                     System.out.print("Invalid choice! Try again: ");

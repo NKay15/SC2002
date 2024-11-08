@@ -22,7 +22,7 @@ public class Administrator extends Staff {
 		Scanner sc = GlobalData.getInstance().sc;
 		int choice = 1;
 		while (true) {
-			if (choice >= 1 && choice <= 3) {
+			if (choice >= 1 && choice <= 5) {
 				System.out.println("-----Administrator Menu-----");
 				System.out.println("1. Manage Staff");
 				System.out.println("2. View Appointment Records");
@@ -32,7 +32,6 @@ public class Administrator extends Staff {
 				System.out.print("Enter your choice: ");
 			}
 			choice = sc.nextInt(); sc.nextLine();
-			System.out.println();
 
 			switch(choice) {
 				case 1:
@@ -88,7 +87,7 @@ public class Administrator extends Staff {
 							}
 						}
 						else {
-							System.out.println("Invalid choice! Try again: ");
+							System.out.print("Invalid choice! Try again: ");
 							break;
 						}
 					}
@@ -107,9 +106,19 @@ public class Administrator extends Staff {
 		System.out.println("5. Return to Main Menu");
 		System.out.println("--------------------------");
 		System.out.print("Enter your choice: ");
-		int staffChoice;
+		int staffChoice = 0;
 
 		while (true) {
+			if (staffChoice >= 1 && staffChoice <= 5) {
+				System.out.println("\n-----Staff Management-----");
+				System.out.println("1. Add Staff Member");
+				System.out.println("2. Update Existing Staff Member");
+				System.out.println("3. Remove Staff Member");
+				System.out.println("4. Display All Staff Members");
+				System.out.println("5. Return to Main Menu");
+				System.out.println("--------------------------");
+				System.out.print("Enter your choice: ");
+			}
 			staffChoice = sc.nextInt(); sc.nextLine();
 			switch (staffChoice) {
 				case 1:
@@ -143,7 +152,7 @@ public class Administrator extends Staff {
 					switch (addWho) {
 						case 1:
 							System.out.println("Confirm to Add New Doctor?");
-							System.out.print("Enter 1 to Confirm; or 2 to Cancel.");
+							System.out.println("Enter 1 to Confirm; or 2 to Cancel.");
 							System.out.print("Enter your choice: ");
 							confirmAdd = sc.nextInt(); sc.nextLine();
 							while (true) {
@@ -166,7 +175,7 @@ public class Administrator extends Staff {
 
 						case 2:
 							System.out.println("Confirm to Add New Pharmacist?");
-							System.out.print("Enter 1 to Confirm; or 2 to Cancel.");
+							System.out.println("Enter 1 to Confirm; or 2 to Cancel.");
 							System.out.print("Enter your choice: ");
 							confirmAdd = sc.nextInt(); sc.nextLine();
 							while (true) {
@@ -189,7 +198,7 @@ public class Administrator extends Staff {
 
 						case 3:
 							System.out.println("Confirm to Add New Administrator?");
-							System.out.print("Enter 1 to Confirm; or 2 to Cancel.");
+							System.out.println("Enter 1 to Confirm; or 2 to Cancel.");
 							System.out.print("Enter your choice: ");
 							confirmAdd = sc.nextInt(); sc.nextLine();
 							while (true) {
@@ -368,13 +377,12 @@ public class Administrator extends Staff {
 
 				case 5:
 					System.out.println("Returning to Menu...\n");
-					break;
+					return;
 
 				default:
 					System.out.print("Invalid choice! Try again: ");
-					continue;
+					break;
 			}
-			return;
 		}
 	}
 
@@ -389,15 +397,26 @@ public class Administrator extends Staff {
 		System.out.println("6. Return to Main Menu");
 		System.out.println("------------------------------");
 		System.out.print("Enter your choice: ");
-		int inventoryChoice;
+		int inventoryChoice = 0;
 
 		while (true) {
+			if (inventoryChoice >= 1 && inventoryChoice <= 6) {
+				System.out.println("\n-----Inventory Management-----");
+				System.out.println("1. View Medication Inventory");
+				System.out.println("2. Add New Medication to Inventory");
+				System.out.println("3. Update Medication Stock Levels");
+				System.out.println("4. Update Low Stock Level Alert Line");
+				System.out.println("5. Manage Restock Requests");
+				System.out.println("6. Return to Main Menu");
+				System.out.println("------------------------------");
+				System.out.print("Enter your choice: ");
+			}
 			inventoryChoice = sc.nextInt(); sc.nextLine();
 			switch (inventoryChoice) {
 				case 1:
 					System.out.println("Current Inventory:");
 					GlobalData.getInstance().inventory.printCurrentInventory();
-					System.out.print("\nEnter any number to Return to Menu: ");
+					System.out.print("Enter any number to Return to Menu: ");
 					sc.nextInt(); sc.nextLine();
 					System.out.println("Returning to Menu...\n");
 					break;
@@ -465,13 +484,12 @@ public class Administrator extends Staff {
 
 				case 6:
 					System.out.println("Returning to Menu...\n");
-					break;
+					return;
 
 				default:
 					System.out.print("Invalid choice! Try again: ");
-					continue;
+					break;
 			}
-			return;
 		}
 	}
 }
