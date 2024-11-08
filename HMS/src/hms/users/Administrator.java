@@ -19,7 +19,7 @@ public class Administrator extends Staff {
 	}
 
 	public void menu() {
-		Scanner sc = new Scanner(System.in);
+		Scanner sc = GlobalData.getInstance().sc;
 		int choice = 1;
 		while (true) {
 			if (choice >= 1 && choice <= 3) {
@@ -37,7 +37,7 @@ public class Administrator extends Staff {
 			switch(choice) {
 				case 1:
 					// This sub-menu will not auto-loop
-					staffMenu(sc);
+					staffMenu();
 					break;
 
 				case 2:
@@ -69,7 +69,7 @@ public class Administrator extends Staff {
 
 				case 3:
 					// This sub-menu will not auto-loop
-					inventoryMenu(sc);
+					inventoryMenu();
 					break;
 
 				default:
@@ -97,7 +97,8 @@ public class Administrator extends Staff {
 		}
 	}
 
-	public void staffMenu(Scanner sc) {
+	public void staffMenu() {
+		Scanner sc = GlobalData.getInstance().sc;
 		System.out.println("\n-----Staff Management-----");
 		System.out.println("1. Add Staff Member");
 		System.out.println("2. Update Existing Staff Member");
@@ -377,7 +378,8 @@ public class Administrator extends Staff {
 		}
 	}
 
-	public void inventoryMenu(Scanner sc) {
+	public void inventoryMenu() {
+		Scanner sc = GlobalData.getInstance().sc;
 		System.out.println("\n-----Inventory Management-----");
 		System.out.println("1. View Medication Inventory");
 		System.out.println("2. Add New Medication to Inventory");
@@ -458,7 +460,7 @@ public class Administrator extends Staff {
 					break;
 
 				case 5:
-					GlobalData.getInstance().inventory.manageRestockRequestsMenu();
+					GlobalData.getInstance().inventory.manageRestockRequests();
 					break;
 
 				case 6:

@@ -106,7 +106,7 @@ public class Patient extends User {
         super.menu(9);
         System.out.println("-----End of Menu-----");
 
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = GlobalData.getInstance().sc;
         int choice = 1;
         while(choice != 9) {
             choice = sc.nextInt();
@@ -201,7 +201,7 @@ public class Patient extends User {
 	    			break;
 
 	    		default:
-                    if(!super.useroptions(choice-8, sc)) {
+                    if(!super.useroptions(choice-8)) {
                         System.out.println("Logging out");
                         return;
                     }

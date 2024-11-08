@@ -1,5 +1,6 @@
 package hms.users;
 
+import hms.GlobalData;
 import hms.appointments.*;
 import hms.utils.*;
 import java.util.List;
@@ -41,7 +42,7 @@ public class Doctor extends Staff {
     	super.menu(8);
     	System.out.println("-----End of Menu-----");
 
-		Scanner sc = new Scanner(System.in);
+		Scanner sc = GlobalData.getInstance().sc;
 		int choice = 1;
 
 		while (choice != 8) {
@@ -95,7 +96,7 @@ public class Doctor extends Staff {
 					break;
 
 				default :
-					if(!super.useroptions(choice-7, sc)) {
+					if(!super.useroptions(choice-7)) {
 						System.out.println("Logging out");
 						return;
 					}
@@ -138,7 +139,7 @@ public class Doctor extends Staff {
 	 * Set Availability for Appointments
 	 */
     public void setAvailabilityforAppointments() {
-		Scanner scanner = new Scanner(System.in);
+		Scanner scanner = GlobalData.getInstance().sc;
 		Date date =  new Date(scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
     	doctorSchedules.setDoctorSchedule(date);
     }

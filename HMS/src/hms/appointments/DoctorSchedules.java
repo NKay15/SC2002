@@ -2,6 +2,7 @@ package hms.appointments;
 
 import hms.utils.Date;
 import hms.utils.Time;
+import hms.GlobalData;
 import hms.users.*;
 
 import java.util.*;
@@ -34,7 +35,7 @@ public class DoctorSchedules {
                     "1. add breaks." +
                     "2. change working time." +
                     "3. rewrite it.");
-            Scanner scanner = new Scanner(System.in);
+            Scanner scanner = GlobalData.getInstance().sc;
             int sc = scanner.nextInt();
             switch (sc) {
                 case 1:

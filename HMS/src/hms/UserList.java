@@ -78,6 +78,7 @@ public class UserList {
      * @param ID
      */
     public boolean removeDoctorByIDMenu(String ID) {
+        Scanner sc = GlobalData.getInstance().sc;
         for (Doctor doctor : doctors) {
             if (doctor.getID().equals(ID)) {
                 System.out.println("Confirm to Remove Doctor?");
@@ -107,9 +108,9 @@ public class UserList {
     /**
      * Update Doctor by ID
      * @param ID
-     * @param sc Scanner
      */
     public boolean updateDoctorByID(String ID) {
+        Scanner sc = GlobalData.getInstance().sc;
         Doctor curDoctor = null;
         for (Doctor doctor : doctors) {
             if (doctor.getID().equals(ID)) {
@@ -299,9 +300,9 @@ public class UserList {
     /**
      * Menu to Remove Pharmacist by ID (for Admins)
      * @param ID
-     * @param sc Scanner
      */
     public boolean removePharmacistByIDMenu(String ID) {
+        Scanner sc = GlobalData.getInstance().sc;
         for (Pharmacist pharmacist : pharmacists) {
             if (pharmacist.getID().equals(ID)) {
                 System.out.println("Confirm to Remove Pharmacist?");
@@ -332,9 +333,9 @@ public class UserList {
     /**
      * Update Pharmacist by ID
      * @param ID
-     * @param sc Scanner
      */
     public boolean updatePharmacistByID(String ID) {
+        Scanner sc = GlobalData.getInstance().sc;
         Pharmacist curPharmacist = null;
         for (Pharmacist pharmacist : pharmacists) {
             if (pharmacist.getID().equals(ID)) {
@@ -462,9 +463,9 @@ public class UserList {
     /**
      * Menu to Remove Pharmacist by ID (for Admins)
      * @param ID
-     * @param sc Scanner
      */
     public boolean removeAdministratorByIDMenu(String ID) {
+        Scanner sc = GlobalData.getInstance().sc;
         for (Administrator administrator : administrators) {
             if (administrator.getID().equals(ID)) {
                 System.out.println("Confirm to Remove Administrator?");
@@ -494,9 +495,9 @@ public class UserList {
     /**
      * Update Administrator by ID
      * @param ID
-     * @param sc Scanner
      */
     public boolean updateAdministratorByID(String ID) {
+        Scanner sc = GlobalData.getInstance().sc;
         Administrator curAdministrator = null;
         for (Administrator administrator : administrators) {
             if (administrator.getID().equals(ID)) {

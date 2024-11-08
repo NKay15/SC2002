@@ -48,7 +48,7 @@ public class App {
 		gd.userList = userList;
 		gd.inventory = inventory;
     	
-    	Scanner sc = new Scanner(System.in);
+    	Scanner sc = gd.sc;
     	
     	/* Login */
     	User currentUser = null;

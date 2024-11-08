@@ -1,6 +1,7 @@
 package hms;
 
 import hms.medicalRecords.AppointmentOutcomeRecord;
+import hms.GlobalData;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -49,6 +50,7 @@ public class Inventory {
      * @param sc Scanner
      */
     public void addNewMedicine() {
+        Scanner sc = GlobalData.getInstance().sc;
         boolean alreadyExists = true;
         System.out.print("Enter Name of New Medicine: ");
         String name = sc.next(); sc.nextLine();
@@ -147,6 +149,7 @@ public class Inventory {
      * @param sc Scanner
      */
     public void updateStockLevelMenu() {
+        Scanner sc = GlobalData.getInstance().sc;
         printCurrentInventory();
         System.out.print("Enter Index of Medicine: ");
         int med = sc.nextInt(); sc.nextLine();
@@ -215,9 +218,9 @@ public class Inventory {
 
     /**
      * Used by pharmacist to request a restock
-     * @param sc Scanner
      */
     public void createRequest() {
+        Scanner sc = GlobalData.getInstance().sc;
         System.out.print("Enter Index of Medicine: ");
         int med = sc.nextInt(); sc.nextLine();
         while(med < 0 || med > catalog.size()) {
@@ -264,7 +267,7 @@ public class Inventory {
         
         while(med < 0 || med >= catalog.size()) {
             System.out.print("Enter Index of Medicine to Prescribe: ");
-            Scanner sc = new Scanner(System.in);
+            Scanner sc = GlobalData.getInstance().sc;
             med = sc.nextInt(); sc.nextLine();
             while(med < 0 || med >= catalog.size()) {
                 System.out.print("Invalid input! Try again: ");
@@ -293,9 +296,9 @@ public class Inventory {
 
     /**
      * Change the low level amount of a medicine
-     * @param sc Scanner
      */
     public void setNewLowLevel() {
+        Scanner sc = GlobalData.getInstance().sc;
         printCurrentInventory();
         System.out.print("Enter Index of Medicine (0 to cancel): ");
         int med = sc.nextInt(); sc.nextLine();
@@ -324,12 +327,11 @@ public class Inventory {
 
     /**
      * Used by ... to manage restock
-     * @param sc Scanner
      */
     public void manageRestockRequests() {
         printRestockRequest();
         System.out.print("Enter Index of Request: ");
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = GlobalData.getInstance().sc;
         int req = sc.nextInt(); sc.nextLine();
         while(req < 0 || req > requests.size()) {
             System.out.print("Invalid input! Try again: ");
@@ -375,7 +377,7 @@ public class Inventory {
     /**
      * Print restock request
      */
-    public void printRestockRequests() {
+    public void printRestockRequest() {
         for(int i = 0; i < requests.size(); i++) {
             System.out.println((i+1) + ". " + requests.get(i).name() + " : " + requests.get(i).amount());
         }

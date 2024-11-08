@@ -1,5 +1,6 @@
 package hms.appointments;
 
+import hms.GlobalData;
 import hms.users.*;
 import hms.utils.*;
 
@@ -37,7 +38,7 @@ public class DoctorSchedule {
      * The input values are then used to create Time objects for startTime and endTime.
      */
     public void setWorkingTime() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = GlobalData.getInstance().sc;
         System.out.println("When do you want to work? Input your start time, in hh mm");
         int hour = sc.nextInt();
         int minute = sc.nextInt();
@@ -56,7 +57,7 @@ public class DoctorSchedule {
      * {@link #mergeBreaks(Time, Time)} method to process each valid break.
      */
     public void setBreaks() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = GlobalData.getInstance().sc;
 
         System.out.println("How many breaks would you like to add?");
         breakCount = sc.nextInt();

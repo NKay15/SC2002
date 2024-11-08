@@ -36,7 +36,7 @@ public class AppointmentOutcomeRecord {
      * Contructor of Appointment Outcome Record triggered by the completion of appointment
      */
     public AppointmentOutcomeRecord() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = GlobalData.getInstance().sc;
         System.out.print("Enter the date of appointment (ddmmyyyy) : ");
         int t = sc.nextInt();
         date = new Date(t);

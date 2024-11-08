@@ -1,5 +1,6 @@
 package hms.users;
 
+import hms.GlobalData;
 import hms.Password;
 import java.util.Scanner;
 
@@ -131,7 +132,7 @@ public class User {
      * @return role if login is successful otherwise -1
      */
     public int login() {
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = GlobalData.getInstance().sc;
         System.out.print("Enter password : ");
         String value = sc.next();
         if (password.checkPassword(value)) return role;
@@ -159,7 +160,8 @@ public class User {
      * @param choice number chosen in the user menu and need to be ofset by the number of options in supclass
      * @return if false log out
      */
-    public boolean useroptions(int choice, Scanner sc){
+    public boolean useroptions(int choice){
+        Scanner sc = GlobalData.getInstance().sc;
         switch(choice) {
             case 1 : changePassword(sc);
             break;

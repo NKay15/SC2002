@@ -25,7 +25,7 @@ public class Pharmacist extends Staff {
 		String appointmentID = "";
 		Appointment appointment;
 
-		Scanner sc = new Scanner(System.in);
+		Scanner sc = GlobalData.getInstance().sc;
 		int choice = 1;
 		while (true) {
 			if (choice >= 1 && choice <= 6) {
