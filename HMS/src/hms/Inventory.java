@@ -266,17 +266,26 @@ public class Inventory {
         int med = 1;
         int amount;
         
-        while(med < 0 || med >= catalog.size()) {
-            System.out.print("Enter Index of Medicine to Prescribe: ");
+        while(med > 0 && med <= catalog.size()) {
+            System.out.print("Enter Index of Medicine to Prescribe () to exit): ");
             Scanner sc = GlobalData.getInstance().sc;
             med = sc.nextInt(); sc.nextLine();
+            if(med == 0) break;
             while(med < 0 || med >= catalog.size()) {
                 System.out.print("Invalid input! Try again: ");
                 med = sc.nextInt();
             }
+            if(ret.size() == 0) {
+                System.out.print("Enter amount (0 to back) : ");
+                amount = sc.nextInt();
+                if(amount <= 0) continue;
+
+                ret.add(new Medicine(catalog.get(med-1).name(), amount));
+                continue;
+            }
             for(int i = 0; i < ret.size(); i++) {
                 if (ret.get(i).name().equals(catalog.get(med-1).name())) {
-                    System.out.print("Medicine is already prescribe");
+                    System.out.println("Medicine is already prescribe!");
                     continue;
                 }
                 System.out.print("Enter amount (0 to back) : ");

@@ -129,9 +129,9 @@ public class Patient extends User {
 
                 case 4:
                     int time, date;
-                    String docname;
+                    String docname = sc.nextLine();
                     Doctor doc = null;
-                    System.out.print("Enter doctor name (! : exit): ");
+                    System.out.println("Enter doctor name (! : exit): ");
                     docname = sc.nextLine();
                     for(Doctor doctor : GlobalData.getInstance().userList.getDoctors()) {
                         if(doctor.getName().equals(docname)) {
@@ -146,7 +146,7 @@ public class Patient extends User {
                     System.out.print("Enter date in ddmmyyyy (O : exit): ");
                     date = sc.nextInt();
                     if(date == 0) break;
-                    System.out.print("Enter time in (O : exit): ");
+                    System.out.print("Enter time in hhmm (O : exit): ");
                     time = sc.nextInt();
                     if(time == 0) break;
                     Appointment toSchedule = patientSchedule.generateAppointment(this, doc, new Date(date), new Time(time));
@@ -156,6 +156,7 @@ public class Patient extends User {
                     }
                     scheduleAppointment(toSchedule);
                     System.out.println("Appointment is scheduled and pending to be approved by the doctor");
+                    docname = sc.nextLine();
                     break;
 
                 case 5:
@@ -244,7 +245,7 @@ public class Patient extends User {
         System.out.println("2. Update Phone Number");
 
         int ch;
-        Scanner scan = new Scanner(System.in);
+        Scanner scan = GlobalData.getInstance().sc;
         ch = scan.nextInt();
 
         if (ch == 1) {
@@ -259,7 +260,6 @@ public class Patient extends User {
             System.out.println("Invalid Input!");
         }
 
-        scan.close();
         return this;
     }
 

@@ -199,7 +199,7 @@ public class DoctorSchedule {
      */
     public boolean isDoctorAvailable(Time time) {
         for (int i = 0; i < breakCount; i++) {
-            if (time.compareTo(breaks.get(i)[0]) > 0 && time.compareTo(breaks.get(i)[1]) < 0) {
+            if (time.compareTo(breaks.get(i)[0]) >= 0 && time.compareTo(breaks.get(i)[1]) < 0) {
                 System.out.println("Doctor at break!");
                 return false;
             }

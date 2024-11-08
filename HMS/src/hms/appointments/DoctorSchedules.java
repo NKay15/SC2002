@@ -76,7 +76,7 @@ public class DoctorSchedules {
 
     public DoctorSchedule findDateSchedule(Date date, Doctor doctor) {
         for (DoctorSchedule doctorSchedule : doctorSchedules) {
-            if (doctorSchedule.getDate().equals(date) && doctorSchedule.getDoctor.equals(doctor))
+            if (doctorSchedule.getDate().equals(date) && doctorSchedule.getDoctor().getID().equals(doctor.getID()))
                 return doctorSchedule;
         }
         return null;
@@ -123,7 +123,7 @@ public class DoctorSchedules {
         }
         Time startTime = schedule.getStartTime();
         Time endTime = schedule.getEndTime();
-        for (int time = startTime.getIntTime(); time < endTime.getIntTime(); time += 30) {
+        for (int time = startTime.getIntTime(); time <endTime.getIntTime(); time += 30) {
             if (time % 100 == 60) time += 40;
             if (isDoctorAvailable(date, time)) {
                 String slotTime = String.format("%02d:%02d", time / 100, time % 100);
