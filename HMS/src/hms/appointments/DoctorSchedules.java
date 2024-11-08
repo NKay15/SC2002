@@ -50,7 +50,7 @@ public class DoctorSchedules {
                 case 3:
                     // Code to rewrite the schedule
                     System.out.println("Rewriting schedule...");
-                    doctorSchedules.remove(findDateSchedule(date));
+                    doctorSchedules.remove(findDateSchedule(date, doctor));
                     doctorSchedule = new DoctorSchedule(doctor, date);
                     doctorSchedules.add(doctorSchedule);
                     break;
@@ -76,23 +76,9 @@ public class DoctorSchedules {
 
     public DoctorSchedule findDateSchedule(Date date, Doctor doctor) {
         for (DoctorSchedule doctorSchedule : doctorSchedules) {
-            if (doctorSchedule.getDate().equals(date) && doctorSchedule.getDoctor.equals(doctor)) doctorSchedules.add(doctorSchedule);
+            if (doctorSchedule.getDate().equals(date) && doctorSchedule.getDoctor.equals(doctor))
+                return doctorSchedule;
         }
-        return null;
-    }
-
-    /**
-     * Finds and returns the doctor's schedule for a specific date.
-     *
-     * @param date The date for which to find the schedule.
-     * @return The DoctorSchedule for the specified date, or null if none exists.
-     */
-    public List<DoctorSchedule>findDateSchedule(Date date) {
-        List <DoctorSchedule> doctorSchedulesDate = new ArrayList<>();
-        for (DoctorSchedule doctorSchedule : doctorSchedules) {
-            if (doctorSchedule.getDate().equals(date)) doctorSchedulesDate.add(doctorSchedule);
-        }
-        if (doctorSchedulesDate != null) return doctorSchedulesDate;
         return null;
     }
 
@@ -116,14 +102,11 @@ public class DoctorSchedules {
      * @return true if the doctor is available, false otherwise.
      */
     public boolean isDoctorAvailable(Date date, Time time) {
-        List <DoctorSchedule> schedules = findDateSchedule(date);
-        for (DoctorSchedule schedule : schedules){
-            if (schedule == null) {
-                return false;
-            }
-            return schedule.isDoctorAvailable(time);
+        DoctorSchedule schedule = findDateSchedule(date, doctor);
+        if (schedule == null) {
+            return false;
         }
-                return false;
+        return schedule.isDoctorAvailable(time);
     }
 
     /**
@@ -133,14 +116,13 @@ public class DoctorSchedules {
      */
     public void printAvailableSlot(Date date) {
         //System.out.println("Doctor ID: " + doctor.getID() + "'s available slots are:");
-        List<DoctorSchedule> schedules = findDateSchedule(date);
-        if(schedules == null) {
+        DoctorSchedule schedule = findDateSchedule(date, doctor);
+        if (schedule == null) {
             System.out.println("No avialable slots.");
             return;
         }
-        for (DoctorSchedule schedule : schedules) {
-            Time startTime = schedule.getStartTime();
-            Time endTime = schedule.getEndTime();
+        Time startTime = schedule.getStartTime();
+        Time endTime = schedule.getEndTime();
         for (int time = startTime.getIntTime(); time < endTime.getIntTime(); time += 30) {
             if (time % 100 == 60) time += 40;
             if (isDoctorAvailable(date, time)) {
@@ -148,7 +130,7 @@ public class DoctorSchedules {
                 System.out.println(slotTime);
             }
         }
-        }
+
         System.out.println("-----------------------------------");
     }
 
