@@ -284,13 +284,14 @@ public class Inventory {
             for(int i = 0; i < ret.size(); i++) {
                 if (ret.get(i).name().equals(catalog.get(med-1).name())) {
                     System.out.println("Medicine is already prescribe!");
-                    continue;
+                    break;
                 }
                 System.out.print("Enter amount (0 to back) : ");
                 amount = sc.nextInt();
-                if(amount <= 0) continue;
+                if(amount <= 0) break;
 
                 ret.add(new Medicine(catalog.get(med-1).name(), amount));
+                break;
             }
         }
 
