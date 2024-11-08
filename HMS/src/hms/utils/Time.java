@@ -65,7 +65,7 @@ public class Time implements Comparable<Time>{
             return false;
         }
         if (hour >= 24 || hour <= 0) {
-            System.out.println("Invalid time."+ hour);
+            System.out.println("Invalid time.");
             return false;
         }
         return true;
