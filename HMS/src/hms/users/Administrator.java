@@ -81,9 +81,9 @@ public class Administrator extends Staff {
 					if(!super.useroptions(choice-3)) {
 						if (choice == 5) {
 							System.out.print("Confirm Log Out? Enter 1 to Log Out; " +
-									"or Enter any other number to Return to Menu.\nEnter your choice: ");
-							int confirmLogOut = sc.nextInt(); sc.nextLine();
-							if (confirmLogOut == 1) {
+									"or Enter anything else to Return to Menu.\nEnter your choice: ");
+							String confirmLogOut = sc.nextLine();
+							if (confirmLogOut.equals("1")) {
 								System.out.println("Logging out...\n");
 								return;
 							}
@@ -228,14 +228,14 @@ public class Administrator extends Staff {
 							System.out.print("Enter Doctor's ID (0 to Cancel): ");
 							String doctorID = sc.nextLine();
 							if (doctorID.equals("0")) {
-								System.out.print("Operation Cancelled. Returning to menu...\n");
+								System.out.println("Operation Cancelled. Returning to menu...");
 								break;
 							}
 							while (!GlobalData.getInstance().userList.updateDoctorByIDMenu(doctorID, this)){
 								System.out.print("Doctor Does Not Exist! Try again: ");
 								doctorID = sc.nextLine();
 								if (doctorID.equals("0")) {
-									System.out.print("Operation Cancelled. Returning to Menu...\n");
+									System.out.println("Operation Cancelled. Returning to Menu...");
 									break;
 								}
 							}
@@ -245,14 +245,14 @@ public class Administrator extends Staff {
 							System.out.print("Enter Pharmacist's ID (0 to Cancel): ");
 							String pharmacistID = sc.nextLine();
 							if (pharmacistID.equals("0")) {
-								System.out.print("Operation Cancelled. Returning to menu...\n");
+								System.out.println("Operation Cancelled. Returning to menu...");
 								break;
 							}
 							while (!GlobalData.getInstance().userList.updatePharmacistByIDMenu(pharmacistID, this)){
 								System.out.print("Pharmacist Does Not Exist! Try again: ");
 								pharmacistID = sc.nextLine();
 								if (pharmacistID.equals("0")) {
-									System.out.print("Operation Cancelled. Returning to Menu...\n");
+									System.out.println("Operation Cancelled. Returning to Menu...");
 									break;
 								}
 							}
@@ -262,14 +262,14 @@ public class Administrator extends Staff {
 							System.out.print("Enter Administrator's ID (0 to Cancel): ");
 							String administratorID = sc.nextLine();
 							if (administratorID.equals("0")) {
-								System.out.print("Operation Cancelled. Returning to menu...\n");
+								System.out.println("Operation Cancelled. Returning to menu...");
 								break;
 							}
 							while (!GlobalData.getInstance().userList.updateAdministratorByIDMenu(administratorID, this)){
 								System.out.print("Administrator Does Not Exist! Try again: ");
 								administratorID = sc.nextLine();
 								if (administratorID.equals("0")) {
-									System.out.print("Operation Cancelled. Returning to Menu...\n");
+									System.out.println("Operation Cancelled. Returning to Menu...");
 									break;
 								}
 							}
@@ -290,14 +290,14 @@ public class Administrator extends Staff {
 							System.out.print("Enter Doctor's ID (0 to Cancel): ");
 							String doctorID = sc.nextLine();
 							if (doctorID.equals("0")) {
-								System.out.print("Operation Cancelled. Returning to menu...\n");
+								System.out.println("Operation Cancelled. Returning to menu...");
 								break;
 							}
 							while (!GlobalData.getInstance().userList.removeDoctorByIDMenu(doctorID, this)){
 								System.out.print("Doctor Does Not Exist! Try again: ");
 								doctorID = sc.nextLine();
 								if (doctorID.equals("0")) {
-									System.out.print("Operation Cancelled. Returning to Menu...\n");
+									System.out.println("Operation Cancelled. Returning to Menu...");
 									break;
 								}
 							}
@@ -307,14 +307,14 @@ public class Administrator extends Staff {
 							System.out.print("Enter Pharmacist's ID (0 to Cancel): ");
 							String pharmacistID = sc.nextLine();
 							if (pharmacistID.equals("0")) {
-								System.out.print("Operation Cancelled. Returning to Menu...\n");
+								System.out.println("Operation Cancelled. Returning to Menu...");
 								break;
 							}
 							while (!GlobalData.getInstance().userList.removePharmacistByIDMenu(pharmacistID, this)){
 								System.out.print("Pharmacist Does Not Exist! Try again: ");
 								pharmacistID = sc.nextLine();
 								if (pharmacistID.equals("0")) {
-									System.out.print("Operation Cancelled. Returning to Menu...\n");
+									System.out.println("Operation Cancelled. Returning to Menu...");
 									break;
 								}
 							}
@@ -324,7 +324,7 @@ public class Administrator extends Staff {
 							System.out.print("Enter Administrator's ID (0 to Cancel): ");
 							String administratorID = sc.nextLine();
 							if (administratorID.equals("0")) {
-								System.out.print("Operation Cancelled. Returning to Menu...\n");
+								System.out.println("Operation Cancelled. Returning to Menu...");
 								break;
 							}
 							while (!GlobalData.getInstance().userList.removeAdministratorByIDMenu(administratorID, this)){
@@ -332,14 +332,14 @@ public class Administrator extends Staff {
 								else System.out.print("Administrator Does Not Exist! Try again: ");
 								administratorID = sc.nextLine();
 								if (administratorID.equals("0")) {
-									System.out.print("Operation Cancelled. Returning to Menu...\n");
+									System.out.println("Operation Cancelled. Returning to Menu...");
 									break;
 								}
 							}
 							break;
 
 						default:
-							System.out.println("Returning to Menu...\n");
+							System.out.println("Returning to Menu...");
 							break;
 					}
 					break;
@@ -357,7 +357,7 @@ public class Administrator extends Staff {
 
 					ArrayList<User> sortedUserList = GlobalData.getInstance().userList.getStaffSorted(sorting);
 					if (sortedUserList == null || sortedUserList.isEmpty()) {
-						System.out.println("No Staff Members to Display! Returning to Menu...\n");
+						System.out.println("No Staff Members to Display! Returning to Menu...");
 						break;
 					}
 
@@ -400,7 +400,7 @@ public class Administrator extends Staff {
 					}
 					System.out.print("\nEnter anything to Return to Menu: ");
 					sc.nextLine();
-					System.out.println("Returning to Menu...\n");
+					System.out.println("Returning to Menu...");
 					break;
 
 				case 5:
@@ -437,15 +437,14 @@ public class Administrator extends Staff {
 					GlobalData.getInstance().inventory.printCurrentInventory();
 					System.out.print("Enter anything to Return to Menu: ");
 					sc.nextLine();
-					System.out.println("Returning to Menu...\n");
+					System.out.println("Returning to Menu...");
 					break;
 
 				case 2:
 					int addMore;
 					while (true) {
-						System.out.println("\n");
 						GlobalData.getInstance().inventory.addNewMedicine();
-						System.out.print("Would you like to Add More Medicines to the Inventory? " +
+						System.out.print("\nWould you like to Add More Medicines to the Inventory? " +
 								"1. Yes; 2. No\nEnter your choice: ");
 						addMore = sc.nextInt(); sc.nextLine();
 						while (addMore != 1 && addMore != 2) {
@@ -453,7 +452,7 @@ public class Administrator extends Staff {
 							addMore = sc.nextInt(); sc.nextLine();
 						}
 						if (addMore == 2) {
-							System.out.println("Returning to Menu...\n");
+							System.out.println("Returning to Menu...");
 							break;
 						}
 					}
@@ -462,9 +461,8 @@ public class Administrator extends Staff {
 				case 3:
 					int updateMoreMeds;
 					while (true) {
-						System.out.println("\n");
 						GlobalData.getInstance().inventory.updateStockLevelMenu();
-						System.out.print("Would you like to Update More Medication Stock Levels? " +
+						System.out.print("\nWould you like to Update More Medication Stock Levels? " +
 								"1. Yes; 2. No\nEnter your choice: ");
 						updateMoreMeds = sc.nextInt(); sc.nextLine();
 						while (updateMoreMeds != 1 && updateMoreMeds != 2) {
@@ -472,7 +470,7 @@ public class Administrator extends Staff {
 							updateMoreMeds = sc.nextInt(); sc.nextLine();
 						}
 						if (updateMoreMeds == 2) {
-							System.out.println("Returning to Menu...\n");
+							System.out.println("Returning to Menu...");
 							break;
 						}
 					}
@@ -481,9 +479,9 @@ public class Administrator extends Staff {
 				case 4:
 					int updateMoreAlerts;
 					while (true) {
-						System.out.println("\n");
+						System.out.println("Current Inventory:");
 						GlobalData.getInstance().inventory.setNewLowLevel();
-						System.out.print("Would you like to Update More Low Levels? " +
+						System.out.print("\nWould you like to Update More Low Levels? " +
 								"1. Yes; 2. No\nEnter your choice: ");
 						updateMoreAlerts = sc.nextInt(); sc.nextLine();
 						while (updateMoreAlerts != 1 && updateMoreAlerts != 2) {
@@ -491,7 +489,7 @@ public class Administrator extends Staff {
 							updateMoreAlerts = sc.nextInt(); sc.nextLine();
 						}
 						if (updateMoreAlerts == 2) {
-							System.out.println("Returning to Menu...\n");
+							System.out.println("Returning to Menu...");
 							break;
 						}
 					}
@@ -501,7 +499,11 @@ public class Administrator extends Staff {
 					int manageMoreRequests;
 					while (true) {
 						GlobalData.getInstance().inventory.manageRestockRequests();
-						System.out.print("Would you like to Manage More Requests? " +
+						if (GlobalData.getInstance().inventory.isRequestsEmpty()) {
+							System.out.println("No Pending Restock Requests!\nReturning to Menu...");
+							break;
+						}
+						System.out.print("\nWould you like to Manage More Requests? " +
 								"1. Yes; 2. No\nEnter your choice: ");
 						manageMoreRequests = sc.nextInt(); sc.nextLine();
 						while (manageMoreRequests != 1 && manageMoreRequests != 2) {
@@ -509,7 +511,7 @@ public class Administrator extends Staff {
 							manageMoreRequests = sc.nextInt(); sc.nextLine();
 						}
 						if (manageMoreRequests == 2) {
-							System.out.println("Returning to Menu...\n");
+							System.out.println("Returning to Menu...");
 							break;
 						}
 					}

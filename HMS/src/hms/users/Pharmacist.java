@@ -241,10 +241,9 @@ public class Pharmacist extends Staff {
                     if (!super.useroptions(choice - 4)) {
                         if (choice == 6) {
                             System.out.print("Confirm Log Out? Enter 1 to Log Out; " +
-                                    "or Enter any other number to Return to Menu.\nEnter your choice: ");
-                            int confirmLogOut = sc.nextInt();
-                            sc.nextLine();
-                            if (confirmLogOut == 1) {
+                                    "or Enter anything else to Return to Menu.\nEnter your choice: ");
+                            String confirmLogOut = sc.nextLine();
+                            if (confirmLogOut.equals("1")) {
                                 System.out.println("Logging out...\n");
                                 return;
                             } else {
