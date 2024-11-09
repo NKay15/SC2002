@@ -139,6 +139,10 @@ public class User {
         else return -1;
     }
 
+    public boolean checkPassword(String password) {
+        return this.password.checkPassword(password);
+    }
+
     /**
      * Method to call menu. To be override by
      */

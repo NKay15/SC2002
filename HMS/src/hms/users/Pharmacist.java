@@ -168,7 +168,8 @@ public class Pharmacist extends Staff {
 								switch (confirmDispense) {
 									case 1:
 										if (GlobalData.getInstance().inventory.dispense(aop)) {
-											System.out.println("Medication Successfully Dispensed! Returning to Menu... \n");
+											System.out.println("Medication Successfully Dispensed! " +
+													"Prescription Status Updated. Returning to Menu... \n");
 										} else {
 											System.out.println("Insufficient Medication. Please Restock! Returning to Menu...\n");
 										}

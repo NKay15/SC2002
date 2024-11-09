@@ -231,9 +231,13 @@ public class Administrator extends Staff {
 								System.out.print("Operation Cancelled. Returning to menu...\n");
 								break;
 							}
-							while (!GlobalData.getInstance().userList.updateDoctorByID(doctorID)){
+							while (!GlobalData.getInstance().userList.updateDoctorByIDMenu(doctorID, this)){
 								System.out.print("Doctor Does Not Exist! Try again: ");
 								doctorID = sc.nextLine();
+								if (doctorID.equals("0")) {
+									System.out.print("Operation Cancelled. Returning to Menu...\n");
+									break;
+								}
 							}
 							break;
 
@@ -244,9 +248,13 @@ public class Administrator extends Staff {
 								System.out.print("Operation Cancelled. Returning to menu...\n");
 								break;
 							}
-							while (!GlobalData.getInstance().userList.updatePharmacistByID(pharmacistID)){
+							while (!GlobalData.getInstance().userList.updatePharmacistByIDMenu(pharmacistID, this)){
 								System.out.print("Pharmacist Does Not Exist! Try again: ");
 								pharmacistID = sc.nextLine();
+								if (pharmacistID.equals("0")) {
+									System.out.print("Operation Cancelled. Returning to Menu...\n");
+									break;
+								}
 							}
 							break;
 
@@ -257,9 +265,13 @@ public class Administrator extends Staff {
 								System.out.print("Operation Cancelled. Returning to menu...\n");
 								break;
 							}
-							while (!GlobalData.getInstance().userList.updatePharmacistByID(administratorID)){
+							while (!GlobalData.getInstance().userList.updateAdministratorByIDMenu(administratorID, this)){
 								System.out.print("Administrator Does Not Exist! Try again: ");
 								administratorID = sc.nextLine();
+								if (administratorID.equals("0")) {
+									System.out.print("Operation Cancelled. Returning to Menu...\n");
+									break;
+								}
 							}
 							break;
 
@@ -281,21 +293,30 @@ public class Administrator extends Staff {
 								System.out.print("Operation Cancelled. Returning to menu...\n");
 								break;
 							}
-							while (!GlobalData.getInstance().userList.removeDoctorByIDMenu(doctorID)){
-								System.out.print("Administrator Does Not Exist! Try again: ");
+							while (!GlobalData.getInstance().userList.removeDoctorByIDMenu(doctorID, this)){
+								System.out.print("Doctor Does Not Exist! Try again: ");
 								doctorID = sc.nextLine();
+								if (doctorID.equals("0")) {
+									System.out.print("Operation Cancelled. Returning to Menu...\n");
+									break;
+								}
 							}
 							break;
+
 						case 2:
 							System.out.print("Enter Pharmacist's ID (0 to Cancel): ");
 							String pharmacistID = sc.nextLine();
 							if (pharmacistID.equals("0")) {
-								System.out.print("Operation Cancelled. Returning to menu...\n");
+								System.out.print("Operation Cancelled. Returning to Menu...\n");
 								break;
 							}
-							while (!GlobalData.getInstance().userList.removePharmacistByIDMenu(pharmacistID)){
-								System.out.print("Administrator Does Not Exist! Try again: ");
+							while (!GlobalData.getInstance().userList.removePharmacistByIDMenu(pharmacistID, this)){
+								System.out.print("Pharmacist Does Not Exist! Try again: ");
 								pharmacistID = sc.nextLine();
+								if (pharmacistID.equals("0")) {
+									System.out.print("Operation Cancelled. Returning to Menu...\n");
+									break;
+								}
 							}
 							break;
 
@@ -303,12 +324,17 @@ public class Administrator extends Staff {
 							System.out.print("Enter Administrator's ID (0 to Cancel): ");
 							String administratorID = sc.nextLine();
 							if (administratorID.equals("0")) {
-								System.out.print("Operation Cancelled. Returning to menu...\n");
+								System.out.print("Operation Cancelled. Returning to Menu...\n");
 								break;
 							}
-							while (!GlobalData.getInstance().userList.removeAdministratorByIDMenu(administratorID)){
-								System.out.print("Administrator Does Not Exist! Try again: ");
+							while (!GlobalData.getInstance().userList.removeAdministratorByIDMenu(administratorID, this)){
+								if (administratorID.equals(this.getID())) System.out.print("You May Not Remove Yourself! Try again: ");
+								else System.out.print("Administrator Does Not Exist! Try again: ");
 								administratorID = sc.nextLine();
+								if (administratorID.equals("0")) {
+									System.out.print("Operation Cancelled. Returning to Menu...\n");
+									break;
+								}
 							}
 							break;
 
@@ -339,31 +365,35 @@ public class Administrator extends Staff {
 					switch (sorting){
 						case 1:
 							for (int i = 0; i < sortedUserList.size(); i++) {
-								System.out.println((i + 1) + ". Name:" + sortedUserList.get(i).getName()
+								System.out.println((i + 1) + ". Name: " + sortedUserList.get(i).getName()
 										+ "\tRole: " + sortedUserList.get(i).getRole());
 							}
 							break;
+
 						case 2:
 							for (int i = 0; i < sortedUserList.size(); i++) {
-								System.out.println((i + 1) + ". Name:" + sortedUserList.get(i).getName()
+								System.out.println((i + 1) + ". Name: " + sortedUserList.get(i).getName()
 										+ "\tGender: " + sortedUserList.get(i).getGender());
 							}
 							break;
+
 						case 3:
 							for (int i = 0; i < sortedUserList.size(); i++) {
-								System.out.println((i + 1) + ". Name:" + sortedUserList.get(i).getName()
+								System.out.println((i + 1) + ". Name: " + sortedUserList.get(i).getName()
 										+ "\tID: " + sortedUserList.get(i).getID());
 							}
 							break;
+
 						case 4:
 							for (int i = 0; i < sortedUserList.size(); i++) {
-								System.out.println((i + 1) + ". ID:" + sortedUserList.get(i).getID()
+								System.out.println((i + 1) + ". ID: " + sortedUserList.get(i).getID()
 										+ "\tName: " + sortedUserList.get(i).getName());
 							}
 							break;
+
 						case 5:
 							for (int i = 0; i < sortedUserList.size(); i++) {
-								System.out.println((i + 1) + ". Name:" + sortedUserList.get(i).getName()
+								System.out.println((i + 1) + ". Name: " + sortedUserList.get(i).getName()
 										+ "\tAge: " + sortedUserList.get(i).getAge());
 							}
 							break;
@@ -374,7 +404,7 @@ public class Administrator extends Staff {
 					break;
 
 				case 5:
-					System.out.println("Returning to Menu...\n");
+					System.out.println("Returning to Main Menu...\n");
 					return;
 
 				default:
@@ -472,7 +502,7 @@ public class Administrator extends Staff {
 					break;
 
 				case 6:
-					System.out.println("Returning to Menu...\n");
+					System.out.println("Returning to Main Menu...\n");
 					return;
 
 				default:
