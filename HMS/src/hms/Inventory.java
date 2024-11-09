@@ -1,7 +1,6 @@
 package hms;
 
 import hms.medicalRecords.AppointmentOutcomeRecord;
-import hms.GlobalData;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -220,9 +219,11 @@ public class Inventory {
      */
     public void createRequest() {
         Scanner sc = GlobalData.getInstance().sc;
-        System.out.print("Enter Index of Medicine: ");
+        System.out.println("Current Inventory:");
+        GlobalData.getInstance().inventory.printCurrentInventory();
+        System.out.print("Enter Index of Medicine (0 to Cancel): ");
         int med = sc.nextInt(); sc.nextLine();
-        while(med < 0 || med > catalog.size()) {
+        while(med < 1 || med > catalog.size()) {
             System.out.print("Invalid input! Try again: ");
             med = sc.nextInt(); sc.nextLine();
         }
@@ -259,38 +260,39 @@ public class Inventory {
     }
 
     public Medicine[] generatePrescription(){
+        System.out.println("\nCurrent Inventory, for your reference:");
         printCurrentInventory();
         ArrayList<Medicine> ret = new ArrayList<Medicine>();
         int med = 1;
-        int amount;
+        int quantity;
         
         while(med > 0 && med <= catalog.size()) {
-            System.out.print("Enter Index of Medicine to Prescribe () to exit): ");
+            System.out.print("Enter Index of Medicine to Prescribe (0 to Exit): ");
             Scanner sc = GlobalData.getInstance().sc;
             med = sc.nextInt(); sc.nextLine();
             if(med == 0) break;
-            while(med < 0 || med >= catalog.size()) {
+            while(med < 0 || med > catalog.size()) {
                 System.out.print("Invalid input! Try again: ");
-                med = sc.nextInt();
+                med = sc.nextInt(); sc.nextLine();
             }
-            if(ret.size() == 0) {
-                System.out.print("Enter amount (0 to back) : ");
-                amount = sc.nextInt();
-                if(amount <= 0) continue;
+            if(ret.isEmpty()) {
+                System.out.print("Enter Quantity (0 to Go Back): ");
+                quantity = sc.nextInt(); sc.nextLine();
+                if(quantity <= 0) continue;
 
-                ret.add(new Medicine(catalog.get(med-1).name(), amount));
+                ret.add(new Medicine(catalog.get(med-1).name(), quantity));
                 continue;
             }
             for(int i = 0; i < ret.size(); i++) {
                 if (ret.get(i).name().equals(catalog.get(med-1).name())) {
-                    System.out.println("Medicine is already prescribe!");
+                    System.out.println("Medicine Has Already Been Prescribed!");
                     break;
                 }
-                System.out.print("Enter amount (0 to back) : ");
-                amount = sc.nextInt();
-                if(amount <= 0) break;
+                System.out.print("Enter Quantity (0 to Go Back): ");
+                quantity = sc.nextInt();
+                if(quantity <= 0) break;
 
-                ret.add(new Medicine(catalog.get(med-1).name(), amount));
+                ret.add(new Medicine(catalog.get(med-1).name(), quantity));
                 break;
             }
         }
@@ -346,7 +348,7 @@ public class Inventory {
         System.out.print("Enter Index of Request: ");
         Scanner sc = GlobalData.getInstance().sc;
         int req = sc.nextInt(); sc.nextLine();
-        while(req < 0 || req > requests.size()) {
+        while(req < 1 || req > requests.size()) {
             System.out.print("Invalid input! Try again: ");
             req = sc.nextInt();
         }
@@ -378,13 +380,14 @@ public class Inventory {
      * Print current inventory
      */
     public void printCurrentInventory() {
+        System.out.println("---------------------");
         for(int i = 0; i < catalog.size(); i++) {
             System.out.print((i+1) + ". " + catalog.get(i).name() + ": " + catalog.get(i).amount());
             if(catalog.get(i).amount() <= lowlevel.get(i).amount())
                 System.out.println(" **LOW, PLEASE RESTOCK!**");
             else System.out.println();
         }
-        System.out.println();
+        System.out.println("---------------------");
     }
 
     /**
@@ -392,7 +395,7 @@ public class Inventory {
      */
     public void printRestockRequest() {
         for(int i = 0; i < requests.size(); i++) {
-            System.out.println((i+1) + ". " + requests.get(i).name() + " : " + requests.get(i).amount());
+            System.out.println((i+1) + ". " + requests.get(i).name() + ": " + requests.get(i).amount());
         }
         System.out.println();
     }

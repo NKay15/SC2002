@@ -38,14 +38,14 @@ public class AppointmentOutcomeRecord {
      */
     public AppointmentOutcomeRecord() {
         Scanner sc = GlobalData.getInstance().sc;
-        System.out.print("Enter the date of appointment (ddmmyyyy) : ");
+        System.out.print("Enter Date of Appointment (ddmmyyyy): ");
         int t = sc.nextInt();
         date = new Date(t);
         service = sc.nextLine();
-        System.out.print("Enter the service provided : ");
+        System.out.print("Enter Service Provided: ");
         service = sc.nextLine();
         prescription = GlobalData.getInstance().inventory.generatePrescription();
-        System.out.print("Enter the consultation notes : ");
+        System.out.print("Enter Consultation Notes: ");
         notes = sc.nextLine();
         status = 1;
     }
@@ -69,7 +69,7 @@ public class AppointmentOutcomeRecord {
         System.out.println("Appointment Outcome Record:");
         System.out.print("Date: ");
         date.print();
-        System.out.println("\nService provided: " + service);
+        System.out.println("Service provided: " + service);
         System.out.println("Prescription: ");
         for(Medicine n : prescription) n.print();
         System.out.print("Status of Prescription: ");

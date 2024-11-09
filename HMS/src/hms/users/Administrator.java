@@ -498,7 +498,21 @@ public class Administrator extends Staff {
 					break;
 
 				case 5:
-					GlobalData.getInstance().inventory.manageRestockRequests();
+					int manageMoreRequests;
+					while (true) {
+						GlobalData.getInstance().inventory.manageRestockRequests();
+						System.out.print("Would you like to Manage More Requests? " +
+								"1. Yes; 2. No\nEnter your choice: ");
+						manageMoreRequests = sc.nextInt(); sc.nextLine();
+						while (manageMoreRequests != 1 && manageMoreRequests != 2) {
+							System.out.print("Invalid choice! Try again: ");
+							manageMoreRequests = sc.nextInt(); sc.nextLine();
+						}
+						if (manageMoreRequests == 2) {
+							System.out.println("Returning to Menu...\n");
+							break;
+						}
+					}
 					break;
 
 				case 6:

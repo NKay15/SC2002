@@ -109,7 +109,7 @@ public class Patient extends User {
         Scanner sc = GlobalData.getInstance().sc;
         int choice = 1;
         while(true) {
-            System.out.print("Enter menu number : ");
+            System.out.print("Enter menu number: ");
             choice = sc.nextInt();
             switch(choice) {
                 case 1:
@@ -129,35 +129,34 @@ public class Patient extends User {
 
                 case 4:
                     int time, date;
-                    String docname = sc.nextLine();
+                    // sc.nextLine();
                     Doctor doc = null;
-                    System.out.println("Enter doctor name (! : exit): ");
-                    docname = sc.nextLine();
-                    for(Doctor doctor : GlobalData.getInstance().userList.getDoctors()) {
-                        if(doctor.getName().equals(docname)) {
-                            doc = doctor;
-                            break;
-                        }
+                    for(int i = 0; i < GlobalData.getInstance().userList.getDoctors().size(); i++) {
+                        System.out.println((i+1) + ". Dr. " + GlobalData.getInstance().userList.getDoctors().get(i).getName());
                     }
-                    if(doc == null) {
-                        if(!docname.equals("!")) System.out.print("Doctor does not exist! ");
-                        break;
+                    System.out.print("Select Doctor (0 to Exit): ");
+                    int whichDoc = sc.nextInt();
+                    while(whichDoc < 1 || whichDoc > GlobalData.getInstance().userList.getDoctors().size()) {
+                        System.out.print("Invalid choice! Try again: ");
+                        whichDoc = sc.nextInt();
                     }
-                    System.out.print("Enter date in ddmmyyyy (O : exit): ");
+                    if(whichDoc == 0) break;
+                    doc = GlobalData.getInstance().userList.getDoctors().get(whichDoc-1);
+                    System.out.print("Enter Date in ddmmyyyy (O to Exit): ");
                     date = sc.nextInt();
                     if(date == 0) break;
-                    System.out.print("Enter time in hhmm (O : exit): ");
+                    System.out.print("Enter Time in hhmm (O to Exit): ");
                     time = sc.nextInt();
                     if(time == 0) break;
                     Appointment toSchedule = patientSchedule.generateAppointment(this, doc, new Date(date), new Time(time));
                     if(toSchedule == null) {
-                        System.out.println(docname + " " +
+                        System.out.println("Dr. " + doc.getName() + " " +
                                 "is not available at your chosen time!");
                         break;
                     }
                     scheduleAppointment(toSchedule);
-                    System.out.println("Appointment is scheduled and pending to be approved by the doctor");
-                    docname = sc.nextLine();
+                    // System.out.println("Appointment is scheduled and pending to be approved by the doctor!");
+                    // sc.nextLine();
                     break;
 
                 case 5:
@@ -170,10 +169,10 @@ public class Patient extends User {
                      * Get new appointment
                      */
                     int newtime, newdate;
-                    System.out.print("Enter date in ddmmyyyy (O : exit): ");
+                    System.out.print("Enter Date in ddmmyyyy (O : exit): ");
                     newdate = sc.nextInt();
                     if(newdate == 0) break;
-                    System.out.print("Enter time in (O : exit): ");
+                    System.out.print("Enter Time in (O : exit): ");
                     newtime = sc.nextInt();
                     if(newtime == 0) break;
                     Appointment toReschedule = patientSchedule.generateAppointment(this, old.getDoctor(), new Date(newdate), new Time(newtime));
@@ -182,7 +181,7 @@ public class Patient extends User {
                         break;
                     }
 	    			rescheduleAppointment(old, toReschedule);
-                    System.out.println("Appointment has successfully been rescheduled and pending to be approved by the doctor");
+                    System.out.println("Appointment has successfully been rescheduled and pending to be approved by the doctor!");
 	    			break;
 
 	    		case 6:
@@ -205,7 +204,7 @@ public class Patient extends User {
 
 	    		default:
                     if(!super.useroptions(choice-8)) {
-                        System.out.println("Logging out");
+                        System.out.println("Logging out...\n");
                         return;
                     }
 	    	}

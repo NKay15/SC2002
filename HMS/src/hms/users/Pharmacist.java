@@ -44,7 +44,7 @@ public class Pharmacist extends Staff {
 			if (choice >= 1 && choice <= 6) {
 				System.out.println("-----Pharmacist Menu-----");
 				System.out.println("1. Search for Appointment Outcome Record by Patient ID");
-				System.out.println("2. Update Prescription Status");
+				System.out.println("2. Dispense Medication & Update Prescription Status");
 				System.out.println("3. View Medication Inventory");
 				System.out.println("4. Submit Replenishment Requests");
 				super.menu(5);
@@ -80,7 +80,8 @@ public class Pharmacist extends Staff {
 						}
 						else {
 							System.out.println("Completed Appointments for Patient " + patient.getID() + ":");
-							for (int i = 0, k = 1; i < patient.getPatientSchedule().getAppointments().size(); i++) {
+							int k = 1;
+							for (int i = 0; i < patient.getPatientSchedule().getAppointments().size(); i++) {
 								appointment = patient.getPatientSchedule().getAppointments().get(i);
 								if (appointment.getStatus() == 4) {
 									int time = appointment.getTimeSlot().getIntTime();
@@ -90,14 +91,17 @@ public class Pharmacist extends Staff {
 									k++;
 								}
 							}
-							System.out.print("Enter your choice: ");
+							System.out.print("Select Appointment for which to View Appointment Outcome Record: ");
 							int appointmentChoice = sc.nextInt(); sc.nextLine();
-							while (appointmentChoice > patient.getPatientSchedule().getAppointments().size()){
+							while (appointmentChoice < 1 || appointmentChoice >= k){
 								System.out.print("Invalid choice! Try again: ");
 								appointmentChoice = sc.nextInt(); sc.nextLine();
 							}
 							appointment = patient.getPatientSchedule().getAppointments().get(appointmentChoice-1);
 							AppointmentOutcomeRecord aop = appointment.getAop();
+							System.out.println("Appointment ID: " + appointment.getUuid());
+							System.out.println("Patient ID: " + patient.getID());
+							System.out.println("---------------------------");
 							aop.print();
 							System.out.print("Enter anything to Return to Menu: ");
 							sc.nextLine();
@@ -130,8 +134,20 @@ public class Pharmacist extends Staff {
 							break;
 						}
 						else {
+							boolean hasPendingMedication = false;
+							for (int i = 0; i < patient.getPatientSchedule().getAppointments().size(); i++) {
+								appointment = patient.getPatientSchedule().getAppointments().get(i);
+								if (appointment.getStatus() == 4) {
+									if (!appointment.getAop().isDispensed()) hasPendingMedication = true;
+								}
+							}
+							if (!hasPendingMedication) {
+								System.out.println("Patient Has No Completed Appointments Awaiting Dispensation of Medication!\nReturning to Menu...\n");
+								break;
+							}
 							System.out.println("Completed Appointments Requiring Medication for Patient " + patient.getID() + ":");
-							for (int i = 0, k = 1; i < patient.getPatientSchedule().getAppointments().size(); i++) {
+							int k = 1;
+							for (int i = 0; i < patient.getPatientSchedule().getAppointments().size(); i++) {
 								appointment = patient.getPatientSchedule().getAppointments().get(i);
 								if (appointment.getStatus() == 4) {
 									if (!appointment.getAop().isDispensed()) {
@@ -145,17 +161,21 @@ public class Pharmacist extends Staff {
 									}
 								}
 							}
-							System.out.print("Enter your choice: ");
+							System.out.print("Select Appointment for which to Dispense Medication: ");
 							int appointmentChoice = sc.nextInt(); sc.nextLine();
+							while (appointmentChoice < 1 || appointmentChoice >= k) {
+								System.out.print("Invalid choice! Try again: ");
+								appointmentChoice = sc.nextInt(); sc.nextLine();
+							}
 							appointment = patient.getPatientSchedule().getAppointments().get(appointmentChoice-1);
 							AppointmentOutcomeRecord aop = appointment.getAop();
 							Medicine[] prescription = aop.getprescription();
-							System.out.println("Please ensure that all fields below are correct before confirming:");
-							System.out.println("Patient ID: " + patientID);
+							System.out.println("\nPlease ensure that all fields below are correct before confirming:");
 							System.out.println("Appointment ID: " + appointment.getUuid());
+							System.out.println("Patient ID: " + patientID);
 							System.out.println("Medication for Dispensation: ");
 							for (int i = 0; i < prescription.length; i++){
-								System.out.println((i+1) + ". " + prescription[i].name() + ": " + prescription[i].amount());
+								System.out.println((i+1) + ". " + prescription[i].name() + ": " + "(Amount: " + prescription[i].amount() + ")");
 							}
 							System.out.println("\nConfirm to Dispense Medication?");
 							System.out.println("Enter 1 to Confirm; or 2 to Cancel.");
@@ -176,7 +196,7 @@ public class Pharmacist extends Staff {
 										break;
 
 									case 2:
-										System.out.println("Operation Cancelled.");
+										System.out.println("Operation Cancelled. Returning to Menu... \n");
 										break;
 
 									default:
@@ -198,8 +218,6 @@ public class Pharmacist extends Staff {
                     break;
 
                 case 4:
-                    System.out.println("Current Inventory:");
-                    GlobalData.getInstance().inventory.printCurrentInventory();
                     int submitMore;
                     while (true) {
                         GlobalData.getInstance().inventory.createRequest();
