@@ -81,6 +81,11 @@ public class UserList {
         Scanner sc = GlobalData.getInstance().sc;
         for (Doctor doctor : doctors) {
             if (doctor.getID().equals(ID)) {
+                System.out.println("\nPlease ensure that all fields below are correct before confirming:");
+                System.out.println("Doctor ID: " + doctor.getID());
+                System.out.println("Name: " + doctor.getName());
+                System.out.println("Gender: " + doctor.getGender());
+                System.out.println("Age: " + doctor.getAge());
                 System.out.println("Confirm to Remove Doctor?");
                 System.out.print("Enter 1 to Confirm; or 2 to Cancel.\nEnter your choice: ");
                 int choice;
@@ -353,6 +358,11 @@ public class UserList {
         Scanner sc = GlobalData.getInstance().sc;
         for (Pharmacist pharmacist : pharmacists) {
             if (pharmacist.getID().equals(ID)) {
+                System.out.println("\nPlease ensure that all fields below are correct before confirming:");
+                System.out.println("Pharmacist ID: " + pharmacist.getID());
+                System.out.println("Name: " + pharmacist.getName());
+                System.out.println("Gender: " + pharmacist.getGender());
+                System.out.println("Age: " + pharmacist.getAge());
                 System.out.println("Confirm to Remove Pharmacist?");
                 System.out.print("Enter 1 to Confirm; or 2 to Cancel.\nEnter your choice: ");
                 int choice;
@@ -562,6 +572,11 @@ public class UserList {
         Scanner sc = GlobalData.getInstance().sc;
         for (Administrator administrator : administrators) {
             if (administrator.getID().equals(ID)) {
+                System.out.println("\nPlease ensure that all fields below are correct before confirming:");
+                System.out.println("Administrator ID: " + administrator.getID());
+                System.out.println("Name: " + administrator.getName());
+                System.out.println("Gender: " + administrator.getGender());
+                System.out.println("Age: " + administrator.getAge());
                 System.out.println("Confirm to Remove Administrator?");
                 System.out.print("Enter 1 to Confirm; or 2 to Cancel.\nEnter your choice: ");
                 int choice;
