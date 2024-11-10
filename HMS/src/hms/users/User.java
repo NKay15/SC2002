@@ -40,7 +40,7 @@ public class User {
 
     private void changePassword(Scanner sc){
         System.out.print("Enter Old Password (0 to Cancel): ");
-        String oldPassword = sc.next(); sc.nextLine();
+        String oldPassword = sc.nextLine();
         if (oldPassword.equals("0")){
             System.out.println("Operation Cancelled. Returning to Menu...\n");
             return;
@@ -151,7 +151,7 @@ public class User {
     public int login() {
         Scanner sc = GlobalData.getInstance().sc;
         System.out.print("Enter password: ");
-        String value = sc.next();
+        String value = sc.nextLine();
         if (password.checkPassword(value)) return role;
         else return -1;
     }

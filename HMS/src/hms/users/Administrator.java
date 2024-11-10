@@ -5,6 +5,7 @@ import hms.appointments.Appointment;
 import hms.appointments.AppointmentScheduler;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.UUID;
 
@@ -18,86 +19,88 @@ public class Administrator extends Staff {
 	}
 
 	public void menu() {
-		System.out.println("-----Administrator Menu-----");
-		System.out.println("1. Manage Staff");
-		System.out.println("2. View Appointment Records");
-		System.out.println("3. Manage Inventory");
-		super.menu(4);
-		System.out.println("-----End of Menu-----");
-		System.out.print("Enter your choice: ");
 		Scanner sc = GlobalData.getInstance().sc;
-		int choice = 0;
+		int choice;
+		boolean inputError = false;
 
 		while (true) {
-			if (choice >= 1 && choice <= 5) {
-				System.out.println("-----Administrator Menu-----");
-				System.out.println("1. Manage Staff");
-				System.out.println("2. View Appointment Records");
-				System.out.println("3. Manage Inventory");
-				super.menu(4);
-				System.out.println("-----End of Menu-----");
-				System.out.print("Enter your choice: ");
-			}
-			choice = sc.nextInt();
-			sc.nextLine();
+			try {
+				if (!inputError) {
+					System.out.println("-----Administrator Menu-----");
+					System.out.println("1. Manage Staff");
+					System.out.println("2. View Appointment Records");
+					System.out.println("3. Manage Inventory");
+					super.menu(4);
+					System.out.println("-----End of Menu-----");
+					System.out.print("Enter your choice: ");
+				}
+				else inputError = false;
+				choice = sc.nextInt(); sc.nextLine();
 
-			switch (choice) {
-				case 1:
-					staffMenu();
-					break;
+				switch (choice) {
+					case 1:
+						staffMenu();
+						break;
 
-				case 2:
-					boolean appointmentFound = false;
-					boolean alreadyTried = false;
-					Appointment appointment = null;
-					String appointmentID;
+					case 2:
+						boolean appointmentFound = false;
+						boolean alreadyTried = false;
+						Appointment appointment = null;
+						String appointmentID;
 
-					while (!appointmentFound) {
-						if (alreadyTried) { System.out.println("Invalid Appointment ID! Try again: "); }
-						System.out.print("Enter Appointment ID (0 to Cancel): ");
-						appointmentID = sc.nextLine();
-						if (appointmentID.equals("0")) {
-							System.out.println("Operation Cancelled. Returning to Menu...\n");
-							break;
-						}
-						if (AppointmentScheduler.getInstance().findAppointment(UUID.fromString(appointmentID),
-								AppointmentScheduler.getInstance().getAppointments()) != null){
-							appointment = AppointmentScheduler.getInstance().findAppointment(UUID.fromString(appointmentID),
-									AppointmentScheduler.getInstance().getAppointments());
-							appointmentFound = true;
-						}
-						alreadyTried = true;
-					}
-
-					if (appointmentFound) appointment.print();
-
-					break;
-
-				case 3:
-					inventoryMenu();
-					break;
-
-				default:
-					if(!super.useroptions(choice-3)) {
-						if (choice == 5) {
-							System.out.print("Confirm Log Out? Enter 1 to Log Out; " +
-									"or Enter anything else to Return to Menu.\nEnter your choice: ");
-							String confirmLogOut = sc.next(); sc.nextLine();
-							if (confirmLogOut.equals("1")) {
-								System.out.println("Logging out...\n");
-								return;
+						while (!appointmentFound) {
+							if (alreadyTried) {
+								System.out.println("Invalid Appointment ID! Try again: ");
 							}
-							else {
-								System.out.println("Returning to Menu...\n");
+							System.out.print("Enter Appointment ID (0 to Cancel): ");
+							appointmentID = sc.nextLine();
+							if (appointmentID.equals("0")) {
+								System.out.println("Operation Cancelled. Returning to Menu...\n");
+								break;
+							}
+							if (AppointmentScheduler.getInstance().findAppointment(UUID.fromString(appointmentID),
+									AppointmentScheduler.getInstance().getAppointments()) != null) {
+								appointment = AppointmentScheduler.getInstance().findAppointment(UUID.fromString(appointmentID),
+										AppointmentScheduler.getInstance().getAppointments());
+								appointmentFound = true;
+							}
+							alreadyTried = true;
+						}
+
+						if (appointmentFound) appointment.print();
+
+						break;
+
+					case 3:
+						inventoryMenu();
+						break;
+
+					default:
+						if (!super.useroptions(choice - 3)) {
+							if (choice == 5) {
+								System.out.print("Confirm Log Out? Enter 1 to Log Out; " +
+										"or Enter anything else to Return to Menu.\nEnter your choice: ");
+								String confirmLogOut = sc.next(); sc.nextLine();
+								if (confirmLogOut.equals("1")) {
+									System.out.println("Logging out...\n");
+									return;
+								} else {
+									System.out.println("Returning to Menu...\n");
+									break;
+								}
+							} else {
+								System.out.print("Invalid choice! Try again: ");
+								inputError = true;
 								break;
 							}
 						}
-						else {
-							System.out.print("Invalid choice! Try again: ");
-							break;
-						}
-					}
-					break;
+						break;
+				}
+			}
+			catch (InputMismatchException e) {
+				System.out.print("Invalid choice! Try again: ");
+				inputError = true;
+				sc.nextLine();
 			}
 		}
 	}

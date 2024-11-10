@@ -157,8 +157,7 @@ public class UserList {
                 case "2":
                     System.out.println("Current Gender: " + doctor.getGenderString());
                     System.out.print("Enter New Gender (0: Unknown; 1: Male; 2: Female): ");
-                    newDoctorGenderString = sc.next();
-                    sc.nextLine();
+                    newDoctorGenderString = sc.next(); sc.nextLine();
                     while (true) {
                         switch (newDoctorGenderString) {
                             case "0":
@@ -181,8 +180,7 @@ public class UserList {
                                 break;
                             default:
                                 System.out.print("Invalid choice! Try again: ");
-                                newDoctorGenderString = sc.next();
-                                sc.nextLine();
+                                newDoctorGenderString = sc.next(); sc.nextLine();
                                 continue;
                         }
                         break;
@@ -193,8 +191,7 @@ public class UserList {
                 case "3":
                     System.out.println("Current Age: " + doctor.getAge());
                     System.out.print("Enter New Age: ");
-                    newDoctorAge = sc.nextInt();
-                    sc.nextLine();
+                    newDoctorAge = sc.nextInt(); sc.nextLine();
                     changeWhat = 3;
                     break;
 
@@ -425,8 +422,7 @@ public class UserList {
                 case "2":
                     System.out.println("Current Gender: " + pharmacist.getGender());
                     System.out.print("Enter New Gender (0: Unknown; 1: Male; 2: Female): ");
-                    newPharmacistGenderString = sc.next();
-                    sc.nextLine();
+                    newPharmacistGenderString = sc.next(); sc.nextLine();
                     while (true){
                         switch (newPharmacistGenderString) {
                             case "0":
@@ -449,8 +445,7 @@ public class UserList {
                                 break;
                             default:
                                 System.out.print("Invalid choice! Try again: ");
-                                newPharmacistGenderString = sc.next();
-                                sc.nextLine();
+                                newPharmacistGenderString = sc.next(); sc.nextLine();
                                 continue;
                         }
                         break;
@@ -461,8 +456,7 @@ public class UserList {
                 case "3":
                     System.out.println("Current Age: " + pharmacist.getAge());
                     System.out.print("Enter New Age: ");
-                    newPharmacistAge = sc.nextInt();
-                    sc.nextLine();
+                    newPharmacistAge = sc.nextInt(); sc.nextLine();
                     changeWhat = 3;
                     break;
 
@@ -629,8 +623,7 @@ public class UserList {
                 case "2":
                     System.out.println("Current Gender: " + administrator.getGender());
                     System.out.print("Enter New Gender (0: Unknown; 1: Male; 2: Female): ");
-                    newAdministratorGenderString = sc.next();
-                    sc.nextLine();
+                    newAdministratorGenderString = sc.next(); sc.nextLine();
                     while (true){
                         switch (newAdministratorGenderString) {
                             case "0":
@@ -653,8 +646,7 @@ public class UserList {
                                 break;
                             default:
                                 System.out.print("Invalid choice! Try again: ");
-                                newAdministratorGenderString = sc.next();
-                                sc.nextLine();
+                                newAdministratorGenderString = sc.next(); sc.nextLine();
                                 continue;
                         }
                         break;
@@ -665,8 +657,7 @@ public class UserList {
                 case "3":
                     System.out.println("Current Age: " + administrator.getAge());
                     System.out.print("Enter New Age: ");
-                    newAdministratorAge = sc.nextInt();
-                    sc.nextLine();
+                    newAdministratorAge = sc.nextInt(); sc.nextLine();
                     changeWhat = 3;
                     break;
 

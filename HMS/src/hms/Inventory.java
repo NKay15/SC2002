@@ -66,7 +66,7 @@ public class Inventory {
                 if (name.equals(catalog.get(i).name())) {
                     System.out.println("Medicine Already Exists in the Catalog!");
                     System.out.println("Enter Name of New Medicine: ");
-                    name = sc.next(); sc.nextLine();
+                    name = sc.nextLine();
                     alreadyExists = true;
                 }
             }
@@ -310,7 +310,7 @@ public class Inventory {
                     break;
                 }
                 System.out.print("Enter Quantity (0 to Go Back): ");
-                quantity = sc.nextInt();
+                quantity = sc.nextInt(); sc.nextLine();
                 if(quantity <= 0) break;
 
                 ret.add(new Medicine(catalog.get(med-1).name(), quantity));
@@ -371,7 +371,7 @@ public class Inventory {
         int req = sc.nextInt(); sc.nextLine();
         while(req < 1 || req > requests.size()) {
             System.out.print("Invalid input! Try again: ");
-            req = sc.nextInt();
+            req = sc.nextInt(); sc.nextLine();
         }
         int idx = findIndex(requests.get(req-1));
         System.out.print("Enter 1 to Exit; 2 to Approve; 3 to Reject.\nEnter your choice: ");
