@@ -137,6 +137,7 @@ public class Patient extends User {
                     System.out.print("Select Doctor (0 to Exit): ");
                     int whichDoc = sc.nextInt();
                     while(whichDoc < 1 || whichDoc > GlobalData.getInstance().userList.getDoctors().size()) {
+                        if(whichDoc == 0) break;
                         System.out.print("Invalid choice! Try again: ");
                         whichDoc = sc.nextInt();
                     }

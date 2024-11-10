@@ -175,18 +175,18 @@ public class Pharmacist extends Staff {
 							System.out.println("Patient ID: " + patientID);
 							System.out.println("Medication for Dispensation: ");
 							for (int i = 0; i < prescription.length; i++){
-								System.out.println((i+1) + ". " + prescription[i].name() + ": " + "(Amount: " + prescription[i].amount() + ")");
+								System.out.println((i+1) + ". " + prescription[i].name() + " " + "(Quantity: " + prescription[i].amount() + ")");
 							}
 							System.out.println("\nConfirm to Dispense Medication?");
 							System.out.println("Enter 1 to Confirm; or 2 to Cancel.");
 							System.out.print("Enter your choice: ");
-							int confirmDispense;
+							String confirmDispense;
 
 							while (true) {
-								confirmDispense = sc.nextInt();
+								confirmDispense = sc.next();
 								sc.nextLine();
 								switch (confirmDispense) {
-									case 1:
+									case "1":
 										if (GlobalData.getInstance().inventory.dispense(aop)) {
 											System.out.println("Medication Successfully Dispensed! " +
 													"Prescription Status Updated. Returning to Menu... \n");
@@ -195,7 +195,7 @@ public class Pharmacist extends Staff {
 										}
 										break;
 
-									case 2:
+									case "2":
 										System.out.println("Operation Cancelled. Returning to Menu... \n");
 										break;
 
@@ -221,7 +221,7 @@ public class Pharmacist extends Staff {
                     int submitMore;
                     while (true) {
                         GlobalData.getInstance().inventory.createRequest();
-                        System.out.print("Would you like to Submit More Restock Requests? " +
+                        System.out.print("\nWould you like to Submit More Restock Requests? " +
                                 "1. Yes; 2. No\nEnter your choice: ");
                         submitMore = sc.nextInt();
                         sc.nextLine();
@@ -242,7 +242,7 @@ public class Pharmacist extends Staff {
                         if (choice == 6) {
                             System.out.print("Confirm Log Out? Enter 1 to Log Out; " +
                                     "or Enter anything else to Return to Menu.\nEnter your choice: ");
-                            String confirmLogOut = sc.nextLine();
+                            String confirmLogOut = sc.next(); sc.nextLine();
                             if (confirmLogOut.equals("1")) {
                                 System.out.println("Logging out...\n");
                                 return;

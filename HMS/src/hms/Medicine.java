@@ -68,6 +68,6 @@ public class Medicine {
      * Print medicine and amount
      */
     public void print() {
-        System.out.println(name + " : " + amount);
+        System.out.println(name + " (Quantity: " + amount + ")");
     }
 }

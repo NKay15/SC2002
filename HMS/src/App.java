@@ -74,7 +74,7 @@ public class App {
 					}
 				}
 				if (found == false) {
-					System.out.println("This user does not exist. Please check your ID again.");
+					System.out.println("This user does not exist. Please check your ID again.\n");
 					continue;
 				}
 				

@@ -72,52 +72,52 @@ public class Inventory {
             }
         }
 
-        int confirmAdding;
         System.out.println("Continue to Add New Medicine \"" + name + "\"?");
-        System.out.println("Enter 1 to Continue; or Enter any other number to Cancel.");
+        System.out.println("Enter 1 to Continue; or Enter anything else to Cancel.");
         System.out.print("Enter your choice: ");
-        confirmAdding = sc.nextInt(); sc.nextLine();
-        if (confirmAdding != 1) {
+        String continueToAdd = sc.next(); sc.nextLine();
+        if (!continueToAdd.equals("1")) {
             System.out.println("Operation Cancelled.");
             return;
         }
-        System.out.print("Enter Initial Amount: ");
+
+        System.out.print("Enter Initial Quantity: ");
         int amount = sc.nextInt(); sc.nextLine();
         System.out.print("Enter Low Level Alert: ");
         int level = sc.nextInt(); sc.nextLine();
 
-        // Confirm before proceeding. confirmAdding currently 1
+        String confirmAdding = "1";
         while (true) {
-            if (confirmAdding >= 1 && confirmAdding <= 4) {
+            if (confirmAdding.equals("1") || confirmAdding.equals("2") || confirmAdding.equals("3") || confirmAdding.equals("4")) {
                 System.out.println("\nPlease ensure that all fields below are correct before confirming:");
                 System.out.println("Name: " + name);
-                System.out.println("Initial Amount: " + amount);
+                System.out.println("Initial Quantity: " + amount);
                 System.out.println("Low Level Alert: " + level);
                 System.out.println("\nConfirm to Add New Medicine?");
                 System.out.println("Enter 1 to Confirm; 2 to Cancel; " +
-                        "3 to Edit Initial Amount; or 4 to Edit Low Level.");
+                        "3 to Edit Initial Quantity; or 4 to Edit Low Level.");
                 System.out.print("Enter your choice: ");
             }
-            confirmAdding = sc.nextInt(); sc.nextLine();
+            confirmAdding = sc.next(); sc.nextLine();
 
             switch (confirmAdding) {
-                case 1:
+                case "1":
                     catalog.add(new Medicine(name, amount));
                     lowlevel.add(new Medicine(name, amount));
                     System.out.println("New Medicine \"" + name + "\" Successfully Added to Inventory!");
                     return;
 
-                case 2:
+                case "2":
                     System.out.println("Operation Cancelled.");
                     return;
 
-                case 3:
-                    System.out.print("Enter Initial Amount: ");
+                case "3":
+                    System.out.print("Enter Initial Quantity: ");
                     amount = sc.nextInt(); sc.nextLine();
-                    System.out.println("Initial Amount has been Modified.");
+                    System.out.println("Initial Quantity has been Modified.");
                     break;
 
-                case 4:
+                case "4":
                     System.out.print("Enter Low Level Alert: ");
                     level = sc.nextInt(); sc.nextLine();
                     System.out.println("Low Level Alert has been Modified.");
@@ -178,17 +178,17 @@ public class Inventory {
         System.out.println("\nConfirm to Update Stock Level?");
         System.out.println("Enter 1 to Confirm; or 2 to Cancel.");
         System.out.print("Enter your choice: ");
-        int confirmAdding;
+        String confirmAdding;
 
         while (true) {
-            confirmAdding = sc.nextInt(); sc.nextLine();
+            confirmAdding = sc.next(); sc.nextLine();
             switch (confirmAdding) {
-                case 1:
+                case "1":
                     catalog.get(med-1).restock(quantity);
                     System.out.println("Stock Level Successfully Restocked!");
                     break;
 
-                case 2:
+                case "2":
                     System.out.println("Operation Cancelled.");
                     break;
 
@@ -238,12 +238,20 @@ public class Inventory {
         System.out.print("Enter Index of Medicine (0 to Cancel): ");
         int med = sc.nextInt(); sc.nextLine();
         while(med < 1 || med > catalog.size()) {
+            if (med == 0) {
+                System.out.println("Operation Cancelled.");
+                return;
+            }
             System.out.print("Invalid input! Try again: ");
             med = sc.nextInt(); sc.nextLine();
         }
-        System.out.print("Enter Quantity of Medicine to Request: ");
+        System.out.print("Enter Quantity of Medicine (0 to Cancel): ");
         int quantity = sc.nextInt(); sc.nextLine();
-        while(quantity < 0) {
+        while(quantity < 1) {
+            if (quantity == 0) {
+                System.out.println("Operation Cancelled.");
+                return;
+            }
             System.out.print("Invalid input! Try again: ");
             quantity = sc.nextInt(); sc.nextLine();
         }
@@ -251,18 +259,18 @@ public class Inventory {
         System.out.println("Confirm to Submit Restock Request?");
         System.out.println("Enter 1 to Confirm; or 2 to Cancel.");
         System.out.print("Enter your choice: ");
-        int confirmAdding;
+        String confirmAdding;
 
         while (true) {
-            confirmAdding = sc.nextInt(); sc.nextLine();
+            confirmAdding = sc.next(); sc.nextLine();
             switch (confirmAdding) {
-                case 1:
+                case "1":
                     requests.add(catalog.get(med-1).copy(quantity));
-                    System.out.println("Restock Request Successfully Created!\n");
+                    System.out.println("Restock Request Successfully Created!");
                     break;
 
-                case 2:
-                    System.out.println("Operation Cancelled.\n");
+                case "2":
+                    System.out.println("Operation Cancelled.");
                     break;
 
                 default:
@@ -281,7 +289,7 @@ public class Inventory {
         int quantity;
         
         while(med > 0 && med <= catalog.size()) {
-            System.out.print("Enter Index of Medicine to Prescribe (0 to Go Back): ");
+            System.out.print("Enter Index of Medicine to Prescribe (0 to Finish): ");
             Scanner sc = GlobalData.getInstance().sc;
             med = sc.nextInt(); sc.nextLine();
             if(med == 0) break;
@@ -324,7 +332,7 @@ public class Inventory {
     public void setNewLowLevel() {
         Scanner sc = GlobalData.getInstance().sc;
         printCurrentInventory();
-        System.out.print("Enter Index of Medicine (0 to cancel): ");
+        System.out.print("Enter Index of Medicine (0 to Cancel): ");
         int med = sc.nextInt(); sc.nextLine();
         if (med == 0) {
             System.out.println("Operation Cancelled.");
@@ -334,7 +342,7 @@ public class Inventory {
             System.out.print("Invalid input! Try again: ");
             med = sc.nextInt(); sc.nextLine();
         }
-        System.out.print("Enter New Low Level (0 to cancel): ");
+        System.out.print("Enter New Low Level (0 to Cancel): ");
         int quantity = sc.nextInt(); sc.nextLine();
         if (quantity == 0) {
             System.out.println("Operation Cancelled.");
@@ -367,19 +375,19 @@ public class Inventory {
         }
         int idx = findIndex(requests.get(req-1));
         System.out.print("Enter 1 to Exit; 2 to Approve; 3 to Reject.\nEnter your choice: ");
-        int choice;
+        String choice;
         while (true) {
-            choice = sc.nextInt(); sc.nextLine();
+            choice = sc.next(); sc.nextLine();
             switch (choice) {
-                case 1:
+                case "1":
                     System.out.println();
                     return;
-                case 2:
+                case "2":
                     catalog.get(idx).restock(requests.get(req - 1).amount());
                     requests.remove(req - 1);
                     System.out.println("Request Successfully Approved!");
                     return;
-                case 3:
+                case "3":
                     requests.remove(req - 1);
                     System.out.println("Request Successfully Rejected!");
                     return;

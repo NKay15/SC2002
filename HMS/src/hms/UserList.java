@@ -86,44 +86,26 @@ public class UserList {
                 System.out.println("Name: " + doctor.getName());
                 System.out.println("Gender: " + doctor.getGender());
                 System.out.println("Age: " + doctor.getAge());
-                System.out.println("Confirm to Remove Doctor?");
-                System.out.print("Enter 1 to Confirm; or 2 to Cancel.\nEnter your choice: ");
-                int choice;
-                while (true) {
-                    choice = sc.nextInt();
-                    sc.nextLine();
-                    switch (choice) {
-                        case 1:
-                            System.out.print("Enter your Password: ");
-                            String password = sc.nextLine();
-                            while (!adminUsing.checkPassword(password)) {
-                                if (password.equals("0")) {
-                                    System.out.println("Operation Cancelled. Returning to Menu...\n");
-                                    break;
-                                }
-                                else {
-                                    System.out.print("Wrong Password! Try again: ");
-                                    password = sc.nextLine();
-                                }
-                            }
-                            if (!password.equals("0")) {
-                                doctors.remove(doctor);
-                                System.out.println("Doctor Successfully Removed! Returning to Menu...\n");
-                                break;
-                            }
-                        case 2:
-                            System.out.println("Operation Cancelled. Returning to Menu...\n");
-                            break;
-                        default:
-                            System.out.print("Invalid choice! Enter your choice: ");
-                            continue;
+                System.out.print("\nEnter your Password to Confirm (0 to Cancel): ");
+                String password = sc.nextLine();
+                while (!adminUsing.checkPassword(password)) {
+                    if (password.equals("0")) {
+                        System.out.println("Operation Cancelled. Returning to Menu...");
+                        return true;
                     }
-                    return true;
+                    else {
+                        System.out.print("Wrong Password! Try again: ");
+                        password = sc.nextLine();
+                    }
                 }
+                doctors.remove(doctor);
+                System.out.println("Doctor Successfully Removed! Returning to Menu...");
+                return true;
             }
         }
         return false;
     }
+
     /**
      * Update Doctor by ID
      * @param ID
@@ -159,19 +141,19 @@ public class UserList {
         System.out.println("4. Cancel");
         System.out.println("----------------------------");
         System.out.print("Enter your choice: ");
-        int choice;
+        String choice;
 
         while (true) {
-            choice = sc.nextInt(); sc.nextLine();
+            choice = sc.next(); sc.nextLine();
             switch (choice) {
-                case 1:
+                case "1":
                     System.out.println("Current Name: " + doctor.getName());
                     System.out.print("Enter New Name: ");
                     newDoctorName = sc.nextLine();
                     changeWhat = 1;
                     break;
 
-                case 2:
+                case "2":
                     System.out.println("Current Gender: " + doctor.getGender());
                     System.out.print("Enter New Gender: ");
                     newDoctorGender = sc.nextInt();
@@ -179,7 +161,7 @@ public class UserList {
                     changeWhat = 2;
                     break;
 
-                case 3:
+                case "3":
                     System.out.println("Current Age: " + doctor.getAge());
                     System.out.print("Enter New Age: ");
                     newDoctorAge = sc.nextInt();
@@ -187,12 +169,12 @@ public class UserList {
                     changeWhat = 3;
                     break;
 
-                case 4:
-                    System.out.println("Operation Cancelled. Returning to Menu...\n");
+                case "4":
+                    System.out.println("Operation Cancelled. Returning to Menu...");
                     return true;
 
                 default:
-                    System.out.print("Invalid choice! Enter your choice: ");
+                    System.out.print("Invalid choice! Try again: ");
                     continue;
             }
             break;
@@ -203,51 +185,31 @@ public class UserList {
         System.out.println("Name: " + newDoctorName);
         System.out.println("Gender: " + newDoctorGender);
         System.out.println("Age: " + newDoctorAge);
-        System.out.println("\nConfirm to Update Details? Enter 1 to Confirm; or 2 to Cancel.");
-        System.out.print("Enter your choice: ");
-
-        while (true) {
-            choice = sc.nextInt(); sc.nextLine();
-            switch (choice) {
-                case 1:
-                    System.out.print("Enter your Password: ");
-                    String password = sc.nextLine();
-                    while (!adminUsing.checkPassword(password)) {
-                        if (password.equals("0")) {
-                            System.out.println("Operation Cancelled. Returning to Menu...\n");
-                            break;
-                        }
-                        else {
-                            System.out.print("Wrong Password! Try again: ");
-                            password = sc.nextLine();
-                        }
-                    }
-                    if (!password.equals("0")) {
-                        switch (changeWhat) {
-                            case 1:
-                                doctor.setName(newDoctorName);
-                                break;
-                            case 2:
-                                doctor.setGender(newDoctorGender);
-                                break;
-                            case 3:
-                                doctor.setAge(newDoctorAge);
-                                break;
-                        }
-                        System.out.println("Doctor Successfully Updated! Returning to Menu...\n");
-                    }
-                    break;
-
-                case 2:
-                    System.out.println("Operation Cancelled. Returning to Menu...\n");
-                    break;
-
-                case 3:
-                    System.out.print("Invalid Choice! Enter your choice: ");
-                    continue;
+        System.out.print("\nEnter your Password to Confirm (0 to Cancel): ");
+        String password = sc.nextLine();
+        while (!adminUsing.checkPassword(password)) {
+            if (password.equals("0")) {
+                System.out.println("Operation Cancelled. Returning to Menu...");
+                return true;
             }
-            return true;
+            else {
+                System.out.print("Wrong Password! Try again: ");
+                password = sc.nextLine();
+            }
         }
+        switch (changeWhat) {
+            case 1:
+                doctor.setName(newDoctorName);
+                break;
+            case 2:
+                doctor.setGender(newDoctorGender);
+                break;
+            case 3:
+                doctor.setAge(newDoctorAge);
+                break;
+        }
+        System.out.println("Doctor Successfully Updated! Returning to Menu...");
+        return true;
     }
 
     /**
@@ -363,40 +325,21 @@ public class UserList {
                 System.out.println("Name: " + pharmacist.getName());
                 System.out.println("Gender: " + pharmacist.getGender());
                 System.out.println("Age: " + pharmacist.getAge());
-                System.out.println("Confirm to Remove Pharmacist?");
-                System.out.print("Enter 1 to Confirm; or 2 to Cancel.\nEnter your choice: ");
-                int choice;
-                while (true) {
-                    choice = sc.nextInt();
-                    sc.nextLine();
-                    switch (choice) {
-                        case 1:
-                            System.out.print("Enter your Password: ");
-                            String password = sc.nextLine();
-                            while (!adminUsing.checkPassword(password)) {
-                                if (password.equals("0")) {
-                                    System.out.println("Operation Cancelled. Returning to Menu...\n");
-                                    break;
-                                }
-                                else {
-                                    System.out.print("Wrong Password! Try again: ");
-                                    password = sc.nextLine();
-                                }
-                            }
-                            if (!password.equals("0")) {
-                                pharmacists.remove(pharmacist);
-                                System.out.println("Pharmacist Successfully Removed! Returning to Menu...\n");
-                                break;
-                            }
-                        case 2:
-                            System.out.println("Operation Cancelled. Returning to Menu...\n");
-                            break;
-                        default:
-                            System.out.print("Invalid choice! Enter your choice: ");
-                            continue;
+                System.out.print("\nEnter your Password to Confirm (0 to Cancel): ");
+                String password = sc.nextLine();
+                while (!adminUsing.checkPassword(password)) {
+                    if (password.equals("0")) {
+                        System.out.println("Operation Cancelled. Returning to Menu...");
+                        return true;
                     }
-                    return true;
+                    else {
+                        System.out.print("Wrong Password! Try again: ");
+                        password = sc.nextLine();
+                    }
                 }
+                pharmacists.remove(pharmacist);
+                System.out.println("Pharmacist Successfully Removed! Returning to Menu...");
+                return true;
             }
         }
         return false;
@@ -437,19 +380,19 @@ public class UserList {
         System.out.println("4. Cancel");
         System.out.println("----------------------------");
         System.out.print("Enter your choice: ");
-        int choice;
+        String choice;
 
         while (true) {
-            choice = sc.nextInt(); sc.nextLine();
+            choice = sc.next(); sc.nextLine();
             switch (choice) {
-                case 1:
+                case "1":
                     System.out.println("Current Name: " + pharmacist.getName());
                     System.out.print("Enter New Name: ");
                     newPharmacistName = sc.nextLine();
                     changeWhat = 1;
                     break;
 
-                case 2:
+                case "2":
                     System.out.println("Current Gender: " + pharmacist.getGender());
                     System.out.print("Enter New Gender: ");
                     newPharmacistGender = sc.nextInt();
@@ -457,7 +400,7 @@ public class UserList {
                     changeWhat = 2;
                     break;
 
-                case 3:
+                case "3":
                     System.out.println("Current Age: " + pharmacist.getAge());
                     System.out.print("Enter New Age: ");
                     newPharmacistAge = sc.nextInt();
@@ -465,8 +408,8 @@ public class UserList {
                     changeWhat = 3;
                     break;
 
-                case 4:
-                    System.out.println("Operation Cancelled. Returning to Menu...\n");
+                case "4":
+                    System.out.println("Operation Cancelled. Returning to Menu...");
                     return true;
 
                 default:
@@ -481,48 +424,28 @@ public class UserList {
         System.out.println("Name: " + newPharmacistName);
         System.out.println("Gender: " + newPharmacistGender);
         System.out.println("Age: " + newPharmacistAge);
-        System.out.println("\nConfirm to Update Details? Enter 1 to Confirm; or 2 to Cancel.");
-        System.out.print("Enter your choice: ");
-
-        while (true) {
-            choice = sc.nextInt(); sc.nextLine();
-            switch (choice) {
-                case 1:
-                    System.out.print("Enter your Password: ");
-                    String password = sc.nextLine();
-                    while (!adminUsing.checkPassword(password)) {
-                        if (password.equals("0")) {
-                            System.out.println("Operation Cancelled. Returning to Menu...\n");
-                            break;
-                        }
-                        else {
-                            System.out.print("Wrong Password! Try again: ");
-                            password = sc.nextLine();
-                        }
-                    }
-                    if (!password.equals("0")) {
-                        switch (changeWhat) {
-                            case 1:
-                                pharmacist.setName(newPharmacistName);
-                            case 2:
-                                pharmacist.setGender(newPharmacistGender);
-                            case 3:
-                                pharmacist.setAge(newPharmacistAge);
-                        }
-                        System.out.println("Pharmacist Successfully Updated! Returning to Menu...\n");
-                    }
-                    break;
-
-                case 2:
-                    System.out.println("Operation Cancelled. Returning to Menu...\n");
-                    break;
-
-                case 3:
-                    System.out.print("Invalid Choice! Enter your choice: ");
-                    continue;
+        System.out.print("\nEnter your Password to Confirm (0 to Cancel): ");
+        String password = sc.nextLine();
+        while (!adminUsing.checkPassword(password)) {
+            if (password.equals("0")) {
+                System.out.println("Operation Cancelled. Returning to Menu...");
+                return true;
             }
-            return true;
+            else {
+                System.out.print("Wrong Password! Try again: ");
+                password = sc.nextLine();
+            }
         }
+        switch (changeWhat) {
+            case 1:
+                pharmacist.setName(newPharmacistName);
+            case 2:
+                pharmacist.setGender(newPharmacistGender);
+            case 3:
+                pharmacist.setAge(newPharmacistAge);
+        }
+        System.out.println("Pharmacist Successfully Updated! Returning to Menu...");
+        return true;
     }
 
     /**
@@ -577,39 +500,21 @@ public class UserList {
                 System.out.println("Name: " + administrator.getName());
                 System.out.println("Gender: " + administrator.getGender());
                 System.out.println("Age: " + administrator.getAge());
-                System.out.println("Confirm to Remove Administrator?");
-                System.out.print("Enter 1 to Confirm; or 2 to Cancel.\nEnter your choice: ");
-                int choice;
-                while (true) {
-                    choice = sc.nextInt(); sc.nextLine();
-                    switch (choice) {
-                        case 1:
-                            System.out.print("Enter your Password: ");
-                            String password = sc.nextLine();
-                            while (!adminUsing.checkPassword(password)) {
-                                if (password.equals("0")) {
-                                    System.out.println("Operation Cancelled. Returning to Menu...\n");
-                                    break;
-                                }
-                                else {
-                                    System.out.print("Wrong Password! Try again: ");
-                                    password = sc.nextLine();
-                                }
-                            }
-                            if (!password.equals("0")) {
-                                administrators.remove(administrator);
-                                System.out.println("Administrator Successfully Removed! Returning to Menu...\n");
-                                break;
-                            }
-                        case 2:
-                            System.out.println("Operation Cancelled. Returning to Menu...\n");
-                            break;
-                        default:
-                            System.out.print("Invalid choice! Enter your choice: ");
-                            continue;
+                System.out.print("\nEnter your Password to Confirm (0 to Cancel): ");
+                String password = sc.nextLine();
+                while (!adminUsing.checkPassword(password)) {
+                    if (password.equals("0")) {
+                        System.out.println("Operation Cancelled. Returning to Menu...");
+                        return true;
                     }
-                    return true;
+                    else {
+                        System.out.print("Wrong Password! Try again: ");
+                        password = sc.nextLine();
+                    }
                 }
+                administrators.remove(administrator);
+                System.out.println("Administrator Successfully Removed! Returning to Menu...");
+                return true;
             }
         }
         return false;
@@ -650,19 +555,19 @@ public class UserList {
         System.out.println("4. Cancel");
         System.out.println("----------------------------");
         System.out.print("Enter your choice: ");
-        int choice;
+        String choice;
 
         while (true) {
-            choice = sc.nextInt(); sc.nextLine();
+            choice = sc.next(); sc.nextLine();
             switch (choice) {
-                case 1:
+                case "1":
                     System.out.println("Current Name: " + administrator.getName());
                     System.out.print("Enter New Name: ");
                     newAdministratorName = sc.nextLine();
                     changeWhat = 1;
                     break;
 
-                case 2:
+                case "2":
                     System.out.println("Current Gender: " + administrator.getGender());
                     System.out.print("Enter New Gender: ");
                     newAdministratorGender = sc.nextInt();
@@ -670,7 +575,7 @@ public class UserList {
                     changeWhat = 2;
                     break;
 
-                case 3:
+                case "3":
                     System.out.println("Current Age: " + administrator.getAge());
                     System.out.print("Enter New Age: ");
                     newAdministratorAge = sc.nextInt();
@@ -678,8 +583,8 @@ public class UserList {
                     changeWhat = 3;
                     break;
 
-                case 4:
-                    System.out.println("Operation Cancelled. Returning to Menu...\n");
+                case "4":
+                    System.out.println("Operation Cancelled. Returning to Menu...");
                     return true;
 
                 default:
@@ -694,52 +599,31 @@ public class UserList {
         System.out.println("Name: " + newAdministratorName);
         System.out.println("Gender: " + newAdministratorGender);
         System.out.println("Age: " + newAdministratorAge);
-        System.out.println("\nConfirm to Update Details? Enter 1 to Confirm; or 2 to Cancel.");
-        System.out.print("Enter your choice: ");
-
-        while (true) {
-            choice = sc.nextInt();
-            sc.nextLine();
-            switch (choice) {
-                case 1:
-                    System.out.print("Enter your Password: ");
-                    String password = sc.nextLine();
-                    while (!adminUsing.checkPassword(password)) {
-                        if (password.equals("0")) {
-                            System.out.println("Operation Cancelled. Returning to Menu...\n");
-                            break;
-                        }
-                        else {
-                            System.out.print("Wrong Password! Try again: ");
-                            password = sc.nextLine();
-                        }
-                    }
-                    if (!password.equals("0")) {
-                        switch (changeWhat){
-                            case 1:
-                                administrator.setName(newAdministratorName);
-                                break;
-                            case 2:
-                                administrator.setGender(newAdministratorGender);
-                                break;
-                            case 3:
-                                administrator.setAge(newAdministratorAge);
-                                break;
-                        }
-                        System.out.println("Administrator Successfully Updated! Returning to Menu...\n");
-                    }
-                    break;
-
-                case 2:
-                    System.out.println("Operation Cancelled. Returning to Menu...\n");
-                    break;
-
-                case 3:
-                    System.out.print("Invalid choice! Enter your choice: ");
-                    continue;
+        System.out.print("\nEnter your Password to Confirm (0 to Cancel): ");
+        String password = sc.nextLine();
+        while (!adminUsing.checkPassword(password)) {
+            if (password.equals("0")) {
+                System.out.println("Operation Cancelled. Returning to Menu...");
+                return true;
             }
-            return true;
+            else {
+                System.out.print("Wrong Password! Try again: ");
+                password = sc.nextLine();
+            }
         }
+        switch (changeWhat){
+            case 1:
+                administrator.setName(newAdministratorName);
+                break;
+            case 2:
+                administrator.setGender(newAdministratorGender);
+                break;
+            case 3:
+                administrator.setAge(newAdministratorAge);
+                break;
+        }
+        System.out.println("Administrator Successfully Updated! Returning to Menu...");
+        return true;
     }
 
     /**
@@ -752,11 +636,11 @@ public class UserList {
             case 1:
                 return getStaffRoleSorted();
             case 2:
-                return getStaffGenderSorted();
+                return getStaffIDSorted();
             case 3:
                 return getStaffNameSorted();
             case 4:
-                return getStaffIDSorted();
+                return getStaffGenderSorted();
             case 5:
                 return getStaffAgeSorted();
             default:
@@ -786,6 +670,95 @@ public class UserList {
         userArray.addAll(doctors);
         userArray.addAll(pharmacists);
         userArray.addAll(administrators);
+        return userArray;
+    }
+
+    /**
+     * Get all users by Name
+     * @return list of users
+     */
+    public ArrayList<User> getUsersNameSorted() {
+        ArrayList<User> userArray = new ArrayList<User>();
+        userArray.addAll(patients);
+        userArray.addAll(doctors);
+        userArray.addAll(pharmacists);
+        userArray.addAll(administrators);
+
+        // Sort by name in ascending order
+        Collections.sort(userArray, new Comparator<User>() {
+            @Override
+            public int compare(User p1, User p2) {
+                return p1.getName().compareTo(p2.getName());
+            }
+        });
+
+        return userArray;
+    }
+
+    /**
+     * Get all staff by Name
+     * @return list of users
+     */
+    public ArrayList<User> getStaffNameSorted() {
+        ArrayList<User> userArray = new ArrayList<User>();
+        userArray.addAll(doctors);
+        userArray.addAll(pharmacists);
+        userArray.addAll(administrators);
+
+        // Sort by name in ascending order
+        Collections.sort(userArray, new Comparator<User>() {
+            @Override
+            public int compare(User p1, User p2) {
+                if (p1 instanceof Staff && p2 instanceof Staff) {
+                    return Integer.compare(p1.getGender(), p2.getGender());
+                }
+                else return 0;
+            }
+        });
+
+        return userArray;
+    }
+
+    /**
+     * Get all users by ID
+     * @return list of users
+     */
+    public ArrayList<User> getUsersIDSorted() {
+        ArrayList<User> userArray = new ArrayList<User>();
+        userArray.addAll(patients);
+        userArray.addAll(doctors);
+        userArray.addAll(pharmacists);
+        userArray.addAll(administrators);
+
+        // Sort by name in ascending order
+        Collections.sort(userArray, new Comparator<User>() {
+            @Override
+            public int compare(User p1, User p2) {
+                return p1.getID().compareTo(p2.getID());
+            }
+        });
+
+        return userArray;
+    }
+
+    /**
+     * Get all staff by ID
+     * @return list of users
+     */
+    public ArrayList<User> getStaffIDSorted() {
+        ArrayList<User> userArray = new ArrayList<User>();
+        userArray.addAll(doctors);
+        userArray.addAll(pharmacists);
+        userArray.addAll(administrators);
+
+        // Sort by name in ascending order
+        Collections.sort(userArray, new Comparator<User>() {
+            @Override
+            public int compare(User p1, User p2) {
+                return p1.getID().compareTo(p2.getID());
+            }
+        });
+
         return userArray;
     }
 
@@ -848,58 +821,10 @@ public class UserList {
 
     /**
      * Get all staff by gender
-     * @return list of staff
+     * @return list of users
      */
     public ArrayList<User> getStaffGenderSorted() {
         ArrayList<User> userArray = new ArrayList<User>();
-        ArrayList<User> temAr1 = new ArrayList<User>();
-        ArrayList<User> temAr2 = new ArrayList<User>();
-        ArrayList<User> temAr3 = new ArrayList<User>();
-
-        for (Doctor doctor : doctors) {
-            if (doctor.getGender() == 1) {
-                temAr1.add(doctor);
-            } else if (doctor.getGender() == 2) {
-                temAr2.add(doctor);
-            } else {
-                temAr3.add(doctor);
-            }
-        }
-
-        for (Pharmacist pharmacist : pharmacists) {
-            if (pharmacist.getGender() == 1) {
-                temAr1.add(pharmacist);
-            } else if (pharmacist.getGender() == 2) {
-                temAr2.add(pharmacist);
-            } else {
-                temAr3.add(pharmacist);
-            }
-        }
-
-        for (Administrator administrator : administrators) {
-            if (administrator.getGender() == 1) {
-                temAr1.add(administrator);
-            } else if (administrator.getGender() == 2) {
-                temAr2.add(administrator);
-            } else {
-                temAr3.add(administrator);
-            }
-        }
-
-        userArray.addAll(temAr1);
-        userArray.addAll(temAr2);
-        userArray.addAll(temAr3);
-
-        return userArray;
-    }
-
-    /**
-     * Get all users by Name
-     * @return list of users
-     */
-    public ArrayList<User> getUsersNameSorted() {
-        ArrayList<User> userArray = new ArrayList<User>();
-        userArray.addAll(patients);
         userArray.addAll(doctors);
         userArray.addAll(pharmacists);
         userArray.addAll(administrators);
@@ -908,7 +833,10 @@ public class UserList {
         Collections.sort(userArray, new Comparator<User>() {
             @Override
             public int compare(User p1, User p2) {
-                return p1.getName().compareTo(p2.getName());
+                if (p1 instanceof Staff && p2 instanceof Staff) {
+                    return Integer.compare(p1.getGender(), p2.getGender());
+                }
+                else return 0;
             }
         });
 
@@ -916,71 +844,7 @@ public class UserList {
     }
 
     /**
-     * Get all staff by Name
-     * @return list of users
-     */
-    public ArrayList<User> getStaffNameSorted() {
-        ArrayList<User> userArray = new ArrayList<User>();
-        userArray.addAll(doctors);
-        userArray.addAll(pharmacists);
-        userArray.addAll(administrators);
-
-        // Sort by name in ascending order
-        Collections.sort(userArray, new Comparator<User>() {
-            @Override
-            public int compare(User p1, User p2) {
-                return p1.getName().compareTo(p2.getName());
-            }
-        });
-
-        return userArray;
-    }
-
-    /**
-     * Get all users by ID
-     * @return list of users
-     */
-    public ArrayList<User> getUsersIDSorted() {
-        ArrayList<User> userArray = new ArrayList<User>();
-        userArray.addAll(patients);
-        userArray.addAll(doctors);
-        userArray.addAll(pharmacists);
-        userArray.addAll(administrators);
-
-        // Sort by name in ascending order
-        Collections.sort(userArray, new Comparator<User>() {
-            @Override
-            public int compare(User p1, User p2) {
-                return p1.getID().compareTo(p2.getID());
-            }
-        });
-
-        return userArray;
-    }
-
-    /**
-     * Get all staff by ID
-     * @return list of users
-     */
-    public ArrayList<User> getStaffIDSorted() {
-        ArrayList<User> userArray = new ArrayList<User>();
-        userArray.addAll(doctors);
-        userArray.addAll(pharmacists);
-        userArray.addAll(administrators);
-
-        // Sort by name in ascending order
-        Collections.sort(userArray, new Comparator<User>() {
-            @Override
-            public int compare(User p1, User p2) {
-                return p1.getID().compareTo(p2.getID());
-            }
-        });
-
-        return userArray;
-    }
-
-    /**
-     * Get all staff by ID
+     * Get all staff by age
      * @return list of users
      */
     public ArrayList<User> getStaffAgeSorted() {
@@ -993,10 +857,10 @@ public class UserList {
         Collections.sort(userArray, new Comparator<User>() {
             @Override
             public int compare(User p1, User p2) {
-                int p1Age = 0, p2Age = 0;
-                if (p1 instanceof Staff) p1Age = ((Staff) p1).getAge();
-                if (p2 instanceof Staff) p1Age = ((Staff) p2).getAge();
-                return Integer.compare(p1Age, p2Age);
+                if (p1 instanceof Staff && p2 instanceof Staff) {
+                    return Integer.compare(p1.getAge(), p2.getAge());
+                }
+                else return 0;
             }
         });
 
