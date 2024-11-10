@@ -118,6 +118,19 @@ public class User {
     	return gender;
     }
 
+    public String getGenderString() {
+        switch (gender) {
+            case 0:
+                return "Unknown";
+            case 1:
+                return "Male";
+            case 2:
+                return "Female";
+            default:
+                return null;
+        }
+    }
+
     /**
      * Set gender of staff
      * @param gender

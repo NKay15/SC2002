@@ -34,7 +34,7 @@ public class UserList {
         administrators = new ArrayList<Administrator>();
         doctors = new ArrayList<Doctor>();
     }
-    
+
     /**
      * Accessor of Doctors
      * @return
@@ -84,7 +84,7 @@ public class UserList {
                 System.out.println("\nPlease ensure that all fields below are correct before confirming:");
                 System.out.println("Doctor ID: " + doctor.getID());
                 System.out.println("Name: " + doctor.getName());
-                System.out.println("Gender: " + doctor.getGender());
+                System.out.println("Gender: " + doctor.getGenderString());
                 System.out.println("Age: " + doctor.getAge());
                 System.out.print("\nEnter your Password to Confirm (0 to Cancel): ");
                 String password = sc.nextLine();
@@ -126,6 +126,7 @@ public class UserList {
         String newDoctorID = doctor.getID();
         String newDoctorName = doctor.getName();
         int newDoctorGender = doctor.getGender();
+        String newDoctorGenderString = doctor.getGenderString();
         int newDoctorAge = doctor.getAge();
         int changeWhat;
 
@@ -133,7 +134,7 @@ public class UserList {
         System.out.println("\n-----Doctor Update Menu-----");
         System.out.println("Doctor ID: " + doctor.getID());
         System.out.println("Name: " + doctor.getName());
-        System.out.println("Gender: " + doctor.getGender());
+        System.out.println("Gender: " + doctor.getGenderString());
         System.out.println("Age: " + doctor.getAge());
     	System.out.println("\n1. Update Name");
     	System.out.println("2. Update Gender");
@@ -154,10 +155,38 @@ public class UserList {
                     break;
 
                 case "2":
-                    System.out.println("Current Gender: " + doctor.getGender());
-                    System.out.print("Enter New Gender: ");
-                    newDoctorGender = sc.nextInt();
+                    System.out.println("Current Gender: " + doctor.getGenderString());
+                    System.out.print("Enter New Gender (0: Unknown; 1: Male; 2: Female): ");
+                    newDoctorGenderString = sc.next();
                     sc.nextLine();
+                    while (true) {
+                        switch (newDoctorGenderString) {
+                            case "0":
+                            case "Unknown":
+                            case "unknown":
+                                newDoctorGender = 0;
+                                newDoctorGenderString = "Unknown";
+                                break;
+                            case "1":
+                            case "Male":
+                            case "male":
+                                newDoctorGender = 1;
+                                newDoctorGenderString = "Male";
+                                break;
+                            case "2":
+                            case "Female":
+                            case "female":
+                                newDoctorGender = 2;
+                                newDoctorGenderString = "Female";
+                                break;
+                            default:
+                                System.out.print("Invalid choice! Try again: ");
+                                newDoctorGenderString = sc.next();
+                                sc.nextLine();
+                                continue;
+                        }
+                        break;
+                    }
                     changeWhat = 2;
                     break;
 
@@ -183,7 +212,7 @@ public class UserList {
         System.out.println("\nPlease ensure that all fields below are correct before confirming:");
         System.out.println("Doctor ID: " + newDoctorID);
         System.out.println("Name: " + newDoctorName);
-        System.out.println("Gender: " + newDoctorGender);
+        System.out.println("Gender: " + newDoctorGenderString);
         System.out.println("Age: " + newDoctorAge);
         System.out.print("\nEnter your Password to Confirm (0 to Cancel): ");
         String password = sc.nextLine();
@@ -323,7 +352,7 @@ public class UserList {
                 System.out.println("\nPlease ensure that all fields below are correct before confirming:");
                 System.out.println("Pharmacist ID: " + pharmacist.getID());
                 System.out.println("Name: " + pharmacist.getName());
-                System.out.println("Gender: " + pharmacist.getGender());
+                System.out.println("Gender: " + pharmacist.getGenderString());
                 System.out.println("Age: " + pharmacist.getAge());
                 System.out.print("\nEnter your Password to Confirm (0 to Cancel): ");
                 String password = sc.nextLine();
@@ -365,6 +394,7 @@ public class UserList {
         String newPharmacistID = pharmacist.getID();
         String newPharmacistName = pharmacist.getName();
         int newPharmacistGender = pharmacist.getGender();
+        String newPharmacistGenderString = pharmacist.getGenderString();
         int newPharmacistAge = pharmacist.getAge();
         int changeWhat;
 
@@ -394,9 +424,37 @@ public class UserList {
 
                 case "2":
                     System.out.println("Current Gender: " + pharmacist.getGender());
-                    System.out.print("Enter New Gender: ");
-                    newPharmacistGender = sc.nextInt();
+                    System.out.print("Enter New Gender (0: Unknown; 1: Male; 2: Female): ");
+                    newPharmacistGenderString = sc.next();
                     sc.nextLine();
+                    while (true){
+                        switch (newPharmacistGenderString) {
+                            case "0":
+                            case "Unknown":
+                            case "unknown":
+                                newPharmacistGender = 0;
+                                newPharmacistGenderString = "Unknown";
+                                break;
+                            case "1":
+                            case "Male":
+                            case "male":
+                                newPharmacistGender = 1;
+                                newPharmacistGenderString = "Male";
+                                break;
+                            case "2":
+                            case "Female":
+                            case "female":
+                                newPharmacistGender = 2;
+                                newPharmacistGenderString = "Female";
+                                break;
+                            default:
+                                System.out.print("Invalid choice! Try again: ");
+                                newPharmacistGenderString = sc.next();
+                                sc.nextLine();
+                                continue;
+                        }
+                        break;
+                    }
                     changeWhat = 2;
                     break;
 
@@ -422,7 +480,7 @@ public class UserList {
         System.out.println("\nPlease ensure that all fields below are correct before confirming:");
         System.out.println("Pharmacist ID: " + newPharmacistID);
         System.out.println("Name: " + newPharmacistName);
-        System.out.println("Gender: " + newPharmacistGender);
+        System.out.println("Gender: " + newPharmacistGenderString);
         System.out.println("Age: " + newPharmacistAge);
         System.out.print("\nEnter your Password to Confirm (0 to Cancel): ");
         String password = sc.nextLine();
@@ -498,7 +556,7 @@ public class UserList {
                 System.out.println("\nPlease ensure that all fields below are correct before confirming:");
                 System.out.println("Administrator ID: " + administrator.getID());
                 System.out.println("Name: " + administrator.getName());
-                System.out.println("Gender: " + administrator.getGender());
+                System.out.println("Gender: " + administrator.getGenderString());
                 System.out.println("Age: " + administrator.getAge());
                 System.out.print("\nEnter your Password to Confirm (0 to Cancel): ");
                 String password = sc.nextLine();
@@ -540,6 +598,7 @@ public class UserList {
         String newAdministratorID = administrator.getID();
         String newAdministratorName = administrator.getName();
         int newAdministratorGender = administrator.getGender();
+        String newAdministratorGenderString = administrator.getGenderString();
         int newAdministratorAge = administrator.getAge();
         int changeWhat;
 
@@ -569,9 +628,37 @@ public class UserList {
 
                 case "2":
                     System.out.println("Current Gender: " + administrator.getGender());
-                    System.out.print("Enter New Gender: ");
-                    newAdministratorGender = sc.nextInt();
+                    System.out.print("Enter New Gender (0: Unknown; 1: Male; 2: Female): ");
+                    newAdministratorGenderString = sc.next();
                     sc.nextLine();
+                    while (true){
+                        switch (newAdministratorGenderString) {
+                            case "0":
+                            case "Unknown":
+                            case "unknown":
+                                newAdministratorGender = 0;
+                                newAdministratorGenderString = "Unknown";
+                                break;
+                            case "1":
+                            case "Male":
+                            case "male":
+                                newAdministratorGender = 1;
+                                newAdministratorGenderString = "Male";
+                                break;
+                            case "2":
+                            case "Female":
+                            case "female":
+                                newAdministratorGender = 2;
+                                newAdministratorGenderString = "Female";
+                                break;
+                            default:
+                                System.out.print("Invalid choice! Try again: ");
+                                newAdministratorGenderString = sc.next();
+                                sc.nextLine();
+                                continue;
+                        }
+                        break;
+                    }
                     changeWhat = 2;
                     break;
 
@@ -597,7 +684,7 @@ public class UserList {
         System.out.println("\nPlease ensure that all fields below are correct before confirming:");
         System.out.println("Administrator ID: " + newAdministratorID);
         System.out.println("Name: " + newAdministratorName);
-        System.out.println("Gender: " + newAdministratorGender);
+        System.out.println("Gender: " + newAdministratorGenderString);
         System.out.println("Age: " + newAdministratorAge);
         System.out.print("\nEnter your Password to Confirm (0 to Cancel): ");
         String password = sc.nextLine();
@@ -709,10 +796,7 @@ public class UserList {
         Collections.sort(userArray, new Comparator<User>() {
             @Override
             public int compare(User p1, User p2) {
-                if (p1 instanceof Staff && p2 instanceof Staff) {
-                    return Integer.compare(p1.getGender(), p2.getGender());
-                }
-                else return 0;
+                return p1.getName().compareTo(p2.getName());
             }
         });
 

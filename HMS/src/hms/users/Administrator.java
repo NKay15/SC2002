@@ -130,26 +130,71 @@ public class Administrator extends Staff {
 						System.out.println("Returning to Menu...");
 						break;
 					}
-
+					boolean alreadyExists;
 					System.out.print("Enter ID: ");
-					String newID = sc.nextLine();
+					String newID;
+					while (true) {
+						alreadyExists = false;
+						newID = sc.nextLine();
+						if (!Character.isUpperCase(newID.charAt(0))) {
+							System.out.print("ID Must Begin With an Uppercase Letter! Try again: ");
+							continue;
+						}
+						for (User user : GlobalData.getInstance().userList.getUsersRoleSorted()) {
+							if (user.getID().equals(newID)) {
+								System.out.print("User " + newID + " Already Exists! Try again: ");
+								alreadyExists = true;
+								break;
+							}
+						}
+						if (!alreadyExists) break;
+					}
+
 					System.out.print("Enter Name: ");
 					String newName = sc.nextLine();
-					System.out.print("Enter Gender: ");
-					int newGender = sc.nextInt(); sc.nextLine();
+					System.out.print("Enter Gender (0: Unknown; 1: Male; 2: Female): ");
+					int newGender;
+					String newGenderString = sc.next(); sc.nextLine();
+					while (true){
+						switch (newGenderString) {
+							case "0":
+							case "Unknown":
+							case "unknown":
+								newGenderString = "Unknown";
+								newGender = 0;
+								break;
+							case "1":
+							case "Male":
+							case "male":
+								newGenderString = "Male";
+								newGender = 1;
+								break;
+							case "2":
+							case "Female":
+							case "female":
+								newGenderString = "Female";
+								newGender = 2;
+								break;
+							default:
+								System.out.print("Invalid choice! Try again: ");
+								newGenderString = sc.next(); sc.nextLine();
+								continue;
+						}
+						break;
+					}
 					System.out.print("Enter Age: ");
 					int newAge = sc.nextInt(); sc.nextLine();
 
 					System.out.println("\nPlease ensure that all fields below are correct before confirming:");
 					System.out.println("ID: " + newID);
 					System.out.println("Name: " + newName);
-					System.out.println("Gender: " + newGender);
+					System.out.println("Gender: " + newGenderString);
 					System.out.println("Age: " + newAge);
 
 					String confirmAdd;
 					switch (addWho) {
 						case "1":
-							System.out.println("Confirm to Add New Doctor?");
+							System.out.println("\nConfirm to Add New Doctor?");
 							System.out.println("Enter 1 to Confirm; or 2 to Cancel.");
 							System.out.print("Enter your choice: ");
 							confirmAdd = sc.next(); sc.nextLine();
@@ -172,7 +217,7 @@ public class Administrator extends Staff {
 							break;
 
 						case "2":
-							System.out.println("Confirm to Add New Pharmacist?");
+							System.out.println("\nConfirm to Add New Pharmacist?");
 							System.out.println("Enter 1 to Confirm; or 2 to Cancel.");
 							System.out.print("Enter your choice: ");
 							confirmAdd = sc.next(); sc.nextLine();
@@ -195,7 +240,7 @@ public class Administrator extends Staff {
 							break;
 
 						case "3":
-							System.out.println("Confirm to Add New Administrator?");
+							System.out.println("\nConfirm to Add New Administrator?");
 							System.out.println("Enter 1 to Confirm; or 2 to Cancel.");
 							System.out.print("Enter your choice: ");
 							confirmAdd = sc.next(); sc.nextLine();
@@ -399,7 +444,7 @@ public class Administrator extends Staff {
 
 								case "4":
 									for (int i = 0; i < sortedUserList.size(); i++) {
-										System.out.println((i + 1) + ". Gender: " + sortedUserList.get(i).getGender()
+										System.out.println((i + 1) + ". Gender: " + sortedUserList.get(i).getGenderString()
 												+ "\tName: " + sortedUserList.get(i).getName());
 									}
 									System.out.println("------------------");
