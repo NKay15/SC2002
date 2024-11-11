@@ -64,15 +64,13 @@ public class DoctorSchedule {
             Time breakStart, breakEnd;
 
             do {
-                System.out.println("Input your break start time, in hh mm");
-                int hour = sc.nextInt();
-                int minute = sc.nextInt();
-                breakStart = new Time(hour, minute);
+                System.out.println("Input your break start time, in hhmm");
+                int time = sc.nextInt();
+                breakStart = new Time(time);
 
                 System.out.println("Input your break end time, in hh mm");
-                hour = sc.nextInt();
-                minute = sc.nextInt();
-                breakEnd = new Time(hour, minute);
+                time = sc.nextInt();
+                breakEnd = new Time(time);
             } while (breakStart.compareTo(breakEnd) >= 0);
 
             mergeBreaks(breakStart, breakEnd);
