@@ -39,24 +39,20 @@ public class User {
     private int gender;
 
     private void changePassword(Scanner sc){
-        // sc.nextLine();
+        sc.nextLine();
         System.out.print("Enter Old Password (0 to Cancel): ");
-        String password = sc.next(); sc.nextLine();
-        if (password.equals("0")){
+        String oldPassword = sc.nextLine();
+        if (oldPassword.equals("0")){
             System.out.println("Operation Cancelled. Returning to Menu...\n");
             return;
         }
-        if(!this.password.checkPassword(password)) {
+        if(!password.checkPassword(oldPassword)) {
             System.out.print("Incorrect Password! Returning to Menu...\n");
             return;
         }
         System.out.print("Enter New Password: ");
-        password = sc.next(); sc.nextLine();
-        while (password.equals("0")){
-            System.out.print("Invalid password! Enter New Password: ");
-            password = sc.next(); sc.nextLine();
-        }
-        this.password.changePassword(password);
+        oldPassword = sc.next(); sc.nextLine();
+        password.changePassword(oldPassword);
         System.out.print("Password Successfully Changed! Returning to Menu...\n ");
     }
 
