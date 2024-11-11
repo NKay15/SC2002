@@ -157,14 +157,20 @@ public class PatientScheduleManager {
      */
     public Appointment getUpcomingAppointment(int i) {
         updatePatientData();
-        if (i < 0 || i > (appointmentList.size() + pendingAppointmentList.size())) return null;
-        if (i <= appointmentList.size()) {
-            // Fetch from appointmentList
-            return appointmentList.get(i - 1);
+
+        if (appointmentList == null && pendingAppointmentList == null) return null;
+        int totalSize = (appointmentList != null ? appointmentList.size() : 0)
+                + (pendingAppointmentList != null ? pendingAppointmentList.size() : 0);
+        if (i < 0 || i >= totalSize) return null;
+        if (appointmentList != null && i < appointmentList.size()) {
+            return appointmentList.get(i);
         } else {
-            // Fetch from pendingAppointmentList, adjusting the index
-            return pendingAppointmentList.get(i - appointmentList.size() - 1);
+            int adjustedIndex = appointmentList != null ? i - appointmentList.size() : i;
+            if (pendingAppointmentList != null && adjustedIndex < pendingAppointmentList.size()) {
+                return pendingAppointmentList.get(adjustedIndex);
+            }
         }
+        return null;
     }
 
     /**
