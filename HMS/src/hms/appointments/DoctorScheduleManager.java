@@ -108,12 +108,12 @@ public class DoctorScheduleManager {
     public void printUpcomingSlots(Doctor doctor) {
         updateDoctorData();
         int i = 1;
-        System.out.println("Doctor ID: " + doctor.getID() + "'s upcoming slots are:");
+        System.out.println("Doctor " + doctor.getName() + "'s upcoming slots are:");
         for (Appointment appointment : appointmentList) {
             if (appointment.getStatus() == 2) {
                 int time = appointment.getTimeSlot().getIntTime();
                 String slotTime = String.format("%02d:%02d", time / 100, time % 100);
-                System.out.println(i + " " +appointment.getDate().get() + slotTime);
+                System.out.println(i + ". " +appointment.getDate().get() + " " + slotTime);
                 i++;
             }
         }

@@ -58,8 +58,8 @@ public class App {
 				System.out.println("Hospital Management System (HMS)");
 				System.out.println("==============================");
 				System.out.println("Please login");
-				System.out.println("Enter your ID (0 to exit):");
-				String ID = sc.next();
+				System.out.print("Enter your ID (0 to exit): ");
+				String ID = sc.nextLine();
 
 				if(ID.equals("0")) {
 					accessLevel = -1;
@@ -74,15 +74,16 @@ public class App {
 					}
 				}
 				if (found == false) {
-					System.out.println("This user does not exist. Please check your ID again.");
+					System.out.println("This user does not exist. Please check your ID again.\n");
 					continue;
 				}
 				
 				accessLevel = currentUser.login();
 				if(accessLevel != -1) {
+					System.out.println("Logged in successfully.\n");
 					break;
 				} 
-				System.out.println("Password is incorrect");
+				System.out.println("Password is incorrect!");
 			} while (accessLevel == -1);
 			
 			if(accessLevel == -1) break;

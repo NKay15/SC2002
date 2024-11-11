@@ -39,15 +39,19 @@ public class User {
     private int gender;
 
     private void changePassword(Scanner sc){
-        System.out.print("Enter Old Password: ");
-        String old = sc.next(); sc.nextLine();
-        if(!password.checkPassword(old)) {
-            System.out.print("Incorrect Password! Returning to Menu...\n ");
+        System.out.print("Enter Old Password (0 to Cancel): ");
+        String oldPassword = sc.nextLine();
+        if (oldPassword.equals("0")){
+            System.out.println("Operation Cancelled. Returning to Menu...\n");
+            return;
+        }
+        if(!password.checkPassword(oldPassword)) {
+            System.out.print("Incorrect Password! Returning to Menu...\n");
             return;
         }
         System.out.print("Enter New Password: ");
-        old = sc.next(); sc.nextLine();
-        password.changePassword(old);
+        oldPassword = sc.next(); sc.nextLine();
+        password.changePassword(oldPassword);
         System.out.print("Password Successfully Changed! Returning to Menu...\n ");
     }
 
@@ -114,6 +118,19 @@ public class User {
     	return gender;
     }
 
+    public String getGenderString() {
+        switch (gender) {
+            case 0:
+                return "Unknown";
+            case 1:
+                return "Male";
+            case 2:
+                return "Female";
+            default:
+                return null;
+        }
+    }
+
     /**
      * Set gender of staff
      * @param gender
@@ -133,10 +150,14 @@ public class User {
      */
     public int login() {
         Scanner sc = GlobalData.getInstance().sc;
-        System.out.print("Enter password : ");
-        String value = sc.next();
+        System.out.print("Enter password: ");
+        String value = sc.nextLine();
         if (password.checkPassword(value)) return role;
         else return -1;
+    }
+
+    public boolean checkPassword(String password) {
+        return this.password.checkPassword(password);
     }
 
     /**

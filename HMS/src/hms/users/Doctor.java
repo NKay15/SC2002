@@ -51,7 +51,7 @@ public class Doctor extends Staff {
 		int choice = 1;
 
 		while (true) {
-			System.out.print("Enter menu number : ");
+			System.out.print("Enter menu number: ");
 			choice = sc.nextInt();
 			switch(choice) {
 				case 1 : 
@@ -109,8 +109,8 @@ public class Doctor extends Staff {
 						System.out.println("You have no appointment to view.");
 						break;
 					}
-					System.out.println("Select Appointment (0 : exit) :");
 					viewUpcomingAppointments();
+					System.out.print("Select Appointment (0 to Cancel): ");
 					choice = sc.nextInt();
 					Appointment choiceAppointment = doctorScheduler.getUpcomingAppointment(choice-1);
 					if(choiceAppointment == null) {
@@ -123,7 +123,7 @@ public class Doctor extends Staff {
 
 				default :
 					if(!super.useroptions(choice-7)) {
-						System.out.println("Logging out");
+						System.out.println("Logging out...\n");
 						return;
 					}
 			}
@@ -169,7 +169,7 @@ public class Doctor extends Staff {
     public void setAvailabilityforAppointments() {
 		Scanner scanner = GlobalData.getInstance().sc;
 		int ddmmyyyy;
-		System.out.print("Enter the date (ddmmyyyy) : ");
+		System.out.print("Enter the date (ddmmyyyy): ");
 		ddmmyyyy = scanner.nextInt();
 		Date date =  new Date(ddmmyyyy);
     	doctorSchedules.setDoctorSchedule(date);
@@ -205,9 +205,15 @@ public class Doctor extends Staff {
 
 			++id;
 			System.out.println("-----Request " + id + "-----");
-			System.out.println("patient:" + patient.getName());
-			date.print();
-			System.out.println("Time: " + Time.getHour() + ":" + Time.getMinute());
+			System.out.println("Name of Patient: " + patient.getName());
+			System.out.println("Patient ID: " + patient.getID());
+			System.out.print("Date: "); date.print();
+			String hour = Integer.toString(Time.getHour());
+			String minute = Integer.toString(Time.getMinute());
+			if (Time.getHour() < 10) { hour = "0" + hour; }
+			if (Time.getMinute() < 10) { minute = "0" + minute; }
+			System.out.println("Time: " + hour + ":" + minute);
+			// System.out.println("\nTime: " + Time.getHour() + ":" + Time.getMinute());
 			System.out.println("-----End of Request " + id + "-----");
 			System.out.println("1. Accept");
 			System.out.println("2. Decline");

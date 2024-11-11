@@ -118,7 +118,7 @@ public class DoctorSchedules {
         //System.out.println("Doctor ID: " + doctor.getID() + "'s available slots are:");
         DoctorSchedule schedule = findDateSchedule(date, doctor);
         if (schedule == null) {
-            System.out.println("No avialable slots.");
+            System.out.println("No available slots.");
             return;
         }
         Time startTime = schedule.getStartTime();

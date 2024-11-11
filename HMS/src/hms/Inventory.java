@@ -1,7 +1,6 @@
 package hms;
 
 import hms.medicalRecords.AppointmentOutcomeRecord;
-import hms.GlobalData;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -38,6 +37,12 @@ public class Inventory {
     }
 
     /**
+     * Return whether requests is empty (for admin)
+     * @return true if empty, false otherwise
+     */
+    public boolean isRequestsEmpty() { return requests.isEmpty(); }
+
+    /**
      * Constructor for Inventory
      */
     public Inventory() {
@@ -48,13 +53,12 @@ public class Inventory {
 
     /**
      * Adding new medicine to the inventory
-     * @param sc Scanner
      */
     public void addNewMedicine() {
         Scanner sc = GlobalData.getInstance().sc;
         boolean alreadyExists = true;
         System.out.print("Enter Name of New Medicine: ");
-        String name = sc.next(); sc.nextLine();
+        String name = sc.nextLine();
 
         while(alreadyExists) {
             alreadyExists = false;
@@ -62,58 +66,58 @@ public class Inventory {
                 if (name.equals(catalog.get(i).name())) {
                     System.out.println("Medicine Already Exists in the Catalog!");
                     System.out.println("Enter Name of New Medicine: ");
-                    name = sc.next(); sc.nextLine();
+                    name = sc.nextLine();
                     alreadyExists = true;
                 }
             }
         }
 
-        int confirmAdding;
         System.out.println("Continue to Add New Medicine \"" + name + "\"?");
-        System.out.println("Enter 1 to Continue; or Enter any other number to Cancel.");
+        System.out.println("Enter 1 to Continue; or Enter anything else to Cancel.");
         System.out.print("Enter your choice: ");
-        confirmAdding = sc.nextInt(); sc.nextLine();
-        if (confirmAdding != 1) {
+        String continueToAdd = sc.next(); sc.nextLine();
+        if (!continueToAdd.equals("1")) {
             System.out.println("Operation Cancelled.");
             return;
         }
-        System.out.print("Enter Initial Amount: ");
+
+        System.out.print("Enter Initial Quantity: ");
         int amount = sc.nextInt(); sc.nextLine();
         System.out.print("Enter Low Level Alert: ");
         int level = sc.nextInt(); sc.nextLine();
 
-        // Confirm before proceeding. confirmAdding currently 1
+        String confirmAdding = "1";
         while (true) {
-            if (confirmAdding >= 1 && confirmAdding <= 4) {
-                System.out.println("Please ensure that all fields below are correct before confirming:\n");
+            if (confirmAdding.equals("1") || confirmAdding.equals("2") || confirmAdding.equals("3") || confirmAdding.equals("4")) {
+                System.out.println("\nPlease ensure that all fields below are correct before confirming:");
                 System.out.println("Name: " + name);
-                System.out.println("Initial Amount: " + amount);
+                System.out.println("Initial Quantity: " + amount);
                 System.out.println("Low Level Alert: " + level);
                 System.out.println("\nConfirm to Add New Medicine?");
                 System.out.println("Enter 1 to Confirm; 2 to Cancel; " +
-                        "3 to Edit Initial Amount; or 4 to Edit Low Level.");
+                        "3 to Edit Initial Quantity; or 4 to Edit Low Level.");
                 System.out.print("Enter your choice: ");
             }
-            confirmAdding = sc.nextInt(); sc.nextLine();
+            confirmAdding = sc.next(); sc.nextLine();
 
             switch (confirmAdding) {
-                case 1:
+                case "1":
                     catalog.add(new Medicine(name, amount));
                     lowlevel.add(new Medicine(name, amount));
                     System.out.println("New Medicine \"" + name + "\" Successfully Added to Inventory!");
                     return;
 
-                case 2:
+                case "2":
                     System.out.println("Operation Cancelled.");
                     return;
 
-                case 3:
-                    System.out.print("Enter Initial Amount: ");
+                case "3":
+                    System.out.print("Enter Initial Quantity: ");
                     amount = sc.nextInt(); sc.nextLine();
-                    System.out.println("Initial Amount has been Modified.");
+                    System.out.println("Initial Quantity has been Modified.");
                     break;
 
-                case 4:
+                case "4":
                     System.out.print("Enter Low Level Alert: ");
                     level = sc.nextInt(); sc.nextLine();
                     System.out.println("Low Level Alert has been Modified.");
@@ -147,37 +151,44 @@ public class Inventory {
 
     /**
      * Used by administrator to add quantity of medication
-     * @param sc Scanner
      */
     public void updateStockLevelMenu() {
         Scanner sc = GlobalData.getInstance().sc;
         printCurrentInventory();
-        System.out.print("Enter Index of Medicine: ");
+        System.out.print("Enter Index of Medicine (0 to Cancel): ");
         int med = sc.nextInt(); sc.nextLine();
-        while(med < 0 || med > catalog.size()) {
+        while(med < 1 || med > catalog.size()) {
+            if (med == 0) {
+                System.out.println("Operation Cancelled.");
+                return;
+            }
             System.out.print("Invalid input! Try again: ");
             med = sc.nextInt(); sc.nextLine();
         }
-        System.out.print("Enter Quantity of Restock: ");
+        System.out.print("Enter Quantity of Restock (0 to Cancel): ");
         int quantity = sc.nextInt(); sc.nextLine();
-        while(quantity < 0) {
+        while(quantity < 1) {
+            if (quantity == 0) {
+                System.out.println("Operation Cancelled.");
+                return;
+            }
             System.out.print("Invalid input! Try again: ");
             quantity = sc.nextInt(); sc.nextLine();
         }
         System.out.println("\nConfirm to Update Stock Level?");
         System.out.println("Enter 1 to Confirm; or 2 to Cancel.");
         System.out.print("Enter your choice: ");
-        int confirmAdding;
+        String confirmAdding;
 
         while (true) {
-            confirmAdding = sc.nextInt(); sc.nextLine();
+            confirmAdding = sc.next(); sc.nextLine();
             switch (confirmAdding) {
-                case 1:
+                case "1":
                     catalog.get(med-1).restock(quantity);
-                    System.out.print("Stock Level Successfully Restocked!");
+                    System.out.println("Stock Level Successfully Restocked!");
                     break;
 
-                case 2:
+                case "2":
                     System.out.println("Operation Cancelled.");
                     break;
 
@@ -222,33 +233,43 @@ public class Inventory {
      */
     public void createRequest() {
         Scanner sc = GlobalData.getInstance().sc;
-        System.out.print("Enter Index of Medicine: ");
+        System.out.println("Current Inventory:");
+        GlobalData.getInstance().inventory.printCurrentInventory();
+        System.out.print("Enter Index of Medicine (0 to Cancel): ");
         int med = sc.nextInt(); sc.nextLine();
-        while(med < 0 || med > catalog.size()) {
+        while(med < 1 || med > catalog.size()) {
+            if (med == 0) {
+                System.out.println("Operation Cancelled.");
+                return;
+            }
             System.out.print("Invalid input! Try again: ");
             med = sc.nextInt(); sc.nextLine();
         }
-        System.out.print("Enter Quantity of Medicine to Request: ");
+        System.out.print("Enter Quantity of Medicine (0 to Cancel): ");
         int quantity = sc.nextInt(); sc.nextLine();
-        while(quantity < 0) {
+        while(quantity < 1) {
+            if (quantity == 0) {
+                System.out.println("Operation Cancelled.");
+                return;
+            }
             System.out.print("Invalid input! Try again: ");
             quantity = sc.nextInt(); sc.nextLine();
         }
 
-        System.out.println("\nConfirm to Submit Restock Request?");
+        System.out.println("Confirm to Submit Restock Request?");
         System.out.println("Enter 1 to Confirm; or 2 to Cancel.");
         System.out.print("Enter your choice: ");
-        int confirmAdding;
+        String confirmAdding;
 
         while (true) {
-            confirmAdding = sc.nextInt(); sc.nextLine();
+            confirmAdding = sc.next(); sc.nextLine();
             switch (confirmAdding) {
-                case 1:
+                case "1":
                     requests.add(catalog.get(med-1).copy(quantity));
-                    System.out.print("Restock Request Successfully Created!");
+                    System.out.println("Restock Request Successfully Created!");
                     break;
 
-                case 2:
+                case "2":
                     System.out.println("Operation Cancelled.");
                     break;
 
@@ -261,38 +282,39 @@ public class Inventory {
     }
 
     public Medicine[] generatePrescription(){
+        System.out.println("\nCurrent Inventory, for your reference:");
         printCurrentInventory();
         ArrayList<Medicine> ret = new ArrayList<Medicine>();
         int med = 1;
-        int amount;
+        int quantity;
         
         while(med > 0 && med <= catalog.size()) {
-            System.out.print("Enter Index of Medicine to Prescribe () to exit): ");
+            System.out.print("Enter Index of Medicine to Prescribe (0 to Finish): ");
             Scanner sc = GlobalData.getInstance().sc;
             med = sc.nextInt(); sc.nextLine();
             if(med == 0) break;
-            while(med < 0 || med >= catalog.size()) {
+            while(med < 0 || med > catalog.size()) {
                 System.out.print("Invalid input! Try again: ");
-                med = sc.nextInt();
+                med = sc.nextInt(); sc.nextLine();
             }
-            if(ret.size() == 0) {
-                System.out.print("Enter amount (0 to back) : ");
-                amount = sc.nextInt();
-                if(amount <= 0) continue;
-
-                ret.add(new Medicine(catalog.get(med-1).name(), amount));
+            if(ret.isEmpty()) {
+                System.out.print("Enter Quantity (0 to Go Back): ");
+                quantity = sc.nextInt(); sc.nextLine();
+                if(quantity <= 0) continue;
+                ret.add(new Medicine(catalog.get(med-1).name(), quantity));
                 continue;
             }
             for(int i = 0; i < ret.size(); i++) {
                 if (ret.get(i).name().equals(catalog.get(med-1).name())) {
-                    System.out.println("Medicine is already prescribe!");
-                    continue;
+                    System.out.println("Medicine Has Already Been Prescribed!");
+                    break;
                 }
-                System.out.print("Enter amount (0 to back) : ");
-                amount = sc.nextInt();
-                if(amount <= 0) continue;
+                System.out.print("Enter Quantity (0 to Go Back): ");
+                quantity = sc.nextInt(); sc.nextLine();
+                if(quantity <= 0) break;
 
-                ret.add(new Medicine(catalog.get(med-1).name(), amount));
+                ret.add(new Medicine(catalog.get(med-1).name(), quantity));
+                break;
             }
         }
 
@@ -310,20 +332,20 @@ public class Inventory {
     public void setNewLowLevel() {
         Scanner sc = GlobalData.getInstance().sc;
         printCurrentInventory();
-        System.out.print("Enter Index of Medicine (0 to cancel): ");
+        System.out.print("Enter Index of Medicine (0 to Cancel): ");
         int med = sc.nextInt(); sc.nextLine();
         if (med == 0) {
-            System.out.println("Operation Cancelled. Returning to Menu...");
+            System.out.println("Operation Cancelled.");
             return;
         }
         while(med < 0 || med > catalog.size()) {
             System.out.print("Invalid input! Try again: ");
             med = sc.nextInt(); sc.nextLine();
         }
-        System.out.print("Enter new Low Level (0 to cancel): ");
+        System.out.print("Enter New Low Level (0 to Cancel): ");
         int quantity = sc.nextInt(); sc.nextLine();
         if (quantity == 0) {
-            System.out.println("Operation Cancelled. Returning to Menu...");
+            System.out.println("Operation Cancelled.");
             return;
         }
         while(quantity < 0) {
@@ -332,35 +354,40 @@ public class Inventory {
         }
         lowlevel.get(med-1).prescribe(lowlevel.get(med-1).amount());
         lowlevel.get(med-1).restock(quantity);
-        System.out.print("Low Level Alert Successfully Updated!");
+        System.out.println("Low Level Alert Successfully Updated!");
     }
 
     /**
      * Used by ... to manage restock
      */
     public void manageRestockRequests() {
+        if (requests.isEmpty()) {
+            return;
+        }
+        System.out.println("Pending Restock Requests:");
         printRestockRequest();
         System.out.print("Enter Index of Request: ");
         Scanner sc = GlobalData.getInstance().sc;
         int req = sc.nextInt(); sc.nextLine();
-        while(req < 0 || req > requests.size()) {
+        while(req < 1 || req > requests.size()) {
             System.out.print("Invalid input! Try again: ");
-            req = sc.nextInt();
+            req = sc.nextInt(); sc.nextLine();
         }
         int idx = findIndex(requests.get(req-1));
         System.out.print("Enter 1 to Exit; 2 to Approve; 3 to Reject.\nEnter your choice: ");
-        int choice;
+        String choice;
         while (true) {
-            choice = sc.nextInt(); sc.nextLine();
+            choice = sc.next(); sc.nextLine();
             switch (choice) {
-                case 1:
+                case "1":
+                    System.out.println();
                     return;
-                case 2:
+                case "2":
                     catalog.get(idx).restock(requests.get(req - 1).amount());
                     requests.remove(req - 1);
                     System.out.println("Request Successfully Approved!");
                     return;
-                case 3:
+                case "3":
                     requests.remove(req - 1);
                     System.out.println("Request Successfully Rejected!");
                     return;
@@ -375,22 +402,24 @@ public class Inventory {
      * Print current inventory
      */
     public void printCurrentInventory() {
+        System.out.println("---------------------");
         for(int i = 0; i < catalog.size(); i++) {
-            System.out.print((i+1) + ". " + catalog.get(i).name() + " : " + catalog.get(i).amount());
+            System.out.print((i+1) + ". " + catalog.get(i).name() + ": " + catalog.get(i).amount());
             if(catalog.get(i).amount() <= lowlevel.get(i).amount())
                 System.out.println(" **LOW, PLEASE RESTOCK!**");
-            else System.out.println();
+            else System.out.println(" (LL: " + lowlevel.get(i).amount() + ")");
         }
-        System.out.println();
+        System.out.println("---------------------");
     }
 
     /**
      * Print restock request
      */
     public void printRestockRequest() {
+        System.out.println("---------------------");
         for(int i = 0; i < requests.size(); i++) {
-            System.out.println((i+1) + ". " + requests.get(i).name() + " : " + requests.get(i).amount());
+            System.out.println((i+1) + ". " + requests.get(i).name() + ": " + requests.get(i).amount());
         }
-        System.out.println();
+        System.out.println("---------------------");
     }
 }
