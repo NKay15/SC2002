@@ -70,4 +70,12 @@ public class Medicine {
     public void print() {
         System.out.println(name + " (Quantity: " + amount + ")");
     }
+
+    /**
+     * mutator of amount
+     * @param amount new amount
+     */
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
 }

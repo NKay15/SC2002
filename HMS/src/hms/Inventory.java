@@ -297,24 +297,21 @@ public class Inventory {
                 System.out.print("Invalid input! Try again: ");
                 med = sc.nextInt(); sc.nextLine();
             }
-            if(ret.isEmpty()) {
-                System.out.print("Enter Quantity (0 to Go Back): ");
-                quantity = sc.nextInt(); sc.nextLine();
-                if(quantity <= 0) continue;
-                ret.add(new Medicine(catalog.get(med-1).name(), quantity));
-                continue;
-            }
-            for(int i = 0; i < ret.size(); i++) {
-                if (ret.get(i).name().equals(catalog.get(med-1).name())) {
-                    System.out.println("Medicine Has Already Been Prescribed!");
-                    break;
-                }
-                System.out.print("Enter Quantity (0 to Go Back): ");
-                quantity = sc.nextInt(); sc.nextLine();
-                if(quantity <= 0) break;
 
+            int i;
+            for(i = 0; i < ret.size(); i++) {
+                if(ret.get(i).name().equals(catalog.get(med-1).name())) break;
+            }
+
+            if(i == ret.size()) {
+                System.out.print("Enter amount to precribe: ");
+                quantity = sc.nextInt();
                 ret.add(new Medicine(catalog.get(med-1).name(), quantity));
-                break;
+            }
+            else {
+                System.out.print("Enter new amount to precribe: ");
+                quantity = sc.nextInt();
+                ret.get(i).setAmount(quantity);
             }
         }
 

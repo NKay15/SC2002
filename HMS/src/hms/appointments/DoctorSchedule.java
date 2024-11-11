@@ -68,7 +68,7 @@ public class DoctorSchedule {
                 int time = sc.nextInt();
                 breakStart = new Time(time);
 
-                System.out.println("Input your break end time, in hh mm");
+                System.out.println("Input your break end time, in hhmm");
                 time = sc.nextInt();
                 breakEnd = new Time(time);
             } while (breakStart.compareTo(breakEnd) >= 0);

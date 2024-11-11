@@ -180,28 +180,28 @@ public class App {
                 Cell bloodType = cellIterator.next();
                 int bloodTypeNo = 0;
                 
-                if (bloodType.toString() == "A+") {
+                if (bloodType.toString().equals("A+")) {
                 	bloodTypeNo = 1;
                 }
-                if (bloodType.toString() == "A-") {
+                if (bloodType.toString().equals("A-")) {
                 	bloodTypeNo = 2;
                 }
-                if (bloodType.toString() == "B+") {
+                if (bloodType.toString().equals("B+")) {
                 	bloodTypeNo = 3;
                 }
-                if (bloodType.toString() == "B-") {
+                if (bloodType.toString().equals("B-")) {
                 	bloodTypeNo = 4;
                 } 
-                if (bloodType.toString() == "AB+") {
+                if (bloodType.toString().equals("AB+")) {
                 	bloodTypeNo = 5;
                 }
-                if (bloodType.toString() == "AB-") {
+                if (bloodType.toString().equals("AB-")) {
                 	bloodTypeNo = 6;
                 } 
-                if (bloodType.toString() == "O+") {
+                if (bloodType.toString().equals("O+")) {
                 	bloodTypeNo = 7;
                 } 
-                if (bloodType.toString() == "O-") {
+                if (bloodType.toString().equals("O-")) {
                 	bloodTypeNo = 8;
                 }
                 

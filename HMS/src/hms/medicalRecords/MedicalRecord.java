@@ -99,7 +99,7 @@ public class MedicalRecord {
 
         System.out.println("Medical History : ");
         for(int i = 0; i < medicalHistory.size(); i++) {
-            System.out.println(i + " : " + medicalHistory.get(i));
+            System.out.println((i+1) + " : " + medicalHistory.get(i));
         }
 
         System.out.println("-----End of Medical Record-----");
