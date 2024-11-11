@@ -4,7 +4,6 @@ import hms.medicalRecords.MedicalRecord;
 import hms.utils.*;
 import hms.appointments.*;
 import hms.GlobalData;
-import org.apache.poi.ss.usermodel.charts.ScatterChartSeries;
 
 import java.util.ArrayList;
 import java.util.Scanner;

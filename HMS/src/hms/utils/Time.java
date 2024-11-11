@@ -17,12 +17,12 @@ public class Time implements Comparable<Time>{
         this.hour = time/100;
         while (!checkTime()) {
             System.out.println("This time is not available.");
+            System.out.println("Enter time in hhmm");
             Scanner sc = new Scanner(System.in);
-            int hour = sc.nextInt();
-            int minute = sc.nextInt();
-            this.minute = minute;
-            this.hour = hour;
-            time = 100 * this.hour + this.minute;
+            time = sc.nextInt();
+            this.time = time;
+            this.minute = time%100;
+            this.hour = time/100;
         }
     }
 
@@ -32,6 +32,7 @@ public class Time implements Comparable<Time>{
         this.hour = hour;
         while (!checkTime()) {
             System.out.println("This time is not available.");
+            System.out.println("Enter time in hh mm");
             Scanner sc = new Scanner(System.in);
             hour = sc.nextInt();
             minute = sc.nextInt();
@@ -59,8 +60,7 @@ public class Time implements Comparable<Time>{
     }
 
     public boolean checkTime() {
-
-        if (minute % 100 != 0 && minute % 100 != 30 &&( minute >= 60 || minute < 0)) {
+        if ( (minute % 100 != 0 && minute % 100 != 30) || ( minute >= 60 || minute < 0)) {
             System.out.println("Only 00/30 is allowed for minute.");
             return false;
         }
