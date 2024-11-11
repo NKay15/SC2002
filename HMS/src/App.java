@@ -1,47 +1,39 @@
-import java.io.File;  
-import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.Iterator; 
-import java.util.Scanner;
-
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;  
-import org.apache.poi.xssf.usermodel.XSSFSheet;  
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import hms.users.User;
+import hms.GlobalData;
+import hms.Inventory;
+import hms.TextFileService;
 import hms.UserList;
 import hms.users.Administrator;
 import hms.users.Doctor;
 import hms.users.Patient;
 import hms.users.Pharmacist;
 import hms.users.Staff;
-import hms.utils.Date;
-import hms.Inventory; 
-import hms.GlobalData; 
+import hms.users.User;
+
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) throws Exception {
     	/* Load data into userList */
     	UserList userList = new UserList();
-    	userList.setPatients(getPatientData());
+    	userList.setPatients(TextFileService.getPatientData());
     	ArrayList<Staff> temUser = new ArrayList<Staff>();
-    	temUser = getStaffData();
+    	temUser = TextFileService.getStaffData();
     	for (Staff user : temUser) {
     		if (user.getRole() == 2) {
-    			Doctor temDoc = new Doctor(user.getID(), user.getName(), user.getGender(), user.getAge());
+    			Doctor temDoc = new Doctor(user.getID(), user.getName(), user.getGender(), user.getAge(), user.getPassword());
     			userList.addDoctor(temDoc);
     		} else if (user.getRole() == 3) {
-    			Pharmacist temPhar = new Pharmacist(user.getID(), user.getName(), user.getGender(), user.getAge());
+    			Pharmacist temPhar = new Pharmacist(user.getID(), user.getName(), user.getGender(), user.getAge(), user.getPassword());
     			userList.addPharmacist(temPhar);
     		} else if (user.getRole() == 4) {
-    			Administrator temAdmin = new Administrator(user.getID(), user.getName(), user.getGender(), user.getAge());
+    			Administrator temAdmin = new Administrator(user.getID(), user.getName(), user.getGender(), user.getAge(), user.getPassword());
     			userList.addAdministrator(temAdmin);
     		}
     	}
     	
 		/* Load data into inventory */
-		Inventory inventory = getInventory();
+		Inventory inventory = TextFileService.getInventory();
 
 		/* Set Global Data */
 		GlobalData gd = GlobalData.getInstance();
@@ -141,178 +133,4 @@ public class App {
 			}
 		}
     }
-    
-    /**
-     * Get Patient Data
-     */
-    public static ArrayList<Patient> getPatientData() {
-    	try
-        {  
-    		ArrayList<Patient> patientArray = new ArrayList<Patient>();
-    		
-            File file = new File("HMS/src/data/Patient_List.xlsx");
-            FileInputStream fis = new FileInputStream(file);
-            XSSFWorkbook wb = new XSSFWorkbook(fis);   
-            XSSFSheet sheet = wb.getSheetAt(0);
-            Iterator<Row> itr = sheet.iterator();
-            itr.next(); // Skip header
-            
-            while (itr.hasNext())
-            {  
-                Row row = itr.next();  
-                Iterator<Cell> cellIterator = row.cellIterator();   //iterating over each column  
-                
-                Cell id = cellIterator.next();  
-                
-                Cell name = cellIterator.next();
-                
-                Cell dob = cellIterator.next();
-                Date dateFormat = new Date(Integer.valueOf(dob.toString().substring(0, 4)), Integer.valueOf(dob.toString().substring(5, 7)), Integer.valueOf(dob.toString().substring(8,10)));
-                
-                Cell gender = cellIterator.next();
-                int genderNo = 0;
-                if (gender.toString().equals("Male")) {
-                	genderNo = 1;
-                } else if (gender.toString().equals("Female")) {
-                	genderNo = 2;
-                }
-                
-                Cell bloodType = cellIterator.next();
-                int bloodTypeNo = 0;
-                
-                if (bloodType.toString().equals("A+")) {
-                	bloodTypeNo = 1;
-                }
-                if (bloodType.toString().equals("A-")) {
-                	bloodTypeNo = 2;
-                }
-                if (bloodType.toString().equals("B+")) {
-                	bloodTypeNo = 3;
-                }
-                if (bloodType.toString().equals("B-")) {
-                	bloodTypeNo = 4;
-                } 
-                if (bloodType.toString().equals("AB+")) {
-                	bloodTypeNo = 5;
-                }
-                if (bloodType.toString().equals("AB-")) {
-                	bloodTypeNo = 6;
-                } 
-                if (bloodType.toString().equals("O+")) {
-                	bloodTypeNo = 7;
-                } 
-                if (bloodType.toString().equals("O-")) {
-                	bloodTypeNo = 8;
-                }
-                
-                Cell email = cellIterator.next();
-                
-                Patient newPatient = new Patient(id.toString(), name.toString(), genderNo, dateFormat, 0, email.toString(), bloodTypeNo);
-                patientArray.add(newPatient);
-            }
-            
-            return patientArray;
-        }  
-        catch(Exception e)  
-        {  
-            e.printStackTrace();
-            return null;
-        }  
-    }
-    
-    /**
-     * Get Staff Data
-     */
-    public static ArrayList<Staff> getStaffData() {
-    	try
-        {  
-    		ArrayList<Staff> staffArray = new ArrayList<Staff>();
-    		
-            File file = new File("HMS/src/data/Staff_List.xlsx");
-            FileInputStream fis = new FileInputStream(file);
-            XSSFWorkbook wb = new XSSFWorkbook(fis);   
-            XSSFSheet sheet = wb.getSheetAt(0);
-            Iterator<Row> itr = sheet.iterator();
-            itr.next(); // Skip header
-            
-            while (itr.hasNext())
-            {  
-                Row row = itr.next();  
-                Iterator<Cell> cellIterator = row.cellIterator();   //iterating over each column  
-                
-                Cell id = cellIterator.next();  
-                
-                Cell name = cellIterator.next();
-                
-                Cell role = cellIterator.next();
-                int roleNo = 0;
-                if (role.toString().equals("Doctor")) {
-                	roleNo = 2;
-                }
-                if (role.toString().equals("Pharmacist")) {
-                	roleNo = 3;
-                }
-                if (role.toString().equals("Administrator")) {
-                	roleNo = 4;
-                }
-                
-                Cell gender = cellIterator.next();
-                int genderNo = 0;
-                if (gender.toString().equals("Male")) {
-                	genderNo = 1;
-                } else if (gender.toString().equals("Female")) {
-                	genderNo = 2;
-                }
-                
-                Cell age = cellIterator.next();
-                
-                Staff newUser = new Staff(id.toString(), name.toString(), roleNo, genderNo, (int) Math.floor(age.getNumericCellValue()));
-                staffArray.add(newUser);
-            }
-            
-            return staffArray;
-        }  
-        catch(Exception e)  
-        {  
-            e.printStackTrace();
-            return null;
-        }  
-    }
-
-	/**
-	 * Read medicine from file and generate initial inventory
-	 * @return initial inventory
-	 */
-	public static Inventory getInventory() {
-		try {
-			Inventory setup = new Inventory();
-
-			File file = new File("HMS/src/data/Medicine_List.xlsx");
-			FileInputStream fis = new FileInputStream(file);
-			XSSFWorkbook wb = new XSSFWorkbook(fis);   
-			XSSFSheet sheet = wb.getSheetAt(0);
-			Iterator<Row> itr = sheet.iterator();
-			itr.next(); // Skip header
-
-			while(itr.hasNext()) {
-				Row row = itr.next();  
-				Iterator<Cell> cellIterator = row.cellIterator();   //iterating over each column  
-					
-				Cell name = cellIterator.next();  
-					
-				Cell amount = cellIterator.next();
-					
-				Cell low = cellIterator.next();
-
-				setup.addNewMedicine(name.toString(), (int) amount.getNumericCellValue(), (int) Math.floor(low.getNumericCellValue()));
-			}
-
-			return setup;
-		}
-		catch(Exception e)  
-        {  
-            e.printStackTrace();
-            return new Inventory();
-        }
-	}
 }
