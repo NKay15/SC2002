@@ -48,6 +48,7 @@ public class Pharmacist extends Staff {
 
 				switch (choice) {
 					case 1:
+						sc.nextLine();
 						System.out.print("Enter Patient ID (0 to Cancel): ");
 						while (!patientFound) {
 							if (alreadyTried) System.out.print("Patient Does Not Exist! Try again: ");
@@ -102,6 +103,7 @@ public class Pharmacist extends Staff {
 						break;
 
 					case 2:
+						sc.nextLine();
 						System.out.print("Enter Patient ID (0 to Cancel): ");
 						while (!patientFound) {
 							if (alreadyTried) System.out.print("Patient Does Not Exist! Try again: ");
