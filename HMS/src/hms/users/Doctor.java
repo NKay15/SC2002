@@ -200,6 +200,11 @@ public class Doctor extends Staff {
 		List<Appointment> appointmentList = doctorScheduler.returnPendingList();
 		int id = 0;
 		Scanner scan = GlobalData.getInstance().sc;
+
+		if(appointmentList.size() == 0){
+			System.out.println("No pending request!");
+		}
+
 		for(Appointment appointment : appointmentList){
 			if (appointment.getStatus() !=1) continue;
 			Patient patient = appointment.getPatient();
@@ -208,9 +213,11 @@ public class Doctor extends Staff {
 
 			++id;
 			System.out.println("-----Request " + id + "-----");
+			if(appointment.checkRscheduled()) System.out.println("***Resccheduled Appointment***");
 			System.out.println("Name of Patient: " + patient.getName());
 			System.out.println("Patient ID: " + patient.getID());
 			System.out.print("Date: "); date.print();
+			System.out.print("Status： "); appointment.printStatus();
 			String hour = Integer.toString(Time.getHour());
 			String minute = Integer.toString(Time.getMinute());
 			if (Time.getHour() < 10) { hour = "0" + hour; }

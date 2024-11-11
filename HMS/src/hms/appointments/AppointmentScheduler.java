@@ -74,7 +74,7 @@ public class AppointmentScheduler {
             appointment.cancel();
             System.out.println("Appointment rejected.");
         } else if (appointment.getStatus() == 5) {
-            findAppointment(appointment.getRescheduled().getUuid(), appointments).confirm();
+            appointments.remove(appointment.getRescheduled());
             cancelAppointment(appointment, pendingAppointments);
 
         } else {
@@ -278,7 +278,7 @@ public class AppointmentScheduler {
     public List<Appointment> getAppointments(Patient patient) {
         List<Appointment> appointmentsForPatient = new ArrayList<>();
         for (Appointment appointment : appointments) {
-            if (appointment.getPatientID().equals(patient.getID()) && appointment.getStatus() != 3) {
+            if (appointment.getPatientID().equals(patient.getID()) && appointment.getStatus() != 3  && appointment.getStatus()!=5) {
                 appointmentsForPatient.add(appointment);
             }
         }
@@ -333,5 +333,6 @@ public class AppointmentScheduler {
         }
         return pendingAppointmentsForDoctor;
     }
+
 
 }

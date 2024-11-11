@@ -64,6 +64,11 @@ public class Appointment {
         rescheduled = appointment;
     }
 
+    public boolean checkRscheduled(){
+        if(rescheduled!=null) return true;
+        else return false;
+    }
+
     /**
      * Accessor of patientID
      *
