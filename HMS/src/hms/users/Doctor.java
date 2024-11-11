@@ -236,6 +236,13 @@ public class Doctor extends Staff {
             System.out.println("2. Decline");
             System.out.println("3. Later");
             int ch = scan.nextInt();
+			while(ch < 1 || ch > 3){
+				System.out.println("Invalid Input!");
+				System.out.println("1. Accept");
+				System.out.println("2. Decline");
+				System.out.println("3. Later");
+				ch = scan.nextInt();
+			}
             if (ch == 1) {
                 doctorScheduler.acceptAppointments(appointment);
                 updatePatientList(patient, 1);

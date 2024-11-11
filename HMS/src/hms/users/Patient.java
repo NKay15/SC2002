@@ -5,6 +5,9 @@ import hms.Password;
 import hms.appointments.*;
 import hms.medicalRecords.MedicalRecord;
 import hms.utils.*;
+import hms.appointments.*;
+import hms.GlobalData;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
