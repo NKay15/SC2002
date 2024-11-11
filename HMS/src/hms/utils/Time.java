@@ -89,7 +89,8 @@ public class Time implements Comparable<Time>{
         return (t1.compareTo(t2) >= 0) ? t1 : t2;
     }
     public void print(){
-        System.out.println(hour + ":"+minute);
+        String timeFormatted = String.format("%02d:%02d", hour, minute);
+        System.out.println(timeFormatted);
     }
 
 }
