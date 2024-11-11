@@ -114,9 +114,10 @@ public class DoctorSchedules {
      *
      * @param date The date for which to print available slots.
      */
-    public void printAvailableSlot(Date date){
+    public void printAvailableSlot(Date date) {
         printAvailableSlot(date, doctor.getDoctorScheduler());
     }
+
     public void printAvailableSlot(Date date, DoctorScheduleManager scheduler) {
 
         //System.out.println("Doctor ID: " + doctor.getID() + "'s available slots are:");
@@ -127,7 +128,7 @@ public class DoctorSchedules {
         }
         Time startTime = schedule.getStartTime();
         Time endTime = schedule.getEndTime();
-        for (int time = startTime.getIntTime(); time <endTime.getIntTime(); time += 30) {
+        for (int time = startTime.getIntTime(); time < endTime.getIntTime(); time += 30) {
             if (time % 100 == 60) time += 40;
             if (scheduler.isSlotAvailable(time, date)) {
                 String slotTime = String.format("%02d:%02d", time / 100, time % 100);

@@ -126,7 +126,7 @@ public class PatientScheduleManager {
      * @return appointment if doctor is free otherwise null will be return
      */
     public Appointment generateAppointment(Patient patient, Doctor doctor, Date date, Time time) {
-        if (doctor.getDoctorScheduler().isSlotAvailable(time,date)) {
+        if (doctor.getDoctorScheduler().isSlotAvailable(time, date)) {
             return new Appointment(patient, doctor, date, time);
         } else return null;
     }

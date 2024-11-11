@@ -89,7 +89,7 @@ public class DoctorScheduleManager {
         System.out.println("-----------------------------------");
     }
 
-    public List<Appointment> returnPendingList(){
+    public List<Appointment> returnPendingList() {
         updateDoctorData();
         List<Appointment> docPendingList = new ArrayList<>();
         for (Appointment appointment : pendingList) {
@@ -113,31 +113,31 @@ public class DoctorScheduleManager {
             if (appointment.getStatus() == 2) {
                 int time = appointment.getTimeSlot().getIntTime();
                 String slotTime = String.format("%02d:%02d", time / 100, time % 100);
-                System.out.println(i + ". " +appointment.getDate().get() + " " + slotTime);
+                System.out.println(i + ". " + appointment.getDate().get() + " " + slotTime);
                 i++;
             }
         }
     }
-    public boolean isSlotAvailable(int time, Date date){
+
+    public boolean isSlotAvailable(int time, Date date) {
         Time tempTime = new Time(time);
         return scheduler.isSlotAvailable(doctor, tempTime, date);
     }
-    public boolean isSlotAvailable(Time time, Date date){
+
+    public boolean isSlotAvailable(Time time, Date date) {
         return scheduler.isSlotAvailable(doctor, time, date);
     }
 
     /**
-    * Retrieves the list of appointments for this doctor.
-    *
-    */
+     * Retrieves the list of appointments for this doctor.
+     */
     public List<Appointment> getAppointmentsDoctor() {
         return scheduler.getAppointments(doctor);
     }
 
     /**
-    * Retrieves the list of pending appointments for this doctor.
-    *
-    */
+     * Retrieves the list of pending appointments for this doctor.
+     */
     public List<Appointment> getPendingAppointmentsDoctor() {
         return scheduler.getPendingAppointments(doctor);
     }
@@ -157,16 +157,17 @@ public class DoctorScheduleManager {
      * @param doctor the Doctor object whose available slots are printed.
      */
     public void printAvailableSlot(Date date, Doctor doctor) {
-        doctor.getDoctorSchedules().printAvailableSlot(date,this);
+        doctor.getDoctorSchedules().printAvailableSlot(date, this);
     }
 
     /**
      * Accessor of upcoming appointment
+     *
      * @param i index of appointmnet
      * @return null if index does not exist
      */
     public Appointment getUpcomingAppointment(int i) {
-        if(i < 0 || i > appointmentList.size()) return null;
+        if (i < 0 || i > appointmentList.size()) return null;
         else return appointmentList.get(i);
     }
 }

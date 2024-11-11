@@ -45,6 +45,11 @@ public class AppointmentScheduler {
      * @param pendingAppointment The pending appointment to accept
      */
     public void acceptAppointment(Appointment pendingAppointment) {
+        if (!isSlotAvailable(pendingAppointment)){
+            System.out.println("Slot not available.");
+            pendingAppointment.cancel();
+            return;
+        }
         Appointment appointment = cancelAppointment(pendingAppointment, pendingAppointments);
         if (appointment == null) {
             System.out.println("No such appointment");
@@ -59,6 +64,8 @@ public class AppointmentScheduler {
             cancelAppointment(rescheduledAppointment, appointments);
             appointments.remove(rescheduledAppointment);
         }
+
+        System.out.println("Successfully Accepted!");
         appointment.confirm();
         pendingAppointments.remove(appointment);
         appointments.add(appointment);
@@ -74,13 +81,13 @@ public class AppointmentScheduler {
         if (appointment == null) return;
         if (appointment.getStatus() == 1) {
             appointment.cancel();
-            System.out.println("Appointment rejected.");
+            System.out.println("Successfully Declined!");
         } else if (appointment.getStatus() == 5) {
             appointments.remove(appointment.getRescheduled());
             cancelAppointment(appointment, pendingAppointments);
-
+            System.out.println("Successfully Declined!");
         } else {
-            System.out.println("Appointment not pending or rescheduled");
+            System.out.println("Appointment not pending.");
         }
     }
 
@@ -347,6 +354,4 @@ public class AppointmentScheduler {
         }
         return pendingAppointmentsForDoctor;
     }
-
-
 }
