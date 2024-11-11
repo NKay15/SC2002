@@ -69,6 +69,9 @@ public class PatientScheduleManager {
         updatePatientData();
         int i = 1;
         for (Appointment appointment : appointmentList) {
+<<<<<<< HEAD
+            System.out.println((i) +" :");
+=======
             System.out.println((i) + " :");
             System.out.println("Doctor ID: " + appointment.getDoctorID());
             System.out.println("Date: " + appointment.getDate());
@@ -80,10 +83,13 @@ public class PatientScheduleManager {
         }
         for (Appointment appointment : pendingAppointmentList) {
             System.out.println((i) + " :");
+>>>>>>> 79b27a4e3b2a4084f057119c719aad67a88690ae
             System.out.println("Doctor ID: " + appointment.getDoctorID());
-            System.out.println("Date: " + appointment.getDate());
-            System.out.println("Time Slot: " + appointment.getTimeSlot());
-            System.out.print("Status: ");
+            System.out.print("Date: ");
+            appointment.getDate().print();
+            System.out.print("Time Slot: ");
+            appointment.getTimeSlot().print();
+            System.out.println("Status: ");
             appointment.printStatus();
             System.out.println("-------------");
             i++;
