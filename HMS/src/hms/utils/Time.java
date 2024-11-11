@@ -2,6 +2,8 @@ package hms.utils;
 
 import java.util.Scanner;
 
+import hms.GlobalData;
+
 public class Time implements Comparable<Time>{
     public static int startTime = 800;
     public static int endTime = 1800;
@@ -18,7 +20,7 @@ public class Time implements Comparable<Time>{
         while (!checkTime()) {
             System.out.println("This time is not available.");
             System.out.println("Enter time in hhmm");
-            Scanner sc = new Scanner(System.in);
+            Scanner sc = GlobalData.getInstance().sc;
             time = sc.nextInt();
             this.time = time;
             this.minute = time%100;
@@ -33,7 +35,7 @@ public class Time implements Comparable<Time>{
         while (!checkTime()) {
             System.out.println("This time is not available.");
             System.out.println("Enter time in hh mm");
-            Scanner sc = new Scanner(System.in);
+            Scanner sc = GlobalData.getInstance().sc;
             hour = sc.nextInt();
             minute = sc.nextInt();
             this.minute = minute;
