@@ -4,6 +4,7 @@ import hms.medicalRecords.MedicalRecord;
 import hms.utils.*;
 import hms.appointments.*;
 import hms.GlobalData;
+import org.apache.poi.ss.usermodel.charts.ScatterChartSeries;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -62,10 +63,24 @@ public class Patient extends User {
     }
 
     /**
+     * set Date of birth
+     */
+    public void setDob(int day, int month, int year) {
+        this.dob = new Date(day, month, year);
+    }
+
+    /**
      * return phone number
      */
     public int getPhone() {
         return phone;
+    }
+
+    /**
+     * set phone number
+     */
+    public void setPhone(int phone) {
+        this.phone = phone;
     }
 
     /**
@@ -76,10 +91,50 @@ public class Patient extends User {
     }
 
     /**
+     * set email
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
      * return blood type of patient
      */
     public int getBloodType() {
         return bloodType;
+    }
+
+    /**
+     * set blood type of patient
+     */
+
+    public String getBloodTypeString() {
+        switch (bloodType) {
+            case 0:
+                return "Unknown";
+            case 1:
+                return "A+";
+            case 2:
+                return "A-";
+            case 3:
+                return "B+";
+            case 4:
+                return "B-";
+            case 5:
+                return "AB+";
+            case 6:
+                return "AB-";
+            case 7:
+                return "O+";
+            case 8:
+                return "O-";
+            default:
+                return null;
+        }
+    }
+
+    public void setBloodType(int bloodType) {
+        this.bloodType = bloodType;
     }
 
     /**

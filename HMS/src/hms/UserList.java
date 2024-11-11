@@ -1,6 +1,7 @@
 package hms;
 
 import hms.users.*;
+import hms.utils.Date;
 
 import java.util.*;
 
@@ -73,7 +74,7 @@ public class UserList {
     }
 
     /**
-     * Menu to Remove Pharmacist by ID (for Admins)
+     * Menu to Remove Doctor by ID (for Admins)
      * @param ID
      * @param adminUsing Administrator Using Remove Operation
      */
@@ -276,29 +277,307 @@ public class UserList {
     }
 
     /**
-     * Update Patient by ID
-     * @Param ID
+     * Menu to Remove Patient by ID (for Admins)
+     * @param ID
+     * @param adminUsing Administrator Using Remove Operation
      */
-    public void updatePatientByID(String ID) {
-        Patient curPatient = null;
+    public boolean removePatientByIDMenu(String ID, Administrator adminUsing) {
+        Scanner sc = GlobalData.getInstance().sc;
         for (Patient patient : patients) {
             if (patient.getID().equals(ID)) {
-                curPatient = patient;
+                System.out.println("\nPlease ensure that all fields below are correct before confirming:");
+                System.out.println("Patient ID: " + patient.getID());
+                System.out.println("Name: " + patient.getName());
+                System.out.println("Gender: " + patient.getGenderString());
+                System.out.println("DOB: " + patient.getDob().day() + "/" + patient.getDob().month() + "/" + patient.getDob().year());
+                System.out.println("HP: " + patient.getPhone());
+                System.out.println("Email: " + patient.getEmail());
+                System.out.println("Blood Type: " + patient.getBloodType());
+                System.out.print("\nEnter your Password to Confirm (0 to Cancel): ");
+                String password = sc.nextLine();
+                while (!adminUsing.checkPassword(password)) {
+                    if (password.equals("0")) {
+                        System.out.println("Operation Cancelled. Returning to Menu...");
+                        return true;
+                    }
+                    else {
+                        System.out.print("Wrong Password! Try again: ");
+                        password = sc.nextLine();
+                    }
+                }
+                patients.remove(patient);
+                System.out.println("Patient Successfully Removed! Returning to Menu...");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Update Patient by ID
+     * @param ID
+     * @param adminUsing Administrator Using Update Operation
+     */
+    public boolean updatePatientByIDMenu(String ID, Administrator adminUsing) {
+        Scanner sc = GlobalData.getInstance().sc;
+        Patient patient = null;
+        for (Patient curPatient : patients) {
+            if (curPatient.getID().equals(ID)) {
+                patient = curPatient;
                 break;
             }
         }
+        /* If there is no patient found */
+        if (patient == null) return false;
 
-        /* If there are no doctor found */
-        if (curPatient == null) {
-            return;
+        String newPatientID = patient.getID();
+        String newPatientName = patient.getName();
+        int newPatientGender = patient.getGender();
+        String newPatientGenderString = patient.getGenderString();
+        int newPatientDay = patient.getDob().day();
+        int newPatientMonth = patient.getDob().month();
+        int newPatientYear = patient.getDob().year();
+        int newPatientHP = patient.getPhone();
+        String newPatientEmail = patient.getEmail();
+        String newPatientBloodTypeString = patient.getBloodTypeString();
+        int newPatientBloodType = patient.getBloodType();
+        int changeWhat;
+
+        /* Menu */
+        System.out.println("\n-----Patient Update Menu-----");
+        System.out.println("Patient ID: " + patient.getID());
+        System.out.println("Name: " + patient.getName());
+        System.out.println("Gender: " + patient.getGenderString());
+        System.out.println("DOB: " + newPatientDay + "/" + newPatientMonth + "/" + newPatientYear);
+        System.out.println("HP: " + newPatientHP);
+        System.out.println("Email: " + newPatientEmail);
+        System.out.println("Blood Type: " + newPatientBloodTypeString);
+        System.out.println("\n1. Update Name");
+        System.out.println("2. Update Gender");
+        System.out.println("3. Update DOB");
+        System.out.println("4. Update HP");
+        System.out.println("5. Update Email");
+        System.out.println("6. Update Blood Type");
+        System.out.println("7. Cancel");
+        System.out.println("----------------------------");
+        System.out.print("Enter your choice: ");
+        String choice;
+
+        while (true) {
+            choice = sc.next(); sc.nextLine();
+            switch (choice) {
+                case "1":
+                    System.out.println("Current Name: " + patient.getName());
+                    System.out.print("Enter New Name: ");
+                    newPatientName = sc.nextLine();
+                    changeWhat = 1;
+                    break;
+
+                case "2":
+                    System.out.println("Current Gender: " + patient.getGenderString());
+                    System.out.print("Enter New Gender (0: Unknown; 1: Male; 2: Female): ");
+                    newPatientGenderString = sc.next(); sc.nextLine();
+                    while (true){
+                        switch (newPatientGenderString) {
+                            case "0":
+                            case "Unknown":
+                            case "unknown":
+                                newPatientGender = 0;
+                                newPatientGenderString = "Unknown";
+                                break;
+                            case "1":
+                            case "Male":
+                            case "male":
+                                newPatientGender = 1;
+                                newPatientGenderString = "Male";
+                                break;
+                            case "2":
+                            case "Female":
+                            case "female":
+                                newPatientGender = 2;
+                                newPatientGenderString = "Female";
+                                break;
+                            default:
+                                System.out.print("Invalid choice! Try again: ");
+                                newPatientGenderString = sc.next(); sc.nextLine();
+                                continue;
+                        }
+                        break;
+                    }
+                    changeWhat = 2;
+                    break;
+
+                case "3":
+                    System.out.println("Current Date Of Birth: " + newPatientDay + "/" + newPatientMonth + "/" + newPatientYear);
+                    System.out.print("Enter New Date of Birth (in DDMMYYYY): ");
+                    String newPatientDOBString;
+                    while (true) {
+                        if (sc.hasNextInt()) {
+                            newPatientDOBString = sc.nextLine();
+                            if (newPatientDOBString.length() == 8) {
+                                newPatientDay = Integer.parseInt(newPatientDOBString.substring(0, 2));
+                                newPatientMonth = Integer.parseInt(newPatientDOBString.substring(2, 4));
+                                newPatientYear = Integer.parseInt(newPatientDOBString.substring(4, 8));
+                                if (newPatientDay > 0 && newPatientDay < 32 && newPatientMonth > 0
+                                        && newPatientMonth < 13 && newPatientYear > 1900 && newPatientYear < 2025) {
+                                    break;
+                                } else {
+                                    System.out.print("Invalid date! Try again: ");
+                                }
+                            }
+                            else System.out.print ("Invalid date! Try again: ");
+                        } else {
+                            System.out.print("Invalid input! Try again, With Digits Only: ");
+                            sc.nextLine();
+                        }
+                    }
+                    changeWhat = 3;
+                    break;
+
+                case "4":
+                    System.out.println("Current HP: " + patient.getPhone());
+                    System.out.print("Enter New HP: ");
+                    while (true) {
+                        try {
+                            newPatientHP = sc.nextInt();
+                            sc.nextLine();
+                            if (String.valueOf(newPatientHP).length() == 8){
+                                break;
+                            }
+                            else {
+                                System.out.print("Invalid HP! Try again: ");
+                            }
+                        } catch (InputMismatchException e) {
+                            System.out.print("Invalid input! Try again, With Digits Only: ");
+                            sc.nextLine();
+                        }
+                    }
+                    changeWhat = 4;
+                    break;
+
+                case "5":
+                    System.out.println("Current Email: " + newPatientEmail);
+                    System.out.print("Enter New Email: ");
+                    newPatientEmail = sc.next(); sc.nextLine();
+                    changeWhat = 5;
+                    break;
+
+                case "6":
+                    System.out.println("Current Blood Type: " + newPatientBloodTypeString);
+                    System.out.println("----List of Blood Types----");
+                    System.out.println("0: Unknown\n1: A+\n2: A-\n3: B+\n4: B-\n" +
+                            "5: AB+\n6: AB-\n7: O+\n8: O-");
+                    System.out.println("---------------------------");
+                    System.out.print("Enter New Blood Type (Digit Only): ");
+                    boolean bloodTypeFound;
+                    do {
+                        try {
+                            newPatientBloodType = sc.nextInt();
+                            sc.nextLine();
+                            switch (newPatientBloodType) {
+                                case 0:
+                                    newPatientBloodTypeString = "Unknown";
+                                    bloodTypeFound = true;
+                                    break;
+                                case 1:
+                                    newPatientBloodTypeString = "A+";
+                                    bloodTypeFound = true;
+                                    break;
+                                case 2:
+                                    newPatientBloodTypeString = "A-";
+                                    bloodTypeFound = true;
+                                    break;
+                                case 3:
+                                    newPatientBloodTypeString = "B+";
+                                    bloodTypeFound = true;
+                                    break;
+                                case 4:
+                                    newPatientBloodTypeString = "B-";
+                                    bloodTypeFound = true;
+                                    break;
+                                case 5:
+                                    newPatientBloodTypeString = "AB+";
+                                    bloodTypeFound = true;
+                                    break;
+                                case 6:
+                                    newPatientBloodTypeString = "AB-";
+                                    bloodTypeFound = true;
+                                    break;
+                                case 7:
+                                    newPatientBloodTypeString = "O+";
+                                    bloodTypeFound = true;
+                                    break;
+                                case 8:
+                                    newPatientBloodTypeString = "O-";
+                                    bloodTypeFound = true;
+                                    break;
+                                default:
+                                    bloodTypeFound = false;
+                                    System.out.print("Invalid choice! Try again: ");
+                            }
+                        } catch (InputMismatchException e) {
+                            bloodTypeFound = false;
+                            System.out.print("Invalid input! Try again, With Digit Only: ");
+                            sc.nextLine();
+                        }
+                    } while (!bloodTypeFound);
+                    changeWhat = 6;
+                    break;
+
+                case "7":
+                    System.out.println("Operation Cancelled. Returning to Menu...");
+                    return true;
+
+                default:
+                    System.out.print("Invalid Choice! Enter your choice: ");
+                    continue;
+            }
+            break;
         }
 
-        curPatient = curPatient.updatePersonalInformation();
-
-        removePatientByID(ID);
-        addPatient(curPatient);
+        System.out.println("\nPlease ensure that all fields below are correct before confirming:");
+        System.out.println("Administrator ID: " + newPatientID);
+        System.out.println("Name: " + newPatientName);
+        System.out.println("Gender: " + newPatientGenderString);
+        System.out.println("DOB: " + newPatientDay + "/" + newPatientMonth + "/" + newPatientYear);
+        System.out.println("HP: " + newPatientHP);
+        System.out.println("Email: " + newPatientEmail);
+        System.out.println("Blood Type: " + newPatientBloodTypeString);
+        System.out.print("\nEnter your Password to Confirm (0 to Cancel): ");
+        String password = sc.nextLine();
+        while (!adminUsing.checkPassword(password)) {
+            if (password.equals("0")) {
+                System.out.println("Operation Cancelled. Returning to Menu...");
+                return true;
+            }
+            else {
+                System.out.print("Wrong Password! Try again: ");
+                password = sc.nextLine();
+            }
+        }
+        switch (changeWhat){
+            case 1:
+                patient.setName(newPatientName);
+                break;
+            case 2:
+                patient.setGender(newPatientGender);
+                break;
+            case 3:
+                patient.setDob(newPatientDay, newPatientMonth, newPatientYear);
+                break;
+            case 4:
+                patient.setPhone(newPatientHP);
+                break;
+            case 5:
+                patient.setEmail(newPatientEmail);
+                break;
+            case 6:
+                patient.setBloodType(newPatientBloodType);
+                break;
+        }
+        System.out.println("Administrator Successfully Updated! Returning to Menu...");
+        return true;
     }
-
 
     /**
      * Accessor of Pharmacist
@@ -399,7 +678,7 @@ public class UserList {
         System.out.println("\n-----Pharmacist Update Menu-----");
         System.out.println("Pharmacist ID: " + pharmacist.getID());
         System.out.println("Name: " + pharmacist.getName());
-        System.out.println("Gender: " + pharmacist.getGender());
+        System.out.println("Gender: " + pharmacist.getGenderString());
         System.out.println("Age: " + pharmacist.getAge());
     	System.out.println("\n1. Update Name");
     	System.out.println("2. Update Gender");
@@ -420,7 +699,7 @@ public class UserList {
                     break;
 
                 case "2":
-                    System.out.println("Current Gender: " + pharmacist.getGender());
+                    System.out.println("Current Gender: " + pharmacist.getGenderString());
                     System.out.print("Enter New Gender (0: Unknown; 1: Male; 2: Female): ");
                     newPharmacistGenderString = sc.next(); sc.nextLine();
                     while (true){
@@ -600,7 +879,7 @@ public class UserList {
         System.out.println("\n-----Administrator Update Menu-----");
         System.out.println("Administrator ID: " + administrator.getID());
         System.out.println("Name: " + administrator.getName());
-        System.out.println("Gender: " + administrator.getGender());
+        System.out.println("Gender: " + administrator.getGenderString());
         System.out.println("Age: " + administrator.getAge());
     	System.out.println("\n1. Update Name");
     	System.out.println("2. Update Gender");
@@ -621,7 +900,7 @@ public class UserList {
                     break;
 
                 case "2":
-                    System.out.println("Current Gender: " + administrator.getGender());
+                    System.out.println("Current Gender: " + administrator.getGenderString());
                     System.out.print("Enter New Gender (0: Unknown; 1: Male; 2: Female): ");
                     newAdministratorGenderString = sc.next(); sc.nextLine();
                     while (true){
@@ -727,6 +1006,24 @@ public class UserList {
     }
 
     /**
+     * Get all patients (By selection)
+     * @param choice Choice of sorting
+     * @return list of patients
+     */
+    public ArrayList<User> getPatientsSorted(int choice) {
+        switch (choice) {
+            case 1:
+                return getPatientsIDSorted();
+            case 2:
+                return getPatientsNameSorted();
+            case 3:
+                return getPatientsGenderSorted();
+            default:
+                return null;
+        }
+    }
+
+    /**
      * Get all users by role
      * @return list of users
      */
@@ -752,30 +1049,8 @@ public class UserList {
     }
 
     /**
-     * Get all users by Name
-     * @return list of users
-     */
-    public ArrayList<User> getUsersNameSorted() {
-        ArrayList<User> userArray = new ArrayList<User>();
-        userArray.addAll(patients);
-        userArray.addAll(doctors);
-        userArray.addAll(pharmacists);
-        userArray.addAll(administrators);
-
-        // Sort by name in ascending order
-        Collections.sort(userArray, new Comparator<User>() {
-            @Override
-            public int compare(User p1, User p2) {
-                return p1.getName().compareTo(p2.getName());
-            }
-        });
-
-        return userArray;
-    }
-
-    /**
      * Get all staff by Name
-     * @return list of users
+     * @return list of staff
      */
     public ArrayList<User> getStaffNameSorted() {
         ArrayList<User> userArray = new ArrayList<User>();
@@ -795,21 +1070,18 @@ public class UserList {
     }
 
     /**
-     * Get all users by ID
-     * @return list of users
+     * Get all patients by Name
+     * @return list of patients
      */
-    public ArrayList<User> getUsersIDSorted() {
+    public ArrayList<User> getPatientsNameSorted() {
         ArrayList<User> userArray = new ArrayList<User>();
         userArray.addAll(patients);
-        userArray.addAll(doctors);
-        userArray.addAll(pharmacists);
-        userArray.addAll(administrators);
 
         // Sort by name in ascending order
         Collections.sort(userArray, new Comparator<User>() {
             @Override
             public int compare(User p1, User p2) {
-                return p1.getID().compareTo(p2.getID());
+                return p1.getName().compareTo(p2.getName());
             }
         });
 
@@ -818,7 +1090,7 @@ public class UserList {
 
     /**
      * Get all staff by ID
-     * @return list of users
+     * @return list of staff
      */
     public ArrayList<User> getStaffIDSorted() {
         ArrayList<User> userArray = new ArrayList<User>();
@@ -838,58 +1110,20 @@ public class UserList {
     }
 
     /**
-     * Get all users by gender
-     * @return list of users
+     * Get all patients by ID
+     * @return list of patients
      */
-    public ArrayList<User> getUsersGenderSorted() {
+    public ArrayList<User> getPatientsIDSorted() {
         ArrayList<User> userArray = new ArrayList<User>();
-        ArrayList<User> temAr1 = new ArrayList<User>();
-        ArrayList<User> temAr2 = new ArrayList<User>();
-        ArrayList<User> temAr3 = new ArrayList<User>();
+        userArray.addAll(patients);
 
-        for (Patient patient : patients) {
-            if (patient.getGender() == 1) {
-                temAr1.add(patient);
-            } else if (patient.getGender() == 2) {
-                temAr2.add(patient);
-            } else {
-                temAr3.add(patient);
+        // Sort by name in ascending order
+        Collections.sort(userArray, new Comparator<User>() {
+            @Override
+            public int compare(User p1, User p2) {
+                return p1.getID().compareTo(p2.getID());
             }
-        }
-
-        for (Doctor doctor : doctors) {
-            if (doctor.getGender() == 1) {
-                temAr1.add(doctor);
-            } else if (doctor.getGender() == 2) {
-                temAr2.add(doctor);
-            } else {
-                temAr3.add(doctor);
-            }
-        }
-
-        for (Pharmacist pharmacist : pharmacists) {
-            if (pharmacist.getGender() == 1) {
-                temAr1.add(pharmacist);
-            } else if (pharmacist.getGender() == 2) {
-                temAr2.add(pharmacist);
-            } else {
-                temAr3.add(pharmacist);
-            }
-        }
-
-        for (Administrator administrator : administrators) {
-            if (administrator.getGender() == 1) {
-                temAr1.add(administrator);
-            } else if (administrator.getGender() == 2) {
-                temAr2.add(administrator);
-            } else {
-                temAr3.add(administrator);
-            }
-        }
-
-        userArray.addAll(temAr1);
-        userArray.addAll(temAr2);
-        userArray.addAll(temAr3);
+        });
 
         return userArray;
     }
@@ -908,10 +1142,26 @@ public class UserList {
         Collections.sort(userArray, new Comparator<User>() {
             @Override
             public int compare(User p1, User p2) {
-                if (p1 instanceof Staff && p2 instanceof Staff) {
-                    return Integer.compare(p1.getGender(), p2.getGender());
-                }
-                else return 0;
+                return Integer.compare(p1.getGender(), p2.getGender());
+            }
+        });
+
+        return userArray;
+    }
+
+    /**
+     * Get all patients by gender
+     * @return list of users
+     */
+    public ArrayList<User> getPatientsGenderSorted() {
+        ArrayList<User> userArray = new ArrayList<User>();
+        userArray.addAll(patients);
+
+        // Sort by name in ascending order
+        Collections.sort(userArray, new Comparator<User>() {
+            @Override
+            public int compare(User p1, User p2) {
+                return Integer.compare(p1.getGender(), p2.getGender());
             }
         });
 

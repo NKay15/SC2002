@@ -45,10 +45,9 @@ public class Pharmacist extends Staff {
 				}
 				else inputError = false;
 				choice = sc.nextInt();
-
+				sc.nextLine();
 				switch (choice) {
 					case 1:
-						sc.nextLine();
 						System.out.print("Enter Patient ID (0 to Cancel): ");
 						while (!patientFound) {
 							if (alreadyTried) System.out.print("Patient Does Not Exist! Try again: ");
@@ -103,7 +102,6 @@ public class Pharmacist extends Staff {
 						break;
 
 					case 2:
-						sc.nextLine();
 						System.out.print("Enter Patient ID (0 to Cancel): ");
 						while (!patientFound) {
 							if (alreadyTried) System.out.print("Patient Does Not Exist! Try again: ");
@@ -201,7 +199,6 @@ public class Pharmacist extends Staff {
 						break;
 
 					case 3:
-						sc.nextLine();
 						System.out.println("Current Inventory:");
 						GlobalData.getInstance().inventory.printCurrentInventory();
 						System.out.print("Enter anything to Return to Menu: ");
