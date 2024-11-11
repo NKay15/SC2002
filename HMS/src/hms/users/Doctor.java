@@ -200,7 +200,7 @@ public class Doctor extends Staff {
 		int id = 0;
 		Scanner scan = GlobalData.getInstance().sc;
 		for(Appointment appointment : appointmentList){
-			if (appointment.getStatus() !=1 && appointment.getStatus()!=5) continue;
+			if (appointment.getStatus() !=1) continue;
 			Patient patient = appointment.getPatient();
 			Date date = appointment.getDate();
 			Time Time = appointment.getTimeSlot();

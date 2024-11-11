@@ -48,7 +48,7 @@ public class AppointmentScheduler {
             System.out.println("No such appointment");
             return;
         }
-        if (appointment.getStatus() == 5) {
+        if (appointment.getRescheduled() != null) {
             Appointment rescheduledAppointment = findAppointment(appointment.getRescheduled(), appointments);
             if (rescheduledAppointment == null){
                 System.out.println("Can't find related events need to be rescheduled.");
@@ -100,7 +100,6 @@ public class AppointmentScheduler {
                 return newAppointment;
             }
             existingAppointment.reschedule();
-            newAppointment.reschedule();
             newAppointment.setRescheduled(existingAppointment);
             scheduleAppointment(newAppointment);
             return newAppointment;
