@@ -3,11 +3,9 @@ package hms.users;
 import hms.GlobalData;
 import hms.appointments.Appointment;
 import hms.appointments.AppointmentScheduler;
+import hms.utils.Date;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
-import java.util.UUID;
+import java.util.*;
 
 public class Administrator extends Staff {
 	
@@ -37,7 +35,7 @@ public class Administrator extends Staff {
 				}
 				else inputError = false;
 				choice = sc.nextInt();
-
+				sc.nextLine();
 				switch (choice) {
 					case 1:
 						staffMenu();
@@ -281,7 +279,7 @@ public class Administrator extends Staff {
 					String confirmAdd;
 					switch (addWho) {
 						case "1":
-							System.out.println("\nConfirm to Add New Doctor?");
+							System.out.println("\nConfirm to Add New Doctor? You May Edit Details Later.");
 							System.out.println("Enter 1 to Confirm; or 2 to Cancel.");
 							System.out.print("Enter your choice: ");
 							confirmAdd = sc.next(); sc.nextLine();
@@ -304,7 +302,7 @@ public class Administrator extends Staff {
 							break;
 
 						case "2":
-							System.out.println("\nConfirm to Add New Pharmacist?");
+							System.out.println("\nConfirm to Add New Pharmacist?  You May Edit Details Later.");
 							System.out.println("Enter 1 to Confirm; or 2 to Cancel.");
 							System.out.print("Enter your choice: ");
 							confirmAdd = sc.next(); sc.nextLine();
@@ -327,7 +325,7 @@ public class Administrator extends Staff {
 							break;
 
 						case "3":
-							System.out.println("\nConfirm to Add New Administrator?");
+							System.out.println("\nConfirm to Add New Administrator?  You May Edit Details Later.");
 							System.out.println("Enter 1 to Confirm; or 2 to Cancel.");
 							System.out.print("Enter your choice: ");
 							confirmAdd = sc.next(); sc.nextLine();
@@ -510,19 +508,283 @@ public class Administrator extends Staff {
 			patientChoice = sc.next(); sc.nextLine();
 			switch (patientChoice) {
 				case "1":
+					System.out.println("Display Patients by:");
+					System.out.println("1. ID; 2. Name; 3. Gender");
+					System.out.println("Enter anything else to Return to Menu.");
+					System.out.print("Enter your choice: ");
+					String sorting = sc.next(); sc.nextLine();
 
+					if (sorting.equals("1") || sorting.equals("2") || sorting.equals("3")) {
+						ArrayList<User> sortedUserList = GlobalData.getInstance().userList.getPatientsSorted(Integer.parseInt(sorting));
+						if (sortedUserList == null || sortedUserList.isEmpty()) {
+							System.out.println("No Patients to Display! Returning to Menu...");
+							break;
+						}
+						else {
+							System.out.println("\nSorted Patient List:\n------------------");
+							switch (sorting){
+								case "1":
+									for (int i = 0; i < sortedUserList.size(); i++) {
+										System.out.println((i + 1) + ". ID: " + sortedUserList.get(i).getID()
+												+ "\tName: " + sortedUserList.get(i).getName());
+									}
+									System.out.println("------------------");
+									System.out.print("Enter anything to Return to Menu: ");
+									sc.nextLine();
+									System.out.println("Returning to Menu...");
+									break;
+
+								case "2":
+									for (int i = 0; i < sortedUserList.size(); i++) {
+										System.out.println((i + 1) + ". Name: " + sortedUserList.get(i).getName()
+												+ "\tID: " + sortedUserList.get(i).getID());
+									}
+									System.out.println("------------------");
+									System.out.print("Enter anything to Return to Menu: ");
+									sc.nextLine();
+									System.out.println("Returning to Menu...");
+									break;
+
+								case "3":
+									for (int i = 0; i < sortedUserList.size(); i++) {
+										System.out.println((i + 1) + ". Gender: " + sortedUserList.get(i).getGenderString()
+												+ "\tName: " + sortedUserList.get(i).getName());
+									}
+									System.out.println("------------------");
+									System.out.print("Enter anything to Return to Menu: ");
+									sc.nextLine();
+									System.out.println("Returning to Menu...");
+									break;
+							}
+						}
+					}
+					else {
+						System.out.println("Returning to Menu...");
+					}
 					break;
 
 				case "2":
+					boolean alreadyExists;
+					System.out.print("Enter ID: ");
+					String newID;
+					while (true) {
+						alreadyExists = false;
+						newID = sc.nextLine();
+						if (!Character.isUpperCase(newID.charAt(0))) {
+							System.out.print("ID Must Begin With an Uppercase Letter! Try again: ");
+							continue;
+						}
+						for (User user : GlobalData.getInstance().userList.getUsersRoleSorted()) {
+							if (user.getID().equals(newID)) {
+								System.out.print("User " + newID + " Already Exists! Try again: ");
+								alreadyExists = true;
+								break;
+							}
+						}
+						if (!alreadyExists) break;
+					}
 
+					System.out.print("Enter Name: ");
+					String newName = sc.nextLine();
+					System.out.print("Enter Gender (0: Unknown; 1: Male; 2: Female): ");
+					int newGender;
+					String newGenderString = sc.next(); sc.nextLine();
+					while (true){
+						switch (newGenderString) {
+							case "0":
+							case "Unknown":
+							case "unknown":
+								newGenderString = "Unknown";
+								newGender = 0;
+								break;
+							case "1":
+							case "Male":
+							case "male":
+								newGenderString = "Male";
+								newGender = 1;
+								break;
+							case "2":
+							case "Female":
+							case "female":
+								newGenderString = "Female";
+								newGender = 2;
+								break;
+							default:
+								System.out.print("Invalid choice! Try again: ");
+								newGenderString = sc.next(); sc.nextLine();
+								continue;
+						}
+						break;
+					}
+					System.out.print("Enter Date of Birth (in DDMMYYYY): ");
+					Date newDOB;
+					String newDOBString;
+					int day;
+					int month;
+					int year;
+					while (true) {
+						if (sc.hasNextInt()) {
+							newDOBString = sc.nextLine();
+							if (newDOBString.length() == 8) {
+								day = Integer.parseInt(newDOBString.substring(0, 2));
+								month = Integer.parseInt(newDOBString.substring(2, 4));
+								year = Integer.parseInt(newDOBString.substring(4, 8));
+								if (day > 0 && day < 32 && month > 0 && month < 13 && year > 1900 && year < 2025) {
+									newDOB = new hms.utils.Date(day, month, year);
+									break;
+								} else {
+									System.out.print("Invalid date! Try again: ");
+								}
+							}
+							else System.out.print ("Invalid date! Try again: ");
+						} else {
+							System.out.print("Invalid input! Try again, With Digits Only: ");
+							sc.nextLine();
+						}
+					}
+					System.out.print("Enter HP: ");
+					int newHP;
+					while (true) {
+						try {
+							newHP = sc.nextInt();
+							sc.nextLine();
+							if (String.valueOf(newHP).length() == 8){
+								break;
+							}
+							else {
+								System.out.print("Invalid HP! Try again: ");
+							}
+						} catch (InputMismatchException e) {
+							System.out.print("Invalid input! Try again, With Digits Only: ");
+							sc.nextLine();
+						}
+					}
+					System.out.print("Enter Email: ");
+					String newEmail = sc.next(); sc.nextLine();
+					System.out.println("----List of Blood Types----");
+					System.out.println("0: Unknown\n1: A+\n2: A-\n3: B+\n4: B-\n" +
+							"5: AB+\n6: AB-\n7: O+\n8: O-");
+					System.out.println("---------------------------");
+					System.out.print("Enter Blood Type (Digit Only): ");
+					int newBloodType = -1;
+					String newBloodTypeString = "";
+					boolean bloodTypeFound;
+					do {
+						try {
+							newBloodType = sc.nextInt();
+							sc.nextLine();
+							switch (newBloodType) {
+								case 0:
+									newBloodTypeString = "Unknown";
+									bloodTypeFound = false;
+									break;
+								case 1:
+									newBloodTypeString = "A+";
+									bloodTypeFound = true;
+									break;
+								case 2:
+									newBloodTypeString = "A-";
+									bloodTypeFound = true;
+									break;
+								case 3:
+									newBloodTypeString = "B+";
+									bloodTypeFound = true;
+									break;
+								case 4:
+									newBloodTypeString = "B-";
+									bloodTypeFound = true;
+									break;
+								case 5:
+									newBloodTypeString = "AB+";
+									bloodTypeFound = true;
+									break;
+								case 6:
+									newBloodTypeString = "AB-";
+									bloodTypeFound = true;
+									break;
+								case 7:
+									newBloodTypeString = "O+";
+									bloodTypeFound = true;
+									break;
+								case 8:
+									newBloodTypeString = "O-";
+									bloodTypeFound = true;
+									break;
+								default:
+									bloodTypeFound = false;
+									System.out.print("Invalid choice! Try again: ");
+							}
+						} catch (InputMismatchException e) {
+							bloodTypeFound = false;
+							System.out.print("Invalid input! Try again, With Digit Only: ");
+							sc.nextLine();
+						}
+					} while (!bloodTypeFound);
+
+					System.out.println("\nPlease ensure that all fields below are correct before confirming:");
+					System.out.println("ID: " + newID);
+					System.out.println("Name: " + newName);
+					System.out.println("Gender: " + newGenderString);
+					System.out.println("DOB: " + day + "/" + month + "/" + year);
+					System.out.println("HP: " + newHP);
+					System.out.println("Email: " + newEmail);
+					System.out.println("Blood Type: " + newBloodTypeString);
+
+					String confirmAdd;
+					System.out.println("\nConfirm to Add New Patient? You May Edit Details Later.");
+					System.out.println("Enter 1 to Confirm; or 2 to Cancel.");
+					System.out.print("Enter your choice: ");
+					confirmAdd = sc.next(); sc.nextLine();
+					while (true) {
+						switch (confirmAdd) {
+							case "1":
+								Patient newPatient = new Patient(newID, newName, newGender, newDOB, newHP, newEmail, newBloodType);
+								GlobalData.getInstance().userList.addPatient(newPatient);
+								System.out.println("New Doctor Successfully Added! Returning to Menu...");
+								break;
+							case "2":
+								System.out.println("Operation Cancelled. Returning to Menu...");
+								break;
+							default:
+								System.out.print("Invalid choice! Try again: ");
+								continue;
+						}
+						break;
+					}
 					break;
 
 				case "3":
-
+					System.out.print("Enter Patient's ID (0 to Cancel): ");
+					String patientID = sc.nextLine();
+					if (patientID.equals("0")) {
+						System.out.println("Operation Cancelled. Returning to menu...");
+						break;
+					}
+					while (!GlobalData.getInstance().userList.updatePatientByIDMenu(patientID, this)){
+						System.out.print("Patient Does Not Exist! Try again: ");
+						patientID = sc.nextLine();
+						if (patientID.equals("0")) {
+							System.out.println("Operation Cancelled. Returning to Menu...");
+							break;
+						}
+					}
 					break;
 
 				case "4":
-
+					System.out.print("Enter Patient's ID (0 to Cancel): ");
+					String patientToRemoveID = sc.nextLine();
+					if (patientToRemoveID.equals("0")) {
+						System.out.println("Operation Cancelled. Returning to menu...");
+						break;
+					}
+					while (!GlobalData.getInstance().userList.removePatientByIDMenu(patientToRemoveID, this)){
+						System.out.print("Doctor Does Not Exist! Try again: ");
+						patientToRemoveID = sc.nextLine();
+						if (patientToRemoveID.equals("0")) {
+							System.out.println("Operation Cancelled. Returning to Menu...");
+							break;
+						}
+					}
 					break;
 
 				case "5":
