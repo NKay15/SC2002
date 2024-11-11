@@ -88,5 +88,8 @@ public class Time implements Comparable<Time>{
     public static Time max(Time t1, Time t2) {
         return (t1.compareTo(t2) >= 0) ? t1 : t2;
     }
+    public void print(){
+        System.out.println(hour + ":"+minute);
+    }
 
 }
