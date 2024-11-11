@@ -39,6 +39,7 @@ public class User {
     private int gender;
 
     private void changePassword(Scanner sc){
+        sc.nextLine();
         System.out.print("Enter Old Password (0 to Cancel): ");
         String oldPassword = sc.nextLine();
         if (oldPassword.equals("0")){
