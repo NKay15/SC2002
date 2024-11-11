@@ -201,6 +201,7 @@ public class Pharmacist extends Staff {
 						break;
 
 					case 3:
+						sc.nextLine();
 						System.out.println("Current Inventory:");
 						GlobalData.getInstance().inventory.printCurrentInventory();
 						System.out.print("Enter anything to Return to Menu: ");

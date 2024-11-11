@@ -27,10 +27,11 @@ public class Administrator extends Staff {
 			try {
 				if (!inputError) {
 					System.out.println("-----Administrator Menu-----");
-					System.out.println("1. Manage Staff");
-					System.out.println("2. View Appointment Records");
-					System.out.println("3. Manage Inventory");
-					super.menu(4);
+					System.out.println("1. View & Manage Hospital Staff");
+					System.out.println("2. View Appointment Details");
+					System.out.println("3. View & Manage Hospital Patients");
+					System.out.println("4. View & Manage Medication Inventory");
+					super.menu(5);
 					System.out.println("-----End of Menu-----");
 					System.out.print("Enter your choice: ");
 				}
@@ -72,12 +73,16 @@ public class Administrator extends Staff {
 						break;
 
 					case 3:
+						patientMenu();
+						break;
+
+					case 4:
 						inventoryMenu();
 						break;
 
 					default:
-						if (!super.useroptions(choice - 3)) {
-							if (choice == 5) {
+						if (!super.useroptions(choice - 4)) {
+							if (choice == 6) {
 								System.out.print("Confirm Log Out? Enter 1 to Log Out; " +
 										"or Enter anything else to Return to Menu.\nEnter your choice: ");
 								String confirmLogOut = sc.next(); sc.nextLine();
@@ -113,10 +118,10 @@ public class Administrator extends Staff {
 			if (staffChoice.equals("1") || staffChoice.equals("2") || staffChoice.equals("3")
 					|| staffChoice.equals("4")) {
 				System.out.println("\n-----Staff Management-----");
-				System.out.println("1. Add Staff Member");
-				System.out.println("2. Update Existing Staff Member");
-				System.out.println("3. Remove Staff Member");
-				System.out.println("4. Display All Staff Members");
+				System.out.println("1. View All Staff Members");
+				System.out.println("2. Add New Staff Member");
+				System.out.println("3. Update Existing Staff Member");
+				System.out.println("4. Remove Existing Staff Member");
 				System.out.println("5. Return to Main Menu");
 				System.out.println("--------------------------");
 				System.out.print("Enter your choice: ");
@@ -124,6 +129,85 @@ public class Administrator extends Staff {
 			staffChoice = sc.next(); sc.nextLine();
 			switch (staffChoice) {
 				case "1":
+					System.out.println("Display Staff Members by:");
+					System.out.println("1. Role; 2. ID; 3. Name; 4. Gender; 5. Age");
+					System.out.println("Enter anything else to Return to Menu.");
+					System.out.print("Enter your choice: ");
+					String sorting = sc.next(); sc.nextLine();
+
+					if (sorting.equals("1") || sorting.equals("2") || sorting.equals("3") || sorting.equals("4") || sorting.equals("5")) {
+						ArrayList<User> sortedUserList = GlobalData.getInstance().userList.getStaffSorted(Integer.parseInt(sorting));
+						if (sortedUserList == null || sortedUserList.isEmpty()) {
+							System.out.println("No Staff Members to Display! Returning to Menu...");
+							break;
+						}
+						else {
+							System.out.println("\nSorted Staff List:\n------------------");
+							switch (sorting){
+								case "1":
+									for (int i = 0; i < sortedUserList.size(); i++) {
+										System.out.print((i + 1) + ". Role: ");
+										sortedUserList.get(i).printRole();
+										System.out.println("\tName: " + sortedUserList.get(i).getName());
+									}
+									System.out.println("------------------");
+									System.out.print("Enter anything to Return to Menu: ");
+									sc.nextLine();
+									System.out.println("Returning to Menu...");
+									break;
+
+								case "2":
+									for (int i = 0; i < sortedUserList.size(); i++) {
+										System.out.println((i + 1) + ". ID: " + sortedUserList.get(i).getID()
+												+ "\tName: " + sortedUserList.get(i).getName());
+									}
+									System.out.println("------------------");
+									System.out.print("Enter anything to Return to Menu: ");
+									sc.nextLine();
+									System.out.println("Returning to Menu...");
+									break;
+
+								case "3":
+									for (int i = 0; i < sortedUserList.size(); i++) {
+										System.out.println((i + 1) + ". Name: " + sortedUserList.get(i).getName()
+												+ "\tID: " + sortedUserList.get(i).getID());
+									}
+									System.out.println("------------------");
+									System.out.print("Enter anything to Return to Menu: ");
+									sc.nextLine();
+									System.out.println("Returning to Menu...");
+									break;
+
+								case "4":
+									for (int i = 0; i < sortedUserList.size(); i++) {
+										System.out.println((i + 1) + ". Gender: " + sortedUserList.get(i).getGenderString()
+												+ "\tName: " + sortedUserList.get(i).getName());
+									}
+									System.out.println("------------------");
+									System.out.print("Enter anything to Return to Menu: ");
+									sc.nextLine();
+									System.out.println("Returning to Menu...");
+									break;
+
+								case "5":
+									for (int i = 0; i < sortedUserList.size(); i++) {
+										System.out.println((i + 1) + ". Age: " + sortedUserList.get(i).getAge()
+												+ "\tName: " + sortedUserList.get(i).getName());
+									}
+									System.out.println("------------------");
+									System.out.print("Enter anything to Return to Menu: ");
+									sc.nextLine();
+									System.out.println("Returning to Menu...");
+									break;
+							}
+						}
+					}
+					else {
+						System.out.println("Returning to Menu...");
+					}
+					break;
+
+				case "2":
 					System.out.println("Select Role of New Staff Member:");
 					System.out.println("1. Doctor; 2. Pharmacist; 3. Administrator");
 					System.out.println("Enter anything else to Return to Menu.");
@@ -267,7 +351,7 @@ public class Administrator extends Staff {
 					}
 					break;
 
-				case "2":
+				case "3":
 					System.out.println("Enter Role of Staff Member to Update:");
 					System.out.println("1. Doctor; 2. Pharmacist; 3. Administrator");
 					System.out.println("Enter anything else to Return to Menu.");
@@ -331,7 +415,7 @@ public class Administrator extends Staff {
 					}
 					break;
 
-				case "3":
+				case "4":
 					System.out.println("Enter Role of Staff Member to Remove:");
 					System.out.println("1. Doctor; 2. Pharmacist; 3. Administrator");
 					System.out.println("Enter anything else to Return to Menu.");
@@ -396,84 +480,48 @@ public class Administrator extends Staff {
 					}
 					break;
 
+				case "5":
+					System.out.println("Returning to Main Menu...\n");
+					return;
+
+				default:
+					System.out.print("Invalid choice! Try again: ");
+					break;
+			}
+		}
+	}
+
+	public void patientMenu() {
+		Scanner sc = GlobalData.getInstance().sc;
+		String patientChoice = "1";
+
+		while (true) {
+			if (patientChoice.equals("1") || patientChoice.equals("2") || patientChoice.equals("3")
+					|| patientChoice.equals("4")) {
+				System.out.println("\n-----Patient Management-----");
+				System.out.println("1. View All Patients");
+				System.out.println("2. Add New Patient");
+				System.out.println("3. Update Existing Patient");
+				System.out.println("4. Remove Existing Patient");
+				System.out.println("5. Return to Main Menu");
+				System.out.println("--------------------------");
+				System.out.print("Enter your choice: ");
+			}
+			patientChoice = sc.next(); sc.nextLine();
+			switch (patientChoice) {
+				case "1":
+
+					break;
+
+				case "2":
+
+					break;
+
+				case "3":
+
+					break;
+
 				case "4":
-					System.out.println("Display Staff Members by:");
-					System.out.println("1. Role; 2. ID; 3. Name; 4. Gender; 5. Age");
-					System.out.println("Enter anything else to Return to Menu.");
-					System.out.print("Enter your choice: ");
-					String sorting = sc.next(); sc.nextLine();
-
-					if (sorting.equals("1") || sorting.equals("2") || sorting.equals("3") || sorting.equals("4") || sorting.equals("5")) {
-						ArrayList<User> sortedUserList = GlobalData.getInstance().userList.getStaffSorted(Integer.parseInt(sorting));
-						if (sortedUserList == null || sortedUserList.isEmpty()) {
-							System.out.println("No Staff Members to Display! Returning to Menu...");
-							break;
-						}
-						else {
-							System.out.println("\nSorted Staff List:\n------------------");
-							switch (sorting){
-								case "1":
-									for (int i = 0; i < sortedUserList.size(); i++) {
-										System.out.print((i + 1) + ". Role: ");
-										sortedUserList.get(i).printRole();
-										System.out.println("\tName: " + sortedUserList.get(i).getName());
-									}
-									System.out.println("------------------");
-									System.out.print("Enter anything to Return to Menu: ");
-									sc.nextLine();
-									System.out.println("Returning to Menu...");
-									break;
-
-								case "2":
-									for (int i = 0; i < sortedUserList.size(); i++) {
-										System.out.println((i + 1) + ". ID: " + sortedUserList.get(i).getID()
-												+ "\tName: " + sortedUserList.get(i).getName());
-									}
-									System.out.println("------------------");
-									System.out.print("Enter anything to Return to Menu: ");
-									sc.nextLine();
-									System.out.println("Returning to Menu...");
-									break;
-
-								case "3":
-									for (int i = 0; i < sortedUserList.size(); i++) {
-										System.out.println((i + 1) + ". Name: " + sortedUserList.get(i).getName()
-												+ "\tID: " + sortedUserList.get(i).getID());
-									}
-									System.out.println("------------------");
-									System.out.print("Enter anything to Return to Menu: ");
-									sc.nextLine();
-									System.out.println("Returning to Menu...");
-									break;
-
-								case "4":
-									for (int i = 0; i < sortedUserList.size(); i++) {
-										System.out.println((i + 1) + ". Gender: " + sortedUserList.get(i).getGenderString()
-												+ "\tName: " + sortedUserList.get(i).getName());
-									}
-									System.out.println("------------------");
-									System.out.print("Enter anything to Return to Menu: ");
-									sc.nextLine();
-									System.out.println("Returning to Menu...");
-									break;
-
-								case "5":
-									for (int i = 0; i < sortedUserList.size(); i++) {
-										System.out.println((i + 1) + ". Age: " + sortedUserList.get(i).getAge()
-												+ "\tName: " + sortedUserList.get(i).getName());
-									}
-									System.out.println("------------------");
-									System.out.print("Enter anything to Return to Menu: ");
-									sc.nextLine();
-									System.out.println("Returning to Menu...");
-									break;
-							}
-						}
-					}
-					else {
-						System.out.println("Returning to Menu...");
-					}
-
 
 					break;
 

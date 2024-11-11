@@ -41,19 +41,23 @@ public class User {
     private void changePassword(Scanner sc){
         sc.nextLine();
         System.out.print("Enter Old Password (0 to Cancel): ");
-        String oldPassword = sc.nextLine();
-        if (oldPassword.equals("0")){
+        String password = sc.nextLine();
+        if (password.equals("0")){
             System.out.println("Operation Cancelled. Returning to Menu...\n");
             return;
         }
-        if(!password.checkPassword(oldPassword)) {
+        if(!this.password.checkPassword(password)) {
             System.out.print("Incorrect Password! Returning to Menu...\n");
             return;
         }
         System.out.print("Enter New Password: ");
-        oldPassword = sc.next(); sc.nextLine();
-        password.changePassword(oldPassword);
-        System.out.print("Password Successfully Changed! Returning to Menu...\n ");
+        password = sc.next(); sc.nextLine();
+        while (password.equals("0") || this.password.checkPassword(password)){
+            System.out.print("Invalid Password! Enter New Password: ");
+            password = sc.next(); sc.nextLine();
+        }
+        this.password.changePassword(password);
+        System.out.println("Password Successfully Changed! Returning to Menu...\n");
     }
 
     /**
