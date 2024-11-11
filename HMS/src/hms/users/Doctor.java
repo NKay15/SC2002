@@ -204,9 +204,11 @@ public class Doctor extends Staff {
 			Patient patient = appointment.getPatient();
 			Date date = appointment.getDate();
 			Time Time = appointment.getTimeSlot();
+			int status = appointment.getStatus();
 
 			++id;
 			System.out.println("-----Request " + id + "-----");
+			if(status == 5) System.out.println("***Resccheduled Appointment***");
 			System.out.println("Name of Patient: " + patient.getName());
 			System.out.println("Patient ID: " + patient.getID());
 			System.out.print("Date: "); date.print();
