@@ -50,7 +50,7 @@ public class AppointmentScheduler {
         }
         if (appointment.getRescheduled() != null) {
             Appointment rescheduledAppointment = findAppointment(appointment.getRescheduled(), appointments);
-            if (rescheduledAppointment == null){
+            if (rescheduledAppointment == null) {
                 System.out.println("Can't find related events need to be rescheduled.");
                 return;
             }
@@ -278,7 +278,7 @@ public class AppointmentScheduler {
     public List<Appointment> getAppointments(Patient patient) {
         List<Appointment> appointmentsForPatient = new ArrayList<>();
         for (Appointment appointment : appointments) {
-            if (appointment.getPatientID().equals(patient.getID())) {
+            if (appointment.getPatientID().equals(patient.getID()) && appointment.getStatus() != 3) {
                 appointmentsForPatient.add(appointment);
             }
         }
@@ -294,14 +294,14 @@ public class AppointmentScheduler {
     public List<Appointment> getPendingAppointments(Patient patient) {
         List<Appointment> pendingAppointmentsForPatient = new ArrayList<>();
         for (Appointment appointment : pendingAppointments) {
-            if (appointment.getPatientID().equals(patient.getID())) {
+            if (appointment.getPatientID().equals(patient.getID()) && appointment.getStatus() != 3) {
                 pendingAppointmentsForPatient.add(appointment);
             }
         }
         return pendingAppointmentsForPatient;
     }
 
-     /**
+    /**
      * Retrieves the list of appointments for a specific doctor.
      *
      * @param doctor The doctor for whom to retrieve appointments
@@ -316,7 +316,7 @@ public class AppointmentScheduler {
         }
         return appointmentsForDoctor;
     }
-  
+
     /**
      * Retrieves the list of pending appointments for a specific doctor.
      *
@@ -324,7 +324,7 @@ public class AppointmentScheduler {
      * @return The list of pending appointments for the given doctor
      */
     public List<Appointment> getPendingAppointments(Doctor doctor) {
-        
+
         List<Appointment> pendingAppointmentsForDoctor = new ArrayList<>();
         for (Appointment appointment : pendingAppointments) {
             if (appointment.getDoctorID().equals(doctor.getID())) {
