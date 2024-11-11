@@ -199,6 +199,7 @@ public class Patient extends User {
                     }
                     if(whichDoc == 0) break;
                     doc = GlobalData.getInstance().userList.getDoctors().get(whichDoc-1);
+                    //doc.getDoctorScheduler().updateDoctorData();
                     System.out.print("Enter Date in ddmmyyyy (O to Exit): ");
                     date = sc.nextInt();
                     if(date == 0) break;
