@@ -78,6 +78,9 @@ public class Time implements Comparable<Time>{
         else if (minute < cmpTime.getMinute()) return -1;
         else return 0;
     }
+    public boolean equals(Time cmpTime) {
+        return compareTo(cmpTime) == 0;
+    }
 
     // Static method to get the minimum of two Time objects
     public static Time min(Time t1, Time t2) {

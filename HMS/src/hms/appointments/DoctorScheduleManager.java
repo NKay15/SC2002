@@ -118,6 +118,13 @@ public class DoctorScheduleManager {
             }
         }
     }
+    public boolean isSlotAvailable(int time, Date date){
+        Time tempTime = new Time(time);
+        return scheduler.isSlotAvailable(doctor, tempTime, date);
+    }
+    public boolean isSlotAvailable(Time time, Date date){
+        return scheduler.isSlotAvailable(doctor, time, date);
+    }
 
     /**
     * Retrieves the list of appointments for this doctor.
@@ -150,7 +157,7 @@ public class DoctorScheduleManager {
      * @param doctor the Doctor object whose available slots are printed.
      */
     public void printAvailableSlot(Date date, Doctor doctor) {
-        doctor.getDoctorSchedules().printAvailableSlot(date);
+        doctor.getDoctorSchedules().printAvailableSlot(date,this);
     }
 
     /**

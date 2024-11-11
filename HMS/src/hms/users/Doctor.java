@@ -256,4 +256,7 @@ public class Doctor extends Staff {
 	public void printRole() {
         System.out.print("Doctor");
     }
+	public DoctorScheduleManager getDoctorScheduler(){
+		return doctorScheduler;
+	}
 }

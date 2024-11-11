@@ -6,6 +6,8 @@ import hms.users.*;
 import hms.utils.Date;
 import hms.utils.*;
 
+import javax.print.Doc;
+
 /**
  * Manages the scheduling of appointments in the healthcare management system.
  * This singleton class provides methods to schedule, accept, decline, reschedule, and cancel appointments.
@@ -142,7 +144,7 @@ public class AppointmentScheduler {
      * @param appointment The appointment to check availability for
      * @return true if the slot is available; otherwise false
      */
-    private boolean isSlotAvailable(Appointment appointment) {
+    public boolean isSlotAvailable(Appointment appointment) {
         return isSlotAvailable(appointment.getDoctor(), appointment.getTimeSlot(), appointment.getDate());
     }
 
@@ -153,8 +155,20 @@ public class AppointmentScheduler {
      * @param time   The date and time of the appointment
      * @return true if the slot is available; otherwise false
      */
-    private boolean isSlotAvailable(Doctor doctor, Time time, Date date) {
-        return doctor.getDoctorSchedules().isDoctorAvailable(date, time);
+    public boolean isSlotAvailable(Doctor doctor, Time time, Date date) {
+        return doctor.getDoctorSchedules().isDoctorWorking(date, time) && !isSlotOccupied(doctor, time, date);
+    }
+
+    public boolean isSlotOccupied(Doctor doctor, Time time, Date date) {
+        boolean occupied = false;
+        List<Appointment> appointmentList = getAppointments(doctor);
+        for (Appointment appointment:appointmentList){
+            if (appointment.getDate().equals(date) && appointment.getTimeSlot().equals(time)){
+                occupied = true;
+                break;
+            }
+        }
+        return occupied;
     }
 
     /**

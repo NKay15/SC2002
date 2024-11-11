@@ -193,7 +193,7 @@ public class DoctorSchedule {
      * @param time The Time object representing the time to check availability for.
      * @return A boolean indicating whether the doctor is available (true) or not (false).
      */
-    public boolean isDoctorAvailable(Time time) {
+    public boolean isDoctorWorking(Time time) {
         for (int i = 0; i < breakCount; i++) {
             if (time.compareTo(breaks.get(i)[0]) >= 0 && time.compareTo(breaks.get(i)[1]) < 0) {
                 System.out.println("Doctor at break!");
@@ -204,6 +204,7 @@ public class DoctorSchedule {
             System.out.println("Doctor not working!");
             return false;
         }
+
         return true;
     }
 

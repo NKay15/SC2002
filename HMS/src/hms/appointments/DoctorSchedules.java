@@ -89,9 +89,9 @@ public class DoctorSchedules {
      * @param time The time in integer format (HHMM).
      * @return true if the doctor is available, false otherwise.
      */
-    public boolean isDoctorAvailable(Date date, int time) {
+    public boolean isDoctorWorking(Date date, int time) {
         Time tempTime = new Time(time);
-        return (isDoctorAvailable(date, tempTime));
+        return (isDoctorWorking(date, tempTime));
     }
 
     /**
@@ -101,12 +101,12 @@ public class DoctorSchedules {
      * @param time The time to check availability.
      * @return true if the doctor is available, false otherwise.
      */
-    public boolean isDoctorAvailable(Date date, Time time) {
+    public boolean isDoctorWorking(Date date, Time time) {
         DoctorSchedule schedule = findDateSchedule(date, doctor);
         if (schedule == null) {
             return false;
         }
-        return schedule.isDoctorAvailable(time);
+        return schedule.isDoctorWorking(time);
     }
 
     /**
@@ -114,7 +114,11 @@ public class DoctorSchedules {
      *
      * @param date The date for which to print available slots.
      */
-    public void printAvailableSlot(Date date) {
+    public void printAvailableSlot(Date date){
+        printAvailableSlot(date, doctor.getDoctorScheduler());
+    }
+    public void printAvailableSlot(Date date, DoctorScheduleManager scheduler) {
+
         //System.out.println("Doctor ID: " + doctor.getID() + "'s available slots are:");
         DoctorSchedule schedule = findDateSchedule(date, doctor);
         if (schedule == null) {
@@ -125,7 +129,7 @@ public class DoctorSchedules {
         Time endTime = schedule.getEndTime();
         for (int time = startTime.getIntTime(); time <endTime.getIntTime(); time += 30) {
             if (time % 100 == 60) time += 40;
-            if (isDoctorAvailable(date, time)) {
+            if (scheduler.isSlotAvailable(time, date)) {
                 String slotTime = String.format("%02d:%02d", time / 100, time % 100);
                 System.out.println(slotTime);
             }
