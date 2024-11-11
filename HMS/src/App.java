@@ -51,9 +51,9 @@ public class App {
     	Scanner sc = gd.sc;
     	
     	/* Login */
-    	User currentUser = null;
-    	int accessLevel = -1;
 		while(true) {
+			User currentUser = null;
+			int accessLevel = -1;
 			do {
 				System.out.println("Hospital Management System (HMS)");
 				System.out.println("==============================");
