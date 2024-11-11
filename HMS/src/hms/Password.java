@@ -16,6 +16,13 @@ public class Password extends MD5 {
     }
 
     /**
+     * Constructor of Password that has been changed
+     */
+    public Password(String password) {
+        this.password = password;
+    }
+
+    /**
      * Method to change the password and nothing else.
      * @param newPassword the string of the new password
      */

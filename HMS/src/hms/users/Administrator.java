@@ -1,10 +1,10 @@
 package hms.users;
 
 import hms.GlobalData;
+import hms.Password;
 import hms.appointments.Appointment;
 import hms.appointments.AppointmentScheduler;
 import hms.utils.Date;
-
 import java.util.*;
 
 public class Administrator extends Staff {
@@ -12,8 +12,8 @@ public class Administrator extends Staff {
 	/**
 	 * Constructor
 	 */
-	public Administrator(String ID, String name, int gender, int age) {
-		super(ID, name, 4, gender, age);
+	public Administrator(String ID, String name, int gender, int age, Password password) {
+		super(ID, name, 4, gender, age, password);
 	}
 
 	public void menu() {
@@ -286,7 +286,7 @@ public class Administrator extends Staff {
 							while (true) {
 								switch (confirmAdd) {
 									case "1":
-										Doctor newDoctor = new Doctor(newID, newName, newGender, newAge);
+										Doctor newDoctor = new Doctor(newID, newName, newGender, newAge, null);
 										GlobalData.getInstance().userList.addDoctor(newDoctor);
 										System.out.println("New Doctor Successfully Added! Returning to Menu...");
 										break;
@@ -309,7 +309,7 @@ public class Administrator extends Staff {
 							while (true) {
 								switch (confirmAdd) {
 									case "1":
-										Pharmacist newPharmacist = new Pharmacist(newID, newName, newGender, newAge);
+										Pharmacist newPharmacist = new Pharmacist(newID, newName, newGender, newAge, null);
 										GlobalData.getInstance().userList.addPharmacist(newPharmacist);
 										System.out.println("New Pharmacist Successfully Added! Returning to Menu...");
 										break;
@@ -332,7 +332,7 @@ public class Administrator extends Staff {
 							while (true) {
 								switch (confirmAdd) {
 									case "1":
-										Administrator newAdministrator = new Administrator(newID, newName, newGender, newAge);
+										Administrator newAdministrator = new Administrator(newID, newName, newGender, newAge, null);
 										GlobalData.getInstance().userList.addAdministrator(newAdministrator);
 										System.out.println("New Administrator Successfully Added! Returning to Menu...");
 										break;
@@ -738,7 +738,7 @@ public class Administrator extends Staff {
 					while (true) {
 						switch (confirmAdd) {
 							case "1":
-								Patient newPatient = new Patient(newID, newName, newGender, newDOB, newHP, newEmail, newBloodType);
+								Patient newPatient = new Patient(newID, newName, newGender, newDOB, newHP, newEmail, newBloodType, null);
 								GlobalData.getInstance().userList.addPatient(newPatient);
 								System.out.println("New Doctor Successfully Added! Returning to Menu...");
 								break;

@@ -1,9 +1,9 @@
 package hms.users;
 
 import hms.GlobalData;
+import hms.Password;
 import hms.appointments.*;
 import hms.utils.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -23,8 +23,8 @@ public class Doctor extends Staff {
      */
     private List<Patient> patientList;
 
-    public Doctor(String doctorID, String name, int gender, int age) {
-        super(doctorID, name, 2, gender, age);
+    public Doctor(String doctorID, String name, int gender, int age, Password password) {
+        super(doctorID, name, 2, gender, age, password);
         doctorSchedules = new DoctorSchedules(this);
         doctorScheduler = new DoctorScheduleManager(this);
         patientList = new ArrayList<>();
