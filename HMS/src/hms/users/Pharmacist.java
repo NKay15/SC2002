@@ -45,7 +45,6 @@ public class Pharmacist extends Staff {
 				}
 				else inputError = false;
 				choice = sc.nextInt();
-
 				switch (choice) {
 					case 1:
 						sc.nextLine();
