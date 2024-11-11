@@ -44,7 +44,7 @@ public class Pharmacist extends Staff {
 					System.out.print("Enter your choice: ");
 				}
 				else inputError = false;
-				choice = sc.nextInt(); sc.nextLine();
+				choice = sc.nextInt();
 
 				switch (choice) {
 					case 1:
@@ -253,4 +253,8 @@ public class Pharmacist extends Staff {
 			}
 		}
 	}
+
+	public void printRole() {
+        System.out.print("Pharmacist");
+    }
 }

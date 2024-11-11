@@ -191,4 +191,8 @@ public class User {
         }
         return true;
     }
+
+    public void printRole() {
+        System.out.print("Unknown");
+    }
 }

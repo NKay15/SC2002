@@ -171,9 +171,9 @@ public class App {
                 
                 Cell gender = cellIterator.next();
                 int genderNo = 0;
-                if (gender.toString() == "Male") {
+                if (gender.toString().equals("Male")) {
                 	genderNo = 1;
-                } else if (gender.toString() == "Female") {
+                } else if (gender.toString().equals("Female")) {
                 	genderNo = 2;
                 }
                 
@@ -258,9 +258,9 @@ public class App {
                 
                 Cell gender = cellIterator.next();
                 int genderNo = 0;
-                if (gender.toString() == "Male") {
+                if (gender.toString().equals("Male")) {
                 	genderNo = 1;
-                } else if (gender.toString() == "Female") {
+                } else if (gender.toString().equals("Female")) {
                 	genderNo = 2;
                 }
                 

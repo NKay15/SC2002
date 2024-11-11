@@ -245,4 +245,8 @@ public class Doctor extends Staff {
 	public void viewAvailability(Date date){
 		doctorSchedules.printAvailableSlot(date);
 	}
+
+	public void printRole() {
+        System.out.print("Doctor");
+    }
 }
