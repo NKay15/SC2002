@@ -11,6 +11,7 @@ public class PatientScheduleManager {
     private Patient patient;
     private AppointmentScheduler scheduler = AppointmentScheduler.getInstance();
     private List<Appointment> appointmentList = new ArrayList<>();
+    private List<Appointment> pendingAppointmentList = new ArrayList<>();
 
     /**
      * Constructs a PatientScheduleManager for the given patient and retrieves their appointments.
@@ -20,6 +21,7 @@ public class PatientScheduleManager {
     public PatientScheduleManager(Patient patient) {
         this.patient = patient;
         appointmentList = scheduler.getAppointments(patient);
+        pendingAppointmentList = scheduler.getPendingAppointments(patient);
     }
 
     /**
@@ -38,7 +40,7 @@ public class PatientScheduleManager {
      * Reschedules an existing appointment for the patient with a new appointment.
      *
      * @param existingAppointment the appointment to be rescheduled
-     * @param newAppointment the new appointment details
+     * @param newAppointment      the new appointment details
      */
     public void reschedulePatientAppointment(Appointment existingAppointment, Appointment newAppointment) {
         updatePatientData();
@@ -67,7 +69,21 @@ public class PatientScheduleManager {
         updatePatientData();
         int i = 1;
         for (Appointment appointment : appointmentList) {
+<<<<<<< HEAD
             System.out.println((i) +" :");
+=======
+            System.out.println((i) + " :");
+            System.out.println("Doctor ID: " + appointment.getDoctorID());
+            System.out.println("Date: " + appointment.getDate());
+            System.out.println("Time Slot: " + appointment.getTimeSlot());
+            System.out.print("Status: ");
+            appointment.printStatus();
+            System.out.println("-------------");
+            i++;
+        }
+        for (Appointment appointment : pendingAppointmentList) {
+            System.out.println((i) + " :");
+>>>>>>> 79b27a4e3b2a4084f057119c719aad67a88690ae
             System.out.println("Doctor ID: " + appointment.getDoctorID());
             System.out.print("Date: ");
             appointment.getDate().print();
@@ -83,7 +99,7 @@ public class PatientScheduleManager {
     /**
      * Prints available time slots for the doctors on a given date.
      *
-     * @param date the date for which available slots are printed
+     * @param date    the date for which available slots are printed
      * @param doctors the list of doctors to check availability for
      */
     public void printAvailableSlots(Date date, List<Doctor> doctors) {
@@ -94,7 +110,8 @@ public class PatientScheduleManager {
 
     /**
      * Prints available time slots for a doctor on a given date.
-     * @param date the date for which available slots are printed
+     *
+     * @param date   the date for which available slots are printed
      * @param doctor the specific doctor to check availability
      */
     public void printAvailableSlots(Date date, Doctor doctor) {
@@ -103,17 +120,17 @@ public class PatientScheduleManager {
 
     /**
      * Generate an appointment if the doctor is available.
+     *
      * @param patient patient of the appointment
-     * @param doctor doctor of the appointment
-     * @param date date of the appointment
-     * @param time time of the appointment
+     * @param doctor  doctor of the appointment
+     * @param date    date of the appointment
+     * @param time    time of the appointment
      * @return appointment if doctor is free otherwise null will be return
      */
     public Appointment generateAppointment(Patient patient, Doctor doctor, Date date, Time time) {
-        if(doctor.getDoctorSchedules().isDoctorAvailable(date, time)) {
+        if (doctor.getDoctorSchedules().isDoctorAvailable(date, time)) {
             return new Appointment(patient, doctor, date, time);
-        }
-        else return null;
+        } else return null;
     }
 
     /**
@@ -135,30 +152,37 @@ public class PatientScheduleManager {
      */
     public void updatePatientData() {
         appointmentList = scheduler.getAppointments(patient);
+        pendingAppointmentList = scheduler.getPendingAppointments(patient);
     }
 
     /**
      * Accessor of upcoming appointment
+     *
      * @param i index of appointmnet
      * @return null if index does not exist
      */
     public Appointment getUpcomingAppointment(int i) {
-        if(i < 0 || i > appointmentList.size()) return null;
-        else return appointmentList.get(i);
+        updatePatientData();
+        if (i < 0 || i > (appointmentList.size() + pendingAppointmentList.size())) return null;
+        if (i <= appointmentList.size()) {
+            // Fetch from appointmentList
+            return appointmentList.get(i - 1);
+        } else {
+            // Fetch from pendingAppointmentList, adjusting the index
+            return pendingAppointmentList.get(i - appointmentList.size() - 1);
+        }
     }
 
     /**
-    * Retrieves the list of appointments for this patient.
-    *
-    */
+     * Retrieves the list of appointments for this patient.
+     */
     public List<Appointment> getAppointments() {
         return scheduler.getAppointments(patient);
     }
 
     /**
-    * Retrieves the list of pending appointments for this patient.
-    *
-    */
+     * Retrieves the list of pending appointments for this patient.
+     */
     public List<Appointment> getPendingAppointments() {
         return scheduler.getPendingAppointments(patient);
     }
