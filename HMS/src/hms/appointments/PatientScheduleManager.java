@@ -69,13 +69,12 @@ public class PatientScheduleManager {
         updatePatientData();
         int i = 1;
         for (Appointment appointment : appointmentList) {
-<<<<<<< HEAD
-            System.out.println((i) +" :");
-=======
             System.out.println((i) + " :");
             System.out.println("Doctor ID: " + appointment.getDoctorID());
-            System.out.println("Date: " + appointment.getDate());
-            System.out.println("Time Slot: " + appointment.getTimeSlot());
+            System.out.print("Date: ");
+            appointment.getDate().print();
+            System.out.print("Time Slot: ");
+            appointment.getTimeSlot().print();
             System.out.print("Status: ");
             appointment.printStatus();
             System.out.println("-------------");
@@ -83,7 +82,6 @@ public class PatientScheduleManager {
         }
         for (Appointment appointment : pendingAppointmentList) {
             System.out.println((i) + " :");
->>>>>>> 79b27a4e3b2a4084f057119c719aad67a88690ae
             System.out.println("Doctor ID: " + appointment.getDoctorID());
             System.out.print("Date: ");
             appointment.getDate().print();
@@ -166,10 +164,10 @@ public class PatientScheduleManager {
         if (i < 0 || i > (appointmentList.size() + pendingAppointmentList.size())) return null;
         if (i <= appointmentList.size()) {
             // Fetch from appointmentList
-            return appointmentList.get(i - 1);
+            return appointmentList.get(i);
         } else {
             // Fetch from pendingAppointmentList, adjusting the index
-            return pendingAppointmentList.get(i - appointmentList.size() - 1);
+            return pendingAppointmentList.get(i - appointmentList.size());
         }
     }
 

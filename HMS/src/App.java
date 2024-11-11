@@ -59,10 +59,12 @@ public class App {
 				System.out.println("==============================");
 				System.out.println("Please login");
 				System.out.print("Enter your ID (0 to exit): ");
-				String ID = sc.nextLine();
+				String ID = sc.next();
+				sc.nextLine();
 
 				if(ID.equals("0")) {
 					accessLevel = -1;
+					break;
 				}
 				
 				boolean found = false;

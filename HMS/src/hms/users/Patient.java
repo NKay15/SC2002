@@ -94,21 +94,22 @@ public class Patient extends User {
      * @return break
      */
     public void menu() {    
-        System.out.println("-----Patient Menu-----");
-        System.out.println("1. View Medical Record ");
-        System.out.println("2. Update Personal Information ");
-        System.out.println("3. View Available Appointment Slots ");
-        System.out.println("4. Schedule an Appointment ");
-        System.out.println("5. Reschedule an Appointment ");
-        System.out.println("6. Cancel an Appointment ");
-        System.out.println("7. View Scheduled Appointments ");
-        System.out.println("8. View Past Appointment Outcome Records");
-        super.menu(9);
-        System.out.println("-----End of Menu-----");
-
         Scanner sc = GlobalData.getInstance().sc;
         int choice = 1;
         while(true) {
+
+            System.out.println("-----Patient Menu-----");
+            System.out.println("1. View Medical Record ");
+            System.out.println("2. Update Personal Information ");
+            System.out.println("3. View Available Appointment Slots ");
+            System.out.println("4. Schedule an Appointment ");
+            System.out.println("5. Reschedule an Appointment ");
+            System.out.println("6. Cancel an Appointment ");
+            System.out.println("7. View Scheduled Appointments ");
+            System.out.println("8. View Past Appointment Outcome Records");
+            super.menu(9);
+            System.out.println("-----End of Menu-----");
+            
             System.out.print("Enter menu number: ");
             choice = sc.nextInt();
             switch(choice) {
