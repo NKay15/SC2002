@@ -294,7 +294,7 @@ public class AppointmentScheduler {
     public List<Appointment> getPendingAppointments(Patient patient) {
         List<Appointment> pendingAppointmentsForPatient = new ArrayList<>();
         for (Appointment appointment : pendingAppointments) {
-            if (appointment.getPatientID().equals(patient.getID()) && appointment.getStatus() != 3) {
+            if (appointment.getPatientID().equals(patient.getID()) && appointment.getStatus() != 3 && appointment.getStatus()!=5) {
                 pendingAppointmentsForPatient.add(appointment);
             }
         }
