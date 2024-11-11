@@ -69,6 +69,7 @@ public class Doctor extends Staff {
 						System.out.println((i+1) + " : " + patientList.get(i).getName());
 					}
 					choice = sc.nextInt();
+					sc.nextLine();
 					if(choice < 1 || choice > patientList.size()) {
 						choice = 2;
 						break;

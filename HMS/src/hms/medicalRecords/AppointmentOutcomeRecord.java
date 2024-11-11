@@ -39,7 +39,7 @@ public class AppointmentOutcomeRecord {
     public AppointmentOutcomeRecord() {
         Scanner sc = GlobalData.getInstance().sc;
         System.out.print("Enter Date of Appointment (ddmmyyyy): ");
-        int t = sc.nextInt(); sc.nextLine();
+        int t = sc.nextInt();
         date = new Date(t);
         service = sc.nextLine();
         System.out.print("Enter Service Provided: ");

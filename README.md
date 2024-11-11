@@ -41,6 +41,8 @@ See todo.org
 - [X] Test login and change password
 - [ ] Test doctor schedule
 - [ ] Test patient schedule
-- [ ] Test Doctor completing appointment
-- [ ] Test Pharamacist dispence and restock request
+- [X] Test Doctor completing appointment
+- [X] Test Pharamacist dispence and restock request
 - [X] Test Admin approve restock and manage users
+- [X] Test Admin adding new staff
+- [X] Test updating and viewing of medical records
