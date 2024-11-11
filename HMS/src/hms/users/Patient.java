@@ -1,5 +1,8 @@
 package hms.users;
 
+import hms.GlobalData;
+import hms.Password;
+import hms.appointments.*;
 import hms.medicalRecords.MedicalRecord;
 import hms.utils.*;
 import hms.appointments.*;
@@ -8,7 +11,7 @@ import hms.GlobalData;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Patient extends User {
+public class Patient extends User{
 
     /**
      * Date of birth
@@ -26,10 +29,9 @@ public class Patient extends User {
     private String email;
 
     /**
-     * Integer to store blood type 0 - unknown 1 - A+ 2 - A- 3 - B+ 4 - B-
-     * 5 - AB+ 6 - AB- 7 - O+ 8 - O-
+     * Enum containing blood type
      */
-    private int bloodType;
+    private BloodType bloodType;
 
     /**
      * appointmentScheduler for a specific patient
@@ -44,12 +46,12 @@ public class Patient extends User {
     /**
      * Constructor for patient
      */
-    public Patient(String patientID, String name, int gender, Date dob, int phone, String email, int bloodType) {
-        super(patientID, name, 1, gender);
+    public Patient(String patientID, String name, int gender, Date dob, int phone, String email, int bloodType, Password password) {
+        super(patientID, name, 1, gender, password);
         this.dob = dob;
         this.phone = phone;
         this.email = email;
-        this.bloodType = bloodType;
+        this.bloodType = intToBloodType(bloodType);
         mr = new MedicalRecord(this);
         patientSchedule = new PatientScheduleManager(this);
     }
@@ -99,40 +101,18 @@ public class Patient extends User {
     /**
      * return blood type of patient
      */
-    public int getBloodType() {
+    public BloodType getBloodType() {
         return bloodType;
     }
 
     /**
-     * set blood type of patient
+     * get blood type of patient
      */
-
     public String getBloodTypeString() {
-        switch (bloodType) {
-            case 0:
-                return "Unknown";
-            case 1:
-                return "A+";
-            case 2:
-                return "A-";
-            case 3:
-                return "B+";
-            case 4:
-                return "B-";
-            case 5:
-                return "AB+";
-            case 6:
-                return "AB-";
-            case 7:
-                return "O+";
-            case 8:
-                return "O-";
-            default:
-                return null;
-        }
+        return bloodType.toString();
     }
 
-    public void setBloodType(int bloodType) {
+    public void setBloodType(BloodType bloodType) {
         this.bloodType = bloodType;
     }
 
@@ -141,6 +121,36 @@ public class Patient extends User {
      */
     public PatientScheduleManager getPatientSchedule() {
         return patientSchedule;
+    }
+
+    /**
+     * Convert int to BloodType enum
+     * @return ENUM of Blood Type
+     */
+    public BloodType intToBloodType(int bloodType)
+    {
+        switch (bloodType) {
+            case 0:
+                return BloodType.UNKNOWN;
+            case 1:
+                return BloodType.A_PLUS;
+            case 2:
+                return BloodType.A_MINUS;
+            case 3:
+                return BloodType.B_PLUS;
+            case 4:
+                return BloodType.B_MINUS;
+            case 5:
+                return BloodType.AB_PLUS;
+            case 6:
+                return BloodType.AB_MINUS;
+            case 7:
+                return BloodType.O_PLUS;
+            case 8:
+                return BloodType.O_MINUS;
+            default:
+                return null;
+        }
     }
 
     /**

@@ -2,6 +2,7 @@ package hms.medicalRecords;
 
 import hms.utils.Date;
 import hms.users.*;
+import hms.utils.BloodType;
 
 import java.util.ArrayList;
 
@@ -32,10 +33,9 @@ public class MedicalRecord {
     private String email;
 
     /**
-     * Integer to store blood type 0 - unknown 1 - A+ 2 - A- 3 - B+ 4 - B-
-     * 5 - AB+ 6 - AB- 7 - O+ 8 - O-
+     * Enum of blood type
      */
-    private int bloodType;
+    private BloodType bloodType;
 
     /**
      * List to store pass diagnosis and treatment
@@ -77,25 +77,7 @@ public class MedicalRecord {
 
         System.out.println("Phone Number : " + phone);
         System.out.println("Email Address : " + email);
-        System.out.print("Blood Type : ");
-        switch (bloodType) {
-            case 1 : System.out.println("A+");
-            break;
-            case 2 : System.out.println("A-");
-            break;
-            case 3 : System.out.println("B+");
-            break;
-            case 4 : System.out.println("B-");
-            break;
-            case 5 : System.out.println("AB+");
-            break;
-            case 6 : System.out.println("AB-");
-            break;
-            case 7 : System.out.println("O+");
-            break;
-            case 8 : System.out.println("O-");
-            break;
-        }
+        System.out.print("Blood Type : " + bloodType.toString());
 
         System.out.println("Medical History : ");
         for(int i = 0; i < medicalHistory.size(); i++) {
