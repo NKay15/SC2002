@@ -67,12 +67,16 @@ public class User {
      * @param role role number
      * @param gender gender number
      */
-    public User(String ID, String name, int role, int gender) {
+    public User(String ID, String name, int role, int gender, Password password) {
     	this.ID = ID;
     	this.name = name;
     	this.role = role;
     	this.gender = gender;
-    	this.password = new Password();
+        if (password == null) {
+            this.password = new Password();
+        } else {
+            this.password = password;
+        }
     }
     
     /**
@@ -134,6 +138,14 @@ public class User {
             default:
                 return null;
         }
+    }
+
+    /**
+     * Get password
+     * @return password
+     */
+    public Password getPassword() {
+        return password;
     }
 
     /**
