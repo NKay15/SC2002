@@ -319,4 +319,8 @@ public class Patient extends User {
     public void viewPastAppointmentOutcomeRecords() {
         patientSchedule.printAppointmentOutcomeRecord();
     }
+
+    public void printRole() {
+        System.out.print("Patient");
+    }
 }

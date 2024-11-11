@@ -36,4 +36,8 @@ public class Staff extends User {
         super(ID, name, role, gender);
         this.age = age;
     }
+
+    public void printRole() {
+        System.out.print("Staff");
+    }
 }

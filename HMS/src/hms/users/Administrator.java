@@ -35,7 +35,7 @@ public class Administrator extends Staff {
 					System.out.print("Enter your choice: ");
 				}
 				else inputError = false;
-				choice = sc.nextInt(); sc.nextLine();
+				choice = sc.nextInt();
 
 				switch (choice) {
 					case 1:
@@ -414,8 +414,9 @@ public class Administrator extends Staff {
 							switch (sorting){
 								case "1":
 									for (int i = 0; i < sortedUserList.size(); i++) {
-										System.out.println((i + 1) + ". Role: " + sortedUserList.get(i).getRole()
-												+ "\tName: " + sortedUserList.get(i).getName());
+										System.out.print((i + 1) + ". Role: ");
+										sortedUserList.get(i).printRole();
+										System.out.println("\tName: " + sortedUserList.get(i).getName());
 									}
 									System.out.println("------------------");
 									System.out.print("Enter anything to Return to Menu: ");
@@ -601,4 +602,8 @@ public class Administrator extends Staff {
 			}
 		}
 	}
+
+	public void printRole() {
+        System.out.print("Adminstrator");
+    }
 }
