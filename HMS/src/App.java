@@ -132,5 +132,7 @@ public class App {
 				break;
 			}
 		}
+
+		TextFileService.writeInventory(gd.inventory);
     }
 }

@@ -1,6 +1,7 @@
 package hms.utils;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -155,6 +156,21 @@ public class TextFileService {
         catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             return new Inventory();
+        }
+    }
+
+    public static void writeInventory(Inventory inventory) {
+        try {
+            FileWriter fw = new FileWriter("HMS/src/data/Medicine_List.txt");
+            fw.write("Medicine Name,Initial Stock,Low Stock Level Alert\n");
+            for(int i = 0; i < inventory.getSize(); i++) {
+                fw.write(inventory.getName(i) + "," + inventory.getSize() + "," + inventory.getLowLevel(i) +"\n");
+            }
+            fw.close();
+            
+        }
+        catch (Exception e){
+            System.out.println("An error occurred. Cannot write inventory");
         }
     }
 }
