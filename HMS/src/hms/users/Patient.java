@@ -236,7 +236,7 @@ public class Patient extends User{
                     System.out.print("Enter Date in ddmmyyyy (O : exit): ");
                     newdate = sc.nextInt();
                     if(newdate == 0) break;
-                    System.out.print("Enter Time in (O : exit): ");
+                    System.out.print("Enter Time in hhmm (O : exit): ");
                     newtime = sc.nextInt();
                     if(newtime == 0) break;
                     Appointment toReschedule = patientSchedule.generateAppointment(this, old.getDoctor(), new Date(newdate), new Time(newtime));

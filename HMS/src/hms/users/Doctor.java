@@ -133,7 +133,7 @@ public class Doctor extends Staff {
     }
 
     public void viewPatientMedicalRecords() {
-        if (patientList == null) {
+        if (patientList.size() == 0) {
             System.out.println("Hi, Doc. " + this.getName() + ". You have no patient.");
             return;
         }
