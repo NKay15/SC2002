@@ -6,6 +6,7 @@
 package hms.users;
 
 import hms.utils.Password;
+import hms.utils.Role;
 
 /**
  * Staff class
@@ -34,7 +35,7 @@ public class Staff extends User {
 		this.age = age;
 	}
 
-    public Staff(String ID, String name, int role, int gender, int age, Password password) {
+    public Staff(String ID, String name, Role role, int gender, int age, Password password) {
         super(ID, name, role, gender, password);
         this.age = age;
     }

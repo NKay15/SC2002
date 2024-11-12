@@ -1,10 +1,11 @@
 package hms.users;
 
 import hms.GlobalData;
-import hms.utils.Password;
-import hms.appointments.Appointment;
 import hms.appointments.AdministratorAppointmentManager;
+import hms.appointments.Appointment;
 import hms.utils.Date;
+import hms.utils.Password;
+import hms.utils.Role;
 import java.util.*;
 
 public class Administrator extends Staff {
@@ -14,7 +15,7 @@ public class Administrator extends Staff {
 	 * Constructor
 	 */
 	public Administrator(String ID, String name, int gender, int age, Password password) {
-		super(ID, name, 4, gender, age, password);
+		super(ID, name, Role.ADMINISTRATOR, gender, age, password);
 	}
 
 	public void menu() {
