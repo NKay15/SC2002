@@ -5,10 +5,6 @@ import java.util.Scanner;
 import hms.GlobalData;
 
 public class Time implements Comparable<Time>{
-    public static int startTime = 800;
-    public static int endTime = 1800;
-    public static int breakStart = 1200;
-    public static int breakEnd = 1330;
     private int hour;
     private int minute;
     private int time;

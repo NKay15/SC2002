@@ -1,12 +1,12 @@
-package hms;
+package hms.utils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import hms.pharmacy.Inventory;
 import hms.users.*;
-import hms.utils.Date;
 
 public class TextFileService {
     /**

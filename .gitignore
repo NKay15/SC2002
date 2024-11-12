@@ -409,4 +409,7 @@ FodyWeavers.xsd
 # emacs
 *.html
 \#*
+*.org*
+
+# output files
 out

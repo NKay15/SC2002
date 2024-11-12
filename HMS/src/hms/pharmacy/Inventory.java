@@ -1,5 +1,6 @@
-package hms;
+package hms.pharmacy;
 
+import hms.GlobalData;
 import hms.medicalRecords.AppointmentOutcomeRecord;
 
 import java.util.ArrayList;

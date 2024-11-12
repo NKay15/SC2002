@@ -5,7 +5,7 @@
 
 package hms.users;
 
-import hms.Password;
+import hms.utils.Password;
 
 /**
  * Staff class

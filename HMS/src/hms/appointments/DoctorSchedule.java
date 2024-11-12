@@ -40,13 +40,16 @@ public class DoctorSchedule {
      */
     protected void setWorkingTime() {
         Scanner sc = GlobalData.getInstance().sc;
-        System.out.println("When do you want to work? Input your start time, in hhmm");
-        int time = sc.nextInt();
-        startTime = new Time(time);
+        do {
+            System.out.println("When do you want to work? Input your start time, in hhmm");
+            int time = sc.nextInt();
+            startTime = new Time(time);
 
-        System.out.println("Input your end time, in hhmm");
-        time = sc.nextInt();
-        endTime = new Time(time);
+            System.out.println("Input your end time, in hhmm");
+            time = sc.nextInt();
+            endTime = new Time(time);
+
+        } while (startTime.compareTo(endTime) >= 0);
     }
 
     /**

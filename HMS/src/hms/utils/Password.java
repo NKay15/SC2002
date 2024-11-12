@@ -1,4 +1,4 @@
-package hms;
+package hms.utils;
 
 import hms.utils.MD5;
 

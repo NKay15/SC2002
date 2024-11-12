@@ -1,10 +1,9 @@
 package hms.medicalRecords;
 
 import hms.utils.Date;
-import hms.Medicine;
+import hms.pharmacy.Medicine;
 import hms.GlobalData;
 
-import java.security.Provider;
 import java.util.Scanner;
 
 public class AppointmentOutcomeRecord {

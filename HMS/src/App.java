@@ -1,6 +1,6 @@
 import hms.GlobalData;
-import hms.Inventory;
-import hms.TextFileService;
+import hms.pharmacy.Inventory;
+import hms.utils.TextFileService;
 import hms.UserList;
 import hms.users.Administrator;
 import hms.users.Doctor;

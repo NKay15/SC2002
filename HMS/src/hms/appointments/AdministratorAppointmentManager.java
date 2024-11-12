@@ -8,11 +8,9 @@ public class AdministratorAppointmentManager {
     public List<Appointment> getAppointments() {
         return scheduler.getAppointments();
     }
-
     public List<Appointment> getPendingAppointments() {
         return scheduler.getPendingAppointments();
     }
-
     public Appointment findAppointment(UUID uuid) {
         return scheduler.findAppointment(uuid);
     }

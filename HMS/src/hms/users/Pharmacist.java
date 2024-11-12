@@ -1,8 +1,8 @@
 package hms.users;
 
 import hms.GlobalData;
-import hms.Medicine;
-import hms.Password;
+import hms.pharmacy.Medicine;
+import hms.utils.Password;
 import hms.appointments.Appointment;
 import hms.medicalRecords.AppointmentOutcomeRecord;
 import java.util.InputMismatchException;

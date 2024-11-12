@@ -1,7 +1,7 @@
 package hms.users;
 
 import hms.GlobalData;
-import hms.Password;
+import hms.utils.Password;
 import java.util.Scanner;
 
 public class User {

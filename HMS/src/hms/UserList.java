@@ -476,39 +476,39 @@ public class UserList {
                             newPatientBloodType = patient.intToBloodType(sc.nextInt());
                             sc.nextLine();
                             switch (newPatientBloodType) {
-                                case BloodType.UNKNOWN:
+                                case UNKNOWN:
                                     newPatientBloodTypeString = BloodType.UNKNOWN.toString();
                                     bloodTypeFound = true;
                                     break;
-                                case BloodType.A_PLUS:
+                                case A_PLUS:
                                     newPatientBloodTypeString = BloodType.A_PLUS.toString();
                                     bloodTypeFound = true;
                                     break;
-                                case BloodType.A_MINUS:
+                                case A_MINUS:
                                     newPatientBloodTypeString = BloodType.A_MINUS.toString();
                                     bloodTypeFound = true;
                                     break;
-                                case BloodType.B_PLUS:
+                                case B_PLUS:
                                     newPatientBloodTypeString = BloodType.B_PLUS.toString();
                                     bloodTypeFound = true;
                                     break;
-                                case BloodType.B_MINUS:
+                                case B_MINUS:
                                     newPatientBloodTypeString = BloodType.B_MINUS.toString();
                                     bloodTypeFound = true;
                                     break;
-                                case BloodType.AB_PLUS:
+                                case AB_PLUS:
                                     newPatientBloodTypeString = BloodType.AB_PLUS.toString();
                                     bloodTypeFound = true;
                                     break;
-                                case BloodType.AB_MINUS:
+                                case AB_MINUS:
                                     newPatientBloodTypeString = BloodType.AB_MINUS.toString();
                                     bloodTypeFound = true;
                                     break;
-                                case BloodType.O_PLUS:
+                                case O_PLUS:
                                     newPatientBloodTypeString = BloodType.O_PLUS.toString();
                                     bloodTypeFound = true;
                                     break;
-                                case BloodType.O_MINUS:
+                                case O_MINUS:
                                     newPatientBloodTypeString = BloodType.O_MINUS.toString();
                                     bloodTypeFound = true;
                                     break;

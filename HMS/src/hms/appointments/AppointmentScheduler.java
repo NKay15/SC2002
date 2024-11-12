@@ -178,11 +178,7 @@ public class AppointmentScheduler {
      * @return The found appointment if successful; otherwise null
      */
     protected boolean findAppointment(Appointment appointment) {
-        List<Appointment> tempList = findWhichList(appointment);
-        if (tempList != null) {
-            return findAppointment(appointment, tempList);
-        }
-        return false;
+        return findAppointment(appointment.getUuid()) != null;
     }
 
     /**

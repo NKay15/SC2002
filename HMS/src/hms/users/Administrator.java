@@ -1,9 +1,8 @@
 package hms.users;
 
 import hms.GlobalData;
-import hms.Password;
+import hms.utils.Password;
 import hms.appointments.Appointment;
-import hms.appointments.AppointmentScheduler;
 import hms.appointments.AdministratorAppointmentManager;
 import hms.utils.Date;
 import java.util.*;

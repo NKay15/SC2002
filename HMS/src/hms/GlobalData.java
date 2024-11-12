@@ -1,7 +1,6 @@
 package hms;
 
-import hms.UserList;
-import hms.Inventory;
+import hms.pharmacy.Inventory;
 
 import java.util.Scanner;
 
