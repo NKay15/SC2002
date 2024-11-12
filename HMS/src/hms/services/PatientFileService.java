@@ -6,16 +6,17 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import hms.users.Patient;
+import hms.utils.BloodType;
 import hms.utils.Date;
 import hms.utils.InputValidation;
 import hms.utils.Password;
 
 public class PatientFileService extends InputValidation {
     /**
-     * Get Patient Data
+     * Get All Patient Data
      * @return List of Patients
      */
-    public static ArrayList<Patient> getPatientData() {
+    public static ArrayList<Patient> getAllPatientData() {
         ArrayList<Patient> patientArray = new ArrayList<Patient>();
         
         try {
@@ -36,30 +37,30 @@ public class PatientFileService extends InputValidation {
                 	genderNo = 2;
                 }
 
-                int bloodTypeNo = 0;
+                BloodType bloodTypeNo = BloodType.UNKNOWN;
                 if (dataList[4].equals("A+")) {
-                	bloodTypeNo = 1;
+                	bloodTypeNo = BloodType.A_PLUS;
                 }
                 if (dataList[4].equals("A-")) {
-                	bloodTypeNo = 2;
+                	bloodTypeNo = BloodType.A_MINUS;
                 }
                 if (dataList[4].equals("B+")) {
-                	bloodTypeNo = 3;
+                	bloodTypeNo = BloodType.B_PLUS;
                 }
                 if (dataList[4].equals("B-")) {
-                	bloodTypeNo = 4;
+                	bloodTypeNo = BloodType.B_MINUS;
                 } 
                 if (dataList[4].equals("AB+")) {
-                	bloodTypeNo = 5;
+                	bloodTypeNo = BloodType.AB_PLUS;
                 }
                 if (dataList[4].equals("AB-")) {
-                	bloodTypeNo = 6;
+                	bloodTypeNo = BloodType.AB_MINUS;
                 } 
                 if (dataList[4].equals("O+")) {
-                	bloodTypeNo = 7;
+                	bloodTypeNo = BloodType.O_PLUS;
                 } 
                 if (dataList[4].equals("O-")) {
-                	bloodTypeNo = 8;
+                	bloodTypeNo = BloodType.O_MINUS;
                 }
 
                 Patient newPatient = null;
@@ -78,5 +79,75 @@ public class PatientFileService extends InputValidation {
         }
         
         return patientArray;
+    }
+
+    /**
+     * Get Patient by ID
+     * @return patient
+     */
+    public static Patient getPatientDataByID(String ID) {
+        try {
+            Patient curPatient = null;
+
+            File myObj = new File("HMS/src/data/Patient_List.txt");
+            Scanner myReader = new Scanner(myObj);
+            myReader.nextLine(); // Remove header line
+
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                String[] dataList = data.split(",");
+
+                if (dataList[0] != ID) {
+                    continue;
+                }
+
+                Date dateFormat = new Date(Integer.valueOf(dataList[2].substring(0, 4)), Integer.valueOf(dataList[2].substring(5, 7)), Integer.valueOf(dataList[2].substring(8,10)));
+
+                int genderNo = 0;
+                if (dataList[3].equals("Male")) {
+                	genderNo = 1;
+                } else if (dataList[3].equals("Female")) {
+                	genderNo = 2;
+                }
+
+                BloodType bloodTypeNo = BloodType.UNKNOWN;
+                if (dataList[4].equals("A+")) {
+                	bloodTypeNo = BloodType.A_PLUS;
+                }
+                if (dataList[4].equals("A-")) {
+                	bloodTypeNo = BloodType.A_MINUS;
+                }
+                if (dataList[4].equals("B+")) {
+                	bloodTypeNo = BloodType.B_PLUS;
+                }
+                if (dataList[4].equals("B-")) {
+                	bloodTypeNo = BloodType.B_MINUS;
+                } 
+                if (dataList[4].equals("AB+")) {
+                	bloodTypeNo = BloodType.AB_PLUS;
+                }
+                if (dataList[4].equals("AB-")) {
+                	bloodTypeNo = BloodType.AB_MINUS;
+                } 
+                if (dataList[4].equals("O+")) {
+                	bloodTypeNo = BloodType.O_PLUS;
+                } 
+                if (dataList[4].equals("O-")) {
+                	bloodTypeNo = BloodType.O_MINUS;
+                }
+
+                myReader.close();
+                if (dataList.length != 9) {
+                    return new Patient(dataList[0], dataList[1], genderNo, dateFormat, Integer.valueOf(dataList[6]), dataList[5], bloodTypeNo, null);
+                } else {
+                    return new Patient(dataList[0], dataList[1], genderNo, dateFormat, Integer.valueOf(dataList[6]), dataList[5], bloodTypeNo, new Password(dataList[7]));
+                }
+            }
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+        }
+        
+        return null;
     }
 }

@@ -8,6 +8,7 @@ import hms.users.Patient;
 import hms.users.Pharmacist;
 import hms.users.Staff;
 import hms.users.User;
+import hms.utils.Role;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -15,17 +16,17 @@ public class App {
     public static void main(String[] args) throws Exception {
     	/* Load data into userList */
     	UserList userList = new UserList();
-    	userList.setPatients(PatientFileService.getPatientData());
+    	userList.setPatients(PatientFileService.getAllPatientData());
     	ArrayList<Staff> temUser = new ArrayList<Staff>();
-    	temUser = StaffFileService.getStaffData();
+    	temUser = StaffFileService.getAllStaffData();
     	for (Staff user : temUser) {
-    		if (user.getRole() == 2) {
+    		if (user.getRole() == Role.DOCTOR) {
     			Doctor temDoc = new Doctor(user.getID(), user.getName(), user.getGender(), user.getAge(), user.getPassword());
     			userList.addDoctor(temDoc);
-    		} else if (user.getRole() == 3) {
+    		} else if (user.getRole() == Role.PHARMACIST) {
     			Pharmacist temPhar = new Pharmacist(user.getID(), user.getName(), user.getGender(), user.getAge(), user.getPassword());
     			userList.addPharmacist(temPhar);
-    		} else if (user.getRole() == 4) {
+    		} else if (user.getRole() == Role.ADMINISTRATOR) {
     			Administrator temAdmin = new Administrator(user.getID(), user.getName(), user.getGender(), user.getAge(), user.getPassword());
     			userList.addAdministrator(temAdmin);
     		}
@@ -47,7 +48,7 @@ public class App {
     	/* Login */
 		while(true) {
 			User currentUser = null;
-			int accessLevel = -1;
+			Role accessLevel = null;
 			do {
 				System.out.println("Hospital Management System (HMS)");
 				System.out.println("==============================");
@@ -57,12 +58,12 @@ public class App {
 				sc.nextLine();
 
 				if(ID.equals("0")) {
-					accessLevel = -1;
+					accessLevel = null;
 					break;
 				}
 				
 				boolean found = false;
-				for (User user : userList.getUsersRoleSorted()) {
+				for (User user : PatientFileService.getAllPatientData()) {
 					if (user.getID().equals(ID)) {
 						found = true;
 						currentUser = user;
@@ -75,20 +76,20 @@ public class App {
 				}
 				
 				accessLevel = currentUser.login();
-				if(accessLevel != -1) {
+				if(accessLevel != null) {
 					System.out.println("Logged in successfully.\n");
 					break;
 				} 
 				System.out.println("Password is incorrect!");
-			} while (accessLevel == -1);
+			} while (accessLevel == null);
 			
-			if(accessLevel == -1) break;
+			if(accessLevel == null) break;
 
 			/* Menu */
 			switch(accessLevel) {
-			case 1: // Patient
+			case Role.PATIENT: // Patient
 				Patient currentPatient = null;
-				for (Patient patient : userList.getPatients()) {
+				for (Patient patient : PatientFileService.getAllPatientData()) {
 					if (patient.getID().equals(currentUser.getID())) {
 						currentPatient = patient;
 						break;
@@ -97,9 +98,9 @@ public class App {
 				currentPatient.menu();
 				break;
 
-			case 2: // Doctor
+			case Role.DOCTOR: // Doctor
 				Doctor currentDoctor = null;
-				for (Doctor doctor : userList.getDoctors()) {
+				for (Doctor doctor : StaffFileService.getAllDoctorData()) {
 					if (doctor.getID().equals(currentUser.getID())) {
 						currentDoctor = doctor;
 						break;
@@ -108,9 +109,9 @@ public class App {
 				currentDoctor.menu();
 				break;
 
-			case 3: // Pharmacist
+			case Role.PHARMACIST: // Pharmacist
 				Pharmacist currentPharmacist = null;
-				for (Pharmacist pharmacist : userList.getPharmacists()) {
+				for (Pharmacist pharmacist : StaffFileService.getAllPharmacistData()) {
 					if (pharmacist.getID().equals(currentUser.getID())) {
 						currentPharmacist = pharmacist;
 						break;
@@ -119,9 +120,9 @@ public class App {
 				currentPharmacist.menu();
 				break;
 
-			case 4: // Administrator
+			case Role.ADMINISTRATOR: // Administrator
 				Administrator currentAdministrator = null;
-				for (Administrator administrator : userList.getAdministrators()) {
+				for (Administrator administrator : StaffFileService.getAllAdministratorsData()) {
 					if (administrator.getID().equals(currentUser.getID())) {
 						currentAdministrator = administrator;
 						break;
