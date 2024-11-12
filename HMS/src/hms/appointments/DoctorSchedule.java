@@ -38,7 +38,7 @@ public class DoctorSchedule {
      * The user is asked to input the times in the format of hours and minutes.
      * The input values are then used to create Time objects for startTime and endTime.
      */
-    public void setWorkingTime() {
+    protected void setWorkingTime() {
         Scanner sc = GlobalData.getInstance().sc;
         System.out.println("When do you want to work? Input your start time, in hhmm");
         int time = sc.nextInt();
@@ -55,7 +55,7 @@ public class DoctorSchedule {
      * that the break start time is before the break end time and calls the
      * {@link #mergeBreaks(Time, Time)} method to process each valid break.
      */
-    public void setBreaks() {
+    protected void setBreaks() {
         Scanner sc = GlobalData.getInstance().sc;
 
         System.out.println("How many breaks would you like to add?");
@@ -169,39 +169,18 @@ public class DoctorSchedule {
     }
 
     /**
-     * Gets the number of breaks scheduled for the doctor.
-     *
-     * @return The integer count of breaks.
-     */
-    public int getBreakCount() {
-        return breakCount;
-    }
-
-    /**
-     * Checks if the doctor is available at a specific time represented by an integer.
-     * Note: The implementation does not currently perform any actions.
-     *
-     * @param time The time to check availability for, represented as an integer.
-     */
-    public void isDoctorAvailable(int time) {
-        Time temptTime = new Time(time);
-    }
-
-    /**
      * Checks if the doctor is available at a specific time.
      *
      * @param time The Time object representing the time to check availability for.
      * @return A boolean indicating whether the doctor is available (true) or not (false).
      */
-    public boolean isDoctorWorking(Time time) {
+    protected boolean isDoctorWorking(Time time) {
         for (int i = 0; i < breakCount; i++) {
             if (time.compareTo(breaks.get(i)[0]) >= 0 && time.compareTo(breaks.get(i)[1]) < 0) {
-                System.out.println("Doctor at break!");
                 return false;
             }
         }
         if (time.compareTo(startTime) < 0 || time.compareTo(endTime) > 0) {
-            System.out.println("Doctor not working!");
             return false;
         }
 

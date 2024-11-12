@@ -3,12 +3,14 @@ package hms.users;
 import hms.GlobalData;
 import hms.appointments.Appointment;
 import hms.appointments.AppointmentScheduler;
+import hms.appointments.AdministratorAppointmentManager;
 import hms.utils.Date;
 
 import java.util.*;
 
 public class Administrator extends Staff {
-	
+
+	AdministratorAppointmentManager manager = new AdministratorAppointmentManager();
 	/**
 	 * Constructor
 	 */
@@ -57,10 +59,10 @@ public class Administrator extends Staff {
 								System.out.println("Operation Cancelled. Returning to Menu...\n");
 								break;
 							}
-							if (AppointmentScheduler.getInstance().findAppointment(UUID.fromString(appointmentID),
-									AppointmentScheduler.getInstance().getAppointments()) != null) {
-								appointment = AppointmentScheduler.getInstance().findAppointment(UUID.fromString(appointmentID),
-										AppointmentScheduler.getInstance().getAppointments());
+							if (manager.findAppointment(UUID.fromString(appointmentID),
+									manager.getAppointments()) != null) {
+								appointment = manager.findAppointment(UUID.fromString(appointmentID),
+										manager.getAppointments());
 								appointmentFound = true;
 							}
 							alreadyTried = true;

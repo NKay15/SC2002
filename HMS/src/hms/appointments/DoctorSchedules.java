@@ -65,15 +65,6 @@ public class DoctorSchedules {
         }
     }
 
-    /**
-     * Returns the list of all doctor schedules.
-     *
-     * @return A list of DoctorSchedule objects.
-     */
-    public List<DoctorSchedule> getDoctorSchedules() {
-        return doctorSchedules;
-    }
-
     public DoctorSchedule findDateSchedule(Date date, Doctor doctor) {
         for (DoctorSchedule doctorSchedule : doctorSchedules) {
             if (doctorSchedule.getDate().equals(date) && doctorSchedule.getDoctor().getID().equals(doctor.getID()))
@@ -82,17 +73,6 @@ public class DoctorSchedules {
         return null;
     }
 
-    /**
-     * Checks if the doctor is available at a specific date and time given in integer format.
-     *
-     * @param date The date to check availability.
-     * @param time The time in integer format (HHMM).
-     * @return true if the doctor is available, false otherwise.
-     */
-    public boolean isDoctorWorking(Date date, int time) {
-        Time tempTime = new Time(time);
-        return (isDoctorWorking(date, tempTime));
-    }
 
     /**
      * Checks if the doctor is available at a specific date and time.
@@ -118,7 +98,7 @@ public class DoctorSchedules {
         printAvailableSlot(date, doctor.getDoctorScheduler());
     }
 
-    public void printAvailableSlot(Date date, DoctorScheduleManager scheduler) {
+    protected void printAvailableSlot(Date date, DoctorScheduleManager scheduler) {
 
         //System.out.println("Doctor ID: " + doctor.getID() + "'s available slots are:");
         DoctorSchedule schedule = findDateSchedule(date, doctor);
@@ -133,6 +113,9 @@ public class DoctorSchedules {
             if (scheduler.isSlotAvailable(time, date)) {
                 String slotTime = String.format("%02d:%02d", time / 100, time % 100);
                 System.out.println(slotTime);
+            }
+            else {
+                System.out.println("Doctor is not available.");
             }
         }
 

@@ -35,7 +35,7 @@ public class DoctorScheduleManager {
      */
     public void acceptAppointments(Appointment appointment) {
         updateDoctorData();
-        if (scheduler.findAppointment(appointment, pendingList) != null) {
+        if (scheduler.findAppointment(appointment, pendingList)) {
             scheduler.acceptAppointment(appointment);
         }
     }
@@ -47,7 +47,7 @@ public class DoctorScheduleManager {
      */
     public void declineAppointments(Appointment appointment) {
         updateDoctorData();
-        if (scheduler.findAppointment(appointment, pendingList) != null) {
+        if (scheduler.findAppointment(appointment, pendingList)) {
             scheduler.declineAppointment(appointment);
         }
     }

@@ -31,9 +31,11 @@ public class PatientScheduleManager {
      */
     public void schedulePatientAppointment(Appointment appointment) {
         updatePatientData();
-        if (scheduler.findAppointment(appointment, appointmentList) == null) {
-            scheduler.scheduleAppointment(appointment);
+        if (scheduler.findAppointmentSlot(appointment.getTimeSlot(), pendingAppointmentList)) {
+            System.out.println("You have already scheduled this slot.");
+            return;
         }
+        scheduler.scheduleAppointment(appointment);
     }
 
     /**
@@ -55,7 +57,7 @@ public class PatientScheduleManager {
      */
     public void cancelPatientAppointment(Appointment appointment) {
         updatePatientData();
-        if (scheduler.findAppointment(appointment, scheduler.findWhichList(appointment)) != null) {
+        if (scheduler.findAppointment(appointment)) {
             scheduler.cancelAppointment(appointment);
         } else {
             System.out.println("Slot not found");
@@ -91,18 +93,6 @@ public class PatientScheduleManager {
             appointment.printStatus();
             System.out.println("-------------");
             i++;
-        }
-    }
-
-    /**
-     * Prints available time slots for the doctors on a given date.
-     *
-     * @param date    the date for which available slots are printed
-     * @param doctors the list of doctors to check availability for
-     */
-    public void printAvailableSlots(Date date, List<Doctor> doctors) {
-        for (Doctor doctor : doctors) {
-            doctor.getDoctorSchedules().printAvailableSlot(date);
         }
     }
 
@@ -156,7 +146,7 @@ public class PatientScheduleManager {
     /**
      * Accessor of upcoming appointment
      *
-     * @param i index of appointmnet
+     * @param i index of appointment
      * @return null if index does not exist
      */
     public Appointment getUpcomingAppointment(int i) {
@@ -170,7 +160,7 @@ public class PatientScheduleManager {
             return appointmentList.get(i);
         } else {
             int adjustedIndex = appointmentList != null ? i - appointmentList.size() : i;
-            if (pendingAppointmentList != null && adjustedIndex < pendingAppointmentList.size()) {
+            if (adjustedIndex < pendingAppointmentList.size()) {
                 return pendingAppointmentList.get(adjustedIndex);
             }
         }
