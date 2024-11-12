@@ -1,6 +1,5 @@
 package hms.services;
 
-import com.sun.jdi.PathSearchingVirtualMachine;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,7 +12,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import hms.users.Patient;
-import hms.users.Staff;
 import hms.utils.BloodType;
 import hms.utils.Date;
 import hms.utils.InputValidation;

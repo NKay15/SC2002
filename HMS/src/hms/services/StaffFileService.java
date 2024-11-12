@@ -12,7 +12,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
 
-import hms.users.Doctor;
 import hms.users.Staff;
 import hms.utils.Password;
 import hms.utils.Role;
