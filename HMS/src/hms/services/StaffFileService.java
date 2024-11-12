@@ -2,16 +2,26 @@ package hms.services;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
 
+import hms.users.Doctor;
 import hms.users.Staff;
 import hms.utils.Password;
 import hms.utils.Role;
+import java.io.BufferedWriter;
 
 public class StaffFileService extends UserFileService {
+    private static final String originalFileName = "HMS/src/data/Staff_List.txt";
+    private static final String temFileName = "HMS/src/data/tem_Staff_List.txt";
+    
     /**
      * Get All Staff Data
      * @return List of Staff
@@ -20,7 +30,7 @@ public class StaffFileService extends UserFileService {
         ArrayList<Staff> staffArray = new ArrayList<Staff>();
         
         try {
-            File myObj = new File("HMS/src/data/Staff_List.txt");
+            File myObj = new File(originalFileName);
             Scanner myReader = new Scanner(myObj);
             myReader.nextLine(); // Remove header line
 
@@ -65,6 +75,59 @@ public class StaffFileService extends UserFileService {
     }
 
     /**
+     * Get Staff of a certain ID
+     * @param ID
+     * @return Staff
+     */
+    public static Staff getStaffByID(String ID) {
+        try {
+            File myObj = new File(originalFileName);
+            Scanner myReader = new Scanner(myObj);
+            myReader.nextLine(); // Remove header line
+
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                String[] dataList = data.split(",");
+
+                if (!dataList[0].equals(ID)) {
+                    continue;
+                }
+                
+                Role role = Role.UNKNOWN;
+                if (dataList[2].equals("Doctor")) {
+                	role = Role.DOCTOR;
+                }
+                if (dataList[2].equals("Pharmacist")) {
+                	role = Role.PHARMACIST;
+                }
+                if (dataList[2].equals("Administrator")) {
+                	role = Role.ADMINISTRATOR;
+                }
+
+                int genderNo = 0;
+                if (dataList[3].equals("Male")) {
+                	genderNo = 1;
+                } else if (dataList[3].equals("Female")) {
+                	genderNo = 2;
+                }
+
+                myReader.close();
+                if (dataList.length != 6) {
+                    return new Staff(dataList[0], dataList[1], role, genderNo, Integer.valueOf(dataList[4]), null);
+                } else {
+                    return new Staff(dataList[0], dataList[1], role, genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                }
+            }
+            myReader.close();
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+        }
+        
+        return null;
+    }
+
+    /**
      * Get All Staff Data of only a role
      * @param Role
      * @return List of Staff
@@ -73,7 +136,7 @@ public class StaffFileService extends UserFileService {
         ArrayList<Staff> staffArray = new ArrayList<Staff>();
         
         try {
-            File myObj = new File("HMS/src/data/Staff_List.txt");
+            File myObj = new File(originalFileName);
             Scanner myReader = new Scanner(myObj);
             myReader.nextLine(); // Remove header line
 
@@ -222,6 +285,70 @@ public class StaffFileService extends UserFileService {
                 return getStaffAgeSorted();
             default:
                 return null;
+        }
+    }
+
+    /**
+     * Add a new staff
+     * @param Staff
+     */
+    public void addStaff(Staff staff) {
+        try {
+            BufferedWriter f_writer = new BufferedWriter(new FileWriter(temFileName));
+
+            File myObj = new File(originalFileName);
+            Scanner myReader = new Scanner(myObj);
+            f_writer.write(myReader.nextLine());
+
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                String[] dataList = data.split(",");
+
+                if (dataList[0].equals(staff.getID())) {
+                    f_writer.write(staff.getID() + "," + staff.getName() + "," + staff.getRole().toString() + "," + staff.getGenderString() + "," + staff.getAge() + "," + staff.getPassword());
+                } else {
+                    f_writer.write(data);
+                }
+            }
+            myReader.close();
+
+            Path source = Paths.get(temFileName);
+            Path toDir = Paths.get(originalFileName);
+            Files.move(source, toDir.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+        }
+        catch (Exception e) {
+            System.out.println("An error occured");
+        }
+    }
+
+    /**
+     * Remove Doctor by ID
+     * @param ID
+     */
+    public void removeDoctorByID(String ID) {
+        try {
+            BufferedWriter f_writer = new BufferedWriter(new FileWriter(temFileName));
+
+            File myObj = new File(originalFileName);
+            Scanner myReader = new Scanner(myObj);
+            f_writer.write(myReader.nextLine());
+
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                String[] dataList = data.split(",");
+
+                if (!dataList[0].equals(ID)) {
+                    f_writer.write(data);
+                }
+            }
+            myReader.close();
+
+            Path source = Paths.get(temFileName);
+            Path toDir = Paths.get(originalFileName);
+            Files.move(source, toDir.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+        }
+        catch (Exception e) {
+            System.out.println("An error occured");
         }
     }
 }

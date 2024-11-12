@@ -54,4 +54,46 @@ public class DoctorFileService extends StaffFileService {
         
         return doctorArray;
     }
+
+    /**
+     * Get Doctor by ID
+     * @param ID
+     * @return Doctor
+     */
+    public static Doctor getDoctorByID(String ID) {
+        try {
+            File myObj = new File("HMS/src/data/Staff_List.txt");
+            Scanner myReader = new Scanner(myObj);
+            myReader.nextLine(); // Remove header line
+
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                String[] dataList = data.split(",");
+
+                if (dataList[2] != Role.DOCTOR.toString() || (!dataList[0].equals(ID))) {
+                    continue;
+                }
+
+                int genderNo = 0;
+                if (dataList[3].equals("Male")) {
+                	genderNo = 1;
+                } else if (dataList[3].equals("Female")) {
+                	genderNo = 2;
+                }
+
+                myReader.close();
+                if (dataList.length != 6) {
+                    return new Doctor(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), null);
+                } else {
+                    return new Doctor(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                }
+            }
+            myReader.close();
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+        }
+        
+        return null;
+    }
 }

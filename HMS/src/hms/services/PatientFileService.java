@@ -1,19 +1,30 @@
 package hms.services;
 
+import com.sun.jdi.PathSearchingVirtualMachine;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import hms.users.Patient;
+import hms.users.Staff;
 import hms.utils.BloodType;
 import hms.utils.Date;
 import hms.utils.InputValidation;
 import hms.utils.Password;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 public class PatientFileService extends InputValidation {
+    private static final String originalFileName = "HMS/src/data/Patient_List.txt";
+    private static final String temFileName = "HMS/src/data/tem_Patient_List.txt";
+
     /**
      * Get All Patient Data
      * @return List of Patients
@@ -22,7 +33,7 @@ public class PatientFileService extends InputValidation {
         ArrayList<Patient> patientArray = new ArrayList<Patient>();
         
         try {
-            File myObj = new File("HMS/src/data/Patient_List.txt");
+            File myObj = new File(originalFileName);
             Scanner myReader = new Scanner(myObj);
             myReader.nextLine(); // Remove header line
 
@@ -90,7 +101,7 @@ public class PatientFileService extends InputValidation {
      */
     public static Patient getPatientByID(String ID) {
         try {
-            File myObj = new File("HMS/src/data/Patient_List.txt");
+            File myObj = new File(originalFileName);
             Scanner myReader = new Scanner(myObj);
             myReader.nextLine(); // Remove header line
 
@@ -98,7 +109,7 @@ public class PatientFileService extends InputValidation {
                 String data = myReader.nextLine();
                 String[] dataList = data.split(",");
 
-                if (dataList[0] != ID) {
+                if (!dataList[0].equals(ID)) {
                     continue;
                 }
 
@@ -144,6 +155,7 @@ public class PatientFileService extends InputValidation {
                     return new Patient(dataList[0], dataList[1], genderNo, dateFormat, Integer.valueOf(dataList[6]), dataList[5], bloodTypeNo, new Password(dataList[7]));
                 }
             }
+            myReader.close();
         }
         catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
@@ -221,6 +233,70 @@ public class PatientFileService extends InputValidation {
                 return getPatientsGenderSorted();
             default:
                 return null;
+        }
+    }
+
+    /**
+     * Add a new Patient
+     * @param Patient
+     */
+    public void addPatient(Patient patient) {
+        try {
+            BufferedWriter f_writer = new BufferedWriter(new FileWriter(temFileName));
+
+            File myObj = new File(originalFileName);
+            Scanner myReader = new Scanner(myObj);
+            f_writer.write(myReader.nextLine());
+
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                String[] dataList = data.split(",");
+
+                if (dataList[0].equals(patient.getID())) {
+                    f_writer.write(patient.getID() + "," + patient.getName() + "," + patient.getDob().year() + "-" + patient.getDob().month() + "-" + patient.getDob().day() + "," + patient.getGenderString() + "," + patient.getBloodTypeString() + "," + patient.getEmail() + "," + patient.getPhone() + "," + patient.getPassword());
+                } else {
+                    f_writer.write(data);
+                }
+            }
+            myReader.close();
+
+            Path source = Paths.get(temFileName);
+            Path toDir = Paths.get(originalFileName);
+            Files.move(source, toDir.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+        }
+        catch (Exception e) {
+            System.out.println("An error occured");
+        }
+    }
+
+    /**
+     * Remove Patient by ID
+     * @param ID
+     */
+    public void removePatientByID(String ID) {
+        try {
+            BufferedWriter f_writer = new BufferedWriter(new FileWriter(temFileName));
+
+            File myObj = new File(originalFileName);
+            Scanner myReader = new Scanner(myObj);
+            f_writer.write(myReader.nextLine());
+
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                String[] dataList = data.split(",");
+
+                if (!dataList[0].equals(ID)) {
+                    f_writer.write(data);
+                }
+            }
+            myReader.close();
+
+            Path source = Paths.get(temFileName);
+            Path toDir = Paths.get(originalFileName);
+            Files.move(source, toDir.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+        }
+        catch (Exception e) {
+            System.out.println("An error occured");
         }
     }
 }
