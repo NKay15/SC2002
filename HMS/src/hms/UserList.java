@@ -6,6 +6,7 @@ import hms.utils.BloodType;
 
 import java.util.*;
 
+@Deprecated
 public class UserList {
     /**
      * List of Doctors in the system
