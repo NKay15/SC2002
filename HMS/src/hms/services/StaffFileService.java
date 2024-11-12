@@ -291,7 +291,7 @@ public class StaffFileService extends UserFileService {
      * Add a new staff
      * @param Staff
      */
-    public void addStaff(Staff staff) {
+    public static void addStaff(Staff staff) {
         try {
             BufferedWriter f_writer = new BufferedWriter(new FileWriter(temFileName));
 
@@ -301,14 +301,16 @@ public class StaffFileService extends UserFileService {
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 f_writer.write(data);
+                f_writer.newLine();
             }
 
             f_writer.write(staff.getID() + "," + staff.getName() + "," + staff.getRole().toString() + "," + staff.getGenderString() + "," + staff.getAge() + "," + staff.getPassword());
             myReader.close();
+            f_writer.close();
 
             Path source = Paths.get(temFileName);
             Path toDir = Paths.get(originalFileName);
-            Files.move(source, toDir.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+            Files.move(source, toDir, StandardCopyOption.REPLACE_EXISTING);
         }
         catch (Exception e) {
             System.out.println("An error occured");
@@ -319,13 +321,14 @@ public class StaffFileService extends UserFileService {
      * Update a staff
      * @param Staff
      */
-    public void updateStaff(Staff staff) {
+    public static void updateStaff(Staff staff) {
         try {
             BufferedWriter f_writer = new BufferedWriter(new FileWriter(temFileName));
 
             File myObj = new File(originalFileName);
             Scanner myReader = new Scanner(myObj);
             f_writer.write(myReader.nextLine());
+            f_writer.newLine();
 
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
@@ -336,12 +339,14 @@ public class StaffFileService extends UserFileService {
                 } else {
                     f_writer.write(data);
                 }
+                f_writer.newLine();
             }
             myReader.close();
+            f_writer.close();
 
             Path source = Paths.get(temFileName);
             Path toDir = Paths.get(originalFileName);
-            Files.move(source, toDir.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+            Files.move(source, toDir, StandardCopyOption.REPLACE_EXISTING);
         }
         catch (Exception e) {
             System.out.println("An error occured");
@@ -352,13 +357,14 @@ public class StaffFileService extends UserFileService {
      * Remove Staff by ID
      * @param ID
      */
-    public void removeStaffbyID(String ID) {
+    public static void removeStaffbyID(String ID) {
         try {
             BufferedWriter f_writer = new BufferedWriter(new FileWriter(temFileName));
 
             File myObj = new File(originalFileName);
             Scanner myReader = new Scanner(myObj);
             f_writer.write(myReader.nextLine());
+            f_writer.newLine();
 
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
@@ -366,13 +372,15 @@ public class StaffFileService extends UserFileService {
 
                 if (!dataList[0].equals(ID)) {
                     f_writer.write(data);
+                    f_writer.newLine();
                 }
             }
             myReader.close();
+            f_writer.close();
 
             Path source = Paths.get(temFileName);
             Path toDir = Paths.get(originalFileName);
-            Files.move(source, toDir.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+            Files.move(source, toDir, StandardCopyOption.REPLACE_EXISTING);
         }
         catch (Exception e) {
             System.out.println("An error occured");

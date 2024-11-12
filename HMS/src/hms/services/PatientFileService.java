@@ -78,7 +78,7 @@ public class PatientFileService extends InputValidation {
                 }
 
                 Patient newPatient = null;
-                if (dataList.length != 9) {
+                if (dataList.length != 8) {
                     newPatient = new Patient(dataList[0], dataList[1], genderNo, dateFormat, Integer.valueOf(dataList[6]), dataList[5], bloodTypeNo, null);
                 } else {
                     newPatient = new Patient(dataList[0], dataList[1], genderNo, dateFormat, Integer.valueOf(dataList[6]), dataList[5], bloodTypeNo, new Password(dataList[7]));
@@ -150,7 +150,7 @@ public class PatientFileService extends InputValidation {
                 }
 
                 myReader.close();
-                if (dataList.length != 9) {
+                if (dataList.length != 8) {
                     return new Patient(dataList[0], dataList[1], genderNo, dateFormat, Integer.valueOf(dataList[6]), dataList[5], bloodTypeNo, null);
                 } else {
                     return new Patient(dataList[0], dataList[1], genderNo, dateFormat, Integer.valueOf(dataList[6]), dataList[5], bloodTypeNo, new Password(dataList[7]));
@@ -241,7 +241,7 @@ public class PatientFileService extends InputValidation {
      * Add a new Patient
      * @param Patient
      */
-    public void addPatient(Patient patient) {
+    public static void addPatient(Patient patient) {
         try {
             BufferedWriter f_writer = new BufferedWriter(new FileWriter(temFileName));
 
@@ -251,10 +251,12 @@ public class PatientFileService extends InputValidation {
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 f_writer.write(data);
+                f_writer.newLine();
             }
 
             f_writer.write(patient.getID() + "," + patient.getName() + "," + patient.getDob().year() + "-" + patient.getDob().month() + "-" + patient.getDob().day() + "," + patient.getGenderString() + "," + patient.getBloodTypeString() + "," + patient.getEmail() + "," + patient.getPhone() + "," + patient.getPassword());
             myReader.close();
+            f_writer.close();
 
             Path source = Paths.get(temFileName);
             Path toDir = Paths.get(originalFileName);
@@ -269,32 +271,45 @@ public class PatientFileService extends InputValidation {
      * Update a Patient
      * @param Patient
      */
-    public void updatePatient(Patient patient) {
+    public static void updatePatient(Patient patient) {
         try {
             BufferedWriter f_writer = new BufferedWriter(new FileWriter(temFileName));
 
             File myObj = new File(originalFileName);
             Scanner myReader = new Scanner(myObj);
             f_writer.write(myReader.nextLine());
+            f_writer.newLine();
 
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
                 String[] dataList = data.split(",");
 
                 if (dataList[0].equals(patient.getID())) {
-                    f_writer.write(patient.getID() + "," + patient.getName() + "," + patient.getDob().year() + "-" + patient.getDob().month() + "-" + patient.getDob().day() + "," + patient.getGenderString() + "," + patient.getBloodTypeString() + "," + patient.getEmail() + "," + patient.getPhone() + "," + patient.getPassword());
+                    String dob = "";
+                    if (String.valueOf(patient.getDob().day()).length() == 1) {
+                        dob += "0";
+                    }
+                    dob += patient.getDob().day() + "-";
+                    if (String.valueOf(patient.getDob().month()).length() == 1) {
+                        dob += "0";
+                    }
+                    dob += patient.getDob().month() + "-";
+                    dob += patient.getDob().year();
+                    f_writer.write(patient.getID() + "," + patient.getName() + "," + dob + "," + patient.getGenderString() + "," + patient.getBloodTypeString() + "," + patient.getEmail() + "," + patient.getPhone() + "," + patient.getPassword().getPassword());
                 } else {
                     f_writer.write(data);
                 }
+                f_writer.newLine();
             }
             myReader.close();
+            f_writer.close();
 
             Path source = Paths.get(temFileName);
             Path toDir = Paths.get(originalFileName);
-            Files.move(source, toDir.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+            Files.move(source, toDir, StandardCopyOption.REPLACE_EXISTING);
         }
         catch (Exception e) {
-            System.out.println("An error occured");
+            System.out.println(e);
         }
     }
 
@@ -302,13 +317,14 @@ public class PatientFileService extends InputValidation {
      * Remove Patient by ID
      * @param ID
      */
-    public void removePatientByID(String ID) {
+    public static void removePatientByID(String ID) {
         try {
             BufferedWriter f_writer = new BufferedWriter(new FileWriter(temFileName));
 
             File myObj = new File(originalFileName);
             Scanner myReader = new Scanner(myObj);
             f_writer.write(myReader.nextLine());
+            f_writer.newLine();
 
             while (myReader.hasNextLine()) {
                 String data = myReader.nextLine();
@@ -316,13 +332,15 @@ public class PatientFileService extends InputValidation {
 
                 if (!dataList[0].equals(ID)) {
                     f_writer.write(data);
+                    f_writer.newLine();
                 }
             }
             myReader.close();
+            f_writer.close();
 
             Path source = Paths.get(temFileName);
             Path toDir = Paths.get(originalFileName);
-            Files.move(source, toDir.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+            Files.move(source, toDir, StandardCopyOption.REPLACE_EXISTING);
         }
         catch (Exception e) {
             System.out.println("An error occured");

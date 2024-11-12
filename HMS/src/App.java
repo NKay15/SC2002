@@ -24,7 +24,7 @@ public class App {
 
     	
 		/*Load Medical History*/
-		MedicalRecordFileService.loadMedicalHistory(userList);
+		//MedicalRecordFileService.loadMedicalHistory(userList);
 
 		/* Load data into inventory */
 		Inventory inventory = InventoryFileService.getInventory();
@@ -37,8 +37,8 @@ public class App {
     	Scanner sc = gd.sc;
     	
     	/* Login */
+		User currentUser = null;
 		while(true) {
-			User currentUser = null;
 			Role accessLevel = null;
 			do {
 				System.out.println("Hospital Management System (HMS)");
@@ -54,7 +54,7 @@ public class App {
 				}
 				
 				boolean found = false;
-				for (User user : PatientFileService.getAllPatientData()) {
+				for (User user : UserFileService.getUsersRoleSorted()) {
 					if (user.getID().equals(ID)) {
 						found = true;
 						currentUser = user;
@@ -79,46 +79,26 @@ public class App {
 			/* Menu */
 			switch(accessLevel) {
 			case Role.PATIENT: // Patient
-				Patient currentPatient = null;
-				for (Patient patient : PatientFileService.getAllPatientData()) {
-					if (patient.getID().equals(currentUser.getID())) {
-						currentPatient = patient;
-						break;
-					}
-				}
+				Patient currentPatient = PatientFileService.getPatientByID(currentUser.getID());
+				if (currentPatient == null) break;
 				currentPatient.menu();
 				break;
 
 			case Role.DOCTOR: // Doctor
-				Doctor currentDoctor = null;
-				for (Doctor doctor : StaffFileService.getAllDoctorData()) {
-					if (doctor.getID().equals(currentUser.getID())) {
-						currentDoctor = doctor;
-						break;
-					}
-				}
+				Doctor currentDoctor = DoctorFileService.getDoctorByID(currentUser.getID());
+				if (currentDoctor == null) break;
 				currentDoctor.menu();
 				break;
 
 			case Role.PHARMACIST: // Pharmacist
-				Pharmacist currentPharmacist = null;
-				for (Pharmacist pharmacist : StaffFileService.getAllPharmacistData()) {
-					if (pharmacist.getID().equals(currentUser.getID())) {
-						currentPharmacist = pharmacist;
-						break;
-					}
-				}
+				Pharmacist currentPharmacist = PharmacistFileService.getPharmacistByID(currentUser.getID());
+				if (currentPharmacist == null) break;
 				currentPharmacist.menu();
 				break;
 
 			case Role.ADMINISTRATOR: // Administrator
-				Administrator currentAdministrator = null;
-				for (Administrator administrator : StaffFileService.getAllAdministratorsData()) {
-					if (administrator.getID().equals(currentUser.getID())) {
-						currentAdministrator = administrator;
-						break;
-					}
-				}
+				Administrator currentAdministrator = AdministratorFileService.getAdministratorByID(currentUser.getID());
+				if (currentAdministrator == null) break;
 				currentAdministrator.menu();
 				break;
 				
