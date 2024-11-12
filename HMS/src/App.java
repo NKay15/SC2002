@@ -1,14 +1,13 @@
 import hms.GlobalData;
-import hms.pharmacy.Inventory;
-import hms.utils.TextFileService;
 import hms.UserList;
+import hms.pharmacy.Inventory;
+import hms.services.*;
 import hms.users.Administrator;
 import hms.users.Doctor;
 import hms.users.Patient;
 import hms.users.Pharmacist;
 import hms.users.Staff;
 import hms.users.User;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -16,9 +15,9 @@ public class App {
     public static void main(String[] args) throws Exception {
     	/* Load data into userList */
     	UserList userList = new UserList();
-    	userList.setPatients(TextFileService.getPatientData());
+    	userList.setPatients(PatientFileService.getPatientData());
     	ArrayList<Staff> temUser = new ArrayList<Staff>();
-    	temUser = TextFileService.getStaffData();
+    	temUser = StaffFileService.getStaffData();
     	for (Staff user : temUser) {
     		if (user.getRole() == 2) {
     			Doctor temDoc = new Doctor(user.getID(), user.getName(), user.getGender(), user.getAge(), user.getPassword());
@@ -33,10 +32,10 @@ public class App {
     	}
     	
 		/*Load Medical History*/
-		TextFileService.loadMedicalHistory(userList);
+		MedicalRecordFileService.loadMedicalHistory(userList);
 
 		/* Load data into inventory */
-		Inventory inventory = TextFileService.getInventory();
+		Inventory inventory = InventoryFileService.getInventory();
 
 		/* Set Global Data */
 		GlobalData gd = GlobalData.getInstance();
@@ -137,9 +136,9 @@ public class App {
 		}
 
 		/*Write Inventory */
-		TextFileService.writeInventory(gd.inventory);
+		InventoryFileService.writeInventory(gd.inventory);
 
 		/*Wrtie Medical History */
-		TextFileService.writeMedicalHistory(gd.userList.getPatients());
+		MedicalRecordFileService.writeMedicalHistory(gd.userList.getPatients());
     }
 }

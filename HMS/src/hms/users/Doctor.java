@@ -1,8 +1,8 @@
 package hms.users;
 
 import hms.GlobalData;
-import hms.utils.Password;
 import hms.appointments.*;
+import hms.services.StaffFileService;
 import hms.utils.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -156,7 +156,7 @@ public class Doctor extends Staff {
      */
     public void updatePatientMedicalRecords(Patient patient) {
         System.out.println("Add a new medical record:");
-        String message = TextFileService.nextLine();
+        String message = StaffFileService.nextLine();
         patient.addMedicalRecord(message);
     }
 
