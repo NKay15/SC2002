@@ -7,10 +7,13 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import hms.GlobalData;
+import hms.users.Administrator;
 import hms.users.Patient;
 import hms.utils.BloodType;
 import hms.utils.Date;
@@ -244,6 +247,34 @@ public class PatientFileService extends InputValidation {
 
             File myObj = new File(originalFileName);
             Scanner myReader = new Scanner(myObj);
+
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                f_writer.write(data);
+            }
+
+            f_writer.write(patient.getID() + "," + patient.getName() + "," + patient.getDob().year() + "-" + patient.getDob().month() + "-" + patient.getDob().day() + "," + patient.getGenderString() + "," + patient.getBloodTypeString() + "," + patient.getEmail() + "," + patient.getPhone() + "," + patient.getPassword());
+            myReader.close();
+
+            Path source = Paths.get(temFileName);
+            Path toDir = Paths.get(originalFileName);
+            Files.move(source, toDir.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+        }
+        catch (Exception e) {
+            System.out.println("An error occured");
+        }
+    }
+
+    /**
+     * Update a Patient
+     * @param Patient
+     */
+    public void updatePatient(Patient patient) {
+        try {
+            BufferedWriter f_writer = new BufferedWriter(new FileWriter(temFileName));
+
+            File myObj = new File(originalFileName);
+            Scanner myReader = new Scanner(myObj);
             f_writer.write(myReader.nextLine());
 
             while (myReader.hasNextLine()) {
@@ -296,5 +327,305 @@ public class PatientFileService extends InputValidation {
         catch (Exception e) {
             System.out.println("An error occured");
         }
+    }
+
+    /**
+     * Menu to Remove Patient by ID (for Admins)
+     * @param ID
+     * @param adminUsing Administrator Using Remove Operation
+     */
+    public boolean removePatientByIDMenu(String ID, Administrator adminUsing) {
+        Scanner sc = GlobalData.getInstance().sc;
+        Patient patient = getPatientByID(ID);
+
+        if(patient == null) return false;
+
+        System.out.println("\nPlease ensure that all fields below are correct before confirming:");
+        System.out.println("Patient ID: " + patient.getID());
+        System.out.println("Name: " + patient.getName());
+        System.out.println("Gender: " + patient.getGenderString());
+        System.out.println("DOB: " + patient.getDob().day() + "/" + patient.getDob().month() + "/" + patient.getDob().year());
+        System.out.println("HP: " + patient.getPhone());
+        System.out.println("Email: " + patient.getEmail());
+        System.out.println("Blood Type: " + patient.getBloodType());
+        System.out.print("\nEnter your Password to Confirm (0 to Cancel): ");
+        String password = sc.nextLine();
+        while (!adminUsing.checkPassword(password)) {
+            if (password.equals("0")) {
+                System.out.println("Operation Cancelled. Returning to Menu...");
+                return true;
+            }
+            else {
+                System.out.print("Wrong Password! Try again: ");
+                password = sc.nextLine();
+            }
+        }
+        removePatientByID(ID);
+        System.out.println("Patient Successfully Removed! Returning to Menu...");
+        return true;
+    }
+
+    /**
+     * Update Patient by ID
+     * @param ID
+     * @param adminUsing Administrator Using Update Operation
+     */
+    public boolean updatePatientByIDMenu(String ID, Administrator adminUsing) {
+        Scanner sc = GlobalData.getInstance().sc;
+        Patient patient = getPatientByID(ID);
+
+        /* If there is no patient found */
+        if (patient == null) return false;
+
+        String newPatientID = patient.getID();
+        String newPatientName = patient.getName();
+        int newPatientGender = patient.getGender();
+        String newPatientGenderString = patient.getGenderString();
+        int newPatientDay = patient.getDob().day();
+        int newPatientMonth = patient.getDob().month();
+        int newPatientYear = patient.getDob().year();
+        int newPatientHP = patient.getPhone();
+        String newPatientEmail = patient.getEmail();
+        String newPatientBloodTypeString = patient.getBloodTypeString();
+        BloodType newPatientBloodType = patient.getBloodType();
+        int changeWhat;
+
+        /* Menu */
+        System.out.println("\n-----Patient Update Menu-----");
+        System.out.println("Patient ID: " + patient.getID());
+        System.out.println("Name: " + patient.getName());
+        System.out.println("Gender: " + patient.getGenderString());
+        System.out.println("DOB: " + newPatientDay + "/" + newPatientMonth + "/" + newPatientYear);
+        System.out.println("HP: " + newPatientHP);
+        System.out.println("Email: " + newPatientEmail);
+        System.out.println("Blood Type: " + newPatientBloodTypeString);
+        System.out.println("\n1. Update Name");
+        System.out.println("2. Update Gender");
+        System.out.println("3. Update DOB");
+        System.out.println("4. Update HP");
+        System.out.println("5. Update Email");
+        System.out.println("6. Update Blood Type");
+        System.out.println("7. Cancel");
+        System.out.println("----------------------------");
+        System.out.print("Enter your choice: ");
+        String choice;
+
+        while (true) {
+            choice = sc.next(); sc.nextLine();
+            switch (choice) {
+                case "1":
+                    System.out.println("Current Name: " + patient.getName());
+                    System.out.print("Enter New Name: ");
+                    newPatientName = sc.nextLine();
+                    changeWhat = 1;
+                    break;
+
+                case "2":
+                    System.out.println("Current Gender: " + patient.getGenderString());
+                    System.out.print("Enter New Gender (0: Unknown; 1: Male; 2: Female): ");
+                    newPatientGenderString = sc.next(); sc.nextLine();
+                    while (true){
+                        switch (newPatientGenderString) {
+                            case "0":
+                            case "Unknown":
+                            case "unknown":
+                                newPatientGender = 0;
+                                newPatientGenderString = "Unknown";
+                                break;
+                            case "1":
+                            case "Male":
+                            case "male":
+                                newPatientGender = 1;
+                                newPatientGenderString = "Male";
+                                break;
+                            case "2":
+                            case "Female":
+                            case "female":
+                                newPatientGender = 2;
+                                newPatientGenderString = "Female";
+                                break;
+                            default:
+                                System.out.print("Invalid choice! Try again: ");
+                                newPatientGenderString = sc.next(); sc.nextLine();
+                                continue;
+                        }
+                        break;
+                    }
+                    changeWhat = 2;
+                    break;
+
+                case "3":
+                    System.out.println("Current Date Of Birth: " + newPatientDay + "/" + newPatientMonth + "/" + newPatientYear);
+                    System.out.print("Enter New Date of Birth (in DDMMYYYY): ");
+                    String newPatientDOBString;
+                    while (true) {
+                        if (sc.hasNextInt()) {
+                            newPatientDOBString = sc.nextLine();
+                            if (newPatientDOBString.length() == 8) {
+                                newPatientDay = Integer.parseInt(newPatientDOBString.substring(0, 2));
+                                newPatientMonth = Integer.parseInt(newPatientDOBString.substring(2, 4));
+                                newPatientYear = Integer.parseInt(newPatientDOBString.substring(4, 8));
+                                if (newPatientDay > 0 && newPatientDay < 32 && newPatientMonth > 0
+                                        && newPatientMonth < 13 && newPatientYear > 1900 && newPatientYear < 2025) {
+                                    break;
+                                } else {
+                                    System.out.print("Invalid date! Try again: ");
+                                }
+                            }
+                            else System.out.print ("Invalid date! Try again: ");
+                        } else {
+                            System.out.print("Invalid input! Try again, With Digits Only: ");
+                            sc.nextLine();
+                        }
+                    }
+                    changeWhat = 3;
+                    break;
+
+                case "4":
+                    System.out.println("Current HP: " + patient.getPhone());
+                    System.out.print("Enter New HP: ");
+                    while (true) {
+                        try {
+                            newPatientHP = sc.nextInt();
+                            sc.nextLine();
+                            if (String.valueOf(newPatientHP).length() == 8){
+                                break;
+                            }
+                            else {
+                                System.out.print("Invalid HP! Try again: ");
+                            }
+                        } catch (InputMismatchException e) {
+                            System.out.print("Invalid input! Try again, With Digits Only: ");
+                            sc.nextLine();
+                        }
+                    }
+                    changeWhat = 4;
+                    break;
+
+                case "5":
+                    System.out.println("Current Email: " + newPatientEmail);
+                    System.out.print("Enter New Email: ");
+                    newPatientEmail = sc.next(); sc.nextLine();
+                    changeWhat = 5;
+                    break;
+
+                case "6":
+                    System.out.println("Current Blood Type: " + newPatientBloodTypeString);
+                    System.out.println("----List of Blood Types----");
+                    System.out.println("0: Unknown\n1: A+\n2: A-\n3: B+\n4: B-\n" +
+                            "5: AB+\n6: AB-\n7: O+\n8: O-");
+                    System.out.println("---------------------------");
+                    System.out.print("Enter New Blood Type (Digit Only): ");
+                    boolean bloodTypeFound;
+                    do {
+                        try {
+                            newPatientBloodType = patient.intToBloodType(sc.nextInt());
+                            sc.nextLine();
+                            switch (newPatientBloodType) {
+                                case UNKNOWN:
+                                    newPatientBloodTypeString = BloodType.UNKNOWN.toString();
+                                    bloodTypeFound = true;
+                                    break;
+                                case A_PLUS:
+                                    newPatientBloodTypeString = BloodType.A_PLUS.toString();
+                                    bloodTypeFound = true;
+                                    break;
+                                case A_MINUS:
+                                    newPatientBloodTypeString = BloodType.A_MINUS.toString();
+                                    bloodTypeFound = true;
+                                    break;
+                                case B_PLUS:
+                                    newPatientBloodTypeString = BloodType.B_PLUS.toString();
+                                    bloodTypeFound = true;
+                                    break;
+                                case B_MINUS:
+                                    newPatientBloodTypeString = BloodType.B_MINUS.toString();
+                                    bloodTypeFound = true;
+                                    break;
+                                case AB_PLUS:
+                                    newPatientBloodTypeString = BloodType.AB_PLUS.toString();
+                                    bloodTypeFound = true;
+                                    break;
+                                case AB_MINUS:
+                                    newPatientBloodTypeString = BloodType.AB_MINUS.toString();
+                                    bloodTypeFound = true;
+                                    break;
+                                case O_PLUS:
+                                    newPatientBloodTypeString = BloodType.O_PLUS.toString();
+                                    bloodTypeFound = true;
+                                    break;
+                                case O_MINUS:
+                                    newPatientBloodTypeString = BloodType.O_MINUS.toString();
+                                    bloodTypeFound = true;
+                                    break;
+                                default:
+                                    bloodTypeFound = false;
+                                    System.out.print("Invalid choice! Try again: ");
+                            }
+                        } catch (InputMismatchException e) {
+                            bloodTypeFound = false;
+                            System.out.print("Invalid input! Try again, With Digit Only: ");
+                            sc.nextLine();
+                        }
+                    } while (!bloodTypeFound);
+                    changeWhat = 6;
+                    break;
+
+                case "7":
+                    System.out.println("Operation Cancelled. Returning to Menu...");
+                    return true;
+
+                default:
+                    System.out.print("Invalid Choice! Enter your choice: ");
+                    continue;
+            }
+            break;
+        }
+
+        System.out.println("\nPlease ensure that all fields below are correct before confirming:");
+        System.out.println("Administrator ID: " + newPatientID);
+        System.out.println("Name: " + newPatientName);
+        System.out.println("Gender: " + newPatientGenderString);
+        System.out.println("DOB: " + newPatientDay + "/" + newPatientMonth + "/" + newPatientYear);
+        System.out.println("HP: " + newPatientHP);
+        System.out.println("Email: " + newPatientEmail);
+        System.out.println("Blood Type: " + newPatientBloodTypeString);
+        System.out.print("\nEnter your Password to Confirm (0 to Cancel): ");
+        String password = sc.nextLine();
+        while (!adminUsing.checkPassword(password)) {
+            if (password.equals("0")) {
+                System.out.println("Operation Cancelled. Returning to Menu...");
+                return true;
+            }
+            else {
+                System.out.print("Wrong Password! Try again: ");
+                password = sc.nextLine();
+            }
+        }
+        switch (changeWhat){
+            case 1:
+                patient.setName(newPatientName);
+                break;
+            case 2:
+                patient.setGender(newPatientGender);
+                break;
+            case 3:
+                patient.setDob(newPatientDay, newPatientMonth, newPatientYear);
+                break;
+            case 4:
+                patient.setPhone(newPatientHP);
+                break;
+            case 5:
+                patient.setEmail(newPatientEmail);
+                break;
+            case 6:
+                patient.setBloodType(newPatientBloodType);
+                break;
+        }
+
+        updatePatient(patient);
+
+        System.out.println("Administrator Successfully Updated! Returning to Menu...");
+        return true;
     }
 }
