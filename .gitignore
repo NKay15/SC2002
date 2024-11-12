@@ -410,6 +410,7 @@ FodyWeavers.xsd
 *.html
 \#*
 *.org*
+*.pdf
 
 # output files
 out
