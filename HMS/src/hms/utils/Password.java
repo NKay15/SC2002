@@ -1,7 +1,5 @@
 package hms.utils;
 
-import hms.utils.MD5;
-
 public class Password extends MD5 {
     /**
      * For now just a string for the password.
@@ -27,7 +25,7 @@ public class Password extends MD5 {
      * @param newPassword the string of the new password
      */
     public void changePassword(String newPassword) {
-        password = MD5.getMd5(newPassword);
+        this.password = MD5.getMd5(newPassword);
     }
 
     /**
@@ -37,5 +35,9 @@ public class Password extends MD5 {
      */
     public boolean checkPassword(String check) {
         return password.equals(MD5.getMd5(check));
+    }
+
+    public String getPassword() {
+        return this.password;
     }
 }
