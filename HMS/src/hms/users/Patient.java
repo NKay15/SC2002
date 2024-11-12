@@ -1,7 +1,6 @@
 package hms.users;
 
 import hms.GlobalData;
-import hms.utils.Password;
 import hms.appointments.*;
 import hms.medicalRecords.MedicalRecord;
 import hms.utils.*;
@@ -293,12 +292,27 @@ public class Patient extends User{
         mr.setPhone(phone);
     }
 
+    /**
+     * print medical record
+     */
     public void viewMedicalRecord() {
         mr.print();
     }
 
+    /**
+     * write to medical record
+     * @param add text to be added
+     */
     public void addMedicalRecord(String add) {
         mr.newMedicalHistory(add);
+    }
+
+    /**
+     * accessor of medical history
+     * @return medical history
+     */
+    public ArrayList<String> getMedicalHistory(){
+        return mr.getMedicalHistory();
     }
 
     /**

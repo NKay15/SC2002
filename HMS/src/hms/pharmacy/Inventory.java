@@ -2,6 +2,7 @@ package hms.pharmacy;
 
 import hms.GlobalData;
 import hms.medicalRecords.AppointmentOutcomeRecord;
+import hms.utils.TextFileService;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -38,6 +39,19 @@ public class Inventory {
     }
 
     /**
+     * Return the index of a medicine
+     * @param check medicine name to find
+     * @return index of medicine in catalog -1 if not present
+     */
+    private int findIndex(String check) {
+        for(int i = 0; i < catalog.size(); i++) {
+            if(catalog.get(i).name().equals(check)) return i;
+        }
+
+        return -1;
+    }
+
+    /**
      * Return whether requests is empty (for admin)
      * @return true if empty, false otherwise
      */
@@ -59,7 +73,7 @@ public class Inventory {
         Scanner sc = GlobalData.getInstance().sc;
         boolean alreadyExists = true;
         System.out.print("Enter Name of New Medicine: ");
-        String name = sc.nextLine();
+        String name = TextFileService.nextLine();
 
         while(alreadyExists) {
             alreadyExists = false;
@@ -282,6 +296,25 @@ public class Inventory {
         }
     }
 
+    /**
+     * add request
+     * @param name name of medicine
+     * @param amount amount of medicine
+     * @return true if added successfully and false otherwise
+     */
+    public boolean addRequest(String name, int amount){
+        int i = findIndex(name);
+        if(i == -1) return false;
+        else {
+            requests.add(new Medicine(name, amount));
+            return true;
+        }
+    }
+
+    /**
+     * Use by doctor to generate prescription
+     * @return Medicine to be prescribe
+     */
     public Medicine[] generatePrescription(){
         System.out.println("\nCurrent Inventory, for your reference:");
         printCurrentInventory();
@@ -459,5 +492,31 @@ public class Inventory {
         return lowlevel.get(i).amount();
     }
 
-    
+    /**
+     * accessor of the size of request 
+     * @return  size of request
+     */
+    public int getRequestSize() {
+        return requests.size();
+    }
+
+    /**
+     * accessor of the name of medicine in request
+     * @param i index of medicine
+     * @return name of medicine
+     */
+    public String getRequestName(int i) {
+        if(i < 0 || i >= requests.size()) return "\0";
+        return requests.get(i).name();
+    }
+
+    /**
+     * accessor of the request quantity of medicine
+     * @param i index of medicine
+     * @return quantity of medicine
+     */
+    public int getRequestAmount(int i) {
+        if(i < 0 || i >= requests.size()) return -1;
+        return requests.get(i).amount();
+    }
 }
