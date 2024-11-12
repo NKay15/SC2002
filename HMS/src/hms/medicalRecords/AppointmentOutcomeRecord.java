@@ -1,10 +1,9 @@
 package hms.medicalRecords;
 
-import hms.utils.Date;
-import hms.utils.TextFileService;
-import hms.pharmacy.Medicine;
 import hms.GlobalData;
-
+import hms.pharmacy.Medicine;
+import hms.services.MedicalRecordFileService;
+import hms.utils.Date;
 import java.util.Scanner;
 
 public class AppointmentOutcomeRecord {
@@ -43,10 +42,10 @@ public class AppointmentOutcomeRecord {
         date = new Date(t);
         service = sc.nextLine();
         System.out.print("Enter Service Provided: ");
-        service = TextFileService.nextLine();
+        service = MedicalRecordFileService.nextLine();
         prescription = GlobalData.getInstance().inventory.generatePrescription();
         System.out.print("Enter Consultation Notes: ");
-        notes = TextFileService.nextLine();
+        notes = MedicalRecordFileService.nextLine();
         status = 1;
         if (prescription.length == 0) status = 2;
     }

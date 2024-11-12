@@ -5,7 +5,10 @@
 
 package hms.users;
 
+import hms.services.StaffFileService;
 import hms.utils.Password;
+import hms.utils.Role;
+import java.util.Scanner;
 
 /**
  * Staff class
@@ -34,12 +37,18 @@ public class Staff extends User {
 		this.age = age;
 	}
 
-    public Staff(String ID, String name, int role, int gender, int age, Password password) {
+    public Staff(String ID, String name, Role role, int gender, int age, Password password) {
         super(ID, name, role, gender, password);
         this.age = age;
     }
 
     public void printRole() {
         System.out.print("Staff");
+    }
+
+    @Override
+    protected void changePassword(Scanner sc) {
+        super.changePassword(sc);
+        StaffFileService.updateStaff(this);
     }
 }

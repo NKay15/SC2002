@@ -2,6 +2,7 @@ package hms.users;
 
 import hms.GlobalData;
 import hms.utils.Password;
+import hms.utils.Role;
 import java.util.Scanner;
 
 public class User {
@@ -11,14 +12,9 @@ public class User {
     private Password password;
 
     /**
-     * An integer to store the role. 
-     * 0 - no role 
-     * 1 - Patient 
-     * 2 - Doctor 
-     * 3 - Pharmacist 
-     * 4 - Administrator
+     * Enum of role
      */
-    private int role;
+    private Role role;
 
     /**
      * ID of user
@@ -38,7 +34,7 @@ public class User {
      */
     private int gender;
 
-    private void changePassword(Scanner sc){
+    protected void changePassword(Scanner sc){
         sc.nextLine();
         System.out.print("Enter Old Password (0 to Cancel): ");
         String password = sc.nextLine();
@@ -51,12 +47,12 @@ public class User {
             return;
         }
         System.out.print("Enter New Password: ");
-        password = sc.next(); sc.nextLine();
-        while (password.equals("0") || this.password.checkPassword(password)){
+        String newPassword = sc.next(); sc.nextLine();
+        while (newPassword.equals("0") || this.password.checkPassword(newPassword)){
             System.out.print("Invalid Password! Enter New Password: ");
-            password = sc.next(); sc.nextLine();
+            newPassword = sc.next(); sc.nextLine();
         }
-        this.password.changePassword(password);
+        this.password.changePassword(newPassword);
         System.out.println("Password Successfully Changed! Returning to Menu...\n");
     }
 
@@ -67,7 +63,7 @@ public class User {
      * @param role role number
      * @param gender gender number
      */
-    public User(String ID, String name, int role, int gender, Password password) {
+    public User(String ID, String name, Role role, int gender, Password password) {
     	this.ID = ID;
     	this.name = name;
     	this.role = role;
@@ -89,9 +85,9 @@ public class User {
 
     /**
      * Accessor of role
-     * @return role number
+     * @return role
      */
-    public int getRole() {
+    public Role getRole() {
         return role;
     }
 
@@ -99,7 +95,7 @@ public class User {
      * Set role
      * @param role
      */
-    public void setRole(int role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -165,12 +161,12 @@ public class User {
      * A function to login. It will ask for password.
      * @return role if login is successful otherwise -1
      */
-    public int login() {
+    public Role login() {
         Scanner sc = GlobalData.getInstance().sc;
         System.out.print("Enter password: ");
         String value = sc.nextLine();
         if (password.checkPassword(value)) return role;
-        else return -1;
+        else return null;
     }
 
     public boolean checkPassword(String password) {

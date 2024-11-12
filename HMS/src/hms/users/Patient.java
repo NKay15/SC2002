@@ -3,8 +3,8 @@ package hms.users;
 import hms.GlobalData;
 import hms.appointments.*;
 import hms.medicalRecords.MedicalRecord;
+import hms.services.PatientFileService;
 import hms.utils.*;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -43,12 +43,12 @@ public class Patient extends User{
     /**
      * Constructor for patient
      */
-    public Patient(String patientID, String name, int gender, Date dob, int phone, String email, int bloodType, Password password) {
-        super(patientID, name, 1, gender, password);
+    public Patient(String patientID, String name, int gender, Date dob, int phone, String email, BloodType bloodType, Password password) {
+        super(patientID, name, Role.PATIENT, gender, password);
         this.dob = dob;
         this.phone = phone;
         this.email = email;
-        this.bloodType = intToBloodType(bloodType);
+        this.bloodType = bloodType;
         mr = new MedicalRecord(this);
         patientSchedule = new PatientScheduleManager(this);
     }
@@ -402,5 +402,11 @@ public class Patient extends User{
 
     public void printRole() {
         System.out.print("Patient");
+    }
+
+    @Override
+    protected void changePassword(Scanner sc) {
+        super.changePassword(sc);
+        PatientFileService.updatePatient(this);
     }
 }

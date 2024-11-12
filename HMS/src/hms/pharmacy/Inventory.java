@@ -2,7 +2,7 @@ package hms.pharmacy;
 
 import hms.GlobalData;
 import hms.medicalRecords.AppointmentOutcomeRecord;
-import hms.utils.TextFileService;
+import hms.services.InventoryFileService;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -73,7 +73,7 @@ public class Inventory {
         Scanner sc = GlobalData.getInstance().sc;
         boolean alreadyExists = true;
         System.out.print("Enter Name of New Medicine: ");
-        String name = TextFileService.nextLine();
+        String name = InventoryFileService.nextLine();
 
         while(alreadyExists) {
             alreadyExists = false;

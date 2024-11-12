@@ -1,10 +1,15 @@
 package hms.users;
 
 import hms.GlobalData;
-import hms.utils.Password;
-import hms.appointments.Appointment;
 import hms.appointments.AdministratorAppointmentManager;
+import hms.appointments.Appointment;
+import hms.services.DoctorFileService;
+import hms.services.StaffFileService;
+import hms.services.UserFileService;
+import hms.utils.BloodType;
 import hms.utils.Date;
+import hms.utils.Password;
+import hms.utils.Role;
 import java.util.*;
 
 public class Administrator extends Staff {
@@ -14,7 +19,7 @@ public class Administrator extends Staff {
 	 * Constructor
 	 */
 	public Administrator(String ID, String name, int gender, int age, Password password) {
-		super(ID, name, 4, gender, age, password);
+		super(ID, name, Role.ADMINISTRATOR, gender, age, password);
 	}
 
 	public void menu() {
@@ -211,7 +216,7 @@ public class Administrator extends Staff {
 							System.out.print("ID Must Begin With an Uppercase Letter! Try again: ");
 							continue;
 						}
-						for (User user : GlobalData.getInstance().userList.getUsersRoleSorted()) {
+						for (Staff user : StaffFileService.getAllStaffData()) {
 							if (user.getID().equals(newID)) {
 								System.out.print("User " + newID + " Already Exists! Try again: ");
 								alreadyExists = true;
@@ -273,7 +278,7 @@ public class Administrator extends Staff {
 								switch (confirmAdd) {
 									case "1":
 										Doctor newDoctor = new Doctor(newID, newName, newGender, newAge, null);
-										GlobalData.getInstance().userList.addDoctor(newDoctor);
+										StaffFileService.addStaff((Staff) newDoctor);
 										System.out.println("New Doctor Successfully Added! Returning to Menu...");
 										break;
 									case "2":
@@ -296,7 +301,7 @@ public class Administrator extends Staff {
 								switch (confirmAdd) {
 									case "1":
 										Pharmacist newPharmacist = new Pharmacist(newID, newName, newGender, newAge, null);
-										GlobalData.getInstance().userList.addPharmacist(newPharmacist);
+										StaffFileService.addStaff((Staff) newPharmacist);
 										System.out.println("New Pharmacist Successfully Added! Returning to Menu...");
 										break;
 									case "2":
@@ -319,7 +324,7 @@ public class Administrator extends Staff {
 								switch (confirmAdd) {
 									case "1":
 										Administrator newAdministrator = new Administrator(newID, newName, newGender, newAge, null);
-										GlobalData.getInstance().userList.addAdministrator(newAdministrator);
+										StaffFileService.addStaff((Staff) newAdministrator);
 										System.out.println("New Administrator Successfully Added! Returning to Menu...");
 										break;
 									case "2":
@@ -652,48 +657,48 @@ public class Administrator extends Staff {
 							"5: AB+\n6: AB-\n7: O+\n8: O-");
 					System.out.println("---------------------------");
 					System.out.print("Enter Blood Type (Digit Only): ");
-					int newBloodType = -1;
-					String newBloodTypeString = "";
+					int newBloodTypeInt = -1;
+					BloodType newBloodType = BloodType.UNKNOWN;
 					boolean bloodTypeFound;
 					do {
 						try {
-							newBloodType = sc.nextInt();
+							newBloodTypeInt = sc.nextInt();
 							sc.nextLine();
-							switch (newBloodType) {
+							switch (newBloodTypeInt) {
 								case 0:
-									newBloodTypeString = "Unknown";
+									newBloodType = BloodType.UNKNOWN;
 									bloodTypeFound = false;
 									break;
 								case 1:
-									newBloodTypeString = "A+";
+									newBloodType = BloodType.A_PLUS;
 									bloodTypeFound = true;
 									break;
 								case 2:
-									newBloodTypeString = "A-";
+									newBloodType = BloodType.A_MINUS;
 									bloodTypeFound = true;
 									break;
 								case 3:
-									newBloodTypeString = "B+";
+									newBloodType = BloodType.B_PLUS;
 									bloodTypeFound = true;
 									break;
 								case 4:
-									newBloodTypeString = "B-";
+									newBloodType = BloodType.B_MINUS;
 									bloodTypeFound = true;
 									break;
 								case 5:
-									newBloodTypeString = "AB+";
+									newBloodType = BloodType.AB_PLUS;
 									bloodTypeFound = true;
 									break;
 								case 6:
-									newBloodTypeString = "AB-";
+									newBloodType = BloodType.AB_MINUS;
 									bloodTypeFound = true;
 									break;
 								case 7:
-									newBloodTypeString = "O+";
+									newBloodType = BloodType.O_PLUS;
 									bloodTypeFound = true;
 									break;
 								case 8:
-									newBloodTypeString = "O-";
+									newBloodType = BloodType.O_MINUS;
 									bloodTypeFound = true;
 									break;
 								default:
@@ -714,7 +719,7 @@ public class Administrator extends Staff {
 					System.out.println("DOB: " + day + "/" + month + "/" + year);
 					System.out.println("HP: " + newHP);
 					System.out.println("Email: " + newEmail);
-					System.out.println("Blood Type: " + newBloodTypeString);
+					System.out.println("Blood Type: " + newBloodType.toString());
 
 					String confirmAdd;
 					System.out.println("\nConfirm to Add New Patient? You May Edit Details Later.");

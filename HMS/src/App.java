@@ -1,14 +1,14 @@
 import hms.GlobalData;
-import hms.pharmacy.Inventory;
-import hms.utils.TextFileService;
 import hms.UserList;
+import hms.pharmacy.Inventory;
+import hms.services.*;
 import hms.users.Administrator;
 import hms.users.Doctor;
 import hms.users.Patient;
 import hms.users.Pharmacist;
 import hms.users.Staff;
 import hms.users.User;
-
+import hms.utils.Role;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -16,27 +16,18 @@ public class App {
     public static void main(String[] args) throws Exception {
     	/* Load data into userList */
     	UserList userList = new UserList();
-    	userList.setPatients(TextFileService.getPatientData());
+    	userList.setPatients(PatientFileService.getAllPatientData());
     	ArrayList<Staff> temUser = new ArrayList<Staff>();
-    	temUser = TextFileService.getStaffData();
-    	for (Staff user : temUser) {
-    		if (user.getRole() == 2) {
-    			Doctor temDoc = new Doctor(user.getID(), user.getName(), user.getGender(), user.getAge(), user.getPassword());
-    			userList.addDoctor(temDoc);
-    		} else if (user.getRole() == 3) {
-    			Pharmacist temPhar = new Pharmacist(user.getID(), user.getName(), user.getGender(), user.getAge(), user.getPassword());
-    			userList.addPharmacist(temPhar);
-    		} else if (user.getRole() == 4) {
-    			Administrator temAdmin = new Administrator(user.getID(), user.getName(), user.getGender(), user.getAge(), user.getPassword());
-    			userList.addAdministrator(temAdmin);
-    		}
-    	}
+    	userList.setDoctors(DoctorFileService.getAllDoctorData());
+		userList.setPharmacist(PharmacistFileService.getAllPharmacistData());
+		userList.setAdministrator(AdministratorFileService.getAllAdministratorsData());
+
     	
 		/*Load Medical History*/
-		TextFileService.loadMedicalHistory(userList);
+		//MedicalRecordFileService.loadMedicalHistory(userList);
 
 		/* Load data into inventory */
-		Inventory inventory = TextFileService.getInventory();
+		Inventory inventory = InventoryFileService.getInventory();
 
 		/* Set Global Data */
 		GlobalData gd = GlobalData.getInstance();
@@ -46,9 +37,9 @@ public class App {
     	Scanner sc = gd.sc;
     	
     	/* Login */
+		User currentUser = null;
 		while(true) {
-			User currentUser = null;
-			int accessLevel = -1;
+			Role accessLevel = null;
 			do {
 				System.out.println("Hospital Management System (HMS)");
 				System.out.println("==============================");
@@ -58,12 +49,12 @@ public class App {
 				sc.nextLine();
 
 				if(ID.equals("0")) {
-					accessLevel = -1;
+					accessLevel = null;
 					break;
 				}
 				
 				boolean found = false;
-				for (User user : userList.getUsersRoleSorted()) {
+				for (User user : UserFileService.getUsersRoleSorted()) {
 					if (user.getID().equals(ID)) {
 						found = true;
 						currentUser = user;
@@ -76,58 +67,38 @@ public class App {
 				}
 				
 				accessLevel = currentUser.login();
-				if(accessLevel != -1) {
+				if(accessLevel != null) {
 					System.out.println("Logged in successfully.\n");
 					break;
 				} 
 				System.out.println("Password is incorrect!");
-			} while (accessLevel == -1);
+			} while (accessLevel == null);
 			
-			if(accessLevel == -1) break;
+			if(accessLevel == null) break;
 
 			/* Menu */
 			switch(accessLevel) {
-			case 1: // Patient
-				Patient currentPatient = null;
-				for (Patient patient : userList.getPatients()) {
-					if (patient.getID().equals(currentUser.getID())) {
-						currentPatient = patient;
-						break;
-					}
-				}
+			case Role.PATIENT: // Patient
+				Patient currentPatient = PatientFileService.getPatientByID(currentUser.getID());
+				if (currentPatient == null) break;
 				currentPatient.menu();
 				break;
 
-			case 2: // Doctor
-				Doctor currentDoctor = null;
-				for (Doctor doctor : userList.getDoctors()) {
-					if (doctor.getID().equals(currentUser.getID())) {
-						currentDoctor = doctor;
-						break;
-					}
-				}
+			case Role.DOCTOR: // Doctor
+				Doctor currentDoctor = DoctorFileService.getDoctorByID(currentUser.getID());
+				if (currentDoctor == null) break;
 				currentDoctor.menu();
 				break;
 
-			case 3: // Pharmacist
-				Pharmacist currentPharmacist = null;
-				for (Pharmacist pharmacist : userList.getPharmacists()) {
-					if (pharmacist.getID().equals(currentUser.getID())) {
-						currentPharmacist = pharmacist;
-						break;
-					}
-				}
+			case Role.PHARMACIST: // Pharmacist
+				Pharmacist currentPharmacist = PharmacistFileService.getPharmacistByID(currentUser.getID());
+				if (currentPharmacist == null) break;
 				currentPharmacist.menu();
 				break;
 
-			case 4: // Administrator
-				Administrator currentAdministrator = null;
-				for (Administrator administrator : userList.getAdministrators()) {
-					if (administrator.getID().equals(currentUser.getID())) {
-						currentAdministrator = administrator;
-						break;
-					}
-				}
+			case Role.ADMINISTRATOR: // Administrator
+				Administrator currentAdministrator = AdministratorFileService.getAdministratorByID(currentUser.getID());
+				if (currentAdministrator == null) break;
 				currentAdministrator.menu();
 				break;
 				
@@ -138,9 +109,9 @@ public class App {
 		}
 
 		/*Write Inventory */
-		TextFileService.writeInventory(gd.inventory);
+		InventoryFileService.writeInventory(gd.inventory);
 
 		/*Wrtie Medical History */
-		TextFileService.writeMedicalHistory(gd.userList.getPatients());
+		MedicalRecordFileService.writeMedicalHistory(gd.userList.getPatients());
     }
 }

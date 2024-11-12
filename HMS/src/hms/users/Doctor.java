@@ -1,8 +1,8 @@
 package hms.users;
 
 import hms.GlobalData;
-import hms.utils.Password;
 import hms.appointments.*;
+import hms.services.StaffFileService;
 import hms.utils.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class Doctor extends Staff {
     private List<Patient> patientList;
 
     public Doctor(String doctorID, String name, int gender, int age, Password password) {
-        super(doctorID, name, 2, gender, age, password);
+        super(doctorID, name, Role.DOCTOR, gender, age, password);
         doctorSchedules = new DoctorSchedules(this);
         doctorScheduler = new DoctorScheduleManager(this);
         patientList = new ArrayList<>();
@@ -155,7 +155,7 @@ public class Doctor extends Staff {
      */
     public void updatePatientMedicalRecords(Patient patient) {
         System.out.println("Add a new medical record:");
-        String message = TextFileService.nextLine();
+        String message = StaffFileService.nextLine();
         patient.addMedicalRecord(message);
     }
 
