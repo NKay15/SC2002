@@ -297,6 +297,34 @@ public class StaffFileService extends UserFileService {
 
             File myObj = new File(originalFileName);
             Scanner myReader = new Scanner(myObj);
+            
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                f_writer.write(data);
+            }
+
+            f_writer.write(staff.getID() + "," + staff.getName() + "," + staff.getRole().toString() + "," + staff.getGenderString() + "," + staff.getAge() + "," + staff.getPassword());
+            myReader.close();
+
+            Path source = Paths.get(temFileName);
+            Path toDir = Paths.get(originalFileName);
+            Files.move(source, toDir.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+        }
+        catch (Exception e) {
+            System.out.println("An error occured");
+        }
+    }
+
+    /**
+     * Update a staff
+     * @param Staff
+     */
+    public void updateStaff(Staff staff) {
+        try {
+            BufferedWriter f_writer = new BufferedWriter(new FileWriter(temFileName));
+
+            File myObj = new File(originalFileName);
+            Scanner myReader = new Scanner(myObj);
             f_writer.write(myReader.nextLine());
 
             while (myReader.hasNextLine()) {
@@ -321,10 +349,10 @@ public class StaffFileService extends UserFileService {
     }
 
     /**
-     * Remove Doctor by ID
+     * Remove Staff by ID
      * @param ID
      */
-    public void removeDoctorByID(String ID) {
+    public void removeStaffbyID(String ID) {
         try {
             BufferedWriter f_writer = new BufferedWriter(new FileWriter(temFileName));
 
