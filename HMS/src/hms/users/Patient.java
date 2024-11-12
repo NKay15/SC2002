@@ -268,7 +268,6 @@ public class Patient extends User{
 
 	    		default:
                     if(!super.useroptions(choice-8)) {
-                        System.out.println("Logging out...\n");
                         return;
                     }
 	    	}
@@ -325,14 +324,18 @@ public class Patient extends User{
 
         int ch;
         Scanner scan = GlobalData.getInstance().sc;
+
         ch = scan.nextInt();
 
         if (ch == 1) {
             String email;
+            scan.nextLine();
+            System.out.print("Enter new email :");
             email = scan.nextLine();
             this.updateEmail(email);
         } else if (ch == 2) {
             int phone;
+            System.out.print("Enter new phone :");
             phone = scan.nextInt();
             this.updatePhone(phone);
         } else {

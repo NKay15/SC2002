@@ -81,22 +81,7 @@ public class Administrator extends Staff {
 
 					default:
 						if (!super.useroptions(choice - 4)) {
-							if (choice == 6) {
-								System.out.print("Confirm Log Out? Enter 1 to Log Out; " +
-										"or Enter anything else to Return to Menu.\nEnter your choice: ");
-								String confirmLogOut = sc.next(); sc.nextLine();
-								if (confirmLogOut.equals("1")) {
-									System.out.println("Logging out...\n");
-									return;
-								} else {
-									System.out.println("Returning to Menu...\n");
-									break;
-								}
-							} else {
-								System.out.print("Invalid choice! Try again: ");
-								inputError = true;
-								break;
-							}
+							return;
 						}
 						break;
 				}
