@@ -3,6 +3,7 @@ package hms.users;
 import hms.GlobalData;
 import hms.appointments.*;
 import hms.medicalRecords.MedicalRecord;
+import hms.services.PatientFileService;
 import hms.utils.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -398,5 +399,11 @@ public class Patient extends User{
 
     public void printRole() {
         System.out.print("Patient");
+    }
+
+    @Override
+    protected void changePassword(Scanner sc) {
+        super.changePassword(sc);
+        PatientFileService.updatePatient(this);
     }
 }

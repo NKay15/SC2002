@@ -5,8 +5,10 @@
 
 package hms.users;
 
+import hms.services.StaffFileService;
 import hms.utils.Password;
 import hms.utils.Role;
+import java.util.Scanner;
 
 /**
  * Staff class
@@ -42,5 +44,11 @@ public class Staff extends User {
 
     public void printRole() {
         System.out.print("Staff");
+    }
+
+    @Override
+    protected void changePassword(Scanner sc) {
+        super.changePassword(sc);
+        StaffFileService.updateStaff(this);
     }
 }
