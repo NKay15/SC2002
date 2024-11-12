@@ -18,19 +18,10 @@ public class App {
     	UserList userList = new UserList();
     	userList.setPatients(PatientFileService.getAllPatientData());
     	ArrayList<Staff> temUser = new ArrayList<Staff>();
-    	temUser = StaffFileService.getAllStaffData();
-    	for (Staff user : temUser) {
-    		if (user.getRole() == Role.DOCTOR) {
-    			Doctor temDoc = new Doctor(user.getID(), user.getName(), user.getGender(), user.getAge(), user.getPassword());
-    			userList.addDoctor(temDoc);
-    		} else if (user.getRole() == Role.PHARMACIST) {
-    			Pharmacist temPhar = new Pharmacist(user.getID(), user.getName(), user.getGender(), user.getAge(), user.getPassword());
-    			userList.addPharmacist(temPhar);
-    		} else if (user.getRole() == Role.ADMINISTRATOR) {
-    			Administrator temAdmin = new Administrator(user.getID(), user.getName(), user.getGender(), user.getAge(), user.getPassword());
-    			userList.addAdministrator(temAdmin);
-    		}
-    	}
+    	userList.setDoctors(StaffFileService.getAllDoctorData());
+		userList.setPharmacist(StaffFileService.getAllPharmacistData());
+		userList.setAdministrator(StaffFileService.getAllAdministratorsData());
+
     	
 		/*Load Medical History*/
 		MedicalRecordFileService.loadMedicalHistory(userList);
