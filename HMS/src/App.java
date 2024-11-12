@@ -18,9 +18,9 @@ public class App {
     	UserList userList = new UserList();
     	userList.setPatients(PatientFileService.getAllPatientData());
     	ArrayList<Staff> temUser = new ArrayList<Staff>();
-    	userList.setDoctors(StaffFileService.getAllDoctorData());
-		userList.setPharmacist(StaffFileService.getAllPharmacistData());
-		userList.setAdministrator(StaffFileService.getAllAdministratorsData());
+    	userList.setDoctors(DoctorFileService.getAllDoctorData());
+		userList.setPharmacist(PharmacistFileService.getAllPharmacistData());
+		userList.setAdministrator(AdministratorFileService.getAllAdministratorsData());
 
     	
 		/*Load Medical History*/
