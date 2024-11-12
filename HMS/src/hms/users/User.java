@@ -34,7 +34,7 @@ public class User {
      */
     private int gender;
 
-    private void changePassword(Scanner sc){
+    protected void changePassword(Scanner sc){
         sc.nextLine();
         System.out.print("Enter Old Password (0 to Cancel): ");
         String password = sc.nextLine();
@@ -47,12 +47,12 @@ public class User {
             return;
         }
         System.out.print("Enter New Password: ");
-        password = sc.next(); sc.nextLine();
-        while (password.equals("0") || this.password.checkPassword(password)){
+        String newPassword = sc.next(); sc.nextLine();
+        while (newPassword.equals("0") || this.password.checkPassword(newPassword)){
             System.out.print("Invalid Password! Enter New Password: ");
-            password = sc.next(); sc.nextLine();
+            newPassword = sc.next(); sc.nextLine();
         }
-        this.password.changePassword(password);
+        this.password.changePassword(newPassword);
         System.out.println("Password Successfully Changed! Returning to Menu...\n");
     }
 
