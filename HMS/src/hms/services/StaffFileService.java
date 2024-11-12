@@ -3,18 +3,15 @@ package hms.services;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
-import hms.users.Administrator;
-import hms.users.Doctor;
-import hms.users.Pharmacist;
 import hms.users.Staff;
-import hms.utils.InputValidation;
 import hms.utils.Password;
 import hms.utils.Role;
-import javax.management.relation.Role;
 
-public class StaffFileService extends InputValidation {
+public class StaffFileService extends UserFileService {
     /**
      * Get All Staff Data
      * @return List of Staff
@@ -68,7 +65,7 @@ public class StaffFileService extends InputValidation {
     }
 
     /**
-     * Get All Staff Data
+     * Get All Staff Data of only a role
      * @param Role
      * @return List of Staff
      */
@@ -114,137 +111,117 @@ public class StaffFileService extends InputValidation {
     }
 
     /**
-     * Get All Doctor Data
-     * @return List of Doctors
+     * Get all staff by Name
+     * @return list of staff
      */
-    public static ArrayList<Doctor> getAllDoctorData() {
-        ArrayList<Doctor> doctorArray = new ArrayList<Doctor>();
-        
-        try {
-            File myObj = new File("HMS/src/data/Staff_List.txt");
-            Scanner myReader = new Scanner(myObj);
-            myReader.nextLine(); // Remove header line
+    public static ArrayList<Staff> getStaffNameSorted() {
+        ArrayList<Staff> staffArray = getAllStaffData();
 
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                String[] dataList = data.split(",");
-
-                if (dataList[2] != Role.DOCTOR.toString()) {
-                    continue;
-                }
-
-                int genderNo = 0;
-                if (dataList[3].equals("Male")) {
-                	genderNo = 1;
-                } else if (dataList[3].equals("Female")) {
-                	genderNo = 2;
-                }
-
-                Doctor newStaff = null;
-                if (dataList.length != 6) {
-                    newStaff = new Doctor(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), null);
-                } else {
-                    newStaff = new Doctor(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
-                }
-
-                doctorArray.add(newStaff);
+        // Sort by name in ascending order
+        Collections.sort(staffArray, new Comparator<Staff>() {
+            @Override
+            public int compare(Staff p1, Staff p2) {
+                return p1.getName().compareTo(p2.getName());
             }
-            myReader.close();
-        }
-        catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-        }
-        
-        return doctorArray;
+        });
+
+        return staffArray;
     }
 
     /**
-     * Get All Pharmacist Data
-     * @return List of Pharmacists
+     * Get all staff by Role
+     * @return list of staff
      */
-    public static ArrayList<Pharmacist> getAllPharmacistData() {
-        ArrayList<Pharmacist> pharmacistArray = new ArrayList<Pharmacist>();
-        
-        try {
-            File myObj = new File("HMS/src/data/Staff_List.txt");
-            Scanner myReader = new Scanner(myObj);
-            myReader.nextLine(); // Remove header line
+    public static ArrayList<Staff> getStaffRoleSorted() {
+        ArrayList<Staff> staffArray = getAllStaffData();
 
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                String[] dataList = data.split(",");
-
-                if (dataList[2] != Role.PHARMACIST.toString()) {
-                    continue;
-                }
-
-                int genderNo = 0;
-                if (dataList[3].equals("Male")) {
-                	genderNo = 1;
-                } else if (dataList[3].equals("Female")) {
-                	genderNo = 2;
-                }
-
-                Pharmacist newStaff = null;
-                if (dataList.length != 6) {
-                    newStaff = new Pharmacist(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), null);
-                } else {
-                    newStaff = new Pharmacist(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
-                }
-
-                pharmacistArray.add(newStaff);
+        // Sort by name in ascending order
+        Collections.sort(staffArray, new Comparator<Staff>() {
+            @Override
+            public int compare(Staff p1, Staff p2) {
+                return p1.getRole().compareTo(p2.getRole());
             }
-            myReader.close();
-        }
-        catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-        }
-        
-        return pharmacistArray;
+        });
+
+        return staffArray;
     }
 
     /**
-     * Get All Administrators Data
-     * @return List of Administrators
+     * Get all staff by ID
+     * @return list of staff
      */
-    public static ArrayList<Administrator> getAllAdministratorsData() {
-        ArrayList<Administrator> adminstratorArray = new ArrayList<Administrator>();
-        
-        try {
-            File myObj = new File("HMS/src/data/Staff_List.txt");
-            Scanner myReader = new Scanner(myObj);
-            myReader.nextLine(); // Remove header line
+    public static ArrayList<Staff> getStaffIDSorted() {
+        ArrayList<Staff> staffArray = getAllStaffData();
 
-            while (myReader.hasNextLine()) {
-                String data = myReader.nextLine();
-                String[] dataList = data.split(",");
-
-                if (dataList[2] != Role.ADMINISTRATOR.toString()) {
-                    continue;
-                }
-
-                int genderNo = 0;
-                if (dataList[3].equals("Male")) {
-                	genderNo = 1;
-                } else if (dataList[3].equals("Female")) {
-                	genderNo = 2;
-                }
-
-                Administrator newStaff = null;
-                if (dataList.length != 6) {
-                    newStaff = new Administrator(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), null);
-                } else {
-                    newStaff = new Administrator(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
-                }
-
-                adminstratorArray.add(newStaff);
+        // Sort by name in ascending order
+        Collections.sort(staffArray, new Comparator<Staff>() {
+            @Override
+            public int compare(Staff p1, Staff p2) {
+                return p1.getID().compareTo(p2.getID());
             }
-            myReader.close();
+        });
+
+        return staffArray;
+    }
+
+    /**
+     * Get all staff by gender
+     * @return list of users
+     */
+    public static ArrayList<Staff> getStaffGenderSorted() {
+        ArrayList<Staff> staffArray = getAllStaffData();
+
+        // Sort by name in ascending order
+        Collections.sort(staffArray, new Comparator<Staff>() {
+            @Override
+            public int compare(Staff p1, Staff p2) {
+                return Integer.compare(p1.getGender(), p2.getGender());
+            }
+        });
+
+        return staffArray;
+    }
+
+    /**
+     * Get all staff by age
+     * @return list of users
+     */
+    public static ArrayList<Staff> getStaffAgeSorted() {
+        ArrayList<Staff> userArray = getAllStaffData();
+
+        // Sort by name in ascending order
+        Collections.sort(userArray, new Comparator<Staff>() {
+            @Override
+            public int compare(Staff p1, Staff p2) {
+                if (p1 instanceof Staff && p2 instanceof Staff) {
+                    return Integer.compare(p1.getAge(), p2.getAge());
+                }
+                else return 0;
+            }
+        });
+
+        return userArray;
+    }
+
+    /**
+     * Get all users (By selection)
+     * @param choice Choice of sorting
+     * @return list of users
+     */
+    public static ArrayList<Staff> getStaffSorted(int choice) {
+        switch (choice) {
+            case 1:
+                return getStaffRoleSorted();
+            case 2:
+                return getStaffIDSorted();
+            case 3:
+                return getStaffNameSorted();
+            case 4:
+                return getStaffGenderSorted();
+            case 5:
+                return getStaffAgeSorted();
+            default:
+                return null;
         }
-        catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-        }
-        
-        return adminstratorArray;
     }
 }

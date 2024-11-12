@@ -3,6 +3,8 @@ package hms.services;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
 import hms.users.Patient;
@@ -83,12 +85,11 @@ public class PatientFileService extends InputValidation {
 
     /**
      * Get Patient by ID
+     * @param ID of patient
      * @return patient
      */
-    public static Patient getPatientDataByID(String ID) {
+    public static Patient getPatientByID(String ID) {
         try {
-            Patient curPatient = null;
-
             File myObj = new File("HMS/src/data/Patient_List.txt");
             Scanner myReader = new Scanner(myObj);
             myReader.nextLine(); // Remove header line
@@ -149,5 +150,77 @@ public class PatientFileService extends InputValidation {
         }
         
         return null;
+    }
+
+    /**
+     * Get all patients by Name
+     * @return list of patients
+     */
+    public static ArrayList<Patient> getPatientsNameSorted() {
+        ArrayList<Patient> patientArray = getAllPatientData();
+
+        // Sort by name in ascending order
+        Collections.sort(patientArray, new Comparator<Patient>() {
+            @Override
+            public int compare(Patient p1, Patient p2) {
+                return p1.getName().compareTo(p2.getName());
+            }
+        });
+
+        return patientArray;
+    }
+
+    /**
+     * Get all patients by ID
+     * @return list of patients
+     */
+    public static ArrayList<Patient> getPatientsIDSorted() {
+        ArrayList<Patient> patientArray = getAllPatientData();
+
+        // Sort by name in ascending order
+        Collections.sort(patientArray, new Comparator<Patient>() {
+            @Override
+            public int compare(Patient p1, Patient p2) {
+                return p1.getID().compareTo(p2.getID());
+            }
+        });
+
+        return patientArray;
+    }
+
+    /**
+     * Get all patients by ID
+     * @return list of patients
+     */
+    public static ArrayList<Patient> getPatientsGenderSorted() {
+        ArrayList<Patient> patientArray = getAllPatientData();
+
+        // Sort by name in ascending order
+        Collections.sort(patientArray, new Comparator<Patient>() {
+            @Override
+            public int compare(Patient p1, Patient p2) {
+                return Integer.compare(p1.getGender(), p2.getGender());
+            }
+        });
+
+        return patientArray;
+    }
+
+    /**
+     * Get all patients (By selection)
+     * @param choice Choice of sorting
+     * @return list of patients
+     */
+    public static ArrayList<Patient> getPatientsSorted(int choice) {
+        switch (choice) {
+            case 1:
+                return getPatientsIDSorted();
+            case 2:
+                return getPatientsNameSorted();
+            case 3:
+                return getPatientsGenderSorted();
+            default:
+                return null;
+        }
     }
 }
