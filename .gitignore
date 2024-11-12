@@ -4,7 +4,7 @@
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
 # Do not change the base data file in Github
-/HMS/src/data/
+HMS/src/data/
 
 # User-specific files
 *.rsuser
