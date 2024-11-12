@@ -8,8 +8,50 @@ import java.util.Scanner;
 
 import hms.pharmacy.Inventory;
 import hms.users.*;
+import hms.GlobalData;
+import hms.UserList;
 
 public class TextFileService {
+    private static boolean checkString(String check){
+        for(int i = 0; i < check.length(); i++) {
+            if(check.charAt(i) == ',') return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Use this input function to ensure no comma
+     * @return checked input
+     */
+    public static String next(){
+        Scanner sc = GlobalData.getInstance().sc;
+        String check = sc.next();
+
+        while(!checkString(check)) {
+            System.out.print("This input is not allow to have ','. Enter again :");
+            check = sc.next();
+        }
+
+        return check;
+    } 
+
+    /**
+     * Use this input function to ensure no comma
+     * @return checked input
+     */
+    public static String nextLine(){
+        Scanner sc = GlobalData.getInstance().sc;
+        String check = sc.nextLine();
+
+        while(!checkString(check)) {
+            System.out.print("This input is not allow to have ','. Enter again :");
+            check = sc.nextLine();
+        }
+
+        return check;
+    } 
+
     /**
      * Get Patient Data
      * @return List of Patients
@@ -132,13 +174,57 @@ public class TextFileService {
     }
 
     /**
+     * Read medical history and load it in
+     */
+    public static void loadMedicalHistory(UserList userList) {
+        try {
+            File myObj = new File("HMS/src/data/Medical_History_List.txt");
+            Scanner myReader = new Scanner(myObj);
+            myReader.nextLine(); // Remove header line
+
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                String[] dataList = data.split(",");
+
+                Patient patient = userList.getPatientByID(dataList[0]);
+                if(patient != null) {
+                    patient.addMedicalRecord(dataList[1]);
+                }
+            }
+
+            myReader.close();
+        }
+
+        catch(FileNotFoundException e) {
+            System.out.println("An error occurred.");
+        }
+    }
+
+    public static void writeMedicalHistory(ArrayList<Patient> patients) {
+        try {
+            FileWriter fw = new FileWriter("HMS/src/data/Medical_History_List.txt");
+            fw.write("Patient ID,Medical Record\n");
+            for(Patient patient : patients) {
+                for(String s : patient.getMedicalHistory()) {
+                    fw.write(patient.getID() + "," + s +"\n");
+                }
+            }
+            fw.close();
+        }
+
+        catch (Exception e){
+            System.out.println("An error occurred. Cannot write inventory");
+        }
+    }
+
+    /**
 	 * Read medicine from file and generate initial inventory
 	 * @return initial inventory
 	 */
     public static Inventory getInventory() {
-        try {
-            Inventory setup = new Inventory();
+        Inventory setup = new Inventory();
 
+        try {
             File myObj = new File("HMS/src/data/Medicine_List.txt");
             Scanner myReader = new Scanner(myObj);
             myReader.nextLine(); // Remove header line
@@ -150,27 +236,64 @@ public class TextFileService {
                 setup.addNewMedicine(dataList[0], Integer.valueOf(dataList[1]), Integer.valueOf(dataList[2]));
             }
             myReader.close();
-
-            return setup;
         }
         catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
             return new Inventory();
         }
+
+        try {
+            File myObj = new File("HMS/src/data/Restock_List.txt");
+            Scanner myReader = new Scanner(myObj);
+            myReader.nextLine(); // Remove header line
+
+            while (myReader.hasNextLine()) {
+                String data = myReader.nextLine();
+                String[] dataList = data.split(",");
+
+                setup.addRequest(dataList[0], Integer.valueOf(dataList[1]));
+            }
+
+            myReader.close();
+
+            return setup;
+        }
+
+        catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            return setup;
+        }
+
     }
 
+    /**
+     * write inventory
+     * @param inventory inventory to be written
+     */
     public static void writeInventory(Inventory inventory) {
         try {
             FileWriter fw = new FileWriter("HMS/src/data/Medicine_List.txt");
             fw.write("Medicine Name,Initial Stock,Low Stock Level Alert\n");
             for(int i = 0; i < inventory.getSize(); i++) {
-                fw.write(inventory.getName(i) + "," + inventory.getSize() + "," + inventory.getLowLevel(i) +"\n");
+                fw.write(inventory.getName(i) + "," + inventory.getAmount(i) + "," + inventory.getLowLevel(i) +"\n");
             }
             fw.close();
             
         }
         catch (Exception e){
             System.out.println("An error occurred. Cannot write inventory");
+        }
+
+        try {
+            FileWriter fw = new FileWriter("HMS/src/data/Restock_List.txt");
+            fw.write("Medicine Name,Request Amount\n");
+            for(int i = 0; i < inventory.getRequestSize(); i++) {
+                fw.write(inventory.getRequestName(i) + "," + inventory.getRequestAmount(i) +"\n");
+            }
+            fw.close();
+        }
+        catch (Exception e){
+            System.out.println("An error occurred. Cannot write restock");
         }
     }
 }

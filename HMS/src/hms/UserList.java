@@ -249,6 +249,18 @@ public class UserList {
     }
 
     /**
+     * Accessor of Patient
+     * @param ID id of patient
+     * @return patient if found otherwise null
+     */
+    public Patient getPatientByID(String ID){
+        for (Patient patient : patients) {
+            if(ID.equals(patient.getID())) return patient;
+        }
+        return null;
+    }
+
+    /**
      * Setter of Patients
      * @param patients
      */

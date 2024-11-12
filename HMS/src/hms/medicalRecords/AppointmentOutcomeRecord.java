@@ -1,6 +1,7 @@
 package hms.medicalRecords;
 
 import hms.utils.Date;
+import hms.utils.TextFileService;
 import hms.pharmacy.Medicine;
 import hms.GlobalData;
 
@@ -42,10 +43,10 @@ public class AppointmentOutcomeRecord {
         date = new Date(t);
         service = sc.nextLine();
         System.out.print("Enter Service Provided: ");
-        service = sc.nextLine();
+        service = TextFileService.nextLine();
         prescription = GlobalData.getInstance().inventory.generatePrescription();
         System.out.print("Enter Consultation Notes: ");
-        notes = sc.nextLine();
+        notes = TextFileService.nextLine();
         status = 1;
         if (prescription.length == 0) status = 2;
     }

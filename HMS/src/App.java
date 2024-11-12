@@ -32,6 +32,9 @@ public class App {
     		}
     	}
     	
+		/*Load Medical History*/
+		TextFileService.loadMedicalHistory(userList);
+
 		/* Load data into inventory */
 		Inventory inventory = TextFileService.getInventory();
 
@@ -133,6 +136,10 @@ public class App {
 			}
 		}
 
+		/*Write Inventory */
 		TextFileService.writeInventory(gd.inventory);
+
+		/*Wrtie Medical History */
+		TextFileService.writeMedicalHistory(gd.userList.getPatients());
     }
 }

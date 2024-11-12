@@ -77,7 +77,7 @@ public class MedicalRecord {
 
         System.out.println("Phone Number : " + phone);
         System.out.println("Email Address : " + email);
-        System.out.print("Blood Type : " + bloodType.toString());
+        System.out.println("Blood Type : " + bloodType.toString());
 
         System.out.println("Medical History : ");
         for(int i = 0; i < medicalHistory.size(); i++) {
@@ -109,5 +109,13 @@ public class MedicalRecord {
      */
     public void newMedicalHistory(String add) {
         medicalHistory.add(add);
+    }
+
+    /**
+     * accessor of medical history
+     * @return medical history
+     */
+    public ArrayList<String> getMedicalHistory(){
+        return medicalHistory;
     }
 }

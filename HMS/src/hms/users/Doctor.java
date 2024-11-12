@@ -155,10 +155,8 @@ public class Doctor extends Staff {
      * @param patient Patient that the doctor want to add
      */
     public void updatePatientMedicalRecords(Patient patient) {
-        Scanner scan = GlobalData.getInstance().sc;
-
         System.out.println("Add a new medical record:");
-        String message = scan.nextLine();
+        String message = TextFileService.nextLine();
         patient.addMedicalRecord(message);
     }
 
