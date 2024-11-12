@@ -3,6 +3,7 @@ package hms.users;
 import hms.GlobalData;
 import hms.appointments.AdministratorAppointmentManager;
 import hms.appointments.Appointment;
+import hms.utils.BloodType;
 import hms.utils.Date;
 import hms.utils.Password;
 import hms.utils.Role;
@@ -668,48 +669,48 @@ public class Administrator extends Staff {
 							"5: AB+\n6: AB-\n7: O+\n8: O-");
 					System.out.println("---------------------------");
 					System.out.print("Enter Blood Type (Digit Only): ");
-					int newBloodType = -1;
-					String newBloodTypeString = "";
+					int newBloodTypeInt = -1;
+					BloodType newBloodType = BloodType.UNKNOWN;
 					boolean bloodTypeFound;
 					do {
 						try {
-							newBloodType = sc.nextInt();
+							newBloodTypeInt = sc.nextInt();
 							sc.nextLine();
-							switch (newBloodType) {
+							switch (newBloodTypeInt) {
 								case 0:
-									newBloodTypeString = "Unknown";
+									newBloodType = BloodType.UNKNOWN;
 									bloodTypeFound = false;
 									break;
 								case 1:
-									newBloodTypeString = "A+";
+									newBloodType = BloodType.A_PLUS;
 									bloodTypeFound = true;
 									break;
 								case 2:
-									newBloodTypeString = "A-";
+									newBloodType = BloodType.A_MINUS;
 									bloodTypeFound = true;
 									break;
 								case 3:
-									newBloodTypeString = "B+";
+									newBloodType = BloodType.B_PLUS;
 									bloodTypeFound = true;
 									break;
 								case 4:
-									newBloodTypeString = "B-";
+									newBloodType = BloodType.B_MINUS;
 									bloodTypeFound = true;
 									break;
 								case 5:
-									newBloodTypeString = "AB+";
+									newBloodType = BloodType.AB_PLUS;
 									bloodTypeFound = true;
 									break;
 								case 6:
-									newBloodTypeString = "AB-";
+									newBloodType = BloodType.AB_MINUS;
 									bloodTypeFound = true;
 									break;
 								case 7:
-									newBloodTypeString = "O+";
+									newBloodType = BloodType.O_PLUS;
 									bloodTypeFound = true;
 									break;
 								case 8:
-									newBloodTypeString = "O-";
+									newBloodType = BloodType.O_MINUS;
 									bloodTypeFound = true;
 									break;
 								default:
@@ -730,7 +731,7 @@ public class Administrator extends Staff {
 					System.out.println("DOB: " + day + "/" + month + "/" + year);
 					System.out.println("HP: " + newHP);
 					System.out.println("Email: " + newEmail);
-					System.out.println("Blood Type: " + newBloodTypeString);
+					System.out.println("Blood Type: " + newBloodType.toString());
 
 					String confirmAdd;
 					System.out.println("\nConfirm to Add New Patient? You May Edit Details Later.");
