@@ -10,7 +10,7 @@ public class UserFileService extends InputValidation {
      * Get all users by role
      * @return list of users
      */
-    public ArrayList<User> getUsersRoleSorted() {
+    public static ArrayList<User> getUsersRoleSorted() {
         ArrayList<User> userArray = new ArrayList<User>();
         userArray.addAll(PatientFileService.getAllPatientData());
         userArray.addAll(StaffFileService.getStaffRoleSorted());
