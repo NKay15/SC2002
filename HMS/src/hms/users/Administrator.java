@@ -3,7 +3,10 @@ package hms.users;
 import hms.GlobalData;
 import hms.appointments.AdministratorAppointmentManager;
 import hms.appointments.Appointment;
+import hms.services.AdministratorFileService;
 import hms.services.DoctorFileService;
+import hms.services.PatientFileService;
+import hms.services.PharmacistFileService;
 import hms.services.StaffFileService;
 import hms.services.UserFileService;
 import hms.utils.BloodType;
@@ -125,7 +128,7 @@ public class Administrator extends Staff {
 					String sorting = sc.next(); sc.nextLine();
 
 					if (sorting.equals("1") || sorting.equals("2") || sorting.equals("3") || sorting.equals("4") || sorting.equals("5")) {
-						ArrayList<User> sortedUserList = GlobalData.getInstance().userList.getStaffSorted(Integer.parseInt(sorting));
+						ArrayList<Staff> sortedUserList = StaffFileService.getStaffSorted(Integer.valueOf(sorting));
 						if (sortedUserList == null || sortedUserList.isEmpty()) {
 							System.out.println("No Staff Members to Display! Returning to Menu...");
 							break;
@@ -354,7 +357,7 @@ public class Administrator extends Staff {
 								System.out.println("Operation Cancelled. Returning to menu...");
 								break;
 							}
-							while (!GlobalData.getInstance().userList.updateDoctorByIDMenu(doctorID, this)){
+							while (!DoctorFileService.updateDoctorByIDMenu(doctorID, this)){
 								System.out.print("Doctor Does Not Exist! Try again: ");
 								doctorID = sc.nextLine();
 								if (doctorID.equals("0")) {
@@ -371,7 +374,7 @@ public class Administrator extends Staff {
 								System.out.println("Operation Cancelled. Returning to menu...");
 								break;
 							}
-							while (!GlobalData.getInstance().userList.updatePharmacistByIDMenu(pharmacistID, this)){
+							while (!PharmacistFileService.updatePharmacistByIDMenu(pharmacistID, this)){
 								System.out.print("Pharmacist Does Not Exist! Try again: ");
 								pharmacistID = sc.nextLine();
 								if (pharmacistID.equals("0")) {
@@ -388,7 +391,7 @@ public class Administrator extends Staff {
 								System.out.println("Operation Cancelled. Returning to menu...");
 								break;
 							}
-							while (!GlobalData.getInstance().userList.updateAdministratorByIDMenu(administratorID, this)){
+							while (!AdministratorFileService.updateAdministratorByIDMenu(administratorID, this)){
 								System.out.print("Administrator Does Not Exist! Try again: ");
 								administratorID = sc.nextLine();
 								if (administratorID.equals("0")) {
@@ -418,7 +421,7 @@ public class Administrator extends Staff {
 								System.out.println("Operation Cancelled. Returning to menu...");
 								break;
 							}
-							while (!GlobalData.getInstance().userList.removeDoctorByIDMenu(doctorID, this)){
+							while (!DoctorFileService.removeDoctorByIDMenu(doctorID, this)){
 								System.out.print("Doctor Does Not Exist! Try again: ");
 								doctorID = sc.nextLine();
 								if (doctorID.equals("0")) {
@@ -435,7 +438,7 @@ public class Administrator extends Staff {
 								System.out.println("Operation Cancelled. Returning to Menu...");
 								break;
 							}
-							while (!GlobalData.getInstance().userList.removePharmacistByIDMenu(pharmacistID, this)){
+							while (!PharmacistFileService.removePharmacistByIDMenu(pharmacistID, this)){
 								System.out.print("Pharmacist Does Not Exist! Try again: ");
 								pharmacistID = sc.nextLine();
 								if (pharmacistID.equals("0")) {
@@ -452,7 +455,7 @@ public class Administrator extends Staff {
 								System.out.println("Operation Cancelled. Returning to Menu...");
 								break;
 							}
-							while (!GlobalData.getInstance().userList.removeAdministratorByIDMenu(administratorID, this)){
+							while (!AdministratorFileService.removeAdministratorByIDMenu(administratorID, this)){
 								if (administratorID.equals(this.getID())) System.out.print("You May Not Remove Yourself! Try again: ");
 								else System.out.print("Administrator Does Not Exist! Try again: ");
 								administratorID = sc.nextLine();
@@ -506,7 +509,7 @@ public class Administrator extends Staff {
 					String sorting = sc.next(); sc.nextLine();
 
 					if (sorting.equals("1") || sorting.equals("2") || sorting.equals("3")) {
-						ArrayList<User> sortedUserList = GlobalData.getInstance().userList.getPatientsSorted(Integer.parseInt(sorting));
+						ArrayList<Patient> sortedUserList = PatientFileService.getPatientsSorted(Integer.parseInt(sorting));
 						if (sortedUserList == null || sortedUserList.isEmpty()) {
 							System.out.println("No Patients to Display! Returning to Menu...");
 							break;
@@ -565,7 +568,7 @@ public class Administrator extends Staff {
 							System.out.print("ID Must Begin With an Uppercase Letter! Try again: ");
 							continue;
 						}
-						for (User user : GlobalData.getInstance().userList.getUsersRoleSorted()) {
+						for (User user : UserFileService.getUsersRoleSorted()) {
 							if (user.getID().equals(newID)) {
 								System.out.print("User " + newID + " Already Exists! Try again: ");
 								alreadyExists = true;
@@ -730,7 +733,7 @@ public class Administrator extends Staff {
 						switch (confirmAdd) {
 							case "1":
 								Patient newPatient = new Patient(newID, newName, newGender, newDOB, newHP, newEmail, newBloodType, null);
-								GlobalData.getInstance().userList.addPatient(newPatient);
+								PatientFileService.addPatient(newPatient);
 								System.out.println("New Doctor Successfully Added! Returning to Menu...");
 								break;
 							case "2":
@@ -751,7 +754,7 @@ public class Administrator extends Staff {
 						System.out.println("Operation Cancelled. Returning to menu...");
 						break;
 					}
-					while (!GlobalData.getInstance().userList.updatePatientByIDMenu(patientID, this)){
+					while (!PatientFileService.updatePatientByIDMenu(patientID, this)){
 						System.out.print("Patient Does Not Exist! Try again: ");
 						patientID = sc.nextLine();
 						if (patientID.equals("0")) {
@@ -768,7 +771,7 @@ public class Administrator extends Staff {
 						System.out.println("Operation Cancelled. Returning to menu...");
 						break;
 					}
-					while (!GlobalData.getInstance().userList.removePatientByIDMenu(patientToRemoveID, this)){
+					while (!PatientFileService.removePatientByIDMenu(patientToRemoveID, this)){
 						System.out.print("Doctor Does Not Exist! Try again: ");
 						patientToRemoveID = sc.nextLine();
 						if (patientToRemoveID.equals("0")) {

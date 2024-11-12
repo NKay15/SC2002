@@ -104,7 +104,7 @@ public class AdministratorFileService extends StaffFileService {
      * @param ID
      * @param adminUsing Administrator Using Remove Operation
      */
-    public boolean removeAdministratorByIDMenu(String ID, Administrator adminUsing) {
+    public static boolean removeAdministratorByIDMenu(String ID, Administrator adminUsing) {
         if (adminUsing.getID().equals(ID)) return false;
         Scanner sc = GlobalData.getInstance().sc;
         Administrator administrator = getAdministratorByID(ID);
@@ -138,7 +138,7 @@ public class AdministratorFileService extends StaffFileService {
      * @param ID
      * @param adminUsing Administrator Using Update Operation
      */
-    public boolean updateAdministratorByIDMenu(String ID, Administrator adminUsing) {
+    public static boolean updateAdministratorByIDMenu(String ID, Administrator adminUsing) {
         Scanner sc = GlobalData.getInstance().sc;
         Administrator administrator = getAdministratorByID(ID);
 

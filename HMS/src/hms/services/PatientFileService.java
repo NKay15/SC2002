@@ -352,7 +352,7 @@ public class PatientFileService extends InputValidation {
      * @param ID
      * @param adminUsing Administrator Using Remove Operation
      */
-    public boolean removePatientByIDMenu(String ID, Administrator adminUsing) {
+    public static boolean removePatientByIDMenu(String ID, Administrator adminUsing) {
         Scanner sc = GlobalData.getInstance().sc;
         Patient patient = getPatientByID(ID);
 
@@ -388,7 +388,7 @@ public class PatientFileService extends InputValidation {
      * @param ID
      * @param adminUsing Administrator Using Update Operation
      */
-    public boolean updatePatientByIDMenu(String ID, Administrator adminUsing) {
+    public static boolean updatePatientByIDMenu(String ID, Administrator adminUsing) {
         Scanner sc = GlobalData.getInstance().sc;
         Patient patient = getPatientByID(ID);
 

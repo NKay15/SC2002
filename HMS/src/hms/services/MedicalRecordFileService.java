@@ -6,15 +6,14 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import hms.UserList;
 import hms.users.Patient;
 import hms.utils.InputValidation;
 
-public class MedicalRecordFileService extends InputValidations {
+public class MedicalRecordFileService extends InputValidation {
     /**
      * Read medical history and load it in
      */
-    public static void loadMedicalHistory(UserList userList) {
+    public static void loadMedicalHistory() {
         try {
             File myObj = new File("HMS/src/data/Medical_History_List.txt");
             Scanner myReader = new Scanner(myObj);
@@ -24,7 +23,7 @@ public class MedicalRecordFileService extends InputValidations {
                 String data = myReader.nextLine();
                 String[] dataList = data.split(",");
 
-                Patient patient = userList.getPatientByID(dataList[0]);
+                Patient patient = PatientFileService.getPatientByID(dataList[0]);
                 if(patient != null) {
                     patient.addMedicalRecord(dataList[1]);
                 }

@@ -105,7 +105,7 @@ public class PharmacistFileService extends StaffFileService {
      * @param ID
      * @param adminUsing Administrator Using Remove Operation
      */
-    public boolean removePharmacistByIDMenu(String ID, Administrator adminUsing) {
+    public static boolean removePharmacistByIDMenu(String ID, Administrator adminUsing) {
         Scanner sc = GlobalData.getInstance().sc;
         Pharmacist pharmacist = getPharmacistByID(ID);
         
@@ -138,7 +138,7 @@ public class PharmacistFileService extends StaffFileService {
      * @param ID
      * @param adminUsing Administrator Using Update Operation
      */
-    public boolean updatePharmacistByIDMenu(String ID, Administrator adminUsing) {
+    public static boolean updatePharmacistByIDMenu(String ID, Administrator adminUsing) {
         Scanner sc = GlobalData.getInstance().sc;
         Pharmacist pharmacist = getPharmacistByID(ID);
 
