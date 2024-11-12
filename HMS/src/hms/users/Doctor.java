@@ -3,6 +3,7 @@ package hms.users;
 import hms.GlobalData;
 import hms.appointments.*;
 import hms.services.StaffFileService;
+import hms.services.DoctorAvailabilityFileService;
 import hms.utils.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class Doctor extends Staff {
 
     public Doctor(String doctorID, String name, int gender, int age, Password password) {
         super(doctorID, name, Role.DOCTOR, gender, age, password);
-        doctorSchedules = new DoctorSchedules(this);
+        doctorSchedules = DoctorAvailabilityFileService.loadSchedulesFromFile(this);
         doctorScheduler = new DoctorScheduleManager(this);
         patientList = new ArrayList<>();
     }
@@ -195,7 +196,7 @@ public class Doctor extends Staff {
      */
     public void acceptOrDeclineAppointmentRequests() {
         doctorScheduler.updateDoctorData();
-        List<Appointment> appointmentList = doctorScheduler.returnPendingList();
+        List<Appointment> appointmentList = doctorScheduler.getPendingAppointmentsDoctor();
         int id = 0;
         Scanner scan = GlobalData.getInstance().sc;
 
@@ -257,10 +258,6 @@ public class Doctor extends Staff {
 
     public void recordAppointmentOutcome(Appointment appointment) {
         doctorScheduler.updateAppointmentOutcomeRecord(appointment);
-    }
-
-    public void viewAvailability(Date date) {
-        doctorSchedules.printAvailableSlot(date);
     }
 
     public void printRole() {

@@ -36,7 +36,9 @@ public class DoctorScheduleManager {
         updateDoctorData();
         if (scheduler.findAppointment(appointment, pendingList)) {
             scheduler.acceptAppointment(appointment);
+            return;
         }
+        System.out.println("Appointment not pending.");
     }
 
     /**
@@ -48,18 +50,11 @@ public class DoctorScheduleManager {
         updateDoctorData();
         if (scheduler.findAppointment(appointment, pendingList)) {
             scheduler.declineAppointment(appointment);
+            return;
         }
+        System.out.println("Appointment not pending.");
     }
 
-    /**
-     * Marks a given appointment as complete and updates its outcome record.
-     *
-     * @param appointment the Appointment object to complete.
-     */
-    public void completeAppointments(Appointment appointment) {
-        appointment.complete();
-        updateAppointmentOutcomeRecord(appointment);
-    }
 
     /**
      * Updates the appointment outcome record for a given appointment and set it as complete.
@@ -67,6 +62,10 @@ public class DoctorScheduleManager {
      * @param appointment the Appointment object to update.
      */
     public void updateAppointmentOutcomeRecord(Appointment appointment) {
+        if (scheduler.findWhichList(appointment).equals(scheduler.getPendingAppointments())){
+            System.out.println("Appointment is not confirmed.");
+            return;
+        }
         appointment.complete();
     }
 
@@ -88,17 +87,6 @@ public class DoctorScheduleManager {
         System.out.println("-----------------------------------");
     }
 
-    public List<Appointment> returnPendingList() {
-        updateDoctorData();
-        List<Appointment> docPendingList = new ArrayList<>();
-        for (Appointment appointment : pendingList) {
-            if (appointment.getDoctorID().equals(doctor.getID())) {
-                docPendingList.add(appointment);
-            }
-        }
-        return docPendingList;
-    }
-
     /**
      * Prints upcoming slots for the specified doctor.
      *
@@ -110,9 +98,9 @@ public class DoctorScheduleManager {
         System.out.println("Doctor " + doctor.getName() + "'s upcoming slots are:");
         for (Appointment appointment : appointmentList) {
             if (appointment.getStatus() == 2) {
-                int time = appointment.getTimeSlot().getIntTime();
-                String slotTime = String.format("%02d:%02d", time / 100, time % 100);
-                System.out.println(i + ". " + appointment.getDate().get() + " " + slotTime);
+                System.out.println("Appointment " + i + ":");
+                appointment.print();
+                System.out.println();
                 i++;
             }
         }
@@ -149,15 +137,6 @@ public class DoctorScheduleManager {
         pendingList = scheduler.getPendingAppointments(doctor);
     }
 
-    /**
-     * Prints available slots for a given date for the specified doctor.
-     *
-     * @param date   the date to check for available slots.
-     * @param doctor the Doctor object whose available slots are printed.
-     */
-    public void printAvailableSlot(Date date, Doctor doctor) {
-        doctor.getDoctorSchedules().printAvailableSlot(date, this);
-    }
 
     /**
      * Accessor of upcoming appointment

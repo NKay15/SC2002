@@ -4,6 +4,7 @@ import hms.GlobalData;
 import hms.users.*;
 import hms.utils.*;
 
+import javax.print.Doc;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -25,6 +26,16 @@ public class DoctorSchedule {
     private int breakCount;
     public Object getDoctor;
 
+
+    public DoctorSchedule(Doctor doctor, Date date, Time startTime, Time endTime, int breakCount, List<Time[]> breaks) {
+        this.doctor = doctor;
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.breaks = breaks;
+        this.breakCount = breakCount;
+    }
+
     public DoctorSchedule(Doctor doctor, Date date) {
         this.doctor = doctor;
         this.breaks = new ArrayList<>();
@@ -32,6 +43,7 @@ public class DoctorSchedule {
         setWorkingTime();
         setBreaks();
     }
+
 
     /**
      * Sets the working time by prompting the user for the start and end times.
@@ -168,6 +180,10 @@ public class DoctorSchedule {
         return endTime;
     }
 
+    public int getBreakCount() {
+        return breakCount;
+    }
+
     /**
      * Gets the breaks scheduled for the doctor.
      *
@@ -177,10 +193,12 @@ public class DoctorSchedule {
         return breaks;
     }
 
+
     /**
      * Checks if the doctor is available at a specific time.
      *
      * @param time The Time object representing the time to check availability for.
+     *
      * @return A boolean indicating whether the doctor is available (true) or not (false).
      */
     protected boolean isDoctorWorking(Time time) {

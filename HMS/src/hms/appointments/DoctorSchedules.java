@@ -32,7 +32,7 @@ public class DoctorSchedules {
         DoctorSchedule doctorSchedule = findDateSchedule(date, doctor);
         if (doctorSchedule != null) {
             System.out.println("Schedule exists, do you want to \n" +
-                    "1. add breaks." +
+                    "1. reset breaks." +
                     "2. change working time." +
                     "3. rewrite it.");
             Scanner scanner = GlobalData.getInstance().sc;
@@ -48,7 +48,6 @@ public class DoctorSchedules {
                     break;
 
                 case 3:
-                    // Code to rewrite the schedule
                     System.out.println("Rewriting schedule...");
                     doctorSchedules.remove(findDateSchedule(date, doctor));
                     doctorSchedule = new DoctorSchedule(doctor, date);
@@ -122,4 +121,11 @@ public class DoctorSchedules {
         System.out.println("-----------------------------------");
     }
 
+    public void addSchedule(DoctorSchedule schedule) {
+        doctorSchedules.add(schedule);
+    }
+
+    public List<DoctorSchedule> getDoctorSchedules() {
+        return doctorSchedules;
+    }
 }

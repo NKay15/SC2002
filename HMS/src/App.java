@@ -1,4 +1,5 @@
 import hms.GlobalData;
+import hms.appointments.AppointmentScheduler;
 import hms.pharmacy.Inventory;
 import hms.services.*;
 import hms.users.Administrator;
@@ -22,13 +23,18 @@ public class App {
 		userList.setAdministrator(AdministratorFileService.getAllAdministratorsData());
 		*/
 
+		/* Load Appointments */
+		AppointmentScheduler scheduler = AppointmentScheduler.getInstance();
+		AppointmentFileService.loadAppointments(scheduler);
 
-    	
 		/*Load Medical History*/
 		//MedicalRecordFileService.loadMedicalHistory(userList);
 
 		/* Load data into inventory */
 		Inventory inventory = InventoryFileService.getInventory();
+
+		/* Load Doctor Availability, not sure where to add. */
+		DoctorAvailabilityFileService.loadSchedulesFromFile(DoctorFileService.getAllDoctorData());
 
 		/* Set Global Data */
 		GlobalData gd = GlobalData.getInstance();
@@ -78,25 +84,25 @@ public class App {
 
 			/* Menu */
 			switch(accessLevel) {
-			case Role.PATIENT: // Patient
+			case PATIENT: // Patient
 				Patient currentPatient = PatientFileService.getPatientByID(currentUser.getID());
 				if (currentPatient == null) break;
 				currentPatient.menu();
 				break;
 
-			case Role.DOCTOR: // Doctor
+			case DOCTOR: // Doctor
 				Doctor currentDoctor = DoctorFileService.getDoctorByID(currentUser.getID());
 				if (currentDoctor == null) break;
 				currentDoctor.menu();
 				break;
 
-			case Role.PHARMACIST: // Pharmacist
+			case PHARMACIST: // Pharmacist
 				Pharmacist currentPharmacist = PharmacistFileService.getPharmacistByID(currentUser.getID());
 				if (currentPharmacist == null) break;
 				currentPharmacist.menu();
 				break;
 
-			case Role.ADMINISTRATOR: // Administrator
+			case ADMINISTRATOR: // Administrator
 				Administrator currentAdministrator = AdministratorFileService.getAdministratorByID(currentUser.getID());
 				if (currentAdministrator == null) break;
 				currentAdministrator.menu();
@@ -108,10 +114,16 @@ public class App {
 			}
 		}
 
+		/* Write Appointments */
+		AppointmentFileService.writeAppointments(scheduler);
+
 		/*Write Inventory */
 		InventoryFileService.writeInventory(gd.inventory);
 
 		/*Wrtie Medical History */
 		MedicalRecordFileService.writeMedicalHistory(PatientFileService.getAllPatientData());
+
+		/* Write Doctor Availability, not sure where to put */
+		DoctorAvailabilityFileService.writeSchedulesToFile(DoctorFileService.getAllDoctorData());
     }
 }

@@ -35,7 +35,7 @@ public class Appointment {
      * Appointment Outcome Record to be created after appointment is completed
      */
     private AppointmentOutcomeRecord aop;
-    private Appointment rescheduled;
+    private UUID rescheduled;
 
     /**
      * Constructor of appointment
@@ -56,17 +56,28 @@ public class Appointment {
         rescheduled = null;
     }
 
+    public Appointment(UUID uuid, Patient patient, Doctor doctor, int date, int time, int status,UUID rescheduled) {
+        this.uuid = uuid;
+        this.patient = patient;
+        this.doctor = doctor;
+        this.date = new Date(date);
+        this.timeSlot = new Time(time);
+        this.status = status;
+        this.rescheduled = rescheduled;
+    }
     public void setAop() {
         aop = new AppointmentOutcomeRecord();
     }
 
     public void setRescheduled(Appointment appointment){
-        rescheduled = appointment;
+        rescheduled = appointment.getUuid();
+    }
+    public void clearRescheduled(){
+        rescheduled = null;
     }
 
     public boolean checkRscheduled(){
-        if(rescheduled!=null) return true;
-        else return false;
+        return rescheduled != null;
     }
 
     /**
@@ -142,10 +153,6 @@ public class Appointment {
         status = 3;
     }
 
-    public void reschedule() {
-        status = 5;
-    }
-
     /**
      * Change the appointment to complete and generate the appointment outcome record
      */
@@ -187,9 +194,7 @@ public class Appointment {
             case 4:
                 System.out.println("Completed");
                 break;
-            case 5:
-                System.out.println("Rescheduled");
-                break;
+
         }
     }
 
@@ -199,7 +204,7 @@ public class Appointment {
     public int getStatus() {
         return status;
     }
-    public Appointment getRescheduled(){
+    public UUID getRescheduled(){
         return rescheduled;
     }
 

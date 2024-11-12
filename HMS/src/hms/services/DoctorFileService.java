@@ -73,7 +73,7 @@ public class DoctorFileService extends StaffFileService {
                 String data = myReader.nextLine();
                 String[] dataList = data.split(",");
 
-                if (dataList[2] != Role.DOCTOR.toString() || (!dataList[0].equals(ID))) {
+                if (!dataList[2].equals(Role.DOCTOR.toString())   || (!dataList[0].equals(ID))) {
                     continue;
                 }
 

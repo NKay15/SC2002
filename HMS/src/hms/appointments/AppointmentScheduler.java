@@ -15,9 +15,16 @@ public class AppointmentScheduler {
     private List<Appointment> appointments;
     private List<Appointment> pendingAppointments;
 
-    private AppointmentScheduler() {
-        this.appointments = new ArrayList<>();
-        this.pendingAppointments = new ArrayList<>();
+
+
+    public AppointmentScheduler() {
+        appointments = new ArrayList<>();
+        pendingAppointments = new ArrayList<>();
+    }
+
+    public void setLists(List<Appointment> appointments, List<Appointment> pendingAppointments) {
+        this.appointments = appointments;
+        this.pendingAppointments = pendingAppointments;
     }
 
     /**
@@ -43,6 +50,8 @@ public class AppointmentScheduler {
         if (!isSlotAvailable(pendingAppointment)) {
             System.out.println("Slot not available.");
             pendingAppointment.cancel();
+            pendingAppointments.remove(pendingAppointment);
+            appointments.add(pendingAppointment);
             return;
         }
         Appointment appointment = cancelAppointment(pendingAppointment);
@@ -50,14 +59,9 @@ public class AppointmentScheduler {
             System.out.println("No such appointment");
             return;
         }
-        if (appointment.getRescheduled() != null) {
-            Appointment rescheduledAppointment = findAppointment(appointment.getRescheduled().getUuid(), appointments);
-            if (rescheduledAppointment == null) {
-                System.out.println("Can't find related events need to be rescheduled.");
-                return;
-            }
-            cancelAppointment(rescheduledAppointment);
-            appointments.remove(rescheduledAppointment);
+        if (appointment.getRescheduled() != null && findAppointment(appointment.getRescheduled(), appointments) == null) {
+            System.out.println("Can't find related events need to be rescheduled. Discarding rescheduled data.");
+            appointment.clearRescheduled();
         }
 
         System.out.println("Successfully Accepted!");
@@ -73,17 +77,22 @@ public class AppointmentScheduler {
      */
     protected void declineAppointment(Appointment pendingAppointment) {
         Appointment appointment = findAppointment(pendingAppointment.getUuid(), pendingAppointments);
-        if (appointment == null) return;
-        if (appointment.getStatus() == 1) {
-            appointment.cancel();
-            System.out.println("Successfully Declined!");
-        } else if (appointment.getStatus() == 5) {
-            appointments.remove(appointment.getRescheduled());
-            cancelAppointment(appointment);
-            System.out.println("Successfully Declined!");
-        } else {
-            System.out.println("Appointment not pending.");
+        if (appointment == null) {
+            System.out.println("No such appointment");
+            return;
         }
+        if (appointment.getStatus() != 1) {
+            System.out.println("Appointment not pending.");
+            return;
+        }
+        if (appointment.getRescheduled() != null && findAppointment(appointment.getRescheduled(), appointments) == null) {
+            appointment.clearRescheduled();
+            System.out.println("Can't find related events need to be rescheduled. Discarding rescheduled date.");
+        }
+        appointment.cancel();
+        pendingAppointments.remove(appointment);
+        appointments.add(appointment);
+        System.out.println("Successfully Declined!");
     }
 
     /**
@@ -101,11 +110,11 @@ public class AppointmentScheduler {
             }
             if (tempList.equals(pendingAppointments)) {
                 scheduleAppointment(newAppointment);
-                cancelAppointment(existingAppointment);
+                existingAppointment.cancel();
                 pendingAppointments.remove(existingAppointment);
                 return;
             }
-            existingAppointment.reschedule();
+            existingAppointment.cancel();
             newAppointment.setRescheduled(existingAppointment);
             scheduleAppointment(newAppointment);
             return;
@@ -122,6 +131,9 @@ public class AppointmentScheduler {
      */
     protected Appointment cancelAppointment(Appointment appointment) {
         if (findAppointment(appointment)) {
+            if (appointment.getStatus() == 1) {
+                pendingAppointments.remove(appointment);
+            }
             appointment.cancel();
             return appointment;
         }
@@ -195,7 +207,7 @@ public class AppointmentScheduler {
     /**
      * Searches for an appointment using its UUID in a specified list.
      *
-     * @param uuid         The unique identifier of the appointment
+     * @param uuid The unique identifier of the appointment
      * @return The found appointment if successful; otherwise null
      */
     protected Appointment findAppointment(UUID uuid) {
@@ -259,7 +271,7 @@ public class AppointmentScheduler {
      *
      * @return The instance of the appointment scheduler
      */
-    protected static AppointmentScheduler getInstance() {
+    public static AppointmentScheduler getInstance() {
         if (instance == null) {
             instance = new AppointmentScheduler();
         }
@@ -271,7 +283,7 @@ public class AppointmentScheduler {
      *
      * @return The list of confirmed appointments
      */
-    protected List<Appointment> getAppointments() {
+    public List<Appointment> getAppointments() {
         return appointments;
     }
 
@@ -280,7 +292,7 @@ public class AppointmentScheduler {
      *
      * @return The list of pending appointments
      */
-    protected List<Appointment> getPendingAppointments() {
+    public List<Appointment> getPendingAppointments() {
         return pendingAppointments;
     }
 
@@ -297,7 +309,7 @@ public class AppointmentScheduler {
     protected List<Appointment> getAppointments(Patient patient, List<Appointment> appointments) {
         List<Appointment> appointmentsForPatient = new ArrayList<>();
         for (Appointment appointment : appointments) {
-            if (appointment.getPatientID().equals(patient.getID()) && appointment.getStatus() != 3 && appointment.getStatus() != 5) {
+            if (appointment.getPatientID().equals(patient.getID()) && appointment.getStatus() != 3) {
                 appointmentsForPatient.add(appointment);
             }
         }
