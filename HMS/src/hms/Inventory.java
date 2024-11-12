@@ -419,4 +419,44 @@ public class Inventory {
         }
         System.out.println("---------------------");
     }
+
+    /**
+     * accessor of the size of catalog 
+     * @return  size of catalog
+     */
+    public int getSize() {
+        return catalog.size();
+    }
+
+    /**
+     * accessor of the name of medicine
+     * @param i index of medicine
+     * @return name of medicine
+     */
+    public String getName(int i) {
+        if(i < 0 || i >= catalog.size()) return "\0";
+        return catalog.get(i).name();
+    }
+
+    /**
+     * accessor of the quantity of medicine
+     * @param i index of medicine
+     * @return quantity of medicine
+     */
+    public int getAmount(int i) {
+        if(i < 0 || i >= catalog.size()) return -1;
+        return catalog.get(i).amount();
+    }
+
+    /**
+     * accessor of the lowlevel of medicine
+     * @param i index of medicine
+     * @return lowlevel of medicine
+     */
+    public int getLowLevel(int i) {
+        if(i < 0 || i >= catalog.size()) return -1;
+        return lowlevel.get(i).amount();
+    }
+
+    
 }
