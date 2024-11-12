@@ -10,10 +10,6 @@ public class GlobalData {
      */
     private static GlobalData single = null;
 
-    /**
-     * Global UserList
-     */
-    public UserList userList;
 
     /**
      * Global inventory
@@ -29,7 +25,6 @@ public class GlobalData {
      * Constructor for the global data
      */
     private GlobalData() {
-        userList = null;
         inventory = null;
         sc = new Scanner(System.in);
     }

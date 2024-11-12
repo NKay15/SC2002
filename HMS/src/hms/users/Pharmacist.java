@@ -4,6 +4,7 @@ import hms.GlobalData;
 import hms.appointments.Appointment;
 import hms.medicalRecords.AppointmentOutcomeRecord;
 import hms.pharmacy.Medicine;
+import hms.services.PatientFileService;
 import hms.utils.Password;
 import hms.utils.Role;
 import java.util.InputMismatchException;
@@ -57,7 +58,7 @@ public class Pharmacist extends Staff {
 								System.out.println("Operation Cancelled. Returning to Menu...\n");
 								break;
 							}
-							for (Patient temPatient : GlobalData.getInstance().userList.getPatients()) {
+							for (Patient temPatient : PatientFileService.getAllPatientData()) {
 								if (temPatient.getID().equals(patientID)) {
 									patient = temPatient;
 									patientFound = true;
@@ -112,7 +113,7 @@ public class Pharmacist extends Staff {
 								System.out.println("Operation Cancelled. Returning to Menu...\n");
 								break;
 							}
-							for (Patient temPatient : GlobalData.getInstance().userList.getPatients()) {
+							for (Patient temPatient : PatientFileService.getAllPatientData()) {
 								if (temPatient.getID().equals(patientID)) {
 									patient = temPatient;
 									patientFound = true;

@@ -3,6 +3,7 @@ package hms.users;
 import hms.GlobalData;
 import hms.appointments.*;
 import hms.medicalRecords.MedicalRecord;
+import hms.services.DoctorFileService;
 import hms.services.PatientFileService;
 import hms.utils.*;
 import java.util.ArrayList;
@@ -186,25 +187,25 @@ public class Patient extends User{
                     int date3;
                     System.out.print("Enter date to view slots (ddmmyyyy): ");
                     date3 = sc.nextInt();
-                    viewAvailableAppointmentSlots(GlobalData.getInstance().userList.getDoctors(), new Date(date3));
+                    viewAvailableAppointmentSlots(DoctorFileService.getAllDoctorData(), new Date(date3));
                     break;
 
                 case 4:
                     int time, date;
                     // sc.nextLine();
                     Doctor doc = null;
-                    for(int i = 0; i < GlobalData.getInstance().userList.getDoctors().size(); i++) {
-                        System.out.println((i+1) + ". Dr. " + GlobalData.getInstance().userList.getDoctors().get(i).getName());
+                    for(int i = 0; i < DoctorFileService.getAllDoctorData().size(); i++) {
+                        System.out.println((i+1) + ". Dr. " + DoctorFileService.getAllDoctorData().get(i).getName());
                     }
                     System.out.print("Select Doctor (0 to Exit): ");
                     int whichDoc = sc.nextInt();
-                    while(whichDoc < 1 || whichDoc > GlobalData.getInstance().userList.getDoctors().size()) {
+                    while(whichDoc < 1 || whichDoc > DoctorFileService.getAllDoctorData().size()) {
                         if(whichDoc == 0) break;
                         System.out.print("Invalid choice! Try again: ");
                         whichDoc = sc.nextInt();
                     }
                     if(whichDoc == 0) break;
-                    doc = GlobalData.getInstance().userList.getDoctors().get(whichDoc-1);
+                    doc = DoctorFileService.getAllDoctorData().get(whichDoc-1);
                     //doc.getDoctorScheduler().updateDoctorData();
                     System.out.print("Enter Date in ddmmyyyy (O to Exit): ");
                     date = sc.nextInt();

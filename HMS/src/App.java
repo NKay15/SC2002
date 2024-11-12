@@ -1,5 +1,4 @@
 import hms.GlobalData;
-import hms.UserList;
 import hms.pharmacy.Inventory;
 import hms.services.*;
 import hms.users.Administrator;
@@ -9,18 +8,20 @@ import hms.users.Pharmacist;
 import hms.users.Staff;
 import hms.users.User;
 import hms.utils.Role;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) throws Exception {
     	/* Load data into userList */
+		/*
     	UserList userList = new UserList();
     	userList.setPatients(PatientFileService.getAllPatientData());
     	ArrayList<Staff> temUser = new ArrayList<Staff>();
     	userList.setDoctors(DoctorFileService.getAllDoctorData());
 		userList.setPharmacist(PharmacistFileService.getAllPharmacistData());
 		userList.setAdministrator(AdministratorFileService.getAllAdministratorsData());
+		*/
+
 
     	
 		/*Load Medical History*/
@@ -31,7 +32,6 @@ public class App {
 
 		/* Set Global Data */
 		GlobalData gd = GlobalData.getInstance();
-		gd.userList = userList;
 		gd.inventory = inventory;
     	
     	Scanner sc = gd.sc;
@@ -112,6 +112,6 @@ public class App {
 		InventoryFileService.writeInventory(gd.inventory);
 
 		/*Wrtie Medical History */
-		MedicalRecordFileService.writeMedicalHistory(gd.userList.getPatients());
+		MedicalRecordFileService.writeMedicalHistory(PatientFileService.getAllPatientData());
     }
 }
