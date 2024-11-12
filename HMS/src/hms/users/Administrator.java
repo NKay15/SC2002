@@ -3,6 +3,9 @@ package hms.users;
 import hms.GlobalData;
 import hms.appointments.AdministratorAppointmentManager;
 import hms.appointments.Appointment;
+import hms.services.DoctorFileService;
+import hms.services.StaffFileService;
+import hms.services.UserFileService;
 import hms.utils.BloodType;
 import hms.utils.Date;
 import hms.utils.Password;
@@ -228,7 +231,7 @@ public class Administrator extends Staff {
 							System.out.print("ID Must Begin With an Uppercase Letter! Try again: ");
 							continue;
 						}
-						for (User user : GlobalData.getInstance().userList.getUsersRoleSorted()) {
+						for (Staff user : StaffFileService.getAllStaffData()) {
 							if (user.getID().equals(newID)) {
 								System.out.print("User " + newID + " Already Exists! Try again: ");
 								alreadyExists = true;
@@ -290,7 +293,7 @@ public class Administrator extends Staff {
 								switch (confirmAdd) {
 									case "1":
 										Doctor newDoctor = new Doctor(newID, newName, newGender, newAge, null);
-										GlobalData.getInstance().userList.addDoctor(newDoctor);
+										StaffFileService.addStaff((Staff) newDoctor);
 										System.out.println("New Doctor Successfully Added! Returning to Menu...");
 										break;
 									case "2":
@@ -313,7 +316,7 @@ public class Administrator extends Staff {
 								switch (confirmAdd) {
 									case "1":
 										Pharmacist newPharmacist = new Pharmacist(newID, newName, newGender, newAge, null);
-										GlobalData.getInstance().userList.addPharmacist(newPharmacist);
+										StaffFileService.addStaff((Staff) newPharmacist);
 										System.out.println("New Pharmacist Successfully Added! Returning to Menu...");
 										break;
 									case "2":
@@ -336,7 +339,7 @@ public class Administrator extends Staff {
 								switch (confirmAdd) {
 									case "1":
 										Administrator newAdministrator = new Administrator(newID, newName, newGender, newAge, null);
-										GlobalData.getInstance().userList.addAdministrator(newAdministrator);
+										StaffFileService.addStaff((Staff) newAdministrator);
 										System.out.println("New Administrator Successfully Added! Returning to Menu...");
 										break;
 									case "2":
