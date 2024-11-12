@@ -2,6 +2,7 @@ package hms;
 
 import hms.users.*;
 import hms.utils.Date;
+import hms.utils.BloodType;
 
 import java.util.*;
 
@@ -340,7 +341,7 @@ public class UserList {
         int newPatientHP = patient.getPhone();
         String newPatientEmail = patient.getEmail();
         String newPatientBloodTypeString = patient.getBloodTypeString();
-        int newPatientBloodType = patient.getBloodType();
+        BloodType newPatientBloodType = patient.getBloodType();
         int changeWhat;
 
         /* Menu */
@@ -472,43 +473,43 @@ public class UserList {
                     boolean bloodTypeFound;
                     do {
                         try {
-                            newPatientBloodType = sc.nextInt();
+                            newPatientBloodType = patient.intToBloodType(sc.nextInt());
                             sc.nextLine();
                             switch (newPatientBloodType) {
-                                case 0:
-                                    newPatientBloodTypeString = "Unknown";
+                                case BloodType.UNKNOWN:
+                                    newPatientBloodTypeString = BloodType.UNKNOWN.toString();
                                     bloodTypeFound = true;
                                     break;
-                                case 1:
-                                    newPatientBloodTypeString = "A+";
+                                case BloodType.A_PLUS:
+                                    newPatientBloodTypeString = BloodType.A_PLUS.toString();
                                     bloodTypeFound = true;
                                     break;
-                                case 2:
-                                    newPatientBloodTypeString = "A-";
+                                case BloodType.A_MINUS:
+                                    newPatientBloodTypeString = BloodType.A_MINUS.toString();
                                     bloodTypeFound = true;
                                     break;
-                                case 3:
-                                    newPatientBloodTypeString = "B+";
+                                case BloodType.B_PLUS:
+                                    newPatientBloodTypeString = BloodType.B_PLUS.toString();
                                     bloodTypeFound = true;
                                     break;
-                                case 4:
-                                    newPatientBloodTypeString = "B-";
+                                case BloodType.B_MINUS:
+                                    newPatientBloodTypeString = BloodType.B_MINUS.toString();
                                     bloodTypeFound = true;
                                     break;
-                                case 5:
-                                    newPatientBloodTypeString = "AB+";
+                                case BloodType.AB_PLUS:
+                                    newPatientBloodTypeString = BloodType.AB_PLUS.toString();
                                     bloodTypeFound = true;
                                     break;
-                                case 6:
-                                    newPatientBloodTypeString = "AB-";
+                                case BloodType.AB_MINUS:
+                                    newPatientBloodTypeString = BloodType.AB_MINUS.toString();
                                     bloodTypeFound = true;
                                     break;
-                                case 7:
-                                    newPatientBloodTypeString = "O+";
+                                case BloodType.O_PLUS:
+                                    newPatientBloodTypeString = BloodType.O_PLUS.toString();
                                     bloodTypeFound = true;
                                     break;
-                                case 8:
-                                    newPatientBloodTypeString = "O-";
+                                case BloodType.O_MINUS:
+                                    newPatientBloodTypeString = BloodType.O_MINUS.toString();
                                     bloodTypeFound = true;
                                     break;
                                 default:

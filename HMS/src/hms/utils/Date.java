@@ -1,5 +1,9 @@
 package hms.utils;
 
+import java.util.Scanner;
+
+import hms.GlobalData;
+
 public class Date implements Comparable<Date> {
 
     /**
@@ -22,11 +26,42 @@ public class Date implements Comparable<Date> {
      * @param ddmmyyyy date in ddmmyyyy format
      */
     public Date(int ddmmyyyy) {
+        Scanner sc = GlobalData.getInstance().sc;
+        while(!checkDate(ddmmyyyy)){
+            System.out.println("Enter data in ddmmyyyy");
+            ddmmyyyy = sc.nextInt();
+        }
+
         year = ddmmyyyy%10000;
         ddmmyyyy /= 10000;
         month = ddmmyyyy%100;
         ddmmyyyy /= 100;
         day = ddmmyyyy;
+    }
+
+    private boolean checkDate(int ddmmyyyy){
+        int[] days = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        if(ddmmyyyy >= 1000000 && ddmmyyyy <= 99999999){
+            int dd = ddmmyyyy / 1000000;
+            int mm = ddmmyyyy / 10000 % 100;
+            if(mm > 12){
+                System.out.println("Invalid Date!");
+                System.out.println("month out of range");
+                return false;
+            }
+            int yyyy = ddmmyyyy % 10000;
+                if ((yyyy % 4 == 0 && yyyy % 100 != 0) || (yyyy % 400 == 0)) {
+                days[2] = 29; 
+            }
+            if(dd > days[mm]){
+                System.out.println("Invalid Date!");
+                System.out.println(mm + "/" + yyyy + " only has " + days[mm] + " days");
+                return false;
+            }
+            return true;
+        }
+        System.out.println("Invalid inut! Please enter data in ddmmyyyy");
+        return false;
     }
 
     /**

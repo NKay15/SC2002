@@ -2,9 +2,9 @@ package hms.users;
 
 import hms.GlobalData;
 import hms.Medicine;
+import hms.Password;
 import hms.appointments.Appointment;
 import hms.medicalRecords.AppointmentOutcomeRecord;
-
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -13,8 +13,8 @@ public class Pharmacist extends Staff {
 	/**
 	 * Constructor
 	 */
-	public Pharmacist(String ID, String name, int gender, int age) {
-		super(ID, name, 3, gender, age);
+	public Pharmacist(String ID, String name, int gender, int age, Password password) {
+		super(ID, name, 3, gender, age, password);
 	}
 
 	public void menu() {
