@@ -63,10 +63,12 @@ public class DoctorSchedule {
 
         System.out.println("How many breaks would you like to add?");
         breakCount = sc.nextInt();
+        int breakCountAdjustment = 0;
         for (int i = 0; i < breakCount; i++) {
             Time breakStart, breakEnd;
-
+            boolean flag = false;
             do {
+                if (flag) System.out.println("Invalid break time. Breaks must be within working hours and not overlap.");
                 System.out.println("Input your break start time, in hhmm");
                 int time = sc.nextInt();
                 breakStart = new Time(time);
@@ -74,10 +76,12 @@ public class DoctorSchedule {
                 System.out.println("Input your break end time, in hhmm");
                 time = sc.nextInt();
                 breakEnd = new Time(time);
-            } while (breakStart.compareTo(breakEnd) >= 0);
+                flag = breakStart.compareTo(breakEnd) >= 0 || breakStart.compareTo(startTime) < 0 || breakEnd.compareTo(endTime) > 0;
+            } while (flag);
 
-            mergeBreaks(breakStart, breakEnd);
+            breakCountAdjustment+=mergeBreaks(breakStart, breakEnd);
         }
+        breakCount-=breakCountAdjustment;
     }
 
     /**
@@ -93,20 +97,21 @@ public class DoctorSchedule {
      * @param newBreakEnd   the end time of the new break
      */
 
-    private void mergeBreaks(Time newBreakStart, Time newBreakEnd) {
+    private int mergeBreaks(Time newBreakStart, Time newBreakEnd) {
         List<Time[]> updatedBreaks = new ArrayList<>();
         int breakCountAdjustment = 0;
+
         boolean merged = false;
+        if (breaks.isEmpty()) {
+            breaks.add(new Time[]{newBreakStart, newBreakEnd});
+            return 0;
+        }
 
         for (Time[] existingBreak : breaks) {
             Time existingStart = existingBreak[0];
             Time existingEnd = existingBreak[1];
 
             if (newBreakEnd.compareTo(existingStart) < 0) {
-                if (!merged) {
-                    updatedBreaks.add(new Time[]{newBreakStart, newBreakEnd});
-                    merged = true;
-                }
                 updatedBreaks.add(existingBreak);
             } else if (newBreakStart.compareTo(existingEnd) > 0) {
                 updatedBreaks.add(existingBreak);
@@ -114,15 +119,16 @@ public class DoctorSchedule {
                 breakCountAdjustment++;
                 newBreakStart = Time.min(existingStart, newBreakStart);
                 newBreakEnd = Time.max(existingEnd, newBreakEnd);
+                merged = true;
             }
         }
 
-        if (!merged) {
+        if (merged) {
             updatedBreaks.add(new Time[]{newBreakStart, newBreakEnd});
         }
         breaks = updatedBreaks;
-        breakCount -= breakCountAdjustment;
 
+        return breakCountAdjustment;
     }
 
 

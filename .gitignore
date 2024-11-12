@@ -411,6 +411,7 @@ FodyWeavers.xsd
 \#*
 *.org*
 *.pdf
+*.class
 
 # output files
 out
