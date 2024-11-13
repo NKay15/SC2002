@@ -26,8 +26,8 @@ public class Doctor extends Staff {
 
     public Doctor(String doctorID, String name, int gender, int age, Password password) {
         super(doctorID, name, Role.DOCTOR, gender, age, password);
-        doctorSchedules = DoctorAvailabilityFileService.loadSchedulesFromFile(this);
         doctorScheduler = new DoctorScheduleManager(this);
+        doctorSchedules = new DoctorSchedules(this);
         patientList = new ArrayList<>();
     }
 
@@ -267,6 +267,10 @@ public class Doctor extends Staff {
 
     public DoctorScheduleManager getDoctorScheduler() {
         return doctorScheduler;
+    }
+
+    public void setDoctorSchedules(DoctorSchedules doctorSchedules) {
+        this.doctorSchedules = doctorSchedules;
     }
 
 }

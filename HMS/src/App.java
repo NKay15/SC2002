@@ -2,14 +2,10 @@ import hms.GlobalData;
 import hms.appointments.AppointmentScheduler;
 import hms.pharmacy.Inventory;
 import hms.services.*;
-import hms.users.Administrator;
-import hms.users.Doctor;
-import hms.users.Patient;
-import hms.users.Pharmacist;
-import hms.users.Staff;
-import hms.users.User;
+import hms.users.*;
 import hms.utils.Role;
 
+import javax.print.Doc;
 import java.util.Scanner;
 
 public class App {
@@ -33,8 +29,6 @@ public class App {
 
         /* Load data into inventory */
         Inventory inventory = InventoryFileService.getInventory();
-
-        /* Load Doctor Availability, not sure where to add. */
 
         /* Set Global Data */
         GlobalData gd = GlobalData.getInstance();
@@ -68,6 +62,10 @@ public class App {
                         currentUser = user;
                         break;
                     }
+                }
+
+                for (Doctor doctor:DoctorFileService.getAllDoctorData()){
+                    DoctorAvailabilityFileService.loadSchedulesFromFile(doctor);
                 }
 
                 if (found == false) {
@@ -126,7 +124,5 @@ public class App {
         /*Wrtie Medical History */
         MedicalRecordFileService.writeMedicalHistory(PatientFileService.getAllPatientData());
 
-        /* Write Doctor Availability, not sure where to put */
-        DoctorAvailabilityFileService.writeSchedulesToFile(DoctorFileService.getAllDoctorData());
     }
 }

@@ -169,8 +169,8 @@ public class Appointment {
         System.out.println("Patient ID: " + patient.getID());
         System.out.println("Doctor ID: " + doctor.getID());
         System.out.print("Status: "); printStatus();
-        System.out.println("Date: " + date.get());
-        System.out.println("Time: " + timeSlot.get());
+        date.print();
+        timeSlot.print();
         if (status == 4) {
             System.out.println();
             aop.print();

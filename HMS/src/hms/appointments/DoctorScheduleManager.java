@@ -21,7 +21,6 @@ public class DoctorScheduleManager {
      * @param doctor the Doctor object to manage appointments for.
      */
     public DoctorScheduleManager(Doctor doctor) {
-        updateDoctorData();
         this.doctor = doctor;
         appointmentList = scheduler.getAppointments(doctor);
         pendingList = scheduler.getPendingAppointments(doctor);

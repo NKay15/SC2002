@@ -166,7 +166,7 @@ public class AppointmentScheduler {
         boolean occupied = false;
         List<Appointment> appointmentList = getAppointments(doctor);
         for (Appointment appointment : appointmentList) {
-            if (appointment.getDate().equals(date) && appointment.getTimeSlot().equals(time)) {
+            if (appointment.getDate().equals(date) && appointment.getTimeSlot().equals(time) && appointment.getStatus() == 2) {
                 occupied = true;
                 break;
             }

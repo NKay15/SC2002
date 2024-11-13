@@ -29,10 +29,11 @@ public class AppointmentFileService extends InputValidation {
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred. Trace for Appointment File not found.");
         }
-        appointmentScheduler.setLists(appointments,pendingAppointments);
+        appointmentScheduler.setLists(appointments, pendingAppointments);
     }
 
     private static void formatAppointment(String[] dataList) {
+        UUID uuid = (dataList[6].equals("null")) ? null : UUID.fromString(dataList[6]);
         Appointment appointment = new Appointment(
                 UUID.fromString(dataList[0]),
                 PatientFileService.getPatientByID(dataList[1]),
@@ -40,7 +41,8 @@ public class AppointmentFileService extends InputValidation {
                 Integer.parseInt(dataList[3]),
                 Integer.parseInt(dataList[4]),
                 Integer.parseInt(dataList[5]),
-                UUID.fromString(dataList[2]));
+                uuid
+        );
         if (appointment.getStatus() == 1) {
             pendingAppointments.add(appointment);
         } else {
@@ -68,7 +70,7 @@ public class AppointmentFileService extends InputValidation {
     }
 
     private static String formatAppointmentData(Appointment appointment) {
-        return String.format("%s, %s, %s, %d, %d, %d, %s\n",
+        return String.format("%s,%s,%s,%d,%d,%d,%s\n",
                 appointment.getUuid().toString(),
                 appointment.getPatient().getID(),
                 appointment.getDoctor().getID(),

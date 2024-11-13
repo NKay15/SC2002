@@ -15,7 +15,7 @@ public class DoctorAvailabilityFileService extends InputValidation {
     private static final String fileName = "HMS/src/data/Doctor_Availability_List.txt";
     private static DoctorSchedules schedules;
 
-    public static DoctorSchedules loadSchedulesFromFile(Doctor doctor) {
+    public static void loadSchedulesFromFile(Doctor doctor) {
         schedules = new DoctorSchedules(doctor);
         try {
             File myObj = new File(fileName);
@@ -30,7 +30,7 @@ public class DoctorAvailabilityFileService extends InputValidation {
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred. Trace for Doctor Availability File not found.");
         }
-        return schedules;
+        doctor.setDoctorSchedules(schedules);
     }
 
     private static void formatDoctorSchedule(String[] dataList) {
