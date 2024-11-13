@@ -40,11 +40,22 @@ public class PharmacistFileService extends StaffFileService {
                 	genderNo = 2;
                 }
 
-                Pharmacist newStaff = null;
-                if (dataList.length != 6) {
-                    newStaff = new Pharmacist(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), null);
-                } else {
-                    newStaff = new Pharmacist(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                Pharmacist newStaff = (Pharmacist)GlobalData.getInstance().userInstances.getInstance(dataList[0]);
+
+                if(newStaff != null) {
+                    if (dataList.length != 6) {
+                        newStaff.update(dataList[0], dataList[1], Role.PHARMACIST, genderNo, Integer.valueOf(dataList[4]), null);
+                    } else {
+                        newStaff.update(dataList[0], dataList[1], Role.PHARMACIST, genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                    }
+                }
+                else {
+                    if (dataList.length != 6) {
+                        newStaff = new Pharmacist(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), null);
+                    } else {
+                        newStaff = new Pharmacist(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                    }
+                    GlobalData.getInstance().userInstances.add(newStaff);
                 }
 
                 pharmacistArray.add(newStaff);
@@ -85,11 +96,25 @@ public class PharmacistFileService extends StaffFileService {
                 }
 
                 myReader.close();
-                if (dataList.length != 6) {
-                    return new Pharmacist(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), null);
-                } else {
-                    return new Pharmacist(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+
+                Pharmacist newStaff = (Pharmacist)GlobalData.getInstance().userInstances.getInstance(dataList[0]);
+                if(newStaff != null) {
+                    if (dataList.length != 6) {
+                        newStaff.update(dataList[0], dataList[1], Role.PHARMACIST, genderNo, Integer.valueOf(dataList[4]), null);
+                    } else {
+                        newStaff.update(dataList[0], dataList[1], Role.PHARMACIST, genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                    }
                 }
+                else {
+                    if (dataList.length != 6) {
+                        newStaff = new Pharmacist(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), null);
+                    } else {
+                        newStaff = new Pharmacist(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                    }
+                    GlobalData.getInstance().userInstances.add(newStaff);
+                }
+
+                return newStaff;
             }
             myReader.close();
         }

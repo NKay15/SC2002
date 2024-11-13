@@ -12,6 +12,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
 
+import hms.GlobalData;
+import hms.users.Administrator;
+import hms.users.Doctor;
+import hms.users.Pharmacist;
 import hms.users.Staff;
 import hms.utils.Password;
 import hms.utils.Role;
@@ -55,11 +59,47 @@ public class StaffFileService extends UserFileService {
                 	genderNo = 2;
                 }
 
-                Staff newStaff = null;
-                if (dataList.length != 6) {
-                    newStaff = new Staff(dataList[0], dataList[1], role, genderNo, Integer.valueOf(dataList[4]), null);
-                } else {
-                    newStaff = new Staff(dataList[0], dataList[1], role, genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                Staff newStaff = (Staff)GlobalData.getInstance().userInstances.getInstance(dataList[0]);
+
+                if(newStaff != null) {
+                    if (dataList.length != 6) {
+                        newStaff.update(dataList[0], dataList[1], role, genderNo, Integer.valueOf(dataList[4]), null);
+                    } else {
+                        newStaff.update(dataList[0], dataList[1], role, genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                    }
+                }
+
+                else {
+                    if (dataList.length != 6) {
+                        switch(role) {
+                            case DOCTOR :
+                                newStaff = new Doctor(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), null);
+                            break;
+                            case PHARMACIST :
+                                newStaff = new Pharmacist(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), null);
+                            break;
+                            case ADMINISTRATOR :
+                                newStaff = new Administrator(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), null);
+                            break;
+                            default :
+                                newStaff = new Staff(dataList[0], dataList[1], role, genderNo, Integer.valueOf(dataList[4]), null);
+                        }
+                    } else {
+                        switch(role) {
+                            case DOCTOR :
+                                newStaff = new Doctor(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                            break;
+                            case PHARMACIST :
+                                newStaff = new Pharmacist(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                            break;
+                            case ADMINISTRATOR :
+                                newStaff = new Administrator(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                            break;
+                            default :
+                                newStaff = new Staff(dataList[0], dataList[1], role, genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                        }
+                    }
+                    GlobalData.getInstance().userInstances.add(newStaff);
                 }
 
                 staffArray.add(newStaff);
@@ -111,11 +151,49 @@ public class StaffFileService extends UserFileService {
                 }
 
                 myReader.close();
-                if (dataList.length != 6) {
-                    return new Staff(dataList[0], dataList[1], role, genderNo, Integer.valueOf(dataList[4]), null);
-                } else {
-                    return new Staff(dataList[0], dataList[1], role, genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+
+                Staff newStaff = (Staff)GlobalData.getInstance().userInstances.getInstance(dataList[0]);
+                if(newStaff != null) {
+                    if (dataList.length != 6) {
+                        newStaff.update(dataList[0], dataList[1], role, genderNo, Integer.valueOf(dataList[4]), null);
+                    } else {
+                        newStaff.update(dataList[0], dataList[1], role, genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                    }
                 }
+                else {
+                    if (dataList.length != 6) {
+                        switch(role) {
+                            case DOCTOR :
+                                newStaff = new Doctor(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), null);
+                            break;
+                            case PHARMACIST :
+                                newStaff = new Pharmacist(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), null);
+                            break;
+                            case ADMINISTRATOR :
+                                newStaff = new Administrator(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), null);
+                            break;
+                            default :
+                                newStaff = new Staff(dataList[0], dataList[1], role, genderNo, Integer.valueOf(dataList[4]), null);
+                        }
+                    } else {
+                        switch(role) {
+                            case DOCTOR :
+                                newStaff = new Doctor(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                            break;
+                            case PHARMACIST :
+                                newStaff = new Pharmacist(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                            break;
+                            case ADMINISTRATOR :
+                                newStaff = new Administrator(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                            break;
+                            default :
+                                newStaff = new Staff(dataList[0], dataList[1], role, genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                        }
+                    }
+                    GlobalData.getInstance().userInstances.add(newStaff);
+                }
+
+                return newStaff;
             }
             myReader.close();
         }
@@ -154,11 +232,23 @@ public class StaffFileService extends UserFileService {
                 	genderNo = 2;
                 }
 
-                Staff newStaff = null;
-                if (dataList.length != 6) {
-                    newStaff = new Staff(dataList[0], dataList[1], role, genderNo, Integer.valueOf(dataList[4]), null);
-                } else {
-                    newStaff = new Staff(dataList[0], dataList[1], role, genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                Staff newStaff = (Staff)GlobalData.getInstance().userInstances.getInstance(dataList[0]);
+
+                if(newStaff != null) {
+                    if (dataList.length != 6) {
+                        newStaff.update(dataList[0], dataList[1], role, genderNo, Integer.valueOf(dataList[4]), null);
+                    } else {
+                        newStaff.update(dataList[0], dataList[1], role, genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                    }
+                }
+
+                else {
+                    if (dataList.length != 6) {
+                        newStaff = new Staff(dataList[0], dataList[1], role, genderNo, Integer.valueOf(dataList[4]), null);
+                    } else {
+                        newStaff = new Staff(dataList[0], dataList[1], role, genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                    }
+                    GlobalData.getInstance().userInstances.add(newStaff);
                 }
 
                 staffArray.add(newStaff);
@@ -311,6 +401,8 @@ public class StaffFileService extends UserFileService {
             Path source = Paths.get(temFileName);
             Path toDir = Paths.get(originalFileName);
             Files.move(source, toDir, StandardCopyOption.REPLACE_EXISTING);
+
+            GlobalData.getInstance().userInstances.add(staff);
         }
         catch (Exception e) {
             System.out.println("An error occured");
@@ -347,6 +439,8 @@ public class StaffFileService extends UserFileService {
             Path source = Paths.get(temFileName);
             Path toDir = Paths.get(originalFileName);
             Files.move(source, toDir, StandardCopyOption.REPLACE_EXISTING);
+
+            ((Staff)GlobalData.getInstance().userInstances.getInstance(staff.getID())).update(staff.getID(), staff.getName(), staff.getRole(), staff.getGender(), staff.getAge(), staff.getPassword());
         }
         catch (Exception e) {
             System.out.println("An error occured");
@@ -381,6 +475,8 @@ public class StaffFileService extends UserFileService {
             Path source = Paths.get(temFileName);
             Path toDir = Paths.get(originalFileName);
             Files.move(source, toDir, StandardCopyOption.REPLACE_EXISTING);
+
+            GlobalData.getInstance().userInstances.remove(ID);
         }
         catch (Exception e) {
             System.out.println("An error occured");

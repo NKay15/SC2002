@@ -15,6 +15,7 @@ import java.nio.file.Path;
 import hms.GlobalData;
 import hms.users.Administrator;
 import hms.users.Patient;
+import hms.users.Staff;
 import hms.utils.BloodType;
 import hms.utils.Date;
 import hms.utils.InputValidation;
@@ -77,11 +78,22 @@ public class PatientFileService extends InputValidation {
                 	bloodTypeNo = BloodType.O_MINUS;
                 }
 
-                Patient newPatient = null;
-                if (dataList.length != 8) {
-                    newPatient = new Patient(dataList[0], dataList[1], genderNo, dateFormat, Integer.valueOf(dataList[6]), dataList[5], bloodTypeNo, null);
-                } else {
-                    newPatient = new Patient(dataList[0], dataList[1], genderNo, dateFormat, Integer.valueOf(dataList[6]), dataList[5], bloodTypeNo, new Password(dataList[7]));
+                Patient newPatient = (Patient)GlobalData.getInstance().userInstances.getInstance(dataList[0]);
+
+                if(newPatient != null) {
+                    if (dataList.length != 8) {
+                        newPatient.update(dataList[0], dataList[1], genderNo, dateFormat, Integer.valueOf(dataList[6]), dataList[5], bloodTypeNo, null);
+                    } else {
+                        newPatient.update(dataList[0], dataList[1], genderNo, dateFormat, Integer.valueOf(dataList[6]), dataList[5], bloodTypeNo, new Password(dataList[7]));
+                    }
+                }
+                else {
+                    if (dataList.length != 8) {
+                        newPatient = new Patient(dataList[0], dataList[1], genderNo, dateFormat, Integer.valueOf(dataList[6]), dataList[5], bloodTypeNo, null);
+                    } else {
+                        newPatient = new Patient(dataList[0], dataList[1], genderNo, dateFormat, Integer.valueOf(dataList[6]), dataList[5], bloodTypeNo, new Password(dataList[7]));
+                    }
+                    GlobalData.getInstance().userInstances.add(newPatient);
                 }
 
                 patientArray.add(newPatient);
@@ -150,11 +162,25 @@ public class PatientFileService extends InputValidation {
                 }
 
                 myReader.close();
-                if (dataList.length != 8) {
-                    return new Patient(dataList[0], dataList[1], genderNo, dateFormat, Integer.valueOf(dataList[6]), dataList[5], bloodTypeNo, null);
-                } else {
-                    return new Patient(dataList[0], dataList[1], genderNo, dateFormat, Integer.valueOf(dataList[6]), dataList[5], bloodTypeNo, new Password(dataList[7]));
+
+                Patient newPatient = (Patient)GlobalData.getInstance().userInstances.getInstance(dataList[0]);
+                if(newPatient != null) {
+                    if (dataList.length != 8) {
+                        newPatient.update(dataList[0], dataList[1], genderNo, dateFormat, Integer.valueOf(dataList[6]), dataList[5], bloodTypeNo, null);
+                    } else {
+                        newPatient.update(dataList[0], dataList[1], genderNo, dateFormat, Integer.valueOf(dataList[6]), dataList[5], bloodTypeNo, new Password(dataList[7]));
+                    }
                 }
+                else {
+                    if (dataList.length != 8) {
+                        newPatient = new Patient(dataList[0], dataList[1], genderNo, dateFormat, Integer.valueOf(dataList[6]), dataList[5], bloodTypeNo, null);
+                    } else {
+                        newPatient = new Patient(dataList[0], dataList[1], genderNo, dateFormat, Integer.valueOf(dataList[6]), dataList[5], bloodTypeNo, new Password(dataList[7]));
+                    }
+                    GlobalData.getInstance().userInstances.add(newPatient);
+                }
+
+                return newPatient;
             }
             myReader.close();
         }
@@ -261,6 +287,8 @@ public class PatientFileService extends InputValidation {
             Path source = Paths.get(temFileName);
             Path toDir = Paths.get(originalFileName);
             Files.move(source, toDir.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+
+            GlobalData.getInstance().userInstances.add(patient);
         }
         catch (Exception e) {
             System.out.println("An error occured");
@@ -307,6 +335,8 @@ public class PatientFileService extends InputValidation {
             Path source = Paths.get(temFileName);
             Path toDir = Paths.get(originalFileName);
             Files.move(source, toDir, StandardCopyOption.REPLACE_EXISTING);
+
+            ((Patient)GlobalData.getInstance().userInstances.getInstance(patient.getID())).update(patient.getID(), patient.getName(), patient.getGender(), patient.getDob(), patient.getPhone(), patient.getEmail(), patient.getBloodType(), patient.getPassword());
         }
         catch (Exception e) {
             System.out.println(e);
@@ -341,6 +371,8 @@ public class PatientFileService extends InputValidation {
             Path source = Paths.get(temFileName);
             Path toDir = Paths.get(originalFileName);
             Files.move(source, toDir, StandardCopyOption.REPLACE_EXISTING);
+
+            GlobalData.getInstance().userInstances.remove(ID);
         }
         catch (Exception e) {
             System.out.println("An error occured");

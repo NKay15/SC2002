@@ -39,11 +39,21 @@ public class AdministratorFileService extends StaffFileService {
                 	genderNo = 2;
                 }
 
-                Administrator newStaff = null;
-                if (dataList.length != 6) {
-                    newStaff = new Administrator(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), null);
-                } else {
-                    newStaff = new Administrator(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                Administrator newStaff = (Administrator)GlobalData.getInstance().userInstances.getInstance(dataList[0]);
+                if(newStaff != null) {
+                    if (dataList.length != 6) {
+                        newStaff.update(dataList[0], dataList[1], Role.ADMINISTRATOR, genderNo, Integer.valueOf(dataList[4]), null);
+                    } else {
+                        newStaff.update(dataList[0], dataList[1], Role.ADMINISTRATOR, genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                    }
+                }
+                else {
+                    if (dataList.length != 6) {
+                        newStaff = new Administrator(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), null);
+                    } else {
+                        newStaff = new Administrator(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                    }
+                    GlobalData.getInstance().userInstances.add(newStaff);
                 }
 
                 adminstratorArray.add(newStaff);
@@ -84,11 +94,26 @@ public class AdministratorFileService extends StaffFileService {
                 }
 
                 myReader.close();
-                if (dataList.length != 6) {
-                    return new Administrator(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), null);
-                } else {
-                    return new Administrator(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+
+                Administrator newStaff =  (Administrator)GlobalData.getInstance().userInstances.getInstance(dataList[0]);
+                if(newStaff != null) {
+                    if (dataList.length != 6) {
+                        newStaff.update(dataList[0], dataList[1], Role.ADMINISTRATOR, genderNo, Integer.valueOf(dataList[4]), null);
+                    } else {
+                        newStaff.update(dataList[0], dataList[1], Role.ADMINISTRATOR, genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                    }
                 }
+                else {
+                    if (dataList.length != 6) {
+                        newStaff = new Administrator(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), null);
+                    } else {
+                        newStaff = new Administrator(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                    }
+
+                    GlobalData.getInstance().userInstances.add(newStaff);
+                }
+
+                return newStaff;
             }
             myReader.close();
         }
