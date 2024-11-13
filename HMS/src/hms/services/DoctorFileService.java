@@ -29,7 +29,7 @@ public class DoctorFileService extends StaffFileService {
                 String data = myReader.nextLine();
                 String[] dataList = data.split(",");
 
-                if (dataList[2] != Role.DOCTOR.toString()) {
+                if (!dataList[2].equals(Role.DOCTOR.toString())) {
                     continue;
                 }
 

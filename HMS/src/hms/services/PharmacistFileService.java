@@ -29,7 +29,7 @@ public class PharmacistFileService extends StaffFileService {
                 String data = myReader.nextLine();
                 String[] dataList = data.split(",");
 
-                if (dataList[2] != Role.PHARMACIST.toString()) {
+                if (dataList[2].equals(Role.PHARMACIST.toString())) {
                     continue;
                 }
 
@@ -84,7 +84,7 @@ public class PharmacistFileService extends StaffFileService {
                 String data = myReader.nextLine();
                 String[] dataList = data.split(",");
 
-                if (dataList[2] != Role.PHARMACIST.toString() && (!dataList[0].equals(ID))) {
+                if (!dataList[2].equals(Role.PHARMACIST.toString()) && (!dataList[0].equals(ID))) {
                     continue;
                 }
 
