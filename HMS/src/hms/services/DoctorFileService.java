@@ -40,11 +40,21 @@ public class DoctorFileService extends StaffFileService {
                 	genderNo = 2;
                 }
 
-                Doctor newStaff = null;
-                if (dataList.length != 6) {
-                    newStaff = new Doctor(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), null);
-                } else {
-                    newStaff = new Doctor(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                Doctor newStaff = (Doctor)GlobalData.getInstance().userInstances.getInstance(dataList[0]);
+                if(newStaff != null) {
+                    if (dataList.length != 6) {
+                        newStaff.update(dataList[0], dataList[1], Role.DOCTOR, genderNo, Integer.valueOf(dataList[4]), null);
+                    } else {
+                        newStaff.update(dataList[0], dataList[1], Role.DOCTOR, genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                    }
+                }
+                else {
+                    if (dataList.length != 6) {
+                        newStaff = new Doctor(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), null);
+                    } else {
+                        newStaff = new Doctor(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                    }
+                    GlobalData.getInstance().userInstances.add(newStaff);
                 }
 
                 doctorArray.add(newStaff);
@@ -85,11 +95,25 @@ public class DoctorFileService extends StaffFileService {
                 }
 
                 myReader.close();
-                if (dataList.length != 6) {
-                    return new Doctor(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), null);
-                } else {
-                    return new Doctor(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+
+                Doctor newStaff = (Doctor)GlobalData.getInstance().userInstances.getInstance(dataList[0]);
+                if(newStaff != null) {
+                    if (dataList.length != 6) {
+                        newStaff.update(dataList[0], dataList[1], Role.DOCTOR, genderNo, Integer.valueOf(dataList[4]), null);
+                    } else {
+                        newStaff.update(dataList[0], dataList[1], Role.DOCTOR, genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                    }
                 }
+                else {
+                    if (dataList.length != 6) {
+                        newStaff = new Doctor(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), null);
+                    } else {
+                        newStaff = new Doctor(dataList[0], dataList[1], genderNo, Integer.valueOf(dataList[4]), new Password(dataList[5]));
+                    }
+                    GlobalData.getInstance().userInstances.add(newStaff);
+                }
+
+                return newStaff;
             }
             myReader.close();
         }
