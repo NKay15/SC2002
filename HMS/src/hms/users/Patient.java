@@ -54,6 +54,32 @@ public class Patient extends User{
         patientSchedule = new PatientScheduleManager(this);
     }
 
+    public boolean update(String patientID, String name, int gender, Date dob, int phone, String email, BloodType bloodType, Password password) {
+        boolean change = super.update(patientID, name, Role.PATIENT, gender, password);
+
+        if(!this.dob.equals(dob)) {
+            this.dob = dob;
+            change = true;
+        }
+
+        if(this.phone != phone) {
+            this.phone = phone;
+            change = true;
+        }
+
+        if(!this.email.equals(email)) {
+            this.email = email;
+            change = true;
+        }
+
+        if(!this.bloodType.equals(bloodType)) {
+            this.bloodType = bloodType;
+            change = true;
+        }
+
+        return change;
+    }
+
     /**
      * return Date of birth
      */

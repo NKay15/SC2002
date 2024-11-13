@@ -1,6 +1,7 @@
 package hms;
 
 import hms.pharmacy.Inventory;
+import hms.users.UserInstances;
 
 import java.util.Scanner;
 
@@ -17,6 +18,11 @@ public class GlobalData {
     public Inventory inventory;
 
     /**
+     * Global user instances
+     */
+    public UserInstances userInstances;
+
+    /**
      * Global Scanner
      */
     public Scanner sc;
@@ -26,6 +32,7 @@ public class GlobalData {
      */
     private GlobalData() {
         inventory = null;
+        userInstances = new UserInstances();
         sc = new Scanner(System.in);
     }
 

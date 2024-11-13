@@ -37,9 +37,39 @@ public class Staff extends User {
 		this.age = age;
 	}
 
+    /**
+     * Constructor of Staff
+     * @param ID ID
+     * @param name Name
+     * @param role role
+     * @param gender gender number
+     * @param age age
+     * @param password password
+     */
     public Staff(String ID, String name, Role role, int gender, int age, Password password) {
         super(ID, name, role, gender, password);
         this.age = age;
+    }
+
+    /**
+     * Update staff data
+     * @param ID ID
+     * @param name name
+     * @param role role
+     * @param gender gender number
+     * @param age age
+     * @param password password
+     * @return true if a data is changed otherwise false
+     */
+    public boolean update(String ID, String name, Role role, int gender, int age, Password password) {
+        boolean change = super.update(ID, name, role, gender, password);
+
+        if(this.age != age) {
+            this.age = age;
+            change = true;
+        }
+
+        return change;
     }
 
     public void printRole() {

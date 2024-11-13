@@ -60,8 +60,9 @@ public class User {
      * Constructor for user
      * @param ID id
      * @param name name
-     * @param role role number
+     * @param role role
      * @param gender gender number
+     * @param password password
      */
     public User(String ID, String name, Role role, int gender, Password password) {
     	this.ID = ID;
@@ -74,6 +75,53 @@ public class User {
             this.password = password;
         }
     }
+
+    /**
+     * Update the user data
+     * @param ID ID
+     * @param name name
+     * @param role role
+     * @param gender gender number
+     * @param password password
+     * @return true if a data is changed otherwise false
+     */
+    public boolean update(String ID, String name, Role role, int gender, Password password) {
+        boolean change = false;
+
+        if(this.ID.equals(ID)) {
+            this.ID = ID;
+            change = true;
+        }
+
+        if(!this.name.equals(name)){
+    	    this.name = name;
+            change = true;
+        }
+
+        if(!this.role.equals(role)) {
+    	    this.role = role;
+            change = true;
+        }
+
+        if(this.gender != gender){
+    	    this.gender = gender;
+            change = true;
+        }
+
+        if (password == null) {
+            if(!this.password.checkPassword("password")) {
+                this.password = new Password();
+                change = true;
+            }
+        } 
+        else if(!this.password.getPassword().equals(password.getPassword())) {
+            this.password = password;
+            change = true;
+         }
+
+        return change;
+    }
+
     
     /**
      * Accessors method of ID
