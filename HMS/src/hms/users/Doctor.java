@@ -61,7 +61,7 @@ public class Doctor extends Staff {
                     break;
 
                 case 2:
-                    if (patientList == null) {
+                    if (patientList == null || patientList.size() == 0) {
                         System.out.println("You have no patient.");
                         break;
                     }
