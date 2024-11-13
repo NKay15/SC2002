@@ -28,7 +28,7 @@ public class AdministratorFileService extends StaffFileService {
                 String data = myReader.nextLine();
                 String[] dataList = data.split(",");
 
-                if (dataList[2] != Role.ADMINISTRATOR.toString()) {
+                if (dataList[2].equals(Role.ADMINISTRATOR.toString())) {
                     continue;
                 }
 
@@ -82,7 +82,7 @@ public class AdministratorFileService extends StaffFileService {
                 String data = myReader.nextLine();
                 String[] dataList = data.split(",");
 
-                if (dataList[2] != Role.ADMINISTRATOR.toString() && (!dataList[0].equals(ID))) {
+                if (!dataList[2].equals(Role.ADMINISTRATOR.toString()) && (!dataList[0].equals(ID))) {
                     continue;
                 }
 
