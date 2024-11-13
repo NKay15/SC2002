@@ -125,6 +125,7 @@ public class Doctor extends Staff {
                     break;
 
                 default:
+                    DoctorAvailabilityFileService.writeSchedulesToFile(doctorSchedules);
                     if (!super.useroptions(choice - 7)) {
                         return;
                     }
@@ -267,4 +268,5 @@ public class Doctor extends Staff {
     public DoctorScheduleManager getDoctorScheduler() {
         return doctorScheduler;
     }
+
 }

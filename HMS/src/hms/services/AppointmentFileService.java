@@ -27,7 +27,7 @@ public class AppointmentFileService extends InputValidation {
             }
             myReader.close();
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
+            System.out.println("An error occurred. Trace for Appointment File not found.");
         }
         appointmentScheduler.setLists(appointments,pendingAppointments);
     }
