@@ -213,8 +213,13 @@ public class User {
         Scanner sc = GlobalData.getInstance().sc;
         System.out.print("Enter password: ");
         String value = sc.nextLine();
-        if (password.checkPassword(value)) return role;
-        else return null;
+        if (!password.checkPassword(value)) return null;
+        if (password.has2FA()) {
+            System.out.print("Enter 2FA code: ");
+            int code = sc.nextInt();
+            if (!password.check2FA(code)) return null;
+        }
+        return role;
     }
 
     public boolean checkPassword(String password) {
@@ -234,6 +239,7 @@ public class User {
      */
     public void menu(int i) {
         System.out.println((i++) + ". Change Password");
+        System.out.println((i++) + ". Manage 2FA");
         System.out.println((i++) + ". Log out");
     }
 
@@ -247,7 +253,9 @@ public class User {
         switch(choice) {
             case 1 : changePassword(sc);
             break;
-            case 2 : 
+            case 2 : password.menu2FA();
+            break;
+            case 3 : 
                 System.out.print("Confirm Log Out? Enter 1 to Log Out; " +
                 "or Enter anything else to Return to Menu.\nEnter your choice: ");
                 String confirmLogOut = sc.next(); sc.nextLine();
