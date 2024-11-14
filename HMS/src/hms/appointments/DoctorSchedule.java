@@ -80,7 +80,8 @@ public class DoctorSchedule {
             Time breakStart, breakEnd;
             boolean flag = false;
             do {
-                if (flag) System.out.println("Invalid break time. Breaks must be within working hours and not overlap.");
+                if (flag)
+                    System.out.println("Invalid break time. Breaks must be within working hours and not overlap.");
                 System.out.println("Input your break start time, in hhmm");
                 int time = sc.nextInt();
                 breakStart = new Time(time);
@@ -91,9 +92,9 @@ public class DoctorSchedule {
                 flag = breakStart.compareTo(breakEnd) >= 0 || breakStart.compareTo(startTime) < 0 || breakEnd.compareTo(endTime) > 0;
             } while (flag);
 
-            breakCountAdjustment+=mergeBreaks(breakStart, breakEnd);
+            breakCountAdjustment += mergeBreaks(breakStart, breakEnd);
         }
-        breakCount-=breakCountAdjustment;
+        breakCount -= breakCountAdjustment;
     }
 
     /**
@@ -113,7 +114,6 @@ public class DoctorSchedule {
         List<Time[]> updatedBreaks = new ArrayList<>();
         int breakCountAdjustment = 0;
 
-        boolean merged = false;
         if (breaks.isEmpty()) {
             breaks.add(new Time[]{newBreakStart, newBreakEnd});
             return 0;
@@ -131,13 +131,10 @@ public class DoctorSchedule {
                 breakCountAdjustment++;
                 newBreakStart = Time.min(existingStart, newBreakStart);
                 newBreakEnd = Time.max(existingEnd, newBreakEnd);
-                merged = true;
             }
         }
 
-        if (merged) {
-            updatedBreaks.add(new Time[]{newBreakStart, newBreakEnd});
-        }
+        updatedBreaks.add(new Time[]{newBreakStart, newBreakEnd});
         breaks = updatedBreaks;
 
         return breakCountAdjustment;
@@ -198,7 +195,6 @@ public class DoctorSchedule {
      * Checks if the doctor is available at a specific time.
      *
      * @param time The Time object representing the time to check availability for.
-     *
      * @return A boolean indicating whether the doctor is available (true) or not (false).
      */
     protected boolean isDoctorWorking(Time time) {

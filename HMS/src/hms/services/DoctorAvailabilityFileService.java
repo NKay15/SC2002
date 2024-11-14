@@ -36,9 +36,9 @@ public class DoctorAvailabilityFileService extends InputValidation {
     private static void formatDoctorSchedule(String[] dataList) {
         List<Time[]> breaks = new ArrayList<>();
         if (!dataList[4].equals("0")){
-            String[] breakParts = dataList[5].substring(1, dataList[5].length() - 1).split("\\]\\[");
+            String[] breakParts = dataList[5].split(";");
             for (String part : breakParts) {
-                String[] times = part.split(":");
+                String[] times = part.split("-");
                 breaks.add(new Time[]{new Time(Integer.parseInt(times[0])), new Time(Integer.parseInt(times[1]))});
             }
         }
@@ -64,13 +64,15 @@ public class DoctorAvailabilityFileService extends InputValidation {
                 fw.write(schedule.getEndTime().getIntTime() + ",");
                 fw.write(schedule.getBreakCount() + ",");
                 for (int i = 0; i < schedule.getBreakCount(); i++) {
-                    fw.write("[" + schedule.getBreaks().get(i)[0].getIntTime() + "-" +
-                            schedule.getBreaks().get(i)[1].getIntTime() + "]");
+                    if (i > 0) fw.write(";");
+                    fw.write(schedule.getBreaks().get(i)[0].getIntTime() + "-" +
+                            schedule.getBreaks().get(i)[1].getIntTime());
                 }
+                fw.write("\n");
             }
             fw.close();
         } catch (Exception e) {
-            System.out.println("An error occurred. Cannot write appointments.");
+            System.out.println("An error occurred. Cannot write doctor availability list.");
         }
     }
 
