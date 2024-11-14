@@ -125,7 +125,6 @@ public class Doctor extends Staff {
                     break;
 
                 default:
-                    DoctorAvailabilityFileService.writeSchedulesToFile(doctorSchedules);
                     if (!super.useroptions(choice - 7)) {
                         return;
                     }
@@ -175,6 +174,7 @@ public class Doctor extends Staff {
         ddmmyyyy = scanner.nextInt();
         Date date = new Date(ddmmyyyy);
         doctorSchedules.setDoctorSchedule(date);
+        DoctorAvailabilityFileService.writeSchedulesToFile(doctorSchedules);
     }
 
     private boolean isInPatientList(Patient keyPatient) {
@@ -185,9 +185,9 @@ public class Doctor extends Staff {
     }
 
     private void updatePatientList(Patient patient, int op) {
-        if ((op == 1) && (isInPatientList(patient) == false)) {
+        if ((op == 1) && (!isInPatientList(patient))) {
             patientList.add(patient);
-        } else if ((op == -1) && (isInPatientList(patient) == true)) {
+        } else if ((op == -1) && (isInPatientList(patient))) {
             patientList.remove(patient);
         }
     }
@@ -201,7 +201,7 @@ public class Doctor extends Staff {
         int id = 0;
         Scanner scan = GlobalData.getInstance().sc;
 
-        if (appointmentList.size() == 0) {
+        if (appointmentList.isEmpty()) {
             System.out.println("No pending request!");
         }
 
