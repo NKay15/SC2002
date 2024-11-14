@@ -169,11 +169,11 @@ public class Appointment {
         System.out.println("Patient ID: " + patient.getID());
         System.out.println("Doctor ID: " + doctor.getID());
         System.out.print("Status: "); printStatus();
-        date.print();
-        timeSlot.print();
+        System.out.println("Date: " + date.get());
+        System.out.println("Time: " + timeSlot.get());
         if (status == 4) {
             System.out.println();
-            aop.print();
+            if (aop != null) aop.print();
         }
     }
 
