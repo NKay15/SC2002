@@ -25,7 +25,10 @@ public class App {
         AppointmentFileService.loadAppointments(scheduler);
 
         /*Load Medical History*/
-        //MedicalRecordFileService.loadMedicalHistory(userList);
+        MedicalRecordFileService.loadMedicalHistory();
+
+        /*Load 2FA */
+        SercureFileService.load2FA();
 
         /* Load data into inventory */
         Inventory inventory = InventoryFileService.getInventory();
@@ -123,6 +126,9 @@ public class App {
 
         /*Wrtie Medical History */
         MedicalRecordFileService.writeMedicalHistory(PatientFileService.getAllPatientData());
+
+        /*Write 2FA */
+        SercureFileService.write2FA();
 
     }
 }

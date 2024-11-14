@@ -67,8 +67,8 @@ public class DoctorAvailabilityFileService extends InputValidation {
                     fw.write("[" + schedule.getBreaks().get(i)[0].getIntTime() + "-" +
                             schedule.getBreaks().get(i)[1].getIntTime() + "]");
                 }
-                fw.close();
             }
+            fw.close();
         } catch (Exception e) {
             System.out.println("An error occurred. Cannot write appointments.");
         }
