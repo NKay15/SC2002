@@ -273,4 +273,12 @@ public class Doctor extends Staff {
         this.doctorSchedules = doctorSchedules;
     }
 
+    public List<Patient> getPatientList() {
+        return patientList;
+    }
+
+    public void addPatient(Patient patient){
+        patientList.add(patient);
+    }
+
 }

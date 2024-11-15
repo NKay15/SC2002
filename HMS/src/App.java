@@ -24,7 +24,13 @@ public class App {
         AppointmentScheduler scheduler = AppointmentScheduler.getInstance();
         AppointmentFileService.loadAppointments(scheduler);
 
+        for (Doctor doctor:DoctorFileService.getAllDoctorData()){
+            DoctorAvailabilityFileService.loadSchedulesFromFile(doctor);
+        }
+        AOPFileService.loadAOP();
+
         /*Load Medical History*/
+        DoctorPatientFileService.loadPatientList();
         MedicalRecordFileService.loadMedicalHistory();
 
         /*Load 2FA */
@@ -65,10 +71,6 @@ public class App {
                         currentUser = user;
                         break;
                     }
-                }
-
-                for (Doctor doctor:DoctorFileService.getAllDoctorData()){
-                    DoctorAvailabilityFileService.loadSchedulesFromFile(doctor);
                 }
 
                 if (found == false) {
@@ -120,12 +122,14 @@ public class App {
 
         /* Write Appointments */
         AppointmentFileService.writeAppointments(scheduler);
+        AOPFileService.writeAOP();
 
         /*Write Inventory */
         InventoryFileService.writeInventory(gd.inventory);
 
         /*Wrtie Medical History */
         MedicalRecordFileService.writeMedicalHistory(PatientFileService.getAllPatientData());
+        DoctorPatientFileService.write2FA();
 
         /*Write 2FA */
         SercureFileService.write2FA();

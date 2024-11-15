@@ -61,7 +61,7 @@ public class DoctorScheduleManager {
      * @param appointment the Appointment object to update.
      */
     public void updateAppointmentOutcomeRecord(Appointment appointment) {
-        if (appointment.getStatus() != 2 || appointment.getStatus() != 4) {
+        if (appointment.getStatus() != 2 && appointment.getStatus() != 4) {
             System.out.println("Appointment is not confirmed/completed.");
             return;
         }

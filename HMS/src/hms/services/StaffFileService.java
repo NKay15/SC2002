@@ -394,7 +394,7 @@ public class StaffFileService extends UserFileService {
                 f_writer.newLine();
             }
 
-            f_writer.write(staff.getID() + "," + staff.getName() + "," + staff.getRole().toString() + "," + staff.getGenderString() + "," + staff.getAge() + "," + staff.getPassword());
+            f_writer.write(staff.getID() + "," + staff.getName() + "," + staff.getRole().toString() + "," + staff.getGenderString() + "," + staff.getAge() + "," + staff.getPassword().getPassword());
             myReader.close();
             f_writer.close();
 
@@ -427,7 +427,7 @@ public class StaffFileService extends UserFileService {
                 String[] dataList = data.split(",");
 
                 if (dataList[0].equals(staff.getID())) {
-                    f_writer.write(staff.getID() + "," + staff.getName() + "," + staff.getRole().toString() + "," + staff.getGenderString() + "," + staff.getAge() + "," + staff.getPassword());
+                    f_writer.write(staff.getID() + "," + staff.getName() + "," + staff.getRole().toString() + "," + staff.getGenderString() + "," + staff.getAge() + "," + staff.getPassword().getPassword());
                 } else {
                     f_writer.write(data);
                 }

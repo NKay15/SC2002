@@ -13,7 +13,7 @@ public class TOTP {
     public TOTP() {
         try {
             long value = SecureRandom.getInstance("SHA1PRNG").nextLong(min, max);
-            this.key = Base32.encode(value+"").substring(1,17);
+            this.key = Base32.encode(value+"").substring(0,16);
         }
         catch (Exception e) {
             System.out.println("Error at TOTP constructor");
