@@ -185,8 +185,7 @@ public class Patient extends User{
         Scanner sc = GlobalData.getInstance().sc;
         int choice = 1;
         while(true) {
-
-            System.out.println("-----Patient Menu-----");
+            System.out.println("\n-----Patient Menu-----");
             System.out.println("1. View Medical Record ");
             System.out.println("2. Update Personal Information ");
             System.out.println("3. View Available Appointment Slots ");

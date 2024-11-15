@@ -36,7 +36,7 @@ public class Pharmacist extends Staff {
 
 			try {
 				if (!inputError) {
-					System.out.println("-----Pharmacist Menu-----");
+					System.out.println("\n-----Pharmacist Menu-----");
 					System.out.println("1. Search for Appointment Outcome Record by Patient ID");
 					System.out.println("2. Dispense Medication & Update Prescription Status");
 					System.out.println("3. View Medication Inventory");
@@ -55,7 +55,7 @@ public class Pharmacist extends Staff {
 							if (alreadyTried) System.out.print("Patient Does Not Exist! Try again: ");
 							patientID = sc.nextLine();
 							if (patientID.equals("0")) {
-								System.out.println("Operation Cancelled. Returning to Menu...\n");
+								System.out.println("Operation Cancelled. Returning to Menu...");
 								break;
 							}
 							for (Patient temPatient : PatientFileService.getAllPatientData()) {
@@ -69,7 +69,7 @@ public class Pharmacist extends Staff {
 
 						if (patient != null) {
 							if (patient.getPatientSchedule().getAppointments().isEmpty()) {
-								System.out.println("Patient Has No Completed Appointments! Returning to Menu...\n");
+								System.out.println("Patient Has No Completed Appointments! Returning to Menu...");
 								break;
 							} else {
 								System.out.println("Completed Appointments for Patient " + patient.getID() + ":");
@@ -98,7 +98,7 @@ public class Pharmacist extends Staff {
 								aop.print();
 								System.out.print("Enter anything to Return to Menu: ");
 								sc.nextLine();
-								System.out.println("Returning to Menu...\n");
+								System.out.println("Returning to Menu...");
 							}
 						}
 						break;
@@ -110,7 +110,7 @@ public class Pharmacist extends Staff {
 							if (alreadyTried) System.out.print("Patient Does Not Exist! Try again: ");
 							patientID = sc.nextLine();
 							if (patientID.equals("0")) {
-								System.out.println("Operation Cancelled. Returning to Menu...\n");
+								System.out.println("Operation Cancelled. Returning to Menu...");
 								break;
 							}
 							for (Patient temPatient : PatientFileService.getAllPatientData()) {
@@ -124,7 +124,7 @@ public class Pharmacist extends Staff {
 
 						if (patient != null) {
 							if (patient.getPatientSchedule().getAppointments().isEmpty()) {
-								System.out.println("Patient Has No Completed Appointments! Returning to Menu...\n");
+								System.out.println("Patient Has No Completed Appointments! Returning to Menu...");
 								break;
 							} else {
 								boolean hasPendingMedication = false;
@@ -135,7 +135,7 @@ public class Pharmacist extends Staff {
 									}
 								}
 								if (!hasPendingMedication) {
-									System.out.println("Patient Has No Completed Appointments Awaiting Dispensation of Medication!\nReturning to Menu...\n");
+									System.out.println("Patient Has No Completed Appointments Awaiting Dispensation of Medication!\nReturning to Menu...");
 									break;
 								}
 								System.out.println("Completed Appointments Requiring Medication for Patient " + patient.getID() + ":");
@@ -181,14 +181,14 @@ public class Pharmacist extends Staff {
 										case "1":
 											if (GlobalData.getInstance().inventory.dispense(aop)) {
 												System.out.println("Medication Successfully Dispensed! " +
-														"Prescription Status Updated. Returning to Menu... \n");
+														"Prescription Status Updated. Returning to Menu...");
 											} else {
-												System.out.println("Insufficient Medication. Please Restock! Returning to Menu...\n");
+												System.out.println("Insufficient Medication. Please Restock! Returning to Menu...");
 											}
 											break;
 
 										case "2":
-											System.out.println("Operation Cancelled. Returning to Menu... \n");
+											System.out.println("Operation Cancelled. Returning to Menu...");
 											break;
 
 										default:
@@ -207,7 +207,7 @@ public class Pharmacist extends Staff {
 						GlobalData.getInstance().inventory.printCurrentInventory();
 						System.out.print("Enter anything to Return to Menu: ");
 						sc.nextLine();
-						System.out.println("Returning to Menu...\n");
+						System.out.println("Returning to Menu...");
 						break;
 
 					case 4:
@@ -222,7 +222,7 @@ public class Pharmacist extends Staff {
 								submitMore = sc.nextInt(); sc.nextLine();
 							}
 							if (submitMore == 2) {
-								System.out.println("Returning to Menu...\n");
+								System.out.println("Returning to Menu...");
 								break;
 							}
 						}

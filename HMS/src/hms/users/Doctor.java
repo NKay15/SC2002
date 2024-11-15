@@ -41,8 +41,7 @@ public class Doctor extends Staff {
         int choice = 1;
 
         while (true) {
-
-            System.out.println("-----Doctor Menu-----");
+            System.out.println("\n-----Doctor Menu-----");
             System.out.println("1. View Patient Medical Records ");
             System.out.println("2. Update Patient Medical Records");
             System.out.println("3. View Personal Schedule ");

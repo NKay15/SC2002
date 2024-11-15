@@ -35,7 +35,7 @@ public class Administrator extends Staff {
 		while (true) {
 			try {
 				if (!inputError) {
-					System.out.println("-----Administrator Menu-----");
+					System.out.println("\n-----Administrator Menu-----");
 					System.out.println("1. View & Manage Hospital Staff");
 					System.out.println("2. View Patient Appointments");
 					System.out.println("3. View & Manage Hospital Patients");
@@ -450,7 +450,7 @@ public class Administrator extends Staff {
 					break;
 
 				case "5":
-					System.out.println("Returning to Main Menu...\n");
+					System.out.println("Returning to Main Menu...");
 					return;
 
 				default:
@@ -701,7 +701,7 @@ public class Administrator extends Staff {
 					break;
 
 				case "3":
-					System.out.println("Returning to Main Menu...\n");
+					System.out.println("Returning to Main Menu...");
 					return;
 
 				default:
@@ -1010,7 +1010,7 @@ public class Administrator extends Staff {
 					break;
 
 				case "5":
-					System.out.println("Returning to Main Menu...\n");
+					System.out.println("Returning to Main Menu...");
 					return;
 
 				default:
@@ -1125,7 +1125,7 @@ public class Administrator extends Staff {
 					break;
 
 				case "6":
-					System.out.println("Returning to Main Menu...\n");
+					System.out.println("Returning to Main Menu...");
 					return;
 
 				default:
