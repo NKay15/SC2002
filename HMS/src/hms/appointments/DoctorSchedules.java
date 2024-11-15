@@ -32,22 +32,12 @@ public class DoctorSchedules {
         DoctorSchedule doctorSchedule = findDateSchedule(date, doctor);
         if (doctorSchedule != null) {
             System.out.println("Schedule exists, do you want to \n" +
-                    "1. reset breaks." +
-                    "2. change working time." +
-                    "3. rewrite it.");
+                    "1. rewrite it." +
+                    "2. exit.");
             Scanner scanner = GlobalData.getInstance().sc;
             int sc = scanner.nextInt();
             switch (sc) {
                 case 1:
-                    doctorSchedule.setBreaks();
-                    break;
-
-                case 2:
-                    System.out.println("Changing working time...");
-                    doctorSchedule.setWorkingTime();
-                    break;
-
-                case 3:
                     System.out.println("Rewriting schedule...");
                     doctorSchedules.remove(findDateSchedule(date, doctor));
                     doctorSchedule = new DoctorSchedule(doctor, date);
