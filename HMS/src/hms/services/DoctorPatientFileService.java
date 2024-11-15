@@ -31,7 +31,7 @@ public class DoctorPatientFileService {
 
     public static void write2FA() {
         try {
-            FileWriter fw = new FileWriter("HMS/src/data/Doctor_Patients_List_List.txt");
+            FileWriter fw = new FileWriter("HMS/src/data/Doctor_Patients_List.txt");
             fw.write("Doctor,Patient\n");
 
             for(Doctor doctor : DoctorFileService.getAllDoctorData()) {
