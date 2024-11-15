@@ -15,6 +15,8 @@ import hms.utils.Password;
 import hms.utils.Role;
 import java.util.*;
 
+import static hms.services.PatientFileService.getPatientByID;
+
 public class Administrator extends Staff {
 
 	AdministratorAppointmentManager manager = new AdministratorAppointmentManager();
@@ -35,7 +37,7 @@ public class Administrator extends Staff {
 				if (!inputError) {
 					System.out.println("-----Administrator Menu-----");
 					System.out.println("1. View & Manage Hospital Staff");
-					System.out.println("2. View Appointment Details");
+					System.out.println("2. View Patient Appointments");
 					System.out.println("3. View & Manage Hospital Patients");
 					System.out.println("4. View & Manage Medication Inventory");
 					super.menu(5);
@@ -51,32 +53,7 @@ public class Administrator extends Staff {
 						break;
 
 					case 2:
-						boolean appointmentFound = false;
-						boolean alreadyTried = false;
-						Appointment appointment = null;
-						String appointmentID;
-
-						while (!appointmentFound) {
-							if (alreadyTried) {
-								System.out.println("Invalid Appointment ID! Try again: ");
-							}
-							System.out.print("Enter Appointment ID (0 to Cancel): ");
-							appointmentID = sc.nextLine();
-							if (appointmentID.equals("0")) {
-								System.out.println("Operation Cancelled. Returning to Menu...\n");
-								break;
-							}
-							if (manager.findAppointment(UUID.fromString(appointmentID),
-									manager.getAppointments()) != null) {
-								appointment = manager.findAppointment(UUID.fromString(appointmentID),
-										manager.getAppointments());
-								appointmentFound = true;
-							}
-							alreadyTried = true;
-						}
-
-						if (appointmentFound) appointment.print();
-
+						appointmentMenu();
 						break;
 
 					case 3:
@@ -473,6 +450,257 @@ public class Administrator extends Staff {
 					break;
 
 				case "5":
+					System.out.println("Returning to Main Menu...\n");
+					return;
+
+				default:
+					System.out.print("Invalid choice! Try again: ");
+					break;
+			}
+		}
+	}
+
+	public void appointmentMenu(){
+		Scanner sc = GlobalData.getInstance().sc;
+		String apptChoice = "1";
+
+		boolean appointmentFound;
+		boolean patientFound;
+		boolean alreadyTried;
+		Appointment appointment;
+		String appointmentID;
+		String patientID = null;
+		String searchHow;
+
+		while (true) {
+			appointmentFound = false;
+			patientFound = false;
+			alreadyTried = false;
+			appointment = null;
+
+			if (apptChoice.equals("1") || apptChoice.equals("2")) {
+				System.out.println("\n-----View Appointments-----");
+				System.out.println("1. View Non-Pending Appointments");
+				System.out.println("2. View Pending Appointments");
+				System.out.println("3. Return to Main Menu");
+				System.out.println("---------------------------");
+				System.out.print("Enter your choice: ");
+			}
+			apptChoice = sc.next(); sc.nextLine();
+			switch (apptChoice) {
+				case "1":
+					System.out.println("Search Non-Pending Appointments by:");
+					System.out.println("1. UUID; 2. Patient ID");
+					System.out.println("Enter anything else to Return to Menu.");
+					System.out.print("Enter your choice: ");
+					searchHow = sc.next(); sc.nextLine();
+					if (!searchHow.equals("1") && !searchHow.equals("2")) {
+						System.out.println("Returning to Menu...");
+						break;
+					}
+
+					switch (searchHow) {
+						case "1":
+							System.out.print("Enter Appointment ID (0 to Cancel): ");
+							while (!appointmentFound) {
+								if (alreadyTried) {
+									System.out.print("Invalid Appointment ID! Try again: ");
+								}
+								appointmentID = sc.nextLine();
+								if (appointmentID.equals("0")) {
+									System.out.println("Operation Cancelled. Returning to Menu...");
+									break;
+								}
+								if (manager.findAppointment(UUID.fromString(appointmentID),
+										manager.getAppointments()) != null) {
+									appointment = manager.findAppointment(UUID.fromString(appointmentID),
+											manager.getAppointments());
+									appointmentFound = true;
+								}
+								alreadyTried = true;
+							}
+
+							if (appointmentFound) {
+								System.out.println("Appointment Found!\n");
+								appointment.print();
+								System.out.print("Enter anything to Return to Menu: ");
+								sc.nextLine();
+								System.out.println("Returning to Menu...");
+							}
+							break;
+
+						case "2":
+							System.out.print("Enter Patient ID (0 to Cancel): ");
+							while (!patientFound) {
+								if (alreadyTried) {
+									System.out.print("Invalid Patient ID! Try again: ");
+								}
+								patientID = sc.nextLine();
+								if (patientID.equals("0")) {
+									System.out.println("Operation Cancelled. Returning to Menu...");
+									break;
+								}
+								if (getPatientByID(patientID) != null) {
+									patientFound = true;
+								}
+								alreadyTried = true;
+							}
+							if (patientFound) {
+								int j = 0;
+								for (int i = 0; i < manager.getAppointments().size(); i++) {
+									if (manager.getAppointments().get(i).getPatientID().equals(patientID)){
+										j++;
+									}
+								}
+								if (j == 0) {
+									System.out.println("Patient " + patientID + " Has No Non-Pending Appointments!");
+									System.out.println("Returning to Menu...");
+								}
+								else {
+									System.out.println("Non-Pending Appointments for Patient " + patientID + ":");
+									int k = 0; Appointment cur;
+									for (int i = 0; i < manager.getAppointments().size(); i++) {
+										if (manager.getAppointments().get(i).getPatientID().equals(patientID)){
+											cur = manager.getAppointments().get(i);
+											System.out.println((++k) + ". " + cur.getDate().get()
+													+ " " + cur.getTimeSlot().get() + " UUID: " + cur.getUuid());
+										}
+									}
+									System.out.print("Enter your choice: ");
+									int appointmentToView;
+									while (true){
+										try {
+											appointmentToView = sc.nextInt(); sc.nextLine();
+											if (appointmentToView < 1 || appointmentToView > j) {
+												System.out.print("Invalid choice! Try again: ");
+											}
+											else {
+												appointment = manager.getAppointments().get(appointmentToView-1);
+												System.out.println();
+												appointment.print();
+												System.out.print("Enter anything to Return to Menu: ");
+												sc.nextLine();
+												System.out.println("Returning to Menu...");
+												break;
+											}
+										}
+										catch (InputMismatchException e) {
+											sc.nextLine();
+											System.out.print("Invalid input! Try again, With Digit(s) Only: ");
+										}
+									}
+								}
+							}
+							break;
+					}
+					break;
+
+				case "2":
+					System.out.println("Search Pending Appointments by:");
+					System.out.println("1. UUID; 2. Patient ID");
+					System.out.println("Enter anything else to Return to Menu.");
+					System.out.print("Enter your choice: ");
+					searchHow = sc.next(); sc.nextLine();
+					if (!searchHow.equals("1") && !searchHow.equals("2")) {
+						System.out.println("Returning to Menu...");
+						break;
+					}
+
+					switch (searchHow) {
+						case "1":
+							System.out.print("Enter Appointment ID (0 to Cancel): ");
+							while (!appointmentFound) {
+								if (alreadyTried) {
+									System.out.print("Invalid Appointment ID! Try again: ");
+								}
+								appointmentID = sc.nextLine();
+								if (appointmentID.equals("0")) {
+									System.out.println("Operation Cancelled. Returning to Menu...");
+									break;
+								}
+								if (manager.findAppointment(UUID.fromString(appointmentID),
+										manager.getPendingAppointments()) != null) {
+									appointment = manager.findAppointment(UUID.fromString(appointmentID),
+											manager.getPendingAppointments());
+									appointmentFound = true;
+								}
+								alreadyTried = true;
+							}
+							if (appointmentFound) {
+								System.out.println("Appointment Found!\n");
+								appointment.print();
+								System.out.print("Enter anything to Return to Menu: ");
+								sc.nextLine();
+								System.out.println("Returning to Menu...");
+							}
+							break;
+
+						case "2":
+							System.out.print("Enter Patient ID (0 to Cancel): ");
+							while (!patientFound) {
+								if (alreadyTried) {
+									System.out.print("Invalid Patient ID! Try again: ");
+								}
+								patientID = sc.nextLine();
+								if (patientID.equals("0")) {
+									System.out.println("Operation Cancelled. Returning to Menu...");
+									break;
+								}
+								if (getPatientByID(patientID) != null) {
+									patientFound = true;
+								}
+								alreadyTried = true;
+							}
+							if (patientFound) {
+								int j = 0;
+								for (int i = 0; i < manager.getPendingAppointments().size(); i++) {
+									if (manager.getPendingAppointments().get(i).getPatientID().equals(patientID)){
+										j++;
+									}
+								}
+								if (j == 0) {
+									System.out.println("Patient " + patientID + " Has No Pending Appointments!");
+									System.out.println("Returning to Menu...");
+								}
+								else {
+									System.out.println("Pending Appointments for Patient " + patientID + ":");
+									int k = 0; Appointment cur;
+									for (int i = 0; i < manager.getPendingAppointments().size(); i++) {
+										if (manager.getPendingAppointments().get(i).getPatientID().equals(patientID)){
+											cur = manager.getPendingAppointments().get(i);
+											System.out.println((++k) + ". " + cur.getDate().get()
+													+ " " + cur.getTimeSlot().get() + " UUID: " + cur.getUuid());
+										}
+									}
+									System.out.print("Enter your choice: ");
+									int appointmentToView;
+									while (true){
+										try {
+											appointmentToView = sc.nextInt(); sc.nextLine();
+											if (appointmentToView < 1 || appointmentToView > j) {
+												System.out.print("Invalid choice! Try again: ");
+											}
+											else {
+												appointment = manager.getPendingAppointments().get(appointmentToView-1);
+												System.out.println();
+												appointment.print();
+												System.out.print("Enter anything to Return to Menu: ");
+												sc.nextLine();
+												break;
+											}
+										}
+										catch (InputMismatchException e) {
+											sc.nextLine();
+											System.out.print("Invalid input! Try again, With Digit(s) Only: ");
+										}
+									}
+								}
+							}
+							break;
+					}
+					break;
+
+				case "3":
 					System.out.println("Returning to Main Menu...\n");
 					return;
 

@@ -40,7 +40,15 @@ public class Time implements Comparable<Time>{
         }
     }
 
-    public String get() { return this.getHour() + ":" + this.getMinute(); }
+    public String get() {
+        String hour;
+        if (this.hour < 10) hour = "0" + this.hour;
+        else hour = this.hour + "";
+        String minute;
+        if (this.minute < 10) minute = "0" + this.minute;
+        else minute = this.minute + "";
+        return hour + ":" + minute;
+    }
 
     public int getHour() {
         return hour;

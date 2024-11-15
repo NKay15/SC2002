@@ -131,12 +131,18 @@ public class Date implements Comparable<Date> {
      * Print date in dd/mm/yyyy format
      */
     public String get() {
+        String day;
+        if (this.day < 10) day = "0" + this.day;
+        else day = this.day + "";
+        String month;
+        if (this.month < 10) month = "0" + this.month;
+        else month = this.month + "";
         return day + "/" + month + "/" + year;
     }
     public int getIntDate(){
         return day * 1000000 + month * 10000 + year;
     }
     public void print() {
-        System.out.println(day + "/" + month + "/" + year);
+        System.out.println(get());
     }
 }
