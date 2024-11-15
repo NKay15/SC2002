@@ -118,7 +118,7 @@ public class Inventory {
             switch (confirmAdding) {
                 case "1":
                     catalog.add(new Medicine(name, amount));
-                    lowlevel.add(new Medicine(name, amount));
+                    lowlevel.add(new Medicine(name, level));
                     System.out.println("New Medicine \"" + name + "\" Successfully Added to Inventory!");
                     return;
 
