@@ -68,13 +68,14 @@ public class Administrator extends Staff {
 						if (!super.userOptions(choice - 4)) {
 							return;
 						}
+						else if (choice < 1 || choice > 7) inputError = true;
 						break;
 				}
 			}
 			catch (InputMismatchException e) {
-				System.out.print("Invalid choice! Try again: ");
 				inputError = true;
 				sc.nextLine();
+				System.out.print("Invalid choice! Try again: ");
 			}
 		}
 	}

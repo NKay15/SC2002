@@ -5,10 +5,10 @@ import hms.appointments.*;
 import hms.services.StaffFileService;
 import hms.services.DoctorAvailabilityFileService;
 import hms.utils.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import hms.utils.Date;
+
+import java.nio.file.FileSystemNotFoundException;
+import java.util.*;
 
 public class Doctor extends Staff {
 
@@ -38,95 +38,107 @@ public class Doctor extends Staff {
     public void menu() {
         doctorScheduler.updateDoctorData();
         Scanner sc = GlobalData.getInstance().sc;
-        int choice = 1;
+        int choice;
+        boolean inputError = false;
 
         while (true) {
-            System.out.println("\n-----Doctor Menu-----");
-            System.out.println("1. View Patient Medical Records ");
-            System.out.println("2. Update Patient Medical Records");
-            System.out.println("3. View Personal Schedule ");
-            System.out.println("4. Set Availability for Appointments");
-            System.out.println("5. Accept or Decline Appointment Requests");
-            System.out.println("6. View Upcoming Appointments");
-            System.out.println("7. Record Appointment Outcome ");
-            super.menu(8);
-            System.out.println("-----End of Menu-----");
-
-            System.out.print("Enter menu number: ");
-            choice = sc.nextInt();
-            switch (choice) {
-                case 1:
-                    viewPatientMedicalRecords();
-                    break;
-
-                case 2:
-                    if (patientList == null || patientList.size() == 0) {
-                        System.out.println("You have No Patients!");
+            try {
+                if (!inputError) {
+                    System.out.println("\n-----Doctor Menu-----");
+                    System.out.println("1. View Patient Medical Records ");
+                    System.out.println("2. Update Patient Medical Records");
+                    System.out.println("3. View Personal Schedule ");
+                    System.out.println("4. Set Availability for Appointments");
+                    System.out.println("5. Accept or Decline Appointment Requests");
+                    System.out.println("6. View Upcoming Appointments");
+                    System.out.println("7. Record Appointment Outcome ");
+                    super.menu(8);
+                    System.out.println("-----End of Menu-----");
+                    System.out.print("Enter your choice: ");
+                }
+                else inputError = false;
+                choice = sc.nextInt();
+                switch (choice) {
+                    case 1:
+                        viewPatientMedicalRecords();
                         break;
-                    }
-                    System.out.println("Select Patient (0 to Exit): ");
-                    for (int i = 0; i < patientList.size(); i++) {
-                        System.out.println((i + 1) + ". " + patientList.get(i).getName());
-                    }
-                    choice = sc.nextInt();
-                    sc.nextLine();
-                    if (choice < 1 || choice > patientList.size()) {
+
+                    case 2:
+                        if (patientList == null || patientList.size() == 0) {
+                            System.out.println("You have No Patients!");
+                            break;
+                        }
+                        System.out.println("Select Patient (0 to Exit): ");
+                        for (int i = 0; i < patientList.size(); i++) {
+                            System.out.println((i + 1) + ". " + patientList.get(i).getName());
+                        }
+                        choice = sc.nextInt();
+                        sc.nextLine();
+                        if (choice < 1 || choice > patientList.size()) {
+                            choice = 2;
+                            break;
+                        }
+                        updatePatientMedicalRecords(patientList.get(choice - 1));
                         choice = 2;
                         break;
-                    }
-                    updatePatientMedicalRecords(patientList.get(choice - 1));
-                    choice = 2;
-                    break;
 
-                case 3:
-                    if (doctorScheduler == null) {
-                        System.out.println("You have No Upcoming Appointments!");
+                    case 3:
+                        if (doctorScheduler == null) {
+                            System.out.println("You have No Upcoming Appointments!");
+                            break;
+                        }
+                        viewPersonalSchedule();
                         break;
-                    }
-                    viewPersonalSchedule();
-                    break;
 
-                case 4:
-                    setAvailabilityForAppointments();
-                    break;
-
-                case 5:
-                    if (doctorScheduler == null) {
-                        System.out.println("You have No Pending Appointment Requests!");
+                    case 4:
+                        setAvailabilityForAppointments();
                         break;
-                    }
-                    acceptOrDeclineAppointmentRequests();
-                    break;
 
-                case 6:
-                    if (doctorScheduler == null) {
-                        System.out.println("You have No Upcoming Appointments!");
+                    case 5:
+                        if (doctorScheduler == null) {
+                            System.out.println("You have No Pending Appointment Requests!");
+                            break;
+                        }
+                        acceptOrDeclineAppointmentRequests();
                         break;
-                    }
-                    viewUpcomingAppointments();
-                    break;
 
-                case 7:
-                    if (doctorScheduler == null) {
-                        System.out.println("You have No Appointments to View!");
+                    case 6:
+                        if (doctorScheduler == null) {
+                            System.out.println("You have No Upcoming Appointments!");
+                            break;
+                        }
+                        viewUpcomingAppointments();
                         break;
-                    }
-                    viewUpcomingAppointments();
-                    System.out.print("Select Appointment (0 to Cancel): ");
-                    choice = sc.nextInt();
-                    Appointment choiceAppointment = doctorScheduler.getUpcomingAppointment(choice - 1);
-                    if (choiceAppointment == null) {
+
+                    case 7:
+                        if (doctorScheduler == null) {
+                            System.out.println("You have No Appointments to View!");
+                            break;
+                        }
+                        viewUpcomingAppointments();
+                        System.out.print("Select Appointment (0 to Cancel): ");
+                        choice = sc.nextInt();
+                        Appointment choiceAppointment = doctorScheduler.getUpcomingAppointment(choice - 1);
+                        if (choiceAppointment == null) {
+                            choice = 7;
+                            break;
+                        }
+                        recordAppointmentOutcome(choiceAppointment);
                         choice = 7;
                         break;
-                    }
-                    recordAppointmentOutcome(choiceAppointment);
-                    choice = 7;
-                    break;
 
-                default:
-                    if (!super.userOptions(choice - 7)) {
-                        return;
-                    }
+                    default:
+                        if (!super.userOptions(choice - 7)) {
+                            return;
+                        }
+                        else if (choice < 1 || choice > 10) inputError = true;
+                        break;
+                }
+            }
+            catch (InputMismatchException e) {
+                inputError = true;
+                sc.nextLine();
+                System.out.print("Invalid choice! Try again: ");
             }
         }
     }

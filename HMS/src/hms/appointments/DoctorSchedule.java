@@ -53,11 +53,11 @@ public class DoctorSchedule {
     protected void setWorkingTime() {
         Scanner sc = GlobalData.getInstance().sc;
         do {
-            System.out.println("When do you want to work? Input your start time, in HHMM");
+            System.out.println("When do you want to work? Input your start time (in HHMM):");
             int time = sc.nextInt();
             startTime = new Time(time);
 
-            System.out.println("Input your end time, in HHMM");
+            System.out.println("Input your end time (in HHMM):");
             time = sc.nextInt();
             endTime = new Time(time);
 
@@ -82,11 +82,11 @@ public class DoctorSchedule {
             do {
                 if (flag)
                     System.out.println("Invalid break time. Breaks must be within working hours and not overlap.");
-                System.out.println("Input your break start time, in HHMM");
+                System.out.println("Input your break start time (in HHMM):");
                 int time = sc.nextInt();
                 breakStart = new Time(time);
 
-                System.out.println("Input your break end time, in HHMM");
+                System.out.println("Input your break end time (in HHMM):");
                 time = sc.nextInt();
                 breakEnd = new Time(time);
                 flag = breakStart.compareTo(breakEnd) >= 0 || breakStart.compareTo(startTime) < 0 || breakEnd.compareTo(endTime) > 0;
