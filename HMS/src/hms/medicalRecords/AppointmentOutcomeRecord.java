@@ -2,7 +2,6 @@ package hms.medicalRecords;
 
 import hms.GlobalData;
 import hms.pharmacy.Medicine;
-import hms.services.AOPFileService;
 import hms.services.MedicalRecordFileService;
 import hms.utils.Date;
 import java.util.Scanner;
@@ -34,11 +33,11 @@ public class AppointmentOutcomeRecord {
     private String notes;
 
     /**
-     * Contructor of Appointment Outcome Record triggered by the completion of appointment
+     * Constructor of Appointment Outcome Record triggered by the completion of appointment
      */
     public AppointmentOutcomeRecord() {
         Scanner sc = GlobalData.getInstance().sc;
-        System.out.print("Enter Date of Appointment (ddmmyyyy): ");
+        System.out.print("Enter Date of Appointment (DDMMYYYY): ");
         int t = sc.nextInt();
         date = new Date(t);
         service = MedicalRecordFileService.nextLine();
@@ -63,7 +62,7 @@ public class AppointmentOutcomeRecord {
      * Accessor of prescription
      * @return prescription
      */
-    public Medicine[] getprescription() {
+    public Medicine[] getPrescription() {
         return prescription;
     }
 

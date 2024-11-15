@@ -17,7 +17,7 @@ public class AdministratorFileService extends StaffFileService {
      * @return List of Administrators
      */
     public static ArrayList<Administrator> getAllAdministratorsData() {
-        ArrayList<Administrator> adminstratorArray = new ArrayList<Administrator>();
+        ArrayList<Administrator> administratorArray = new ArrayList<Administrator>();
         
         try {
             File myObj = new File("HMS/src/data/Staff_List.txt");
@@ -56,7 +56,7 @@ public class AdministratorFileService extends StaffFileService {
                     GlobalData.getInstance().userInstances.add(newStaff);
                 }
 
-                adminstratorArray.add(newStaff);
+                administratorArray.add(newStaff);
             }
             myReader.close();
         }
@@ -64,7 +64,7 @@ public class AdministratorFileService extends StaffFileService {
             System.out.println("An error occurred.");
         }
         
-        return adminstratorArray;
+        return administratorArray;
     }
 
     /**
@@ -153,7 +153,7 @@ public class AdministratorFileService extends StaffFileService {
                 password = sc.nextLine();
             }
         }
-        removeStaffbyID(ID);
+        removeStaffByID(ID);
         System.out.println("Administrator Successfully Removed! Returning to Menu...");
         return true;
     }

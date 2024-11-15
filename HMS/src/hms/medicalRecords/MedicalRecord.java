@@ -66,22 +66,22 @@ public class MedicalRecord {
         System.out.print("Date of Birth : ");
         dob.print();
 
-        System.out.print("Gender : ");
+        System.out.print("Gender: ");
         switch (gender) {
             case 1 : System.out.println("Male");
             break;
             case 2 : System.out.println("Female");
             break;
-            default : System.out.println("Unknow");
+            default : System.out.println("Unknown");
         }
 
-        System.out.println("Phone Number : " + phone);
-        System.out.println("Email Address : " + email);
-        System.out.println("Blood Type : " + bloodType.toString());
+        System.out.println("Phone Number: " + phone);
+        System.out.println("Email Address: " + email);
+        System.out.println("Blood Type: " + bloodType.toString());
 
-        System.out.println("Medical History : ");
+        System.out.println("Medical History: ");
         for(int i = 0; i < medicalHistory.size(); i++) {
-            System.out.println((i+1) + " : " + medicalHistory.get(i));
+            System.out.println((i+1) + ". " + medicalHistory.get(i));
         }
 
         System.out.println("-----End of Medical Record-----");

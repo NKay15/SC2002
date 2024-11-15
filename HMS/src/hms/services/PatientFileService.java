@@ -265,7 +265,7 @@ public class PatientFileService extends InputValidation {
 
     /**
      * Add a new Patient
-     * @param Patient
+     * @param patient
      */
     public static void addPatient(Patient patient) {
         try {
@@ -291,13 +291,13 @@ public class PatientFileService extends InputValidation {
             GlobalData.getInstance().userInstances.add(patient);
         }
         catch (Exception e) {
-            System.out.println("An error occured");
+            System.out.println("An error occurred");
         }
     }
 
     /**
      * Update a Patient
-     * @param Patient
+     * @param patient
      */
     public static void updatePatient(Patient patient) {
         try {
@@ -375,7 +375,7 @@ public class PatientFileService extends InputValidation {
             GlobalData.getInstance().userInstances.remove(ID);
         }
         catch (Exception e) {
-            System.out.println("An error occured");
+            System.out.println("An error occurred");
         }
     }
 
@@ -519,10 +519,10 @@ public class PatientFileService extends InputValidation {
                                         && newPatientMonth < 13 && newPatientYear > 1900 && newPatientYear < 2025) {
                                     break;
                                 } else {
-                                    System.out.print("Invalid date! Try again: ");
+                                    System.out.print("Invalid Date! Try again: ");
                                 }
                             }
-                            else System.out.print ("Invalid date! Try again: ");
+                            else System.out.print ("Invalid Date! Try again: ");
                         } else {
                             System.out.print("Invalid input! Try again, With Digits Only: ");
                             sc.nextLine();

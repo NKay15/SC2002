@@ -65,7 +65,7 @@ public class Administrator extends Staff {
 						break;
 
 					default:
-						if (!super.useroptions(choice - 4)) {
+						if (!super.userOptions(choice - 4)) {
 							return;
 						}
 						break;
@@ -855,10 +855,10 @@ public class Administrator extends Staff {
 									newDOB = new hms.utils.Date(day, month, year);
 									break;
 								} else {
-									System.out.print("Invalid date! Try again: ");
+									System.out.print("Invalid Date! Try again: ");
 								}
 							}
-							else System.out.print ("Invalid date! Try again: ");
+							else System.out.print ("Invalid Date! Try again: ");
 						} else {
 							System.out.print("Invalid input! Try again, With Digits Only: ");
 							sc.nextLine();
@@ -1136,6 +1136,6 @@ public class Administrator extends Staff {
 	}
 
 	public void printRole() {
-        System.out.print("Adminstrator");
+        System.out.print("Administrator");
     }
 }

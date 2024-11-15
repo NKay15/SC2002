@@ -15,7 +15,7 @@ public class Time implements Comparable<Time>{
         this.hour = time/100;
         while (!checkTime()) {
             System.out.println("This time is not available.");
-            System.out.println("Enter time in hhmm");
+            System.out.println("Enter time in HHMM");
             Scanner sc = GlobalData.getInstance().sc;
             time = sc.nextInt();
             this.time = time;

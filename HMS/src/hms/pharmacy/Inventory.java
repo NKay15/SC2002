@@ -223,14 +223,14 @@ public class Inventory {
     public boolean dispense(AppointmentOutcomeRecord aop) {
         if(aop.isDispensed()) return false;
 
-        for(Medicine n : aop.getprescription()) {
+        for(Medicine n : aop.getPrescription()) {
             int idx = findIndex(n);
             if(catalog.get(idx).amount() < n.amount()){
                 return false;
             }
         }
 
-        for(Medicine n : aop.getprescription()) {
+        for(Medicine n : aop.getPrescription()) {
             int idx = findIndex(n);
             catalog.get(idx).prescribe(n.amount());
 
@@ -338,12 +338,12 @@ public class Inventory {
             }
 
             if(i == ret.size()) {
-                System.out.print("Enter amount to precribe: ");
+                System.out.print("Enter Amount to Prescribe: ");
                 quantity = sc.nextInt();
                 ret.add(new Medicine(catalog.get(med-1).name(), quantity));
             }
             else {
-                System.out.print("Enter new amount to precribe: ");
+                System.out.print("Enter New Amount to Prescribe: ");
                 quantity = sc.nextInt();
                 ret.get(i).setAmount(quantity);
             }

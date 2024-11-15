@@ -153,7 +153,7 @@ public class PharmacistFileService extends StaffFileService {
                 password = sc.nextLine();
             }
         }
-        removeStaffbyID(ID);
+        removeStaffByID(ID);
         System.out.println("Pharmacist Successfully Removed! Returning to Menu...");
         return true;
     }

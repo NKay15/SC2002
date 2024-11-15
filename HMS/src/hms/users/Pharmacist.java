@@ -144,7 +144,7 @@ public class Pharmacist extends Staff {
 									appointment = patient.getPatientSchedule().getAppointments().get(i);
 									if (appointment.getStatus() == 4) {
 										if (!appointment.getAop().isDispensed()) {
-											if (appointment.getAop().getprescription().length != 0) {
+											if (appointment.getAop().getPrescription().length != 0) {
 												int time = appointment.getTimeSlot().getIntTime();
 												String slotTime = String.format("%02d:%02d", time / 100, time % 100);
 												System.out.println((k) + ". " + appointment.getDate().get()
@@ -162,7 +162,7 @@ public class Pharmacist extends Staff {
 								}
 								appointment = patient.getPatientSchedule().getAppointments().get(appointmentChoice - 1);
 								AppointmentOutcomeRecord aop = appointment.getAop();
-								Medicine[] prescription = aop.getprescription();
+								Medicine[] prescription = aop.getPrescription();
 								System.out.println("\nPlease ensure that all fields below are correct before confirming:");
 								System.out.println("Appointment ID: " + appointment.getUuid());
 								System.out.println("Patient ID: " + patientID);
@@ -229,7 +229,7 @@ public class Pharmacist extends Staff {
 						break;
 
 					default:
-						if (!super.useroptions(choice - 4)) {
+						if (!super.userOptions(choice - 4)) {
 							return;
 						}
 						break;

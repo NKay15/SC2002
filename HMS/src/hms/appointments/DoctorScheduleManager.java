@@ -140,7 +140,7 @@ public class DoctorScheduleManager {
     /**
      * Accessor of upcoming appointment
      *
-     * @param i index of appointmnet
+     * @param i index of appointment
      * @return null if index does not exist
      */
     public Appointment getUpcomingAppointment(int i) {

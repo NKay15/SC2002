@@ -211,7 +211,7 @@ public class Patient extends User{
 
                 case 3:
                     int date3;
-                    System.out.print("Enter date to view slots (ddmmyyyy): ");
+                    System.out.print("Enter Date to View Slots (in DDMMYYYY): ");
                     date3 = sc.nextInt();
                     viewAvailableAppointmentSlots(DoctorFileService.getAllDoctorData(), new Date(date3));
                     break;
@@ -233,16 +233,16 @@ public class Patient extends User{
                     if(whichDoc == 0) break;
                     doc = DoctorFileService.getAllDoctorData().get(whichDoc-1);
                     //doc.getDoctorScheduler().updateDoctorData();
-                    System.out.print("Enter Date in ddmmyyyy (O to Exit): ");
+                    System.out.print("Enter Date in DDMMYYYY (O to Exit): ");
                     date = sc.nextInt();
                     if(date == 0) break;
-                    System.out.print("Enter Time in hhmm (O to Exit): ");
+                    System.out.print("Enter Time in HHMM (O to Exit): ");
                     time = sc.nextInt();
                     if(time == 0) break;
                     Appointment toSchedule = patientSchedule.generateAppointment(this, doc, new Date(date), new Time(time));
                     if(toSchedule == null) {
                         System.out.println("Dr. " + doc.getName() + " " +
-                                "is not available at your chosen time!");
+                                "is Not Available at your chosen time!");
                         break;
                     }
                     scheduleAppointment(toSchedule);
@@ -251,7 +251,7 @@ public class Patient extends User{
                     break;
 
                 case 5:
-                    System.out.println("Select appointment to reschedule (0 : exit):");
+                    System.out.println("Select Appointment to Reschedule (0 to Exit):");
                     patientSchedule.printPatientAppointment();
                     choice = sc.nextInt();
                     Appointment old = patientSchedule.getUpcomingAppointment(choice-1);
@@ -260,29 +260,29 @@ public class Patient extends User{
                      * Get new appointment
                      */
                     int newtime, newdate;
-                    System.out.print("Enter Date in ddmmyyyy (O : exit): ");
+                    System.out.print("Enter Date in DDMMYYYY (O to Exit): ");
                     newdate = sc.nextInt();
                     if(newdate == 0) break;
-                    System.out.print("Enter Time in hhmm (O : exit): ");
+                    System.out.print("Enter Time in HHMM (O to Exit): ");
                     newtime = sc.nextInt();
                     if(newtime == 0) break;
                     Appointment toReschedule = patientSchedule.generateAppointment(this, old.getDoctor(), new Date(newdate), new Time(newtime));
                     if(toReschedule == null) {
-                        System.out.println(old.getDoctor().getName() + "is not available at your chosen time. Rescheduling failed.");
+                        System.out.println(old.getDoctor().getName() + "is Not Available at your chosen time. Rescheduling failed.");
                         break;
                     }
 	    			rescheduleAppointment(old, toReschedule);
-                    System.out.println("Appointment has successfully been rescheduled and pending to be approved by the doctor!");
+                    System.out.println("Appointment Successfully Rescheduled! Pending Doctor's Approval.");
 	    			break;
 
 	    		case 6:
-                    System.out.println("Select appointment to cancel (0 : exit):");
+                    System.out.println("Select Appointment to Cancel (0 to Exit):");
                     patientSchedule.printPatientAppointment();
                     choice = sc.nextInt();
                     Appointment cancel = patientSchedule.getUpcomingAppointment(choice-1);
                     if(cancel == null) break;
 	    			cancelAppointment(cancel);
-                    System.out.println("Appointment has been cancelled");
+                    System.out.println("Appointment Successfully Cancelled!");
 	    			break;
 
 	    		case 7:
@@ -294,7 +294,7 @@ public class Patient extends User{
 	    			break;
 
 	    		default:
-                    if(!super.useroptions(choice-8)) {
+                    if(!super.userOptions(choice-8)) {
                         return;
                     }
 	    	}
@@ -345,7 +345,7 @@ public class Patient extends User{
      * Update Personal Information
      */
     public Patient updatePersonalInformation() {
-        System.out.println("What information do you want to update?");
+        System.out.println("Choose One to Update:");
         System.out.println("1. Update Email");
         System.out.println("2. Update Phone Number");
 
@@ -357,12 +357,12 @@ public class Patient extends User{
         if (ch == 1) {
             String email;
             scan.nextLine();
-            System.out.print("Enter new email :");
+            System.out.print("Enter New Email: ");
             email = scan.nextLine();
             this.updateEmail(email);
         } else if (ch == 2) {
             int phone;
-            System.out.print("Enter new phone :");
+            System.out.print("Enter New Phone: ");
             phone = scan.nextInt();
             this.updatePhone(phone);
         } else {
@@ -379,7 +379,7 @@ public class Patient extends User{
      */
     public void viewAvailableAppointmentSlots(ArrayList<Doctor> doctors, Date date) {
         for (Doctor doctor : doctors) {
-            System.out.println("Dr. " + doctor.getName() + "'s available appointment slots are: ");
+            System.out.println("Dr. " + doctor.getName() + "'s Available Appointment Slots are: ");
             patientSchedule.printAvailableSlots(date, doctor);
             System.out.println("-----End of Dr. " + doctor.getName() + "'s Available slots-----");
         }
@@ -405,7 +405,7 @@ public class Patient extends User{
     }
 
     /**
-     * Cancle appointment
+     * Cancel appointment
      *
      * @param appointment     The appointment to be canceled
      */

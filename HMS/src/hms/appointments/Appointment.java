@@ -80,7 +80,7 @@ public class Appointment {
         rescheduled = null;
     }
 
-    public boolean checkRscheduled(){
+    public boolean checkRescheduled(){
         return rescheduled != null;
     }
 

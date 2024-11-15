@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 import hms.users.*;
 
-public class SercureFileService {
+public class SecureFileService {
     public static void load2FA() {
         try {
             File myObj = new File("HMS/src/data/Secure_List.txt");
@@ -27,7 +27,7 @@ public class SercureFileService {
             myReader.close();
         }
         catch (FileNotFoundException e) {
-            System.out.println("An error occurred. Location SercureFileService");
+            System.out.println("An error occurred. Location SecureFileService");
         }
     }
 
@@ -47,7 +47,7 @@ public class SercureFileService {
             fw.close();
         }
         catch (Exception e){
-            System.out.println("An error occurred. Location SercureFileService");
+            System.out.println("An error occurred. Location SecureFileService");
         }
     }
 }

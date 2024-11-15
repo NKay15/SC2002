@@ -34,7 +34,7 @@ public class App {
         MedicalRecordFileService.loadMedicalHistory();
 
         /*Load 2FA */
-        SercureFileService.load2FA();
+        SecureFileService.load2FA();
 
         /* Load data into inventory */
         Inventory inventory = InventoryFileService.getInventory();
@@ -127,12 +127,12 @@ public class App {
         /*Write Inventory */
         InventoryFileService.writeInventory(gd.inventory);
 
-        /*Wrtie Medical History */
+        /*Write Medical History */
         MedicalRecordFileService.writeMedicalHistory(PatientFileService.getAllPatientData());
         DoctorPatientFileService.write2FA();
 
         /*Write 2FA */
-        SercureFileService.write2FA();
+        SecureFileService.write2FA();
 
     }
 }

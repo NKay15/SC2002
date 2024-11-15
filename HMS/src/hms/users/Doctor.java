@@ -62,12 +62,12 @@ public class Doctor extends Staff {
 
                 case 2:
                     if (patientList == null || patientList.size() == 0) {
-                        System.out.println("You have no patient.");
+                        System.out.println("You have No Patients!");
                         break;
                     }
-                    System.out.println("Select patient (0 : exit): ");
+                    System.out.println("Select Patient (0 to Exit): ");
                     for (int i = 0; i < patientList.size(); i++) {
-                        System.out.println((i + 1) + " : " + patientList.get(i).getName());
+                        System.out.println((i + 1) + ". " + patientList.get(i).getName());
                     }
                     choice = sc.nextInt();
                     sc.nextLine();
@@ -81,19 +81,19 @@ public class Doctor extends Staff {
 
                 case 3:
                     if (doctorScheduler == null) {
-                        System.out.println("You have no upcoming appointment.");
+                        System.out.println("You have No Upcoming Appointments!");
                         break;
                     }
                     viewPersonalSchedule();
                     break;
 
                 case 4:
-                    setAvailabilityforAppointments();
+                    setAvailabilityForAppointments();
                     break;
 
                 case 5:
                     if (doctorScheduler == null) {
-                        System.out.println("You have no upcoming appointment request.");
+                        System.out.println("You have No Pending Appointment Requests!");
                         break;
                     }
                     acceptOrDeclineAppointmentRequests();
@@ -101,7 +101,7 @@ public class Doctor extends Staff {
 
                 case 6:
                     if (doctorScheduler == null) {
-                        System.out.println("You have no upcoming appointment.");
+                        System.out.println("You have No Upcoming Appointments!");
                         break;
                     }
                     viewUpcomingAppointments();
@@ -109,7 +109,7 @@ public class Doctor extends Staff {
 
                 case 7:
                     if (doctorScheduler == null) {
-                        System.out.println("You have no appointment to view.");
+                        System.out.println("You have No Appointments to View!");
                         break;
                     }
                     viewUpcomingAppointments();
@@ -125,7 +125,7 @@ public class Doctor extends Staff {
                     break;
 
                 default:
-                    if (!super.useroptions(choice - 7)) {
+                    if (!super.userOptions(choice - 7)) {
                         return;
                     }
             }
@@ -134,7 +134,7 @@ public class Doctor extends Staff {
 
     public void viewPatientMedicalRecords() {
         if (patientList.size() == 0) {
-            System.out.println("Hi, Doc. " + this.getName() + ". You have no patient.");
+            System.out.println("Hi, Doc. " + this.getName() + ". You have no patients.");
             return;
         }
         System.out.println("Hi, Doc. " + this.getName() + ". Here is your patient list:");
@@ -155,7 +155,7 @@ public class Doctor extends Staff {
      * @param patient Patient that the doctor want to add
      */
     public void updatePatientMedicalRecords(Patient patient) {
-        System.out.println("Add a new medical record:");
+        System.out.println("Add a New Medical Record:");
         String message = StaffFileService.nextLine();
         patient.addMedicalRecord(message);
     }
@@ -167,10 +167,10 @@ public class Doctor extends Staff {
     /**
      * Set Availability for Appointments
      */
-    public void setAvailabilityforAppointments() {
+    public void setAvailabilityForAppointments() {
         Scanner scanner = GlobalData.getInstance().sc;
         int ddmmyyyy;
-        System.out.print("Enter the date (ddmmyyyy): ");
+        System.out.print("Enter the Date (in DDMMYYYY): ");
         ddmmyyyy = scanner.nextInt();
         Date date = new Date(ddmmyyyy);
         doctorSchedules.setDoctorSchedule(date);
@@ -202,7 +202,7 @@ public class Doctor extends Staff {
         Scanner scan = GlobalData.getInstance().sc;
 
         if (appointmentList.isEmpty()) {
-            System.out.println("No pending request!");
+            System.out.println("No Pending Appointment Requests!");
         }
 
         for (Appointment appointment : appointmentList) {
@@ -213,7 +213,7 @@ public class Doctor extends Staff {
 
             ++id;
             System.out.println("-----Request " + id + "-----");
-            if (appointment.checkRscheduled()) System.out.println("***Resccheduled Appointment***");
+            if (appointment.checkRescheduled()) System.out.println("***Rescheduled Appointment***");
             System.out.println("Name of Patient: " + patient.getName());
             System.out.println("Patient ID: " + patient.getID());
             System.out.print("Date: ");
@@ -248,7 +248,7 @@ public class Doctor extends Staff {
             } else if (ch == 2) {
                 doctorScheduler.declineAppointments(appointment);
             } else {
-                System.out.println("This request is still in your pending list. Please don't forget to reply later");
+                System.out.println("This request is still in your pending list. Please don't forget to reply later!");
             }
         }
     }

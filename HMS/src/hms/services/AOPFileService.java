@@ -9,7 +9,6 @@ import java.util.Scanner;
 import hms.appointments.Appointment;
 import hms.appointments.AppointmentScheduler;
 import hms.medicalRecords.AppointmentOutcomeRecord;
-import hms.pharmacy.Inventory;
 import hms.pharmacy.Medicine;
 import hms.utils.InputValidation;
 import hms.utils.Date;
@@ -51,10 +50,10 @@ public class AOPFileService extends InputValidation {
             for(Appointment appointment : AppointmentScheduler.getInstance().getAppointments()) {
                 if(appointment.getAop() == null) continue;
                 fw.write(appointment.getUuid().toString() + "," + appointment.getAop().getDate().day() + "/" + appointment.getAop().getDate().month() + "/"  + appointment.getAop().getDate().year()+ "," + appointment.getAop().getService() + ",");
-                for(int i = 0; i < appointment.getAop().getprescription().length; i++) {
-                    Medicine med = appointment.getAop().getprescription()[i];
+                for(int i = 0; i < appointment.getAop().getPrescription().length; i++) {
+                    Medicine med = appointment.getAop().getPrescription()[i];
                     fw.write(med.name() + "%" + med.amount());
-                    if(i < appointment.getAop().getprescription().length - 1) fw.write("%");
+                    if(i < appointment.getAop().getPrescription().length - 1) fw.write("%");
                 }
                 fw.write("," + appointment.getAop().getStatus() + "," + appointment.getAop().getNotes());
             }

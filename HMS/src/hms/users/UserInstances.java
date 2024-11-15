@@ -60,7 +60,7 @@ public class UserInstances {
     /**
      * get instance of user by ID
      * @param ID ID of user
-     * @return Instnace of user and null if not present
+     * @return Instance of user and null if not present
      */
     public User getInstance(String ID) {
         for(User user : inst) {
