@@ -69,6 +69,10 @@ public class Appointment {
         aop = new AppointmentOutcomeRecord();
     }
 
+    public void setAOP(AppointmentOutcomeRecord aop) {
+        this.aop = aop;
+    }
+
     public void setRescheduled(Appointment appointment){
         rescheduled = appointment.getUuid();
     }

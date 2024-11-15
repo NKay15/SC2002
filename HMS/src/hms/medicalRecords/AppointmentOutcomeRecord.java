@@ -2,6 +2,7 @@ package hms.medicalRecords;
 
 import hms.GlobalData;
 import hms.pharmacy.Medicine;
+import hms.services.AOPFileService;
 import hms.services.MedicalRecordFileService;
 import hms.utils.Date;
 import java.util.Scanner;
@@ -40,7 +41,7 @@ public class AppointmentOutcomeRecord {
         System.out.print("Enter Date of Appointment (ddmmyyyy): ");
         int t = sc.nextInt();
         date = new Date(t);
-        service = sc.nextLine();
+        service = MedicalRecordFileService.nextLine();
         System.out.print("Enter Service Provided: ");
         service = MedicalRecordFileService.nextLine();
         prescription = GlobalData.getInstance().inventory.generatePrescription();
@@ -48,6 +49,14 @@ public class AppointmentOutcomeRecord {
         notes = MedicalRecordFileService.nextLine();
         status = 1;
         if (prescription.length == 0) status = 2;
+    }
+
+    public AppointmentOutcomeRecord(Date date, String service, Medicine[] prescription, int status, String notes) {
+        this.date = date;
+        this.service = service;
+        this.prescription = prescription;
+        this.status = status;
+        this.notes = notes;
     }
 
     /**
@@ -60,6 +69,10 @@ public class AppointmentOutcomeRecord {
 
     public boolean isDispensed() {
         return (status == 2);
+    }
+
+    public int getStatus() {
+        return status;
     }
 
     /**
@@ -87,6 +100,14 @@ public class AppointmentOutcomeRecord {
      */
     public String getService() {
         return service;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public Date getDate() {
+        return date;
     }
 
     /**

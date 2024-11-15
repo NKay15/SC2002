@@ -224,6 +224,26 @@ public class AppointmentScheduler {
         return null;
     }
 
+    /**
+     * Searches for an appointment using its UUID in a specified list.
+     *
+     * @param uuid The unique identifier of the appointment
+     * @return The found appointment if successful; otherwise null
+     */
+    public Appointment findAppointmentToWrite(String uuid) {
+        for (Appointment appointment : appointments) {
+            if (appointment.getUuid().toString().equals(uuid)) {
+                return appointment;
+            }
+        }
+        for (Appointment appointment : pendingAppointments) {
+            if (appointment.getUuid().toString().equals(uuid)) {
+                return appointment;
+            }
+        }
+        return null;
+    }
+
     protected Appointment findAppointment(UUID uuid, List<Appointment> appointments) {
         for (Appointment appointment : appointments) {
             if (appointment.getUuid().equals(uuid)) {
