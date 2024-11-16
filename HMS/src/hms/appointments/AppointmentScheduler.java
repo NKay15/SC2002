@@ -16,7 +16,6 @@ public class AppointmentScheduler {
     private List<Appointment> pendingAppointments;
 
 
-
     public AppointmentScheduler() {
         appointments = new ArrayList<>();
         pendingAppointments = new ArrayList<>();
@@ -162,6 +161,14 @@ public class AppointmentScheduler {
         return doctor.getDoctorSchedules().isDoctorWorking(date, time) && !isSlotOccupied(doctor, time, date);
     }
 
+    /**
+     * Checks if a specific time slot is occupied for a given doctor on a specific date.
+     *
+     * @param doctor the doctor for whom the slot is being checked
+     * @param time   the time slot to check
+     * @param date   the date to check
+     * @return true if the slot is occupied, false otherwise
+     */
     protected boolean isSlotOccupied(Doctor doctor, Time time, Date date) {
         boolean occupied = false;
         List<Appointment> appointmentList = getAppointments(doctor);
@@ -174,6 +181,13 @@ public class AppointmentScheduler {
         return occupied;
     }
 
+    /**
+     * Checks if an appointment exists for a specific time slot in the provided list of appointments.
+     *
+     * @param time         the time slot to find
+     * @param appointments the list of appointments to search through
+     * @return true if the time slot is found, false otherwise
+     */
     protected boolean findAppointmentSlot(Time time, List<Appointment> appointments) {
         for (Appointment appointment : appointments) {
             if (appointment.getTimeSlot().equals(time)) {

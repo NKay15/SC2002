@@ -2,10 +2,12 @@ package hms.appointments;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import hms.users.*;
 import hms.utils.*;
 
+/**
+ * Manages the appointment scheduling for a particular patient.
+ */
 public class PatientScheduleManager {
 
     private Patient patient;
@@ -20,8 +22,7 @@ public class PatientScheduleManager {
      */
     public PatientScheduleManager(Patient patient) {
         this.patient = patient;
-        appointmentList = scheduler.getAppointments(patient);
-        pendingAppointmentList = scheduler.getPendingAppointments(patient);
+        updatePatientData();
     }
 
     /**
@@ -46,8 +47,9 @@ public class PatientScheduleManager {
      */
     public void reschedulePatientAppointment(Appointment existingAppointment, Appointment newAppointment) {
         updatePatientData();
-        if (scheduler.findWhichList(existingAppointment) != null)
+        if (scheduler.findWhichList(existingAppointment) != null) {
             scheduler.rescheduleAppointment(existingAppointment, newAppointment);
+        }
     }
 
     /**
@@ -70,8 +72,13 @@ public class PatientScheduleManager {
     public void printPatientAppointment() {
         updatePatientData();
         int i = 1;
-        for (Appointment appointment : appointmentList) {
-            System.out.println((i) + " :");
+        printAppointments(appointmentList, i);
+        printAppointments(pendingAppointmentList, i + appointmentList.size());
+    }
+
+    private void printAppointments(List<Appointment> appointments, int startIndex) {
+        for (Appointment appointment : appointments) {
+            System.out.println(startIndex + " :");
             System.out.println("Doctor ID: " + appointment.getDoctorID());
             System.out.print("Date: ");
             appointment.getDate().print();
@@ -80,19 +87,7 @@ public class PatientScheduleManager {
             System.out.print("Status: ");
             appointment.printStatus();
             System.out.println("-------------");
-            i++;
-        }
-        for (Appointment appointment : pendingAppointmentList) {
-            System.out.println((i) + " :");
-            System.out.println("Doctor ID: " + appointment.getDoctorID());
-            System.out.print("Date: ");
-            appointment.getDate().print();
-            System.out.print("Time Slot: ");
-            appointment.getTimeSlot().print();
-            System.out.println("Status: ");
-            appointment.printStatus();
-            System.out.println("-------------");
-            i++;
+            startIndex++;
         }
     }
 
@@ -113,21 +108,23 @@ public class PatientScheduleManager {
      * @param doctor  doctor of the appointment
      * @param date    date of the appointment
      * @param time    time of the appointment
-     * @return appointment if doctor is free otherwise null will be return
+     * @return an Appointment if the doctor is available; otherwise, null
      */
     public Appointment generateAppointment(Patient patient, Doctor doctor, Date date, Time time) {
         if (doctor.getDoctorScheduler().isSlotAvailable(time, date)) {
             return new Appointment(patient, doctor, date, time);
-        } else return null;
+        } else {
+            return null;
+        }
     }
 
     /**
-     * Prints outcome records for appointments with status indicating completion.
+     * Prints outcome records for completed appointments.
      */
     public void printAppointmentOutcomeRecord() {
         updatePatientData();
         for (Appointment appointment : appointmentList) {
-            if (appointment.getStatus() == 4) {
+            if (appointment.getStatus() == 4) { // Assuming status 4 indicates completion
                 System.out.println("Appointment Outcome Record for patient: " + appointment.getPatientID());
                 appointment.printAOP();
                 System.out.println("-------------");
@@ -144,40 +141,41 @@ public class PatientScheduleManager {
     }
 
     /**
-     * Accessor of upcoming appointment
+     * Retrieves an upcoming appointment by its index.
      *
-     * @param i index of appointment
-     * @return null if index does not exist
+     * @param i index of the appointment
+     * @return the appointment at the specified index, or null if index does not exist
      */
     public Appointment getUpcomingAppointment(int i) {
         updatePatientData();
 
-        if (appointmentList == null && pendingAppointmentList == null) return null;
-        int totalSize = (appointmentList != null ? appointmentList.size() : 0)
-                + (pendingAppointmentList != null ? pendingAppointmentList.size() : 0);
+        if (appointmentList.isEmpty() && pendingAppointmentList.isEmpty()) return null;
+
+        int totalSize = appointmentList.size() + pendingAppointmentList.size();
         if (i < 0 || i >= totalSize) return null;
-        if (appointmentList != null && i < appointmentList.size()) {
+
+        if (i < appointmentList.size()) {
             return appointmentList.get(i);
         } else {
-            int adjustedIndex = appointmentList != null ? i - appointmentList.size() : i;
-            if (adjustedIndex < pendingAppointmentList.size()) {
-                return pendingAppointmentList.get(adjustedIndex);
-            }
+            return pendingAppointmentList.get(i - appointmentList.size());
         }
-        return null;
     }
 
     /**
      * Retrieves the list of appointments for this patient.
+     *
+     * @return list of appointments for the patient
      */
     public List<Appointment> getAppointments() {
-        return scheduler.getAppointments(patient);
+        return new ArrayList<>(scheduler.getAppointments(patient));
     }
 
     /**
      * Retrieves the list of pending appointments for this patient.
+     *
+     * @return list of pending appointments for the patient
      */
     public List<Appointment> getPendingAppointments() {
-        return scheduler.getPendingAppointments(patient);
+        return new ArrayList<>(scheduler.getPendingAppointments(patient));
     }
 }

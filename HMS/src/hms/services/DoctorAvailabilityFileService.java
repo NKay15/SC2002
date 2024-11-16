@@ -10,11 +10,18 @@ import hms.utils.Time;
 import java.io.*;
 import java.util.*;
 
-
+/**
+ * Service for managing the loading and saving of doctor availability schedules from and to a file.
+ */
 public class DoctorAvailabilityFileService extends InputValidation {
     private static final String fileName = "HMS/src/data/Doctor_Availability_List.txt";
     private static DoctorSchedules schedules;
 
+    /**
+     * Loads the doctor schedules from a specified file for a given doctor.
+     *
+     * @param doctor The doctor for whom the schedules will be loaded.
+     */
     public static void loadSchedulesFromFile(Doctor doctor) {
         schedules = new DoctorSchedules(doctor);
         try {
@@ -33,6 +40,11 @@ public class DoctorAvailabilityFileService extends InputValidation {
         doctor.setDoctorSchedules(schedules);
     }
 
+    /**
+     * Formats a doctor's schedule from the provided data list and adds it to the schedules.
+     *
+     * @param dataList Array of strings containing the doctor's schedule information.
+     */
     private static void formatDoctorSchedule(String[] dataList) {
         List<Time[]> breaks = new ArrayList<>();
         if (!dataList[4].equals("0")){
@@ -52,7 +64,11 @@ public class DoctorAvailabilityFileService extends InputValidation {
         schedules.addSchedule(schedule);
     }
 
-
+    /**
+     * Writes the provided doctor schedules to a file.
+     *
+     * @param schedules The doctor schedules to be written to the file.
+     */
     public static void writeSchedulesToFile(DoctorSchedules schedules) {
         try {
             FileWriter fw = new FileWriter(fileName);
@@ -76,6 +92,11 @@ public class DoctorAvailabilityFileService extends InputValidation {
         }
     }
 
+    /**
+     * Writes schedules for a list of doctors to the file.
+     *
+     * @param doctors The list of doctors whose schedules will be written to the file.
+     */
     public static void writeSchedulesToFile(List<Doctor> doctors) {
         for (Doctor doctor : doctors) {
             writeSchedulesToFile(doctor.getDoctorSchedules());

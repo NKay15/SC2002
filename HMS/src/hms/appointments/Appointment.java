@@ -9,25 +9,26 @@ import java.util.*;
 
 public class Appointment {
     /**
-     * ID of patient
+     * Unique ID of the appointment
      */
-
     private UUID uuid;
 
     private Patient patient;
     private Doctor doctor;
+
     /**
-     * Integer to store the status of appointment 1 - pending 2 - confirmed 3 - canceled 4 - completed 5 - reschedule
+     * Integer to store the status of the appointment:
+     * 1 - pending, 2 - confirmed, 3 - canceled, 4 - completed, 5 - rescheduled
      */
     private int status;
 
     /**
-     * Date of appointment
+     * Date of the appointment
      */
     private Date date;
 
     /**
-     * Time slot of appointment
+     * Time slot of the appointment
      */
     private Time timeSlot;
 
@@ -35,28 +36,40 @@ public class Appointment {
      * Appointment Outcome Record to be created after appointment is completed
      */
     private AppointmentOutcomeRecord aop;
+
     private UUID rescheduled;
 
     /**
-     * Constructor of appointment
+     * Constructor to create a new appointment with given patient, doctor, date, and time.
      *
-     * @param patient ID of patient
-     * @param doctor  ID of doctor
-     * @param date    Date of appointment
-     * @param time    Time Slot of appointment
+     * @param patient Patient making the appointment
+     * @param doctor  Doctor assigned to the appointment
+     * @param date    Date of the appointment
+     * @param time    Time slot of the appointment
      */
     public Appointment(Patient patient, Doctor doctor, Date date, Time time) {
         uuid = UUID.randomUUID();
         this.date = date;
-        timeSlot = time;
-        status = 1;
+        this.timeSlot = time;
+        status = 1; // Set status to pending
         aop = null;
         this.patient = patient;
         this.doctor = doctor;
         rescheduled = null;
     }
 
-    public Appointment(UUID uuid, Patient patient, Doctor doctor, int date, int time, int status,UUID rescheduled) {
+    /**
+     * Constructor to create an appointment with specific attributes.
+     *
+     * @param uuid      Unique ID of the appointment
+     * @param patient   Patient making the appointment
+     * @param doctor    Doctor assigned to the appointment
+     * @param date      Date of the appointment
+     * @param time      Time of the appointment
+     * @param status    Current status of the appointment
+     * @param rescheduled UUID of the previously scheduled appointment if any
+     */
+    public Appointment(UUID uuid, Patient patient, Doctor doctor, int date, int time, int status, UUID rescheduled) {
         this.uuid = uuid;
         this.patient = patient;
         this.doctor = doctor;
@@ -65,38 +78,61 @@ public class Appointment {
         this.status = status;
         this.rescheduled = rescheduled;
     }
+
+    /**
+     * Initializes the Appointment Outcome Record.
+     */
     public void setAop() {
         aop = new AppointmentOutcomeRecord();
     }
 
+    /**
+     * Sets the specified Appointment Outcome Record for this appointment.
+     *
+     * @param aop Appointment Outcome Record to associate with this appointment
+     */
     public void setAOP(AppointmentOutcomeRecord aop) {
         this.aop = aop;
     }
 
-    public void setRescheduled(Appointment appointment){
+    /**
+     * Marks this appointment as rescheduled to another appointment.
+     *
+     * @param appointment Appointment that represents the new scheduling
+     */
+    public void setRescheduled(Appointment appointment) {
         rescheduled = appointment.getUuid();
     }
-    public void clearRescheduled(){
+
+    /**
+     * Clears the rescheduling information of this appointment.
+     */
+    public void clearRescheduled() {
         rescheduled = null;
     }
 
-    public boolean checkRscheduled(){
+    /**
+     * Checks if the appointment has been rescheduled.
+     *
+     * @return true if the appointment has been rescheduled, false otherwise
+     */
+    public boolean checkRscheduled() {
         return rescheduled != null;
     }
 
     /**
-     * Accessor of patientID
+     * Accessor for the patient's ID.
      *
-     * @return patientID
+     * @return ID of the patient
      */
     public String getPatientID() {
         return patient.getID();
     }
 
     /**
-     * Accessor of doctorID
+     * Accessor for the doctor's ID.
      *
-     * @return doctorID
+     * @return ID of the doctor
      */
     public String getDoctorID() {
         return doctor.getID();
@@ -114,14 +150,14 @@ public class Appointment {
         return doctor;
     }
 
-    public AppointmentOutcomeRecord getAop(){
+    public AppointmentOutcomeRecord getAop() {
         return aop;
     }
 
     /**
-     * Accessor of date
+     * Accessor for the date of the appointment.
      *
-     * @return date
+     * @return Date object representing the appointment's date
      */
     public Date getDate() {
         return date;
@@ -132,57 +168,58 @@ public class Appointment {
     }
 
     /**
-     * Change the date and time of appointment and change the status to pending
+     * Changes the date and time of the appointment, resetting the status to pending.
      *
-     * @param date
-     * @param time
+     * @param date New date for the appointment
+     * @param time New time for the appointment
      */
     public void changeDate(Date date, Time time) {
         this.date = date;
         timeSlot = time;
-        status = 1;
+        status = 1; // Set status to pending
     }
 
     /**
-     * For doctor to accept the appointment
+     * Confirms the appointment.
      */
     public void confirm() {
-        status = 2;
+        status = 2; // Set status to confirmed
     }
 
     /**
-     * For canceling the appointment
+     * Cancels the appointment.
      */
     public void cancel() {
-        status = 3;
+        status = 3; // Set status to canceled
     }
 
     /**
-     * Change the appointment to complete and generate the appointment outcome record
+     * Completes the appointment and generates the appointment outcome record.
      */
     public void complete() {
-        status = 4;
+        status = 4; // Set status to completed
         aop = new AppointmentOutcomeRecord();
     }
 
     /**
-     * Print all details of appointment
+     * Prints all details of the appointment to the console.
      */
-    public void print(){
+    public void print() {
         System.out.println("Appointment UUID: " + uuid);
         System.out.println("Patient ID: " + patient.getID());
         System.out.println("Doctor ID: " + doctor.getID());
-        System.out.print("Status: "); printStatus();
+        System.out.print("Status: ");
+        printStatus();
         System.out.println("Date: " + date.get());
         System.out.println("Time: " + timeSlot.get());
-        if (status == 4) {
+        if (status == 4) { // If the appointment is completed
             System.out.println();
             if (aop != null) aop.print();
         }
     }
 
     /**
-     * Print the status of the appointment
+     * Prints the status of the appointment.
      */
     public void printStatus() {
         switch (status) {
@@ -198,33 +235,46 @@ public class Appointment {
             case 4:
                 System.out.println("Completed");
                 break;
-
+            default:
+                System.out.println("Unknown status");
+                break;
         }
     }
 
     /**
-     * @return status
+     * Accessor for the current status of the appointment.
+     *
+     * @return current status of the appointment
      */
     public int getStatus() {
         return status;
     }
-    public UUID getRescheduled(){
+
+    /**
+     * Accessor for the UUID of the rescheduled appointment, if applicable.
+     *
+     * @return UUID of the rescheduled appointment or null if not applicable
+     */
+    public UUID getRescheduled() {
         return rescheduled;
     }
 
     /**
-     * Print the Appointment Outcome Record if appointment has been completed
+     * Prints the Appointment Outcome Record if the appointment has been completed.
      */
     public void printAOP() {
-        if (status == 4) aop.print();
-        else System.out.println("Appointment has not been completed!");
+        if (status == 4) { // If the appointment is completed
+            aop.print();
+        } else {
+            System.out.println("Appointment has not been completed!");
+        }
     }
 
+    @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Appointment that = (Appointment) o;
-        return Objects.equals(uuid, that.uuid);
+        if (this == o) return true; // Check if same reference
+        if (o == null || getClass() != o.getClass()) return false; // Check for null or different class
+        Appointment that = (Appointment) o; // Cast to Appointment
+        return Objects.equals(uuid, that.uuid); // Compare UUIDs for equality
     }
-
 }

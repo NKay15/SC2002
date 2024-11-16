@@ -12,8 +12,8 @@ import java.util.*;
  */
 public class DoctorSchedules {
 
-    private List<DoctorSchedule> doctorSchedules;
-    private Doctor doctor;
+    private List<DoctorSchedule> doctorSchedules; // List to hold doctor's schedules
+    private Doctor doctor; // The doctor for whom the schedules are managed
 
     /**
      * Constructs a DoctorSchedules instance for a specific doctor.
@@ -27,6 +27,10 @@ public class DoctorSchedules {
 
     /**
      * Sets the doctor's schedule by adding a new DoctorSchedule for the doctor.
+     *
+     * If a schedule for the specified date already exists, the user is prompted to rewrite it or exit.
+     *
+     * @param date The date for which to set the schedule.
      */
     public void setDoctorSchedule(Date date) {
         DoctorSchedule doctorSchedule = findDateSchedule(date, doctor);
@@ -34,34 +38,43 @@ public class DoctorSchedules {
             System.out.println("Schedule exists, do you want to \n" +
                     "1. rewrite it." +
                     "2. exit.");
+            // Getting user input for option selection
             Scanner scanner = GlobalData.getInstance().sc;
             int sc = scanner.nextInt();
             switch (sc) {
                 case 1:
                     System.out.println("Rewriting schedule...");
-                    doctorSchedules.remove(findDateSchedule(date, doctor));
+                    doctorSchedules.remove(doctorSchedule); // Remove the existing schedule
                     doctorSchedule = new DoctorSchedule(doctor, date);
-                    doctorSchedules.add(doctorSchedule);
+                    doctorSchedules.add(doctorSchedule); // Add the new schedule
                     break;
 
                 default:
-                    System.out.println("Invalid option. Please choose 1, 2, or 3.");
+                    System.out.println("Invalid option. Please choose 1, or 2.");
                     break;
             }
         } else {
+            // Creating and adding a new schedule if none exists
             doctorSchedule = new DoctorSchedule(doctor, date);
             doctorSchedules.add(doctorSchedule);
         }
     }
 
+    /**
+     * Finds the doctor's schedule for a specific date.
+     *
+     * @param date The date for which to find the schedule.
+     * @param doctor The doctor whose schedule is being searched for.
+     * @return The DoctorSchedule for the specified date, or null if no schedule exists.
+     */
     public DoctorSchedule findDateSchedule(Date date, Doctor doctor) {
         for (DoctorSchedule doctorSchedule : doctorSchedules) {
+            // Check for matching date and doctor ID
             if (doctorSchedule.getDate().equals(date) && doctorSchedule.getDoctor().getID().equals(doctor.getID()))
                 return doctorSchedule;
         }
-        return null;
+        return null; // No matching schedule found
     }
-
 
     /**
      * Checks if the doctor is available at a specific date and time.
@@ -73,9 +86,9 @@ public class DoctorSchedules {
     public boolean isDoctorWorking(Date date, Time time) {
         DoctorSchedule schedule = findDateSchedule(date, doctor);
         if (schedule == null) {
-            return false;
+            return false; // No schedule means not working
         }
-        return schedule.isDoctorWorking(time);
+        return schedule.isDoctorWorking(time); // Check if the doctor is working at the specified time
     }
 
     /**
@@ -87,35 +100,50 @@ public class DoctorSchedules {
         printAvailableSlot(date, doctor.getDoctorScheduler());
     }
 
+    /**
+     * Prints available time slots for the doctor on a specific date using a given scheduler.
+     *
+     * @param date The date for which to print available slots.
+     * @param scheduler The DoctorScheduleManager to check slot availability.
+     */
     protected void printAvailableSlot(Date date, DoctorScheduleManager scheduler) {
 
-        //System.out.println("Doctor ID: " + doctor.getID() + "'s available slots are:");
         DoctorSchedule schedule = findDateSchedule(date, doctor);
         if (schedule == null) {
             System.out.println("No available slots.");
-            return;
+            return; // No schedule, hence no slots
         }
-        Time startTime = schedule.getStartTime();
-        Time endTime = schedule.getEndTime();
+        Time startTime = schedule.getStartTime(); // Get the start time from the schedule
+        Time endTime = schedule.getEndTime(); // Get the end time from the schedule
         for (int time = startTime.getIntTime(); time < endTime.getIntTime(); time += 30) {
-            if (time % 100 == 60) time += 40;
+            if (time % 100 == 60) time += 40; // Adjust for minute overflow
+            // Check if the slot is available
             if (scheduler.isSlotAvailable(time, date)) {
                 String slotTime = String.format("%02d:%02d", time / 100, time % 100);
-                System.out.println(slotTime);
-            }
-            else {
-                System.out.println("Doctor is not available.");
+                System.out.println(slotTime); // Print available slot
+            } else {
+                System.out.println("Doctor is not available."); // Inform about unavailability
             }
         }
 
-        System.out.println("-----------------------------------");
+        System.out.println("-----------------------------------"); // Separator for clarity
     }
 
+    /**
+     * Adds a DoctorSchedule to the list of doctor schedules.
+     *
+     * @param schedule The DoctorSchedule to be added.
+     */
     public void addSchedule(DoctorSchedule schedule) {
         doctorSchedules.add(schedule);
     }
 
+    /**
+     * Returns the list of DoctorSchedules associated with the doctor.
+     *
+     * @return A list of DoctorSchedule objects.
+     */
     public List<DoctorSchedule> getDoctorSchedules() {
-        return doctorSchedules;
+        return doctorSchedules; // Return the list of schedules
     }
 }

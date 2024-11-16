@@ -54,9 +54,8 @@ public class DoctorScheduleManager {
         System.out.println("Appointment not pending.");
     }
 
-
     /**
-     * Updates the appointment outcome record for a given appointment and set it as complete.
+     * Updates the appointment outcome record for a given appointment and sets it as complete.
      *
      * @param appointment the Appointment object to update.
      */
@@ -105,17 +104,33 @@ public class DoctorScheduleManager {
         }
     }
 
+    /**
+     * Checks if a slot is available for the given time and date.
+     *
+     * @param time the time to check availability for.
+     * @param date the date to check availability for.
+     * @return true if the slot is available, false otherwise.
+     */
     public boolean isSlotAvailable(int time, Date date) {
         Time tempTime = new Time(time);
         return scheduler.isSlotAvailable(doctor, tempTime, date);
     }
 
+    /**
+     * Checks if a slot is available for the given Time object and date.
+     *
+     * @param time the Time object to check availability for.
+     * @param date the date to check availability for.
+     * @return true if the slot is available, false otherwise.
+     */
     public boolean isSlotAvailable(Time time, Date date) {
         return scheduler.isSlotAvailable(doctor, time, date);
     }
 
     /**
      * Retrieves the list of appointments for this doctor.
+     *
+     * @return list of Appointment objects for the doctor.
      */
     public List<Appointment> getAppointmentsDoctor() {
         return scheduler.getAppointments(doctor);
@@ -123,6 +138,8 @@ public class DoctorScheduleManager {
 
     /**
      * Retrieves the list of pending appointments for this doctor.
+     *
+     * @return list of pending Appointment objects for the doctor.
      */
     public List<Appointment> getPendingAppointmentsDoctor() {
         return scheduler.getPendingAppointments(doctor);
@@ -136,15 +153,14 @@ public class DoctorScheduleManager {
         pendingList = scheduler.getPendingAppointments(doctor);
     }
 
-
     /**
-     * Accessor of upcoming appointment
+     * Accessor for upcoming appointments.
      *
-     * @param i index of appointmnet
-     * @return null if index does not exist
+     * @param i index of the appointment
+     * @return the Appointment object at index i, or null if index does not exist.
      */
     public Appointment getUpcomingAppointment(int i) {
-        if (i < 0 || i > appointmentList.size()) return null;
+        if (i < 0 || i >= appointmentList.size()) return null; //Fix index bounds check
         else return appointmentList.get(i);
     }
 }

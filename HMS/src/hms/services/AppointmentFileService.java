@@ -7,12 +7,20 @@ import hms.appointments.AppointmentScheduler;
 import java.io.*;
 import java.util.*;
 
-
+/**
+ * Service class for managing appointment data, including loading from and writing to a file.
+ * It extends InputValidation to provide input validation functionalities.
+ */
 public class AppointmentFileService extends InputValidation {
     private static final String fileName = "HMS/src/data/Appointment_List.txt";
     private static List<Appointment> appointments;
     private static List<Appointment> pendingAppointments;
 
+    /**
+     * Loads appointments from a file and populates the provided AppointmentScheduler.
+     *
+     * @param appointmentScheduler the AppointmentScheduler to update with loaded appointments.
+     */
     public static void loadAppointments(AppointmentScheduler appointmentScheduler) {
         appointments = new ArrayList<>();
         pendingAppointments = new ArrayList<>();
@@ -32,6 +40,11 @@ public class AppointmentFileService extends InputValidation {
         appointmentScheduler.setLists(appointments, pendingAppointments);
     }
 
+    /**
+     * Formats appointment data from the given string array and adds it to the appropriate list.
+     *
+     * @param dataList array of strings containing appointment data.
+     */
     private static void formatAppointment(String[] dataList) {
         UUID uuid = (dataList[6].equals("null")) ? null : UUID.fromString(dataList[6]);
         Appointment appointment = new Appointment(
@@ -50,7 +63,11 @@ public class AppointmentFileService extends InputValidation {
         }
     }
 
-
+    /**
+     * Writes the current list of appointments and pending appointments to a file.
+     *
+     * @param appointmentScheduler the AppointmentScheduler containing the appointments to write.
+     */
     public static void writeAppointments(AppointmentScheduler appointmentScheduler) {
         appointments = appointmentScheduler.getAppointments();
         pendingAppointments = appointmentScheduler.getPendingAppointments();
@@ -69,6 +86,12 @@ public class AppointmentFileService extends InputValidation {
         }
     }
 
+    /**
+     * Formats appointment data into a comma-separated string for file writing.
+     *
+     * @param appointment the Appointment to format.
+     * @return a string representation of the appointment data.
+     */
     private static String formatAppointmentData(Appointment appointment) {
         return String.format("%s,%s,%s,%d,%d,%d,%s\n",
                 appointment.getUuid().toString(),
