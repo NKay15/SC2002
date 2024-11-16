@@ -7,6 +7,9 @@ import hms.services.InventoryFileService;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Class of the medicine inventory that manage the inventory
+ */
 public class Inventory {
 
     /**

@@ -304,6 +304,7 @@ public class Patient extends User{
      * update email
      *
      */
+    @Deprecated
     public void updateEmail(String email) {
         this.email = email;
         mr.setEmail(email);
@@ -431,8 +432,8 @@ public class Patient extends User{
     }
 
     @Override
-    protected void changePassword(Scanner sc) {
-        super.changePassword(sc);
+    protected void changePassword() {
+        super.changePassword();
         PatientFileService.updatePatient(this);
     }
 }

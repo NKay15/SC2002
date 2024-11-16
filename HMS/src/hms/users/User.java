@@ -34,7 +34,8 @@ public class User {
      */
     private int gender;
 
-    protected void changePassword(Scanner sc){
+    protected void changePassword(){
+        Scanner sc = GlobalData.getInstance().sc;
         System.out.print("Enter Old Password (0 to Cancel): ");
         String password = sc.next(); sc.nextLine();
         if (password.equals("0")){
@@ -250,7 +251,7 @@ public class User {
     public boolean userOptions(int choice){
         Scanner sc = GlobalData.getInstance().sc;
         switch(choice) {
-            case 1 : changePassword(sc);
+            case 1 : changePassword();
             break;
             case 2 : password.menu2FA();
             break;

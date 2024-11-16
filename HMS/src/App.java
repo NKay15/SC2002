@@ -129,7 +129,7 @@ public class App {
 
         /*Write Medical History */
         MedicalRecordFileService.writeMedicalHistory(PatientFileService.getAllPatientData());
-        DoctorPatientFileService.write2FA();
+        DoctorPatientFileService.writePatientList();
 
         /*Write 2FA */
         SecureFileService.write2FA();

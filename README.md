@@ -4,13 +4,11 @@ Hospital Management System Notes by MACS group 3
 
 ## TODO :
 
-- [ ] Random Testing
-- [ ]  UML Class Diagram
+- [ ]  Javadoc
+- [ ]  Random Testing
+- [X]  UML Class Diagram
 - [ ]  Final Report
 - [ ]  Slides
-
-### LYX
-See todo.org
 
 ## Test
 

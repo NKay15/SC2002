@@ -7,15 +7,26 @@ import hms.utils.Time;
 
 import java.util.*;
 
+/**
+ * This class contains all the details of an appointment
+ */
 public class Appointment {
-    /**
-     * ID of patient
-     */
 
+    /**
+     * ID of appointment
+     */
     private UUID uuid;
 
+    /**
+     * Patient of the appointment
+     */
     private Patient patient;
+
+    /**
+     * Doctor of the appointment
+     */
     private Doctor doctor;
+
     /**
      * Integer to store the status of appointment 1 - pending 2 - confirmed 3 - canceled 4 - completed 5 - reschedule
      */
@@ -39,7 +50,6 @@ public class Appointment {
 
     /**
      * Constructor of appointment
-     *
      * @param patient ID of patient
      * @param doctor  ID of doctor
      * @param date    Date of appointment
@@ -56,6 +66,16 @@ public class Appointment {
         rescheduled = null;
     }
 
+    /**
+     * Constructor of appointment used to write appointment from file
+     * @param uuid UUID of the appointment
+     * @param patient Paitent of the appointment
+     * @param doctor Doctor of the appointment
+     * @param date Date of the appontment
+     * @param time Time of the appointment
+     * @param status Status of the appointment
+     * @param rescheduled UUID of the rescheduled appointment if any
+     */
     public Appointment(UUID uuid, Patient patient, Doctor doctor, int date, int time, int status,UUID rescheduled) {
         this.uuid = uuid;
         this.patient = patient;
@@ -65,28 +85,47 @@ public class Appointment {
         this.status = status;
         this.rescheduled = rescheduled;
     }
+
+    /**
+     * Create appointment outcome record
+     */
     public void setAop() {
         aop = new AppointmentOutcomeRecord();
     }
 
+    /**
+     * Load appointment outcome record
+     * @param aop appointment outcome record
+     */
     public void setAOP(AppointmentOutcomeRecord aop) {
         this.aop = aop;
     }
 
+    /**
+     * Load rescheduled appointment
+     * @param appointment rescheduled appointment
+     */
     public void setRescheduled(Appointment appointment){
         rescheduled = appointment.getUuid();
     }
+
+    /**
+     * Remove rescheduled appointment
+     */
     public void clearRescheduled(){
         rescheduled = null;
     }
 
+    /**
+     * Check if the appointment is rescheduled
+     * @return true is appointment is rescheduled otherwise false
+     */
     public boolean checkRescheduled(){
         return rescheduled != null;
     }
 
     /**
      * Accessor of patientID
-     *
      * @return patientID
      */
     public String getPatientID() {
@@ -95,25 +134,40 @@ public class Appointment {
 
     /**
      * Accessor of doctorID
-     *
      * @return doctorID
      */
     public String getDoctorID() {
         return doctor.getID();
     }
 
+    /**
+     * Accessor of patient
+     * @return patient
+     */
     public Patient getPatient() {
         return patient;
     }
 
+    /**
+     * Accessor of uuid
+     * @return uuid
+     */
     public UUID getUuid() {
         return uuid;
     }
 
+    /**
+     * Accessor of doctor
+     * @return doctor
+     */
     public Doctor getDoctor() {
         return doctor;
     }
 
+    /**
+     * Accessor of aop
+     * @return aop
+     */
     public AppointmentOutcomeRecord getAop(){
         return aop;
     }
@@ -127,6 +181,10 @@ public class Appointment {
         return date;
     }
 
+    /**
+     * Accessor of timeSlot
+     * @return timeSlot
+     */
     public Time getTimeSlot() {
         return timeSlot.getTime();
     }
@@ -208,6 +266,11 @@ public class Appointment {
     public int getStatus() {
         return status;
     }
+
+    /**
+     * Accessor of recheduled appointment uuid
+     * @return recheduled appointment uuid
+     */
     public UUID getRescheduled(){
         return rescheduled;
     }

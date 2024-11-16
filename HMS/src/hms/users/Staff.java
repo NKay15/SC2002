@@ -77,8 +77,8 @@ public class Staff extends User {
     }
 
     @Override
-    protected void changePassword(Scanner sc) {
-        super.changePassword(sc);
+    protected void changePassword() {
+        super.changePassword();
         StaffFileService.updateStaff(this);
     }
 }

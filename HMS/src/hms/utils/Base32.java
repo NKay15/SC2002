@@ -2,6 +2,9 @@ package hms.utils;
 
 import java.lang.StringBuilder;
 
+/**
+ * Contains all the method to handle base32 characters
+ */
 public class Base32 {
     public static int base32Toint(char c) {
         if((int)c >= 65 && (int)c <= 90) return (int)c - 65;
@@ -22,6 +25,11 @@ public class Base32 {
         else return '\0';
     }
 
+    /**
+     * Encode a string binary to base32
+     * @param s string to convert
+     * @return base32 string
+     */
     public static String encode(String s) {
         StringBuilder ret = new StringBuilder();
         int buffer = 0;
@@ -44,6 +52,11 @@ public class Base32 {
         return ret.toString();
     }
 
+    /**
+     * Decode a base32 string
+     * @param s base32 string
+     * @return decoded string
+     */
     public static String decode(String s) {
         s = s.replaceAll("=", "");
         StringBuilder ret = new StringBuilder();

@@ -2,6 +2,9 @@ package hms.users;
 
 import java.util.ArrayList;
 
+/**
+ * Manage all created instance of user class and ensures one is instance is created per user.
+ */
 public class UserInstances {
 
     /**

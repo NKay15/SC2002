@@ -29,7 +29,7 @@ public class DoctorPatientFileService {
         }
     }
 
-    public static void write2FA() {
+    public static void writePatientList() {
         try {
             FileWriter fw = new FileWriter("HMS/src/data/Doctor_Patients_List.txt");
             fw.write("Doctor,Patient\n");

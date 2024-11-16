@@ -1,5 +1,8 @@
 package hms.pharmacy;
 
+/**
+ * Class that contains all the information of a given medicine
+ */
 public class Medicine {
 
     /**
