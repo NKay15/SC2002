@@ -206,7 +206,7 @@ public class StaffFileService extends UserFileService {
 
     /**
      * Get All Staff Data of only a role
-     * @param Role
+     * @param role
      * @return List of Staff
      */
     public static ArrayList<Staff> getRoleStaffData(Role role) {
@@ -379,7 +379,7 @@ public class StaffFileService extends UserFileService {
 
     /**
      * Add a new staff
-     * @param Staff
+     * @param staff
      */
     public static void addStaff(Staff staff) {
         try {
@@ -405,13 +405,13 @@ public class StaffFileService extends UserFileService {
             GlobalData.getInstance().userInstances.add(staff);
         }
         catch (Exception e) {
-            System.out.println("An error occured");
+            System.out.println("An error occurred");
         }
     }
 
     /**
      * Update a staff
-     * @param Staff
+     * @param staff
      */
     public static void updateStaff(Staff staff) {
         try {
@@ -443,7 +443,7 @@ public class StaffFileService extends UserFileService {
             ((Staff)GlobalData.getInstance().userInstances.getInstance(staff.getID())).update(staff.getID(), staff.getName(), staff.getRole(), staff.getGender(), staff.getAge(), staff.getPassword());
         }
         catch (Exception e) {
-            System.out.println("An error occured");
+            System.out.println("An error occurred");
         }
     }
 
@@ -451,7 +451,7 @@ public class StaffFileService extends UserFileService {
      * Remove Staff by ID
      * @param ID
      */
-    public static void removeStaffbyID(String ID) {
+    public static void removeStaffByID(String ID) {
         try {
             BufferedWriter f_writer = new BufferedWriter(new FileWriter(temFileName));
 
@@ -479,7 +479,7 @@ public class StaffFileService extends UserFileService {
             GlobalData.getInstance().userInstances.remove(ID);
         }
         catch (Exception e) {
-            System.out.println("An error occured");
+            System.out.println("An error occurred");
         }
     }
 }

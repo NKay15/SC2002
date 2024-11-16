@@ -35,24 +35,30 @@ public class DoctorSchedules {
     public void setDoctorSchedule(Date date) {
         DoctorSchedule doctorSchedule = findDateSchedule(date, doctor);
         if (doctorSchedule != null) {
-            System.out.println("Schedule exists, do you want to \n" +
-                    "1. rewrite it." +
-                    "2. exit.");
-            // Getting user input for option selection
+            System.out.println("Schedule Already Exists! Do you want to: \n" +
+                    "1. Rewrite it; 2. Exit");
+            System.out.print("Enter your choice: ");
             Scanner scanner = GlobalData.getInstance().sc;
-            int sc = scanner.nextInt();
-            switch (sc) {
-                case 1:
-                    System.out.println("Rewriting schedule...");
-                    doctorSchedules.remove(doctorSchedule); // Remove the existing schedule
-                    doctorSchedule = new DoctorSchedule(doctor, date);
-                    doctorSchedules.add(doctorSchedule); // Add the new schedule
-                    break;
+            int choice;
+            do {
+                choice = scanner.nextInt();
+                switch (choice) {
+                    case 1:
+                        System.out.println("Rewriting Schedule...");
+                        doctorSchedules.remove(findDateSchedule(date, doctor));
+                        doctorSchedule = new DoctorSchedule(doctor, date);
+                        doctorSchedules.add(doctorSchedule);
+                        break;
 
-                default:
-                    System.out.println("Invalid option. Please choose 1, or 2.");
-                    break;
-            }
+                    case 2:
+                        System.out.println("Returning to Menu...");
+                        break;
+
+                    default:
+                        System.out.print("Invalid choice! Try again: ");
+                        break;
+                }
+            } while (choice != 1 && choice != 2);
         } else {
             // Creating and adding a new schedule if none exists
             doctorSchedule = new DoctorSchedule(doctor, date);

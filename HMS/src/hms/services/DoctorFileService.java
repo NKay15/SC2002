@@ -152,7 +152,7 @@ public class DoctorFileService extends StaffFileService {
                 password = sc.nextLine();
             }
         }
-        removeStaffbyID(ID);
+        removeStaffByID(ID);
         System.out.println("Doctor Successfully Removed! Returning to Menu...");
         return true;
     }

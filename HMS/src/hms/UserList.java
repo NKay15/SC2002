@@ -18,12 +18,12 @@ public class UserList {
     private ArrayList<Patient> patients;
 
     /**
-     * List of Pharmacist in the system
+     * List of Pharmacists in the system
      */
     private ArrayList<Pharmacist> pharmacists;
 
     /**
-     * List of Administrator in the system
+     * List of Administrators in the system
      */
     private ArrayList<Administrator> administrators;
 
@@ -39,7 +39,7 @@ public class UserList {
 
     /**
      * Accessor of Doctors
-     * @return
+     * @return list of Doctors
      */
     public ArrayList<Doctor> getDoctors() {
         return doctors;
@@ -594,7 +594,7 @@ public class UserList {
 
     /**
      * Accessor of Pharmacist
-     * @return list of Pharamacists
+     * @return list of Pharmacists
      */
     public ArrayList<Pharmacist> getPharmacists() {
         return pharmacists;
@@ -793,7 +793,7 @@ public class UserList {
     }
 
     /**
-     * Accesspr of Administrators
+     * Accessor of Administrators
      * @return list of administrators
      */
     public ArrayList<Administrator> getAdministrators() {

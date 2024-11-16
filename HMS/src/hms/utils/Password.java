@@ -31,7 +31,7 @@ public class Password extends MD5 {
     }
 
     /**
-     * Contructor of Password to set the password to the default password
+     * Constructor of Password to set the password to the default password
      */
     public Password() {
         this.password = MD5.getMd5("password");
@@ -56,7 +56,7 @@ public class Password extends MD5 {
 
     /**
      * Return true if the input is the password.
-     * @param check string to check the passowrd
+     * @param check string to check the password
      * @return true if the password is correct otherwise false
      */
     public boolean checkPassword(String check) {
@@ -89,7 +89,7 @@ public class Password extends MD5 {
 
     /**
      * Accessor of 2FA key
-     * @return
+     * @return key
      */
     public String get2FAKey() {
         return totp.getKey();
@@ -105,7 +105,7 @@ public class Password extends MD5 {
     }
 
     /**
-     * Remove 2FA used by aministrator
+     * Remove 2FA used by administrator
      */
     public void remove2FA() {
         totp = null;

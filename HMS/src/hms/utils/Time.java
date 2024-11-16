@@ -25,7 +25,7 @@ public class Time implements Comparable<Time> {
         this.hour = time / 100;
         while (!checkTime()) {
             System.out.println("This time is not available.");
-            System.out.println("Enter time in hhmm");
+            System.out.println("Enter time in HHMM.");
             Scanner sc = GlobalData.getInstance().sc;
             time = sc.nextInt();
             this.time = time;
@@ -47,7 +47,7 @@ public class Time implements Comparable<Time> {
         this.time = 100 * hour + minute;
         while (!checkTime()) {
             System.out.println("This time is not available.");
-            System.out.println("Enter time in hh mm");
+            System.out.println("Enter time in HH MM.");
             Scanner sc = GlobalData.getInstance().sc;
             hour = sc.nextInt();
             minute = sc.nextInt();
@@ -91,12 +91,12 @@ public class Time implements Comparable<Time> {
      * @return true if the time is valid, false otherwise
      */
     public boolean checkTime() {
-        if ((minute % 100 != 0 && minute % 100 != 30) || (minute >= 60 || minute < 0)) {
-            System.out.println("Only 00/30 is allowed for minute.");
+        if ( (minute % 100 != 0 && minute % 100 != 30) || ( minute >= 60 || minute < 0)) {
+            System.out.println("Only 00/30 is allowed for minute!");
             return false;
         }
-        if (hour >= 24 || hour < 0) {
-            System.out.println("Invalid time.");
+        if (hour >= 24 || hour <= 0) {
+            System.out.println("Invalid time!");
             return false;
         }
         return true;

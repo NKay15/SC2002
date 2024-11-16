@@ -62,7 +62,7 @@ public class PatientScheduleManager {
         if (scheduler.findAppointment(appointment)) {
             scheduler.cancelAppointment(appointment);
         } else {
-            System.out.println("Slot not found");
+            System.out.println("Slot Not Found!");
         }
     }
 
@@ -72,13 +72,8 @@ public class PatientScheduleManager {
     public void printPatientAppointment() {
         updatePatientData();
         int i = 1;
-        printAppointments(appointmentList, i);
-        printAppointments(pendingAppointmentList, i + appointmentList.size());
-    }
-
-    private void printAppointments(List<Appointment> appointments, int startIndex) {
-        for (Appointment appointment : appointments) {
-            System.out.println(startIndex + " :");
+        for (Appointment appointment : appointmentList) {
+            System.out.println((i) + ".");
             System.out.println("Doctor ID: " + appointment.getDoctorID());
             System.out.print("Date: ");
             appointment.getDate().print();
@@ -87,7 +82,19 @@ public class PatientScheduleManager {
             System.out.print("Status: ");
             appointment.printStatus();
             System.out.println("-------------");
-            startIndex++;
+            i++;
+        }
+        for (Appointment appointment : pendingAppointmentList) {
+            System.out.println((i) + ".");
+            System.out.println("Doctor ID: " + appointment.getDoctorID());
+            System.out.print("Date: ");
+            appointment.getDate().print();
+            System.out.print("Time Slot: ");
+            appointment.getTimeSlot().print();
+            System.out.println("Status: ");
+            appointment.printStatus();
+            System.out.println("-------------");
+            i++;
         }
     }
 

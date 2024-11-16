@@ -39,9 +39,9 @@ public class Medicine {
     }
 
     /**
-     * To be used by phramacist to give prescription
-     * @param given amount of medince
-     * @return true if successful otherwise false and amount remain unchange
+     * To be used by pharmacist to give prescription
+     * @param given amount of medicine
+     * @return true if successful otherwise false and amount remain unchanged
      */
     public boolean prescribe(int given) {
         if(amount >= given){

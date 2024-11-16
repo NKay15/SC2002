@@ -34,7 +34,7 @@ public class App {
         MedicalRecordFileService.loadMedicalHistory();
 
         /*Load 2FA */
-        SercureFileService.load2FA();
+        SecureFileService.load2FA();
 
         /* Load data into inventory */
         Inventory inventory = InventoryFileService.getInventory();
@@ -53,7 +53,7 @@ public class App {
                 System.out.println("Hospital Management System (HMS)");
                 System.out.println("==============================");
                 System.out.println("Please login");
-                System.out.print("Enter your ID (0 to exit): ");
+                System.out.print("Enter your ID (0 to Exit): ");
                 String ID = sc.next();
                 sc.nextLine();
 
@@ -80,7 +80,7 @@ public class App {
 
                 accessLevel = currentUser.login();
                 if (accessLevel != null) {
-                    System.out.println("Logged in successfully.\n");
+                    System.out.println("Logged in successfully.");
                     break;
                 }
                 System.out.println("Password is incorrect!");
@@ -127,12 +127,12 @@ public class App {
         /*Write Inventory */
         InventoryFileService.writeInventory(gd.inventory);
 
-        /*Wrtie Medical History */
+        /*Write Medical History */
         MedicalRecordFileService.writeMedicalHistory(PatientFileService.getAllPatientData());
         DoctorPatientFileService.write2FA();
 
         /*Write 2FA */
-        SercureFileService.write2FA();
+        SecureFileService.write2FA();
 
     }
 }

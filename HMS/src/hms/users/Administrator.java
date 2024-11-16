@@ -35,7 +35,7 @@ public class Administrator extends Staff {
 		while (true) {
 			try {
 				if (!inputError) {
-					System.out.println("-----Administrator Menu-----");
+					System.out.println("\n-----Administrator Menu-----");
 					System.out.println("1. View & Manage Hospital Staff");
 					System.out.println("2. View Patient Appointments");
 					System.out.println("3. View & Manage Hospital Patients");
@@ -65,16 +65,17 @@ public class Administrator extends Staff {
 						break;
 
 					default:
-						if (!super.useroptions(choice - 4)) {
+						if (!super.userOptions(choice - 4)) {
 							return;
 						}
+						else if (choice < 1 || choice > 7) inputError = true;
 						break;
 				}
 			}
 			catch (InputMismatchException e) {
-				System.out.print("Invalid choice! Try again: ");
 				inputError = true;
 				sc.nextLine();
+				System.out.print("Invalid choice! Try again: ");
 			}
 		}
 	}
@@ -450,7 +451,7 @@ public class Administrator extends Staff {
 					break;
 
 				case "5":
-					System.out.println("Returning to Main Menu...\n");
+					System.out.println("Returning to Main Menu...");
 					return;
 
 				default:
@@ -701,7 +702,7 @@ public class Administrator extends Staff {
 					break;
 
 				case "3":
-					System.out.println("Returning to Main Menu...\n");
+					System.out.println("Returning to Main Menu...");
 					return;
 
 				default:
@@ -855,10 +856,10 @@ public class Administrator extends Staff {
 									newDOB = new hms.utils.Date(day, month, year);
 									break;
 								} else {
-									System.out.print("Invalid date! Try again: ");
+									System.out.print("Invalid Date! Try again: ");
 								}
 							}
-							else System.out.print ("Invalid date! Try again: ");
+							else System.out.print ("Invalid Date! Try again: ");
 						} else {
 							System.out.print("Invalid input! Try again, With Digits Only: ");
 							sc.nextLine();
@@ -1010,7 +1011,7 @@ public class Administrator extends Staff {
 					break;
 
 				case "5":
-					System.out.println("Returning to Main Menu...\n");
+					System.out.println("Returning to Main Menu...");
 					return;
 
 				default:
@@ -1125,7 +1126,7 @@ public class Administrator extends Staff {
 					break;
 
 				case "6":
-					System.out.println("Returning to Main Menu...\n");
+					System.out.println("Returning to Main Menu...");
 					return;
 
 				default:
@@ -1136,6 +1137,6 @@ public class Administrator extends Staff {
 	}
 
 	public void printRole() {
-        System.out.print("Adminstrator");
+        System.out.print("Administrator");
     }
 }

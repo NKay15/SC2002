@@ -22,13 +22,13 @@ public class Date implements Comparable<Date> {
     private int year;
 
     /**
-     * Contructor of date
+     * Constructor of date
      * @param ddmmyyyy date in ddmmyyyy format
      */
     public Date(int ddmmyyyy) {
         Scanner sc = GlobalData.getInstance().sc;
         while(!checkDate(ddmmyyyy)){
-            System.out.println("Enter data in ddmmyyyy");
+            System.out.println("Enter Date in DDMMYYYY:");
             ddmmyyyy = sc.nextInt();
         }
 
@@ -46,7 +46,7 @@ public class Date implements Comparable<Date> {
             int mm = ddmmyyyy / 10000 % 100;
             if(mm > 12){
                 System.out.println("Invalid Date!");
-                System.out.println("month out of range");
+                System.out.println("Month out of range.");
                 return false;
             }
             int yyyy = ddmmyyyy % 10000;
@@ -60,12 +60,12 @@ public class Date implements Comparable<Date> {
             }
             return true;
         }
-        System.out.println("Invalid inut! Please enter data in ddmmyyyy");
+        System.out.println("Invalid input! Please enter data in DDMMYYYY");
         return false;
     }
 
     /**
-     * Contructor of date
+     * Constructor of date
      * @param dd day
      * @param mm month
      * @param yyyy year
@@ -94,7 +94,7 @@ public class Date implements Comparable<Date> {
 
     /**
      * Accessor of year
-     * @return yaer
+     * @return year
      */
     public int year() {
         return year;

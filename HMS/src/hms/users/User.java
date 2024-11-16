@@ -35,15 +35,14 @@ public class User {
     private int gender;
 
     protected void changePassword(Scanner sc){
-        sc.nextLine();
         System.out.print("Enter Old Password (0 to Cancel): ");
-        String password = sc.nextLine();
+        String password = sc.next(); sc.nextLine();
         if (password.equals("0")){
-            System.out.println("Operation Cancelled. Returning to Menu...\n");
+            System.out.println("Operation Cancelled. Returning to Menu...");
             return;
         }
         if(!this.password.checkPassword(password)) {
-            System.out.print("Incorrect Password! Returning to Menu...\n");
+            System.out.print("Incorrect Password! Returning to Menu...");
             return;
         }
         System.out.print("Enter New Password: ");
@@ -53,7 +52,7 @@ public class User {
             newPassword = sc.next(); sc.nextLine();
         }
         this.password.changePassword(newPassword);
-        System.out.println("Password Successfully Changed! Returning to Menu...\n");
+        System.out.println("Password Successfully Changed! Returning to Menu...");
     }
 
     /**
@@ -245,10 +244,10 @@ public class User {
 
     /**
      * Process options for user choice
-     * @param choice number chosen in the user menu and need to be ofset by the number of options in supclass
+     * @param choice number chosen in the user menu and need to be offset by the number of options in supclass
      * @return if false log out
      */
-    public boolean useroptions(int choice){
+    public boolean userOptions(int choice){
         Scanner sc = GlobalData.getInstance().sc;
         switch(choice) {
             case 1 : changePassword(sc);
@@ -263,7 +262,7 @@ public class User {
                     System.out.println("Logging out...\n");
                     return false;
                 } else {
-                    System.out.println("Returning to Menu...\n");
+                    System.out.println("Returning to Menu...");
                     break;
                 }
             default :

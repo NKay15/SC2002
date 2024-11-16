@@ -58,7 +58,7 @@ public class TOTP {
         }
 
         catch(Exception e) {
-            System.out.println("No hmac algorithem exist");
+            System.out.println("No hmac algorithm exists");
             return -1;
         }
     }

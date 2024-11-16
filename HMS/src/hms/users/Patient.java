@@ -7,6 +7,7 @@ import hms.services.DoctorFileService;
 import hms.services.PatientFileService;
 import hms.utils.*;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Patient extends User{
@@ -183,121 +184,133 @@ public class Patient extends User{
      */
     public void menu() {    
         Scanner sc = GlobalData.getInstance().sc;
-        int choice = 1;
+        int choice;
+        boolean inputError = false;
+
         while(true) {
-
-            System.out.println("-----Patient Menu-----");
-            System.out.println("1. View Medical Record ");
-            System.out.println("2. Update Personal Information ");
-            System.out.println("3. View Available Appointment Slots ");
-            System.out.println("4. Schedule an Appointment ");
-            System.out.println("5. Reschedule an Appointment ");
-            System.out.println("6. Cancel an Appointment ");
-            System.out.println("7. View Scheduled Appointments ");
-            System.out.println("8. View Past Appointment Outcome Records");
-            super.menu(9);
-            System.out.println("-----End of Menu-----");
-            
-            System.out.print("Enter menu number: ");
-            choice = sc.nextInt();
-            switch(choice) {
-                case 1:
-                    viewMedicalRecord();
-                    break;
-
-                case 2:
-                    updatePersonalInformation();
-                    break;
-
-                case 3:
-                    int date3;
-                    System.out.print("Enter date to view slots (ddmmyyyy): ");
-                    date3 = sc.nextInt();
-                    viewAvailableAppointmentSlots(DoctorFileService.getAllDoctorData(), new Date(date3));
-                    break;
-
-                case 4:
-                    int time, date;
-                    // sc.nextLine();
-                    Doctor doc = null;
-                    for(int i = 0; i < DoctorFileService.getAllDoctorData().size(); i++) {
-                        System.out.println((i+1) + ". Dr. " + DoctorFileService.getAllDoctorData().get(i).getName());
-                    }
-                    System.out.print("Select Doctor (0 to Exit): ");
-                    int whichDoc = sc.nextInt();
-                    while(whichDoc < 1 || whichDoc > DoctorFileService.getAllDoctorData().size()) {
-                        if(whichDoc == 0) break;
-                        System.out.print("Invalid choice! Try again: ");
-                        whichDoc = sc.nextInt();
-                    }
-                    if(whichDoc == 0) break;
-                    doc = DoctorFileService.getAllDoctorData().get(whichDoc-1);
-                    //doc.getDoctorScheduler().updateDoctorData();
-                    System.out.print("Enter Date in ddmmyyyy (O to Exit): ");
-                    date = sc.nextInt();
-                    if(date == 0) break;
-                    System.out.print("Enter Time in hhmm (O to Exit): ");
-                    time = sc.nextInt();
-                    if(time == 0) break;
-                    Appointment toSchedule = patientSchedule.generateAppointment(this, doc, new Date(date), new Time(time));
-                    if(toSchedule == null) {
-                        System.out.println("Dr. " + doc.getName() + " " +
-                                "is not available at your chosen time!");
+            try {
+                if (!inputError) {
+                    System.out.println("\n-----Patient Menu-----");
+                    System.out.println("1. View Medical Record ");
+                    System.out.println("2. Update Personal Information ");
+                    System.out.println("3. View Available Appointment Slots ");
+                    System.out.println("4. Schedule an Appointment ");
+                    System.out.println("5. Reschedule an Appointment ");
+                    System.out.println("6. Cancel an Appointment ");
+                    System.out.println("7. View Scheduled Appointments ");
+                    System.out.println("8. View Past Appointment Outcome Records");
+                    super.menu(9);
+                    System.out.println("-----End of Menu-----");
+                    System.out.print("Enter your choice: ");
+                }
+                else inputError = false;
+                choice = sc.nextInt();
+                switch (choice) {
+                    case 1:
+                        viewMedicalRecord();
                         break;
-                    }
-                    scheduleAppointment(toSchedule);
-                    // System.out.println("Appointment is scheduled and pending to be approved by the doctor!");
-                    // sc.nextLine();
-                    break;
 
-                case 5:
-                    System.out.println("Select appointment to reschedule (0 : exit):");
-                    patientSchedule.printPatientAppointment();
-                    choice = sc.nextInt();
-                    Appointment old = patientSchedule.getUpcomingAppointment(choice-1);
-                    if (old == null) break;
-                    /*
-                     * Get new appointment
-                     */
-                    int newtime, newdate;
-                    System.out.print("Enter Date in ddmmyyyy (O : exit): ");
-                    newdate = sc.nextInt();
-                    if(newdate == 0) break;
-                    System.out.print("Enter Time in hhmm (O : exit): ");
-                    newtime = sc.nextInt();
-                    if(newtime == 0) break;
-                    Appointment toReschedule = patientSchedule.generateAppointment(this, old.getDoctor(), new Date(newdate), new Time(newtime));
-                    if(toReschedule == null) {
-                        System.out.println(old.getDoctor().getName() + "is not available at your chosen time. Rescheduling failed.");
+                    case 2:
+                        updatePersonalInformation();
                         break;
-                    }
-	    			rescheduleAppointment(old, toReschedule);
-                    System.out.println("Appointment has successfully been rescheduled and pending to be approved by the doctor!");
-	    			break;
 
-	    		case 6:
-                    System.out.println("Select appointment to cancel (0 : exit):");
-                    patientSchedule.printPatientAppointment();
-                    choice = sc.nextInt();
-                    Appointment cancel = patientSchedule.getUpcomingAppointment(choice-1);
-                    if(cancel == null) break;
-	    			cancelAppointment(cancel);
-                    System.out.println("Appointment has been cancelled");
-	    			break;
+                    case 3:
+                        int date3;
+                        System.out.print("Enter Date to View Slots (in DDMMYYYY): ");
+                        date3 = sc.nextInt();
+                        viewAvailableAppointmentSlots(DoctorFileService.getAllDoctorData(), new Date(date3));
+                        break;
 
-	    		case 7:
-	    			viewScheduledAppointments();
-	    			break;
+                    case 4:
+                        int time, date;
+                        // sc.nextLine();
+                        Doctor doc = null;
+                        for (int i = 0; i < DoctorFileService.getAllDoctorData().size(); i++) {
+                            System.out.println((i + 1) + ". Dr. " + DoctorFileService.getAllDoctorData().get(i).getName());
+                        }
+                        System.out.print("Select Doctor (0 to Exit): ");
+                        int whichDoc = sc.nextInt();
+                        while (whichDoc < 1 || whichDoc > DoctorFileService.getAllDoctorData().size()) {
+                            if (whichDoc == 0) break;
+                            System.out.print("Invalid choice! Try again: ");
+                            whichDoc = sc.nextInt();
+                        }
+                        if (whichDoc == 0) break;
+                        doc = DoctorFileService.getAllDoctorData().get(whichDoc - 1);
+                        //doc.getDoctorScheduler().updateDoctorData();
+                        System.out.print("Enter Date in DDMMYYYY (O to Exit): ");
+                        date = sc.nextInt();
+                        if (date == 0) break;
+                        System.out.print("Enter Time in HHMM (O to Exit): ");
+                        time = sc.nextInt();
+                        if (time == 0) break;
+                        Appointment toSchedule = patientSchedule.generateAppointment(this, doc, new Date(date), new Time(time));
+                        if (toSchedule == null) {
+                            System.out.println("Dr. " + doc.getName() + " " +
+                                    "is Not Available at your chosen time!");
+                            break;
+                        }
+                        scheduleAppointment(toSchedule);
+                        // System.out.println("Appointment is scheduled and pending to be approved by the doctor!");
+                        // sc.nextLine();
+                        break;
 
-	    		case 8:
-	    			viewPastAppointmentOutcomeRecords();
-	    			break;
+                    case 5:
+                        System.out.println("Select Appointment to Reschedule (0 to Exit):");
+                        patientSchedule.printPatientAppointment();
+                        choice = sc.nextInt();
+                        Appointment old = patientSchedule.getUpcomingAppointment(choice - 1);
+                        if (old == null) break;
+                        /*
+                         * Get new appointment
+                         */
+                        int newtime, newdate;
+                        System.out.print("Enter Date in DDMMYYYY (O to Exit): ");
+                        newdate = sc.nextInt();
+                        if (newdate == 0) break;
+                        System.out.print("Enter Time in HHMM (O to Exit): ");
+                        newtime = sc.nextInt();
+                        if (newtime == 0) break;
+                        Appointment toReschedule = patientSchedule.generateAppointment(this, old.getDoctor(), new Date(newdate), new Time(newtime));
+                        if (toReschedule == null) {
+                            System.out.println(old.getDoctor().getName() + "is Not Available at your chosen time. Rescheduling failed.");
+                            break;
+                        }
+                        rescheduleAppointment(old, toReschedule);
+                        System.out.println("Appointment Successfully Rescheduled! Pending Doctor's Approval.");
+                        break;
 
-	    		default:
-                    if(!super.useroptions(choice-8)) {
-                        return;
-                    }
-	    	}
+                    case 6:
+                        System.out.println("Select Appointment to Cancel (0 to Exit):");
+                        patientSchedule.printPatientAppointment();
+                        choice = sc.nextInt();
+                        Appointment cancel = patientSchedule.getUpcomingAppointment(choice - 1);
+                        if (cancel == null) break;
+                        cancelAppointment(cancel);
+                        System.out.println("Appointment Successfully Cancelled!");
+                        break;
+
+                    case 7:
+                        viewScheduledAppointments();
+                        break;
+
+                    case 8:
+                        viewPastAppointmentOutcomeRecords();
+                        break;
+
+                    default:
+                        if (!super.userOptions(choice - 8)) {
+                            return;
+                        }
+                        else if (choice < 1 || choice > 11) inputError = true;
+                        break;
+                }
+            }
+            catch (InputMismatchException e) {
+                inputError = true;
+                sc.nextLine();
+                System.out.print("Invalid choice! Try again: ");
+            }
         }
     }
 
@@ -345,7 +358,7 @@ public class Patient extends User{
      * Update Personal Information
      */
     public Patient updatePersonalInformation() {
-        System.out.println("What information do you want to update?");
+        System.out.println("Choose One to Update:");
         System.out.println("1. Update Email");
         System.out.println("2. Update Phone Number");
 
@@ -357,12 +370,12 @@ public class Patient extends User{
         if (ch == 1) {
             String email;
             scan.nextLine();
-            System.out.print("Enter new email :");
+            System.out.print("Enter New Email: ");
             email = scan.nextLine();
             this.updateEmail(email);
         } else if (ch == 2) {
             int phone;
-            System.out.print("Enter new phone :");
+            System.out.print("Enter New Phone: ");
             phone = scan.nextInt();
             this.updatePhone(phone);
         } else {
@@ -379,7 +392,7 @@ public class Patient extends User{
      */
     public void viewAvailableAppointmentSlots(ArrayList<Doctor> doctors, Date date) {
         for (Doctor doctor : doctors) {
-            System.out.println("Dr. " + doctor.getName() + "'s available appointment slots are: ");
+            System.out.println("Dr. " + doctor.getName() + "'s Available Appointment Slots are: ");
             patientSchedule.printAvailableSlots(date, doctor);
             System.out.println("-----End of Dr. " + doctor.getName() + "'s Available slots-----");
         }
@@ -405,7 +418,7 @@ public class Patient extends User{
     }
 
     /**
-     * Cancle appointment
+     * Cancel appointment
      *
      * @param appointment     The appointment to be canceled
      */

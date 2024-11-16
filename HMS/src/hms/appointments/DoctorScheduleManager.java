@@ -156,8 +156,9 @@ public class DoctorScheduleManager {
     /**
      * Accessor for upcoming appointments.
      *
-     * @param i index of the appointment
-     * @return the Appointment object at index i, or null if index does not exist.
+
+     * @param i index of appointment
+     * @return null if index does not exist
      */
     public Appointment getUpcomingAppointment(int i) {
         if (i < 0 || i >= appointmentList.size()) return null; //Fix index bounds check

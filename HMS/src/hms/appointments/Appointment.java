@@ -116,7 +116,7 @@ public class Appointment {
      *
      * @return true if the appointment has been rescheduled, false otherwise
      */
-    public boolean checkRscheduled() {
+    public boolean checkRescheduled(){
         return rescheduled != null;
     }
 
