@@ -4,6 +4,9 @@ import java.util.Scanner;
 
 import hms.GlobalData;
 
+/**
+ * Class that manages password and 2FA
+ */
 public class Password extends MD5 {
     /**
      * For now just a string for the password.
@@ -15,6 +18,9 @@ public class Password extends MD5 {
      */
     private TOTP totp;
 
+    /**
+     * Creates 2FA and ensure users set it up correctly
+     */
     private void setUp2FA() {
         totp = new TOTP();
         Scanner sc = GlobalData.getInstance().sc;

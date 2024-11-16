@@ -4,7 +4,15 @@ import java.util.Scanner;
 
 import hms.GlobalData;
 
+/**
+ * Class that contains method to ensure inputs are compatible with CVS files
+ */
 public class InputValidation {
+    /**
+     * Check if string has a comma
+     * @param check string to be check
+     * @return true if is does not have a comma otherwise false
+     */
     private static boolean checkString(String check){
         for(int i = 0; i < check.length(); i++) {
             if(check.charAt(i) == ',') return false;

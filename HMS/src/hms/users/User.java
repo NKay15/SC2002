@@ -5,6 +5,9 @@ import hms.utils.Password;
 import hms.utils.Role;
 import java.util.Scanner;
 
+/**
+ * Base class of user with the basic functionality
+ */
 public class User {
     /**
      * A Password class to store the password.
@@ -34,6 +37,9 @@ public class User {
      */
     private int gender;
 
+    /**
+     * method to change password
+     */
     protected void changePassword(){
         Scanner sc = GlobalData.getInstance().sc;
         System.out.print("Enter Old Password (0 to Cancel): ");
@@ -171,6 +177,10 @@ public class User {
     	return gender;
     }
 
+    /**
+     * Accessor of gender in string
+     * @return gender in string
+     */
     public String getGenderString() {
         switch (gender) {
             case 0:
@@ -272,6 +282,9 @@ public class User {
         return true;
     }
 
+    /**
+     * method to print the role of user
+     */
     public void printRole() {
         System.out.print("Unknown");
     }

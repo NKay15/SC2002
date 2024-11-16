@@ -5,6 +5,9 @@ import hms.utils.BloodType;
 
 import java.util.*;
 
+/**
+ * class that manages all the users
+ */
 @Deprecated
 public class UserList {
     /**

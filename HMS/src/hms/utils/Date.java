@@ -4,6 +4,9 @@ import java.util.Scanner;
 
 import hms.GlobalData;
 
+/**
+ * Class that contains the structure for datesS
+ */
 public class Date implements Comparable<Date> {
 
     /**

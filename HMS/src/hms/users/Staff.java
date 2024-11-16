@@ -72,6 +72,9 @@ public class Staff extends User {
         return change;
     }
 
+    /**
+     * Method to print role of staff
+     */
     public void printRole() {
         System.out.print("Staff");
     }
