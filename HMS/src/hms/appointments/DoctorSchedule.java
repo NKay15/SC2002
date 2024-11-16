@@ -24,7 +24,7 @@ public class DoctorSchedule {
     private List<Time[]> breaks;
 
     private int breakCount;
-    public Object getDoctor;
+    public Object getDoctor; // Unused variable, should be removed.
 
 
     public DoctorSchedule(Doctor doctor, Date date, Time startTime, Time endTime, int breakCount, List<Time[]> breaks) {
@@ -53,11 +53,11 @@ public class DoctorSchedule {
     protected void setWorkingTime() {
         Scanner sc = GlobalData.getInstance().sc;
         do {
-            System.out.println("When do you want to work? Input your start time, in HHMM");
+            System.out.println("When do you want to work? Input your start time (in HHMM):");
             int time = sc.nextInt();
             startTime = new Time(time);
 
-            System.out.println("Input your end time, in HHMM");
+            System.out.println("Input your end time (in HHMM):");
             time = sc.nextInt();
             endTime = new Time(time);
 
@@ -82,11 +82,11 @@ public class DoctorSchedule {
             do {
                 if (flag)
                     System.out.println("Invalid break time. Breaks must be within working hours and not overlap.");
-                System.out.println("Input your break start time, in HHMM");
+                System.out.println("Input your break start time (in HHMM):");
                 int time = sc.nextInt();
                 breakStart = new Time(time);
 
-                System.out.println("Input your break end time, in HHMM");
+                System.out.println("Input your break end time (in HHMM):");
                 time = sc.nextInt();
                 breakEnd = new Time(time);
                 flag = breakStart.compareTo(breakEnd) >= 0 || breakStart.compareTo(startTime) < 0 || breakEnd.compareTo(endTime) > 0;
@@ -108,8 +108,8 @@ public class DoctorSchedule {
      *
      * @param newBreakStart the start time of the new break
      * @param newBreakEnd   the end time of the new break
+     * @return The number of breaks that were merged.
      */
-
     private int mergeBreaks(Time newBreakStart, Time newBreakEnd) {
         List<Time[]> updatedBreaks = new ArrayList<>();
         int breakCountAdjustment = 0;
@@ -177,6 +177,11 @@ public class DoctorSchedule {
         return endTime;
     }
 
+    /**
+     * Gets the count of breaks scheduled for the doctor.
+     *
+     * @return The number of breaks.
+     */
     public int getBreakCount() {
         return breakCount;
     }
@@ -184,12 +189,11 @@ public class DoctorSchedule {
     /**
      * Gets the breaks scheduled for the doctor.
      *
-     * @return A 2D array of Time objects, where each row contains the start and end time of a break.
+     * @return A List of Time arrays, where each array contains the start and end time of a break.
      */
     public List<Time[]> getBreaks() {
         return breaks;
     }
-
 
     /**
      * Checks if the doctor is available at a specific time.
@@ -198,18 +202,15 @@ public class DoctorSchedule {
      * @return A boolean indicating whether the doctor is available (true) or not (false).
      */
     protected boolean isDoctorWorking(Time time) {
-        for (int i = 0; i < breakCount; i++) {
+        for (int i = 0; i < breaks.size(); i++) {
             if (time.compareTo(breaks.get(i)[0]) >= 0 && time.compareTo(breaks.get(i)[1]) < 0) {
                 return false;
             }
         }
-        if (time.compareTo(startTime) < 0 || time.compareTo(endTime) > 0) {
-            return false;
-        }
-
-        return true;
+        return time.compareTo(startTime) >= 0 && time.compareTo(endTime) <= 0;
     }
 
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
