@@ -89,35 +89,7 @@ public class App {
             if (accessLevel == null) break;
 
             /* Menu */
-            switch (accessLevel) {
-                case PATIENT: // Patient
-                    Patient currentPatient = PatientFileService.getPatientByID(currentUser.getID());
-                    if (currentPatient == null) break;
-                    currentPatient.menu();
-                    break;
-
-                case DOCTOR: // Doctor
-                    Doctor currentDoctor = DoctorFileService.getDoctorByID(currentUser.getID());
-                    if (currentDoctor == null) break;
-                    currentDoctor.menu();
-                    break;
-
-                case PHARMACIST: // Pharmacist
-                    Pharmacist currentPharmacist = PharmacistFileService.getPharmacistByID(currentUser.getID());
-                    if (currentPharmacist == null) break;
-                    currentPharmacist.menu();
-                    break;
-
-                case ADMINISTRATOR: // Administrator
-                    Administrator currentAdministrator = AdministratorFileService.getAdministratorByID(currentUser.getID());
-                    if (currentAdministrator == null) break;
-                    currentAdministrator.menu();
-                    break;
-
-                default:
-
-                    break;
-            }
+            else currentUser.menu();
         }
 
         /* Write Appointments */

@@ -3,12 +3,10 @@ package hms.appointments;
 import hms.GlobalData;
 import hms.users.*;
 import hms.utils.*;
+import hms.utils.Date;
 
 import javax.print.Doc;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * The DoctorSchedule class is responsible for managing a doctor's schedule for a given date,
@@ -53,13 +51,11 @@ public class DoctorSchedule {
     protected void setWorkingTime() {
         Scanner sc = GlobalData.getInstance().sc;
         do {
-            System.out.println("When do you want to work? Input your start time (in HHMM):");
-            int time = sc.nextInt();
-            startTime = new Time(time);
+            System.out.println("When do you want to work?");
+            startTime = new Time();
 
-            System.out.println("Input your end time (in HHMM):");
-            time = sc.nextInt();
-            endTime = new Time(time);
+            System.out.println("When do you want to finish work?");
+            endTime = new Time();
 
         } while (startTime.compareTo(endTime) >= 0);
     }
@@ -74,7 +70,17 @@ public class DoctorSchedule {
         Scanner sc = GlobalData.getInstance().sc;
 
         System.out.println("How many breaks would you like to add?");
-        breakCount = sc.nextInt();
+        boolean validInput = false;
+        while (!validInput) {
+            try {
+                breakCount = sc.nextInt();
+                validInput = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid integer for break count.");
+                sc.next();
+            }
+        }
+
         int breakCountAdjustment = 0;
         for (int i = 0; i < breakCount; i++) {
             Time breakStart, breakEnd;
@@ -82,13 +88,11 @@ public class DoctorSchedule {
             do {
                 if (flag)
                     System.out.println("Invalid break time. Breaks must be within working hours and not overlap.");
-                System.out.println("Input your break start time (in HHMM):");
-                int time = sc.nextInt();
-                breakStart = new Time(time);
+                System.out.println("When do you want to start your break?");
+                breakStart = new Time();
 
-                System.out.println("Input your break end time (in HHMM):");
-                time = sc.nextInt();
-                breakEnd = new Time(time);
+                System.out.println("When do you want to end your break?");
+                breakEnd = new Time();
                 flag = breakStart.compareTo(breakEnd) >= 0 || breakStart.compareTo(startTime) < 0 || breakEnd.compareTo(endTime) > 0;
             } while (flag);
 

@@ -1,6 +1,6 @@
 package hms.utils;
 
-import java.util.Scanner;
+import java.util.*;
 
 import hms.GlobalData;
 
@@ -23,11 +23,22 @@ public class Time implements Comparable<Time> {
     private int time;
 
     /**
-     * Constructs a Time object using an integer representation (hhmm).
-     * Prompts for a valid time if the input is incorrect.
-     *
-     * @param time the time in hhmm format
+     * Default constructor that prompts the user to enter time in HHMM format.
      */
+    public Time() {
+        Scanner sc = GlobalData.getInstance().sc;
+        this.time = promptForTime(sc);
+        this.minute = this.time % 100;
+        this.hour = this.time / 100;
+
+        while (!checkTime()) {
+            System.out.println("This time is not available.");
+            this.time = promptForTime(sc);
+            this.minute = this.time % 100;
+            this.hour = this.time / 100;
+        }
+    }
+
     public Time(int time) {
         this.time = time;
         this.minute = time % 100;
@@ -41,6 +52,29 @@ public class Time implements Comparable<Time> {
             this.minute = time % 100;
             this.hour = time / 100;
         }
+    }
+
+
+    /**
+     * Prompts the user for time input in HHMM format.
+     * @param sc The Scanner object for user input.
+     * @return A valid time in HHMM format.
+     */
+    private int promptForTime(Scanner sc) {
+        int time = 0;
+        boolean validInput = false;
+
+        System.out.println("Enter time in HHMM.");
+        while (!validInput) {
+            try {
+                time = sc.nextInt();
+                validInput = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid time in HHMM format.");
+                sc.next();
+            }
+        }
+        return time;
     }
 
     /**

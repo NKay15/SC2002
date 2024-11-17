@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"hms"},{"l":"hms.appointments"},{"l":"hms.medicalRecords"},{"l":"hms.pharmacy"},{"l":"hms.services"},{"l":"hms.users"},{"l":"hms.utils"}];updateSearchResults();
