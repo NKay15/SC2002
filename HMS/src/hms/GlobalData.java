@@ -5,9 +5,12 @@ import hms.users.UserInstances;
 
 import java.util.Scanner;
 
+/**
+ * Singleton for the global data
+ */
 public class GlobalData {
     /**
-     * Singleton for the global data
+     * The single instance of this class
      */
     private static GlobalData single = null;
 

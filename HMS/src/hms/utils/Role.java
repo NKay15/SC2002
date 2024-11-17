@@ -1,5 +1,8 @@
 package hms.utils;
 
+/**
+ * Enum for roles
+ */
 public enum Role {
     UNKNOWN("Unknown"),
     PATIENT("Patient"),

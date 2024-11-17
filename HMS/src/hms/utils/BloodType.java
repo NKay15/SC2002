@@ -1,5 +1,8 @@
 package hms.utils;
 
+/**
+ * Enum for blood type
+ */
 public enum BloodType {
     UNKNOWN("Unknown"),
     A_PLUS("A+"),

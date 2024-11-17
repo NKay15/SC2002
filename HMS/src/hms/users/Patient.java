@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * Class of patients and its functionality
+ */
 public class Patient extends User{
 
     /**
@@ -44,6 +47,14 @@ public class Patient extends User{
 
     /**
      * Constructor for patient
+     * @param patientID ID of patient
+     * @param name name of patient
+     * @param gender gender of patient
+     * @param dob date of birth of patient
+     * @param phone phone number of patient
+     * @param email email of patient
+     * @param bloodType blood type of patient
+     * @param password password if patient
      */
     public Patient(String patientID, String name, int gender, Date dob, int phone, String email, BloodType bloodType, Password password) {
         super(patientID, name, Role.PATIENT, gender, password);
@@ -55,6 +66,18 @@ public class Patient extends User{
         patientSchedule = new PatientScheduleManager(this);
     }
 
+    /**
+     * Used to update date of user
+     * @param patientID ID of patient
+     * @param name name of patient
+     * @param gender gender of patient
+     * @param dob date of birth of patient
+     * @param phone phone number of patient
+     * @param email email of patient
+     * @param bloodType blood type of patient
+     * @param password password if patient
+     * @return true if a data is changed otherwise false
+     */
     public boolean update(String patientID, String name, int gender, Date dob, int phone, String email, BloodType bloodType, Password password) {
         boolean change = super.update(patientID, name, Role.PATIENT, gender, password);
 
@@ -441,6 +464,9 @@ public class Patient extends User{
         patientSchedule.printAppointmentOutcomeRecord();
     }
 
+    /**
+     * Print patient
+     */
     public void printRole() {
         System.out.print("Patient");
     }

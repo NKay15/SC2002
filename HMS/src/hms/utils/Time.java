@@ -9,8 +9,17 @@ import hms.GlobalData;
  * ensuring provided times are valid according to specific rules.
  */
 public class Time implements Comparable<Time> {
+    /**
+     * Hour of the time
+     */
     private int hour;
+    /**
+     * Minute of the time
+     */
     private int minute;
+    /**
+     * Time in hhmm
+     */
     private int time;
 
     /**
@@ -68,18 +77,34 @@ public class Time implements Comparable<Time> {
         return hourStr + ":" + minuteStr;
     }
 
+    /**
+     * Accessor of hour
+     * @return hour
+     */
     public int getHour() {
         return hour;
     }
 
+    /**
+     * Accessor of minute
+     * @return minute
+     */
     public int getMinute() {
         return minute;
     }
 
+    /**
+     * Accessor of time
+     * @return this
+     */
     public Time getTime() {
         return this;
     }
 
+    /**
+     * Accessor of time in hhmm
+     * @return time in hhmm
+     */
     public int getIntTime() {
         return time;
     }

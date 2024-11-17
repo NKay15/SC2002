@@ -8,6 +8,12 @@ import java.security.NoSuchAlgorithmException;
  * @author rin
  */
 public abstract class MD5 {
+
+    /**
+     * Hash String
+     * @param input String to hash
+     * @return hashed string
+     */
     public static String getMd5(String input)
     {
         try {
