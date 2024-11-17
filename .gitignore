@@ -407,10 +407,9 @@ FodyWeavers.xsd
 .DS_Store
 
 # emacs
-*.html
 \#*
 *.org*
-*.pdf
+*HMS.pdf
 *.class
 
 # output files
