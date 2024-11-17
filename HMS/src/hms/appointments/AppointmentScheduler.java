@@ -281,25 +281,6 @@ public class AppointmentScheduler {
         return null;
     }
 
-//
-//    /**
-//     * Returns the total number of confirmed appointments.
-//     *
-//     * @return The number of confirmed appointments
-//     */
-//    public int getAppointmentsCount() {
-//        return appointments.size();
-//    }
-//
-//    /**
-//     * Returns the total number of pending appointments.
-//     *
-//     * @return The number of pending appointments
-//     */
-//    public int getPendingAppointmentCount() {
-//        return pendingAppointments.size();
-//    }
-
     /**
      * Retrieves the singleton instance of the appointment scheduler.
      *

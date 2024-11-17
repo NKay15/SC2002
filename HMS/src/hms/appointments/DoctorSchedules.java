@@ -22,12 +22,11 @@ public class DoctorSchedules {
      */
     public DoctorSchedules(Doctor doctor) {
         this.doctor = doctor;
-        doctorSchedules = new ArrayList<DoctorSchedule>();
+        doctorSchedules = new ArrayList<>();
     }
 
     /**
      * Sets the doctor's schedule by adding a new DoctorSchedule for the doctor.
-     *
      * If a schedule for the specified date already exists, the user is prompted to rewrite it or exit.
      *
      * @param date The date for which to set the schedule.
