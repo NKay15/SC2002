@@ -258,7 +258,7 @@ public class User {
      * @param choice number chosen in the user menu and need to be offset by the number of options in supclass
      * @return if false log out
      */
-    public boolean userOptions(int choice){
+    protected boolean userOptions(int choice){
         Scanner sc = GlobalData.getInstance().sc;
         switch(choice) {
             case 1 : changePassword();
