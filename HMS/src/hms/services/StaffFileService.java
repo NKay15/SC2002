@@ -7,16 +7,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Scanner;
+import java.util.*;
 
 import hms.GlobalData;
-import hms.users.Administrator;
-import hms.users.Doctor;
-import hms.users.Pharmacist;
-import hms.users.Staff;
+import hms.users.*;
 import hms.utils.Password;
 import hms.utils.Role;
 import java.io.BufferedWriter;
@@ -481,5 +475,39 @@ public class StaffFileService extends UserFileService {
         catch (Exception e) {
             System.out.println("An error occurred");
         }
+    }
+
+    /**
+     * Search for Staff Member by ID and Print Staff Member Info
+     *
+     * @param ID ID of Staff Member
+     * @return true iff Staff Member Found
+     */
+    public static boolean printStaffByID(String ID){
+        Staff staff = getStaffByID(ID);
+        if(staff == null) return false;
+        System.out.println();
+        System.out.println("Staff ID: " + staff.getID());
+        System.out.println("Role: " + staff.getRole().toString());
+        System.out.println("Name: " + staff.getName());
+        System.out.println("Gender: " + staff.getGenderString());
+        System.out.println("Age: " + staff.getAge());
+        return true;
+    }
+
+    /**
+     * Search for Staff Member by Name and Print Staff Member Info
+     *
+     * @param name Name of Staff Member
+     * @return true iff Staff Member Found
+     */
+    public static boolean printStaffByName(String name){
+        for (Staff staff : getAllStaffData()){
+            if(staff.getName().equalsIgnoreCase(name)) {
+                printStaffByID(staff.getID());
+                return true;
+            }
+        }
+        return false;
     }
 }

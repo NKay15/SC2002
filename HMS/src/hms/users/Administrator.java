@@ -8,7 +8,6 @@ import hms.services.DoctorFileService;
 import hms.services.PatientFileService;
 import hms.services.PharmacistFileService;
 import hms.services.StaffFileService;
-import hms.services.UserFileService;
 import hms.utils.BloodType;
 import hms.utils.Date;
 import hms.utils.Password;
@@ -99,13 +98,14 @@ public class Administrator extends Staff {
 
 		while (true) {
 			if (staffChoice.equals("1") || staffChoice.equals("2") || staffChoice.equals("3")
-					|| staffChoice.equals("4")) {
+					|| staffChoice.equals("4") || staffChoice.equals("5")) {
 				System.out.println("\n-----Staff Management-----");
 				System.out.println("1. View All Staff Members");
-				System.out.println("2. Add New Staff Member");
-				System.out.println("3. Update Existing Staff Member");
-				System.out.println("4. Remove Existing Staff Member");
-				System.out.println("5. Return to Main Menu");
+				System.out.println("2. Search and View Individual Staff Member");
+				System.out.println("3. Add New Staff Member");
+				System.out.println("4. Update Existing Staff Member");
+				System.out.println("5. Remove Existing Staff Member");
+				System.out.println("6. Return to Main Menu");
 				System.out.println("--------------------------");
 				System.out.print("Enter your choice: ");
 			}
@@ -191,6 +191,62 @@ public class Administrator extends Staff {
 					break;
 
 				case "2":
+					System.out.println("Search for Staff Member by:");
+					System.out.println("1. ID; 2. Name");
+					System.out.print("Enter your choice: ");
+					String searchHow = sc.next(); sc.nextLine();
+
+					while (true) {
+						switch (searchHow) {
+							case "1":
+								System.out.print("Enter Staff Member ID (0 to Cancel): ");
+								String staffID = sc.nextLine();
+								while (!StaffFileService.printStaffByID(staffID)) {
+									if (staffID.equals("0")) {
+										System.out.println("Operation Cancelled. Returning to Menu...");
+										break;
+									}
+									else {
+										System.out.print("Invalid ID! Try again: ");
+										staffID = sc.nextLine();
+									}
+								}
+								if (!staffID.equals("0")) {
+									System.out.print("\nEnter anything to Return to Menu: ");
+									sc.nextLine();
+								}
+								break;
+
+							case "2":
+								System.out.print("Enter Staff Member Name (Not Case Sensitive; Enter 0 to Cancel): ");
+								String staffName = sc.nextLine();
+								while (!StaffFileService.printStaffByName(staffName)) {
+									if (staffName.equals("0")) {
+										System.out.println("Operation Cancelled. Returning to Menu...");
+										break;
+									}
+									else {
+										System.out.print("Invalid ID! Try again: ");
+										staffName = sc.nextLine();
+									}
+								}
+								if (!staffName.equals("0")) {
+									System.out.print("\nEnter anything to Return to Menu: ");
+									sc.nextLine();
+									break;
+								}
+								break;
+
+							default:
+								System.out.print("Invalid choice! Try again: ");
+								searchHow = sc.next(); sc.nextLine();
+								continue;
+						}
+						break;
+					}
+					break;
+
+				case "3":
 					System.out.println("Select Role of New Staff Member:");
 					System.out.println("1. Doctor; 2. Pharmacist; 3. Administrator");
 					System.out.println("Enter anything else to Return to Menu.");
@@ -334,7 +390,7 @@ public class Administrator extends Staff {
 					}
 					break;
 
-				case "3":
+				case "4":
 					System.out.println("Enter Role of Staff Member to Update:");
 					System.out.println("1. Doctor; 2. Pharmacist; 3. Administrator");
 					System.out.println("Enter anything else to Return to Menu.");
@@ -398,7 +454,7 @@ public class Administrator extends Staff {
 					}
 					break;
 
-				case "4":
+				case "5":
 					System.out.println("Enter Role of Staff Member to Remove:");
 					System.out.println("1. Doctor; 2. Pharmacist; 3. Administrator");
 					System.out.println("Enter anything else to Return to Menu.");
@@ -463,7 +519,7 @@ public class Administrator extends Staff {
 					}
 					break;
 
-				case "5":
+				case "6":
 					System.out.println("Returning to Main Menu...");
 					return;
 
@@ -737,13 +793,14 @@ public class Administrator extends Staff {
 
 		while (true) {
 			if (patientChoice.equals("1") || patientChoice.equals("2") || patientChoice.equals("3")
-					|| patientChoice.equals("4")) {
+					|| patientChoice.equals("4") || patientChoice.equals("5")) {
 				System.out.println("\n-----Patient Management-----");
 				System.out.println("1. View All Patients");
-				System.out.println("2. Add New Patient");
-				System.out.println("3. Update Existing Patient");
-				System.out.println("4. Remove Existing Patient");
-				System.out.println("5. Return to Main Menu");
+				System.out.println("2. Search and View Individual Patient");
+				System.out.println("3. Add New Patient");
+				System.out.println("4. Update Existing Patient");
+				System.out.println("5. Remove Existing Patient");
+				System.out.println("6. Return to Main Menu");
 				System.out.println("--------------------------");
 				System.out.print("Enter your choice: ");
 			}
@@ -806,6 +863,62 @@ public class Administrator extends Staff {
 					break;
 
 				case "2":
+					System.out.println("Search for Patient by:");
+					System.out.println("1. ID; 2. Name");
+					System.out.print("Enter your choice: ");
+					String searchHow = sc.next(); sc.nextLine();
+
+					while (true) {
+						switch (searchHow) {
+							case "1":
+								System.out.print("Enter Patient ID (0 to Cancel): ");
+								String patientID = sc.nextLine();
+								while (!PatientFileService.printPatientByID(patientID)) {
+									if (patientID.equals("0")) {
+										System.out.println("Operation Cancelled. Returning to Menu...");
+										break;
+									}
+									else {
+										System.out.print("Invalid ID! Try again: ");
+										patientID = sc.nextLine();
+									}
+								}
+								if (!patientID.equals("0")) {
+									System.out.print("\nEnter anything to Return to Menu: ");
+									sc.nextLine();
+								}
+								break;
+
+							case "2":
+								System.out.print("Enter Patient Name (Not Case Sensitive; Enter 0 to Cancel): ");
+								String patientName = sc.nextLine();
+								while (!PatientFileService.printPatientByName(patientName)) {
+									if (patientName.equals("0")) {
+										System.out.println("Operation Cancelled. Returning to Menu...");
+										break;
+									}
+									else {
+										System.out.print("Invalid ID! Try again: ");
+										patientName = sc.nextLine();
+									}
+								}
+								if (!patientName.equals("0")) {
+									System.out.print("\nEnter anything to Return to Menu: ");
+									sc.nextLine();
+									break;
+								}
+								break;
+
+							default:
+								System.out.print("Invalid choice! Try again: ");
+								searchHow = sc.next(); sc.nextLine();
+								continue;
+						}
+						break;
+					}
+					break;
+
+				case "3":
 					boolean alreadyExists;
 					System.out.print("Enter ID: ");
 					String newID;
@@ -816,8 +929,8 @@ public class Administrator extends Staff {
 							System.out.print("ID Must Begin With an Uppercase Letter! Try again: ");
 							continue;
 						}
-						for (User user : UserFileService.getUsersRoleSorted()) {
-							if (user.getID().equals(newID)) {
+						for (Patient patient : PatientFileService.getAllPatientData()) {
+							if (patient.getID().equals(newID)) {
 								System.out.print("User " + newID + " Already Exists! Try again: ");
 								alreadyExists = true;
 								break;
@@ -872,7 +985,7 @@ public class Administrator extends Staff {
 								month = Integer.parseInt(newDOBString.substring(2, 4));
 								year = Integer.parseInt(newDOBString.substring(4, 8));
 								if (day > 0 && day < 32 && month > 0 && month < 13 && year > 1900 && year < 2025) {
-									newDOB = new hms.utils.Date(day, month, year);
+									newDOB = new Date(day, month, year);
 									break;
 								} else {
 									System.out.print("Invalid Date! Try again: ");
@@ -995,24 +1108,24 @@ public class Administrator extends Staff {
 					}
 					break;
 
-				case "3":
+				case "4":
 					System.out.print("Enter Patient's ID (0 to Cancel): ");
-					String patientID = sc.nextLine();
-					if (patientID.equals("0")) {
+					String updatePatientID = sc.nextLine();
+					if (updatePatientID.equals("0")) {
 						System.out.println("Operation Cancelled. Returning to menu...");
 						break;
 					}
-					while (!PatientFileService.updatePatientByIDMenu(patientID, this)){
+					while (!PatientFileService.updatePatientByIDMenu(updatePatientID, this)){
 						System.out.print("Patient Does Not Exist! Try again: ");
-						patientID = sc.nextLine();
-						if (patientID.equals("0")) {
+						updatePatientID = sc.nextLine();
+						if (updatePatientID.equals("0")) {
 							System.out.println("Operation Cancelled. Returning to Menu...");
 							break;
 						}
 					}
 					break;
 
-				case "4":
+				case "5":
 					System.out.print("Enter Patient's ID (0 to Cancel): ");
 					String patientToRemoveID = sc.nextLine();
 					if (patientToRemoveID.equals("0")) {
@@ -1020,7 +1133,7 @@ public class Administrator extends Staff {
 						break;
 					}
 					while (!PatientFileService.removePatientByIDMenu(patientToRemoveID, this)){
-						System.out.print("Doctor Does Not Exist! Try again: ");
+						System.out.print("Patient Does Not Exist! Try again: ");
 						patientToRemoveID = sc.nextLine();
 						if (patientToRemoveID.equals("0")) {
 							System.out.println("Operation Cancelled. Returning to Menu...");
@@ -1029,7 +1142,7 @@ public class Administrator extends Staff {
 					}
 					break;
 
-				case "5":
+				case "6":
 					System.out.println("Returning to Main Menu...");
 					return;
 
