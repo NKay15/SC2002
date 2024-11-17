@@ -11,42 +11,42 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
- * Class of patients and its functionality
+ * Class of Patients and its Functionality
  */
 public class Patient extends User{
 
     /**
-     * Date of birth
+     * Date of Birth
      */
     private Date dob;
 
     /**
-     * Phone number
+     * Phone Number
      */
     private int phone;
 
     /**
-     * Email address
+     * Email Address
      */
     private String email;
 
     /**
-     * Enum containing blood type
+     * Enum containing Blood Type
      */
     private BloodType bloodType;
 
     /**
-     * appointmentScheduler for a specific patient
+     * Appointment Scheduler for a Specific Patient
      */
     private PatientScheduleManager patientSchedule;
 
     /**
-     * medical record
+     * Medical Record
      */
     private MedicalRecord mr;
 
     /**
-     * Constructor for patient
+     * Constructor for Patient
      * @param patientID ID of patient
      * @param name name of patient
      * @param gender gender of patient
@@ -67,7 +67,8 @@ public class Patient extends User{
     }
 
     /**
-     * Used to update date of user
+     * Update Patient's User Data
+     *
      * @param patientID ID of patient
      * @param name name of patient
      * @param gender gender of patient
@@ -105,56 +106,56 @@ public class Patient extends User{
     }
 
     /**
-     * return Date of birth
+     * Return Date of Birth
      */
     public Date getDob() {
         return dob;
     }
 
     /**
-     * set Date of birth
+     * Set Date of Birth
      */
     public void setDob(int day, int month, int year) {
         this.dob = new Date(day, month, year);
     }
 
     /**
-     * return phone number
+     * Return Phone Number
      */
     public int getPhone() {
         return phone;
     }
 
     /**
-     * set phone number
+     * Set Phone Number
      */
     public void setPhone(int phone) {
         this.phone = phone;
     }
 
     /**
-     * return email
+     * Return Email
      */
     public String getEmail() {
         return email;
     }
 
     /**
-     * set email
+     * Set Email
      */
     public void setEmail(String email) {
         this.email = email;
     }
 
     /**
-     * return blood type of patient
+     * Return Blood Type
      */
     public BloodType getBloodType() {
         return bloodType;
     }
 
     /**
-     * get blood type of patient
+     * Get Blood Type
      */
     public String getBloodTypeString() {
         return bloodType.toString();
@@ -165,7 +166,7 @@ public class Patient extends User{
     }
 
     /**
-     * return schedule of patient
+     * Return Schedule of Patient
      */
     public PatientScheduleManager getPatientSchedule() {
         return patientSchedule;
@@ -202,7 +203,7 @@ public class Patient extends User{
     }
 
     /**
-     * print patient menu
+     * Main Menu for Patient (Appears Once Login Successful)
      * @return break
      */
     public void menu() {    
@@ -338,7 +339,7 @@ public class Patient extends User{
     }
 
     /**
-     * update email
+     * Update Email
      *
      */
     @Deprecated
@@ -348,7 +349,7 @@ public class Patient extends User{
     }
 
     /**
-     * update phone number
+     * Update Phone Number
      */
     public void updatePhone(int phone) {
         this.phone = phone;
@@ -356,23 +357,23 @@ public class Patient extends User{
     }
 
     /**
-     * print medical record
+     * Print Medical Record
      */
     public void viewMedicalRecord() {
         mr.print();
     }
 
     /**
-     * write to medical record
-     * @param add text to be added
+     * Write to Medical Record
+     * @param add Text to be Added
      */
     public void addMedicalRecord(String add) {
         mr.newMedicalHistory(add);
     }
 
     /**
-     * accessor of medical history
-     * @return medical history
+     * Accessor of Medical History
+     * @return Medical History
      */
     public ArrayList<String> getMedicalHistory(){
         return mr.getMedicalHistory();
@@ -423,7 +424,7 @@ public class Patient extends User{
     }
 
     /**
-     * Schedule appointment
+     * Schedule Appointment
      *
      * @param appointment The appointment to be scheduled
      */
@@ -432,7 +433,7 @@ public class Patient extends User{
     }
 
     /**
-     * Reschedule appointment
+     * Reschedule Appointment
      *
      * @param existingAppointment The existing appointment to be rescheduled
      * @param newAppointment      The new appointment with updated time slot
@@ -442,7 +443,7 @@ public class Patient extends User{
     }
 
     /**
-     * Cancel appointment
+     * Cancel Appointment
      *
      * @param appointment     The appointment to be canceled
      */
@@ -451,21 +452,21 @@ public class Patient extends User{
     }
 
     /**
-     * View status of scheduled appointments
+     * View Status of Scheduled Appointments
      */
     public void viewScheduledAppointments() {
         patientSchedule.printPatientAppointment();
     }
 
     /**
-     * View past appointment outcome records
+     * View Past Appointment Outcome Records
      */
     public void viewPastAppointmentOutcomeRecords() {
         patientSchedule.printAppointmentOutcomeRecord();
     }
 
     /**
-     * Print patient
+     * Print Role of Patient
      */
     public void printRole() {
         System.out.print("Patient");

@@ -10,15 +10,21 @@ import hms.utils.Role;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * Class of Pharmacists and its Functionality
+ */
 public class Pharmacist extends Staff {
 
 	/**
-	 * Constructor
+	 * Constructor for Pharmacist
 	 */
 	public Pharmacist(String ID, String name, int gender, int age, Password password) {
 		super(ID, name, Role.PHARMACIST, gender, age, password);
 	}
 
+	/**
+	 * Main Menu for Pharmacist (Appears Once Login Successful)
+	 */
 	public void menu() {
 		boolean patientFound;
 		boolean alreadyTried;
@@ -244,6 +250,9 @@ public class Pharmacist extends Staff {
 		}
 	}
 
+	/**
+	 * Print Role of Pharmacist
+	 */
 	public void printRole() {
         System.out.print("Pharmacist");
     }

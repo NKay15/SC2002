@@ -380,7 +380,7 @@ public class PatientFileService extends InputValidation {
     }
 
     /**
-     * Menu to Remove Patient by ID (for Admins)
+     * Menu to Remove Patient by ID (for Administrators)
      * @param ID
      * @param adminUsing Administrator Using Remove Operation
      */
@@ -416,7 +416,7 @@ public class PatientFileService extends InputValidation {
     }
 
     /**
-     * Update Patient by ID
+     * Menu to Update Patient by ID (for Administrators)
      * @param ID
      * @param adminUsing Administrator Using Update Operation
      */

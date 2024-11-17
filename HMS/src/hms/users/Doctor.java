@@ -10,20 +10,29 @@ import hms.utils.Date;
 import java.nio.file.FileSystemNotFoundException;
 import java.util.*;
 
+/**
+ * Class of Doctors and its Functionality
+ */
 public class Doctor extends Staff {
 
+    /**
+     * Scheduler for Doctor
+     */
     private DoctorSchedules doctorSchedules;
 
     /**
-     * doctor scheduler
+     * Appointment Schedule Manager for Doctor
      */
     private DoctorScheduleManager doctorScheduler;
 
     /**
-     * patient list of doctor
+     * Patient List of Doctor
      */
     private List<Patient> patientList;
 
+    /**
+     * Constructor for Doctor
+     */
     public Doctor(String doctorID, String name, int gender, int age, Password password) {
         super(doctorID, name, Role.DOCTOR, gender, age, password);
         doctorScheduler = new DoctorScheduleManager(this);
@@ -31,10 +40,17 @@ public class Doctor extends Staff {
         patientList = new ArrayList<>();
     }
 
+    /**
+     * Get Doctor's Schedule
+     * @return Doctor's Schedule
+     */
     public DoctorSchedules getDoctorSchedules() {
         return doctorSchedules;
     }
 
+    /**
+     * Main Menu for Doctor (Appears Once Login Successful)
+     */
     public void menu() {
         doctorScheduler.updateDoctorData();
         Scanner sc = GlobalData.getInstance().sc;
@@ -199,6 +215,12 @@ public class Doctor extends Staff {
         DoctorAvailabilityFileService.writeSchedulesToFile(doctorSchedules);
     }
 
+    /**
+     * Evaluates if Patient is in Doctor's Patient List
+     *
+     * @param keyPatient Patient in Question
+     * @return true iff Patient is in Doctor's Patient List
+     */
     private boolean isInPatientList(Patient keyPatient) {
         for (Patient patient : patientList) {
             if (Objects.equals(patient.getID(), keyPatient.getID())) return true;
@@ -206,6 +228,12 @@ public class Doctor extends Staff {
         return false;
     }
 
+    /**
+     * Adds or Removes a Patient from Doctor's Patient List
+     *
+     * @param patient Patient to be Added or Removed
+     * @param op Choice: 1 to Add Patient, -1 to Remove Patient
+     */
     private void updatePatientList(Patient patient, int op) {
         if ((op == 1) && (!isInPatientList(patient))) {
             patientList.add(patient);
@@ -275,30 +303,61 @@ public class Doctor extends Staff {
         }
     }
 
+    /**
+     * Print Doctor's Upcoming Appointments
+     */
     public void viewUpcomingAppointments() {
         doctorScheduler.printUpcomingSlots(this);
     }
 
+    /**
+     * Create Outcome Record for Completed Appointment
+     *
+     * @param appointment Appointment for which to Create Outcome Record
+     */
     public void recordAppointmentOutcome(Appointment appointment) {
         doctorScheduler.updateAppointmentOutcomeRecord(appointment);
     }
 
+    /**
+     * Print Role of Doctor
+     */
     public void printRole() {
         System.out.print("Doctor");
     }
 
+    /**
+     * Get Doctor's Appointment Schedule Manager
+     *
+     * @return The Schedule
+     */
     public DoctorScheduleManager getDoctorScheduler() {
         return doctorScheduler;
     }
 
+    /**
+     * Initialize Scheduler for Doctor
+     *
+     * @param doctorSchedules
+     */
     public void setDoctorSchedules(DoctorSchedules doctorSchedules) {
         this.doctorSchedules = doctorSchedules;
     }
 
+    /**
+     * Get Doctor's Patient List
+     *
+     * @return Patient List
+     */
     public List<Patient> getPatientList() {
         return patientList;
     }
 
+    /**
+     * Add a Patient to Doctor's Patient List
+     *
+     * @param patient
+     */
     public void addPatient(Patient patient){
         patientList.add(patient);
     }

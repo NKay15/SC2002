@@ -17,16 +17,26 @@ import java.util.*;
 
 import static hms.services.PatientFileService.getPatientByID;
 
+/**
+ * Class of Administrators and its Functionality
+ */
 public class Administrator extends Staff {
 
-	AdministratorAppointmentManager manager = new AdministratorAppointmentManager();
 	/**
-	 * Constructor
+	 * Appointment Manager for Admin to Access Patient Appointments
+	 */
+	AdministratorAppointmentManager manager = new AdministratorAppointmentManager();
+
+	/**
+	 * Constructor for Administrator
 	 */
 	public Administrator(String ID, String name, int gender, int age, Password password) {
 		super(ID, name, Role.ADMINISTRATOR, gender, age, password);
 	}
 
+	/**
+	 * Main Menu for Administrator (Appears Once Login Successful)
+	 */
 	public void menu() {
 		Scanner sc = GlobalData.getInstance().sc;
 		int choice;
@@ -80,6 +90,9 @@ public class Administrator extends Staff {
 		}
 	}
 
+	/**
+	 * Option 1 (View & Manage Hospital Staff) of Administrator Main Menu
+	 */
 	public void staffMenu() {
 		Scanner sc = GlobalData.getInstance().sc;
 		String staffChoice = "1";
@@ -461,6 +474,9 @@ public class Administrator extends Staff {
 		}
 	}
 
+	/**
+	 * Option 2 (View Patient Appointments) of Administrator Main Menu
+	 */
 	public void appointmentMenu(){
 		Scanner sc = GlobalData.getInstance().sc;
 		String apptChoice = "1";
@@ -712,6 +728,9 @@ public class Administrator extends Staff {
 		}
 	}
 
+	/**
+	 * Option 3 (View & Manage Hospital Patients) of Administrator Main Menu
+	 */
 	public void patientMenu() {
 		Scanner sc = GlobalData.getInstance().sc;
 		String patientChoice = "1";
@@ -1021,6 +1040,9 @@ public class Administrator extends Staff {
 		}
 	}
 
+	/**
+	 * Option 4 (View & Manage Medication Inventory) of Administrator Main Menu
+	 */
 	public void inventoryMenu() {
 		Scanner sc = GlobalData.getInstance().sc;
 		String inventoryChoice = "1";
@@ -1136,6 +1158,9 @@ public class Administrator extends Staff {
 		}
 	}
 
+	/**
+	 * Print Role of Administrator
+	 */
 	public void printRole() {
         System.out.print("Administrator");
     }

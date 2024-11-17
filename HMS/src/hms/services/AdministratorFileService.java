@@ -125,7 +125,7 @@ public class AdministratorFileService extends StaffFileService {
     }
 
     /**
-     * Menu to Remove Pharmacist by ID (for Admins)
+     * Menu to Remove Pharmacist by ID (for Administrators)
      * @param ID
      * @param adminUsing Administrator Using Remove Operation
      */
@@ -159,7 +159,7 @@ public class AdministratorFileService extends StaffFileService {
     }
 
     /**
-     * Update Administrator by ID
+     * Menu to Update Administrator by ID (for Administrators)
      * @param ID
      * @param adminUsing Administrator Using Update Operation
      */

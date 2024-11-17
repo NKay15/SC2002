@@ -125,7 +125,7 @@ public class DoctorFileService extends StaffFileService {
     }
 
     /**
-     * Menu to Remove Doctor by ID (for Admins)
+     * Menu to Remove Doctor by ID (for Administrators)
      * @param ID
      * @param adminUsing Administrator Using Remove Operation
      */
@@ -158,7 +158,7 @@ public class DoctorFileService extends StaffFileService {
     }
 
     /**
-     * Update Doctor by ID
+     * Menu to Update Doctor by ID (for Administrators)
      * @param ID
      * @param adminUsing Administrator Using Update Operation
      */
