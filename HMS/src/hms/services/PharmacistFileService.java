@@ -159,7 +159,7 @@ public class PharmacistFileService extends StaffFileService {
     }
 
     /**
-     * Update Pharmacist by ID
+     * Menu to Update Pharmacist by ID (for Administrators)
      * @param ID
      * @param adminUsing Administrator Using Update Operation
      */
