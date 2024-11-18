@@ -331,9 +331,8 @@ public class Patient extends User{
                 }
             }
             catch (InputMismatchException e) {
-                inputError = true;
                 sc.nextLine();
-                System.out.print("Invalid choice! Try again: ");
+                System.out.print("Invalid choice! Returned to menu: ");
             }
         }
     }
