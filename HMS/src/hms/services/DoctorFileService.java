@@ -9,6 +9,7 @@ import hms.GlobalData;
 import hms.users.Administrator;
 import hms.users.Doctor;
 import hms.users.Staff;
+import hms.utils.InputValidation;
 import hms.utils.Password;
 import hms.utils.Role;
 
@@ -196,14 +197,14 @@ public class DoctorFileService extends StaffFileService {
                 case "1":
                     System.out.println("Current Name: " + doctor.getName());
                     System.out.print("Enter New Name: ");
-                    newDoctorName = sc.nextLine();
+                    newDoctorName = InputValidation.nextLine();
                     changeWhat = 1;
                     break;
 
                 case "2":
                     System.out.println("Current Gender: " + doctor.getGenderString());
                     System.out.print("Enter New Gender (0: Unknown; 1: Male; 2: Female): ");
-                    newDoctorGenderString = sc.next(); sc.nextLine();
+                    newDoctorGenderString = InputValidation.next(); sc.nextLine();
                     while (true) {
                         switch (newDoctorGenderString) {
                             case "0":
@@ -226,7 +227,7 @@ public class DoctorFileService extends StaffFileService {
                                 break;
                             default:
                                 System.out.print("Invalid choice! Try again: ");
-                                newDoctorGenderString = sc.next(); sc.nextLine();
+                                newDoctorGenderString = InputValidation.next(); InputValidation.nextLine();
                                 continue;
                         }
                         break;
