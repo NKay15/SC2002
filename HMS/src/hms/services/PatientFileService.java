@@ -15,7 +15,6 @@ import java.nio.file.Path;
 import hms.GlobalData;
 import hms.users.Administrator;
 import hms.users.Patient;
-import hms.users.Staff;
 import hms.utils.BloodType;
 import hms.utils.Date;
 import hms.utils.InputValidation;
@@ -43,7 +42,7 @@ public class PatientFileService extends InputValidation {
                 String data = myReader.nextLine();
                 String[] dataList = data.split(",");
 
-                Date dateFormat = new Date(Integer.valueOf(dataList[2].substring(0, 4)), Integer.valueOf(dataList[2].substring(5, 7)), Integer.valueOf(dataList[2].substring(8,10)));
+                Date dateFormat = new Date(Integer.valueOf(dataList[2].substring(8, 10)), Integer.valueOf(dataList[2].substring(5, 7)), Integer.valueOf(dataList[2].substring(0,4)));
 
                 int genderNo = 0;
                 if (dataList[3].equals("Male")) {
@@ -126,7 +125,7 @@ public class PatientFileService extends InputValidation {
                     continue;
                 }
 
-                Date dateFormat = new Date(Integer.valueOf(dataList[2].substring(0, 4)), Integer.valueOf(dataList[2].substring(5, 7)), Integer.valueOf(dataList[2].substring(8,10)));
+                Date dateFormat = new Date(Integer.valueOf(dataList[2].substring(8, 10)), Integer.valueOf(dataList[2].substring(5, 7)), Integer.valueOf(dataList[2].substring(0, 4)));
 
                 int genderNo = 0;
                 if (dataList[3].equals("Male")) {
@@ -380,6 +379,42 @@ public class PatientFileService extends InputValidation {
     }
 
     /**
+     * Search for Patient by ID and Print Patient Info
+     *
+     * @param ID ID of Patient
+     * @return true iff Patient Found
+     */
+    public static boolean printPatientByID(String ID){
+        Patient patient = getPatientByID(ID);
+        if(patient == null) return false;
+        System.out.println();
+        System.out.println("Patient ID: " + patient.getID());
+        System.out.println("Name: " + patient.getName());
+        System.out.println("Gender: " + patient.getGenderString());
+        System.out.println("DOB: " + patient.getDob().get());
+        System.out.println("HP: " + patient.getPhone());
+        System.out.println("Email: " + patient.getEmail());
+        System.out.println("Blood Type: " + patient.getBloodType());
+        return true;
+    }
+
+    /**
+     * Search for Patient by Name and Print Patient Info
+     *
+     * @param name Name of Patient
+     * @return true iff Patient Found
+     */
+    public static boolean printPatientByName(String name){
+        for (Patient patient : getAllPatientData()){
+            if(patient.getName().equalsIgnoreCase(name)) {
+                printPatientByID(patient.getID());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Menu to Remove Patient by ID (for Administrators)
      * @param ID
      * @param adminUsing Administrator Using Remove Operation
@@ -391,13 +426,7 @@ public class PatientFileService extends InputValidation {
         if(patient == null) return false;
 
         System.out.println("\nPlease ensure that all fields below are correct before confirming:");
-        System.out.println("Patient ID: " + patient.getID());
-        System.out.println("Name: " + patient.getName());
-        System.out.println("Gender: " + patient.getGenderString());
-        System.out.println("DOB: " + patient.getDob().day() + "/" + patient.getDob().month() + "/" + patient.getDob().year());
-        System.out.println("HP: " + patient.getPhone());
-        System.out.println("Email: " + patient.getEmail());
-        System.out.println("Blood Type: " + patient.getBloodType());
+        printPatientByID(ID);
         System.out.print("\nEnter your Password to Confirm (0 to Cancel): ");
         String password = sc.nextLine();
         while (!adminUsing.checkPassword(password)) {
