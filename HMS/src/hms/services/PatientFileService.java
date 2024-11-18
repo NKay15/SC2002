@@ -279,13 +279,13 @@ public class PatientFileService extends InputValidation {
                 f_writer.newLine();
             }
 
-            f_writer.write(patient.getID() + "," + patient.getName() + "," + patient.getDob().year() + "-" + patient.getDob().month() + "-" + patient.getDob().day() + "," + patient.getGenderString() + "," + patient.getBloodTypeString() + "," + patient.getEmail() + "," + patient.getPhone() + "," + patient.getPassword());
+            f_writer.write(patient.getID() + "," + patient.getName() + "," + patient.getDob().year() + "-" + patient.getDob().month() + "-" + patient.getDob().day() + "," + patient.getGenderString() + "," + patient.getBloodTypeString() + "," + patient.getEmail() + "," + patient.getPhone() + "," + patient.getPassword().getPassword());
             myReader.close();
             f_writer.close();
 
             Path source = Paths.get(temFileName);
             Path toDir = Paths.get(originalFileName);
-            Files.move(source, toDir.resolve(source.getFileName()), StandardCopyOption.REPLACE_EXISTING);
+            Files.move(source, toDir, StandardCopyOption.REPLACE_EXISTING);
 
             GlobalData.getInstance().userInstances.add(patient);
         }
@@ -495,14 +495,14 @@ public class PatientFileService extends InputValidation {
                 case "1":
                     System.out.println("Current Name: " + patient.getName());
                     System.out.print("Enter New Name: ");
-                    newPatientName = sc.nextLine();
+                    newPatientName = InputValidation.nextLine();
                     changeWhat = 1;
                     break;
 
                 case "2":
                     System.out.println("Current Gender: " + patient.getGenderString());
                     System.out.print("Enter New Gender (0: Unknown; 1: Male; 2: Female): ");
-                    newPatientGenderString = sc.next(); sc.nextLine();
+                    newPatientGenderString = InputValidation.next(); InputValidation.nextLine();
                     while (true){
                         switch (newPatientGenderString) {
                             case "0":
@@ -525,7 +525,7 @@ public class PatientFileService extends InputValidation {
                                 break;
                             default:
                                 System.out.print("Invalid choice! Try again: ");
-                                newPatientGenderString = sc.next(); sc.nextLine();
+                                newPatientGenderString = InputValidation.next(); InputValidation.nextLine();
                                 continue;
                         }
                         break;
@@ -539,7 +539,7 @@ public class PatientFileService extends InputValidation {
                     String newPatientDOBString;
                     while (true) {
                         if (sc.hasNextInt()) {
-                            newPatientDOBString = sc.nextLine();
+                            newPatientDOBString = InputValidation.nextLine();
                             if (newPatientDOBString.length() == 8) {
                                 newPatientDay = Integer.parseInt(newPatientDOBString.substring(0, 2));
                                 newPatientMonth = Integer.parseInt(newPatientDOBString.substring(2, 4));
@@ -566,7 +566,7 @@ public class PatientFileService extends InputValidation {
                     while (true) {
                         try {
                             newPatientHP = sc.nextInt();
-                            sc.nextLine();
+                            InputValidation.nextLine();
                             if (String.valueOf(newPatientHP).length() == 8){
                                 break;
                             }
@@ -575,7 +575,7 @@ public class PatientFileService extends InputValidation {
                             }
                         } catch (InputMismatchException e) {
                             System.out.print("Invalid input! Try again, With Digits Only: ");
-                            sc.nextLine();
+                            InputValidation.nextLine();
                         }
                     }
                     changeWhat = 4;
@@ -584,7 +584,7 @@ public class PatientFileService extends InputValidation {
                 case "5":
                     System.out.println("Current Email: " + newPatientEmail);
                     System.out.print("Enter New Email: ");
-                    newPatientEmail = sc.next(); sc.nextLine();
+                    newPatientEmail = InputValidation.next(); InputValidation.nextLine();
                     changeWhat = 5;
                     break;
 
@@ -599,7 +599,7 @@ public class PatientFileService extends InputValidation {
                     do {
                         try {
                             newPatientBloodType = patient.intToBloodType(sc.nextInt());
-                            sc.nextLine();
+                            InputValidation.nextLine();
                             switch (newPatientBloodType) {
                                 case UNKNOWN:
                                     newPatientBloodTypeString = BloodType.UNKNOWN.toString();
