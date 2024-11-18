@@ -9,6 +9,7 @@ import hms.GlobalData;
 import hms.users.Administrator;
 import hms.users.Pharmacist;
 import hms.users.Staff;
+import hms.utils.InputValidation;
 import hms.utils.Password;
 import hms.utils.Role;
 
@@ -197,14 +198,14 @@ public class PharmacistFileService extends StaffFileService {
                 case "1":
                     System.out.println("Current Name: " + pharmacist.getName());
                     System.out.print("Enter New Name: ");
-                    newPharmacistName = sc.nextLine();
+                    newPharmacistName = InputValidation.nextLine();
                     changeWhat = 1;
                     break;
 
                 case "2":
                     System.out.println("Current Gender: " + pharmacist.getGenderString());
                     System.out.print("Enter New Gender (0: Unknown; 1: Male; 2: Female): ");
-                    newPharmacistGenderString = sc.next(); sc.nextLine();
+                    newPharmacistGenderString = InputValidation.next(); InputValidation.nextLine();
                     while (true){
                         switch (newPharmacistGenderString) {
                             case "0":
@@ -227,7 +228,7 @@ public class PharmacistFileService extends StaffFileService {
                                 break;
                             default:
                                 System.out.print("Invalid choice! Try again: ");
-                                newPharmacistGenderString = sc.next(); sc.nextLine();
+                                newPharmacistGenderString = InputValidation.next(); InputValidation.nextLine();
                                 continue;
                         }
                         break;
@@ -238,7 +239,7 @@ public class PharmacistFileService extends StaffFileService {
                 case "3":
                     System.out.println("Current Age: " + pharmacist.getAge());
                     System.out.print("Enter New Age: ");
-                    newPharmacistAge = sc.nextInt(); sc.nextLine();
+                    newPharmacistAge = sc.nextInt(); InputValidation.nextLine();
                     changeWhat = 3;
                     break;
 

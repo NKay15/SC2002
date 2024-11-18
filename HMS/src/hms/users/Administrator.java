@@ -6,15 +6,15 @@ import hms.appointments.Appointment;
 import hms.services.AdministratorFileService;
 import hms.services.DoctorFileService;
 import hms.services.PatientFileService;
+import static hms.services.PatientFileService.getPatientByID;
 import hms.services.PharmacistFileService;
 import hms.services.StaffFileService;
 import hms.utils.BloodType;
 import hms.utils.Date;
+import hms.utils.InputValidation;
 import hms.utils.Password;
 import hms.utils.Role;
 import java.util.*;
-
-import static hms.services.PatientFileService.getPatientByID;
 
 /**
  * Class of Administrators and its Functionality
@@ -260,7 +260,7 @@ public class Administrator extends Staff {
 					String newID;
 					while (true) {
 						alreadyExists = false;
-						newID = sc.nextLine();
+						newID = InputValidation.nextLine();
 						if (!Character.isUpperCase(newID.charAt(0))) {
 							System.out.print("ID Must Begin With an Uppercase Letter! Try again: ");
 							continue;
@@ -276,10 +276,10 @@ public class Administrator extends Staff {
 					}
 
 					System.out.print("Enter Name: ");
-					String newName = sc.nextLine();
+					String newName = InputValidation.nextLine();
 					System.out.print("Enter Gender (0: Unknown; 1: Male; 2: Female): ");
 					int newGender;
-					String newGenderString = sc.next(); sc.nextLine();
+					String newGenderString = InputValidation.next(); InputValidation.nextLine();
 					while (true){
 						switch (newGenderString) {
 							case "0":
@@ -302,13 +302,13 @@ public class Administrator extends Staff {
 								break;
 							default:
 								System.out.print("Invalid choice! Try again: ");
-								newGenderString = sc.next(); sc.nextLine();
+								newGenderString = InputValidation.next(); InputValidation.nextLine();
 								continue;
 						}
 						break;
 					}
 					System.out.print("Enter Age: ");
-					int newAge = sc.nextInt(); sc.nextLine();
+					int newAge = sc.nextInt(); InputValidation.nextLine();
 
 					System.out.println("\nPlease ensure that all fields below are correct before confirming:");
 					System.out.println("ID: " + newID);
@@ -923,7 +923,7 @@ public class Administrator extends Staff {
 					String newID;
 					while (true) {
 						alreadyExists = false;
-						newID = sc.nextLine();
+						newID = InputValidation.nextLine();
 						if (!Character.isUpperCase(newID.charAt(0))) {
 							System.out.print("ID Must Begin With an Uppercase Letter! Try again: ");
 							continue;
@@ -939,10 +939,10 @@ public class Administrator extends Staff {
 					}
 
 					System.out.print("Enter Name: ");
-					String newName = sc.nextLine();
+					String newName = InputValidation.nextLine();
 					System.out.print("Enter Gender (0: Unknown; 1: Male; 2: Female): ");
 					int newGender;
-					String newGenderString = sc.next(); sc.nextLine();
+					String newGenderString = InputValidation.next(); InputValidation.nextLine();
 					while (true){
 						switch (newGenderString) {
 							case "0":
@@ -965,7 +965,7 @@ public class Administrator extends Staff {
 								break;
 							default:
 								System.out.print("Invalid choice! Try again: ");
-								newGenderString = sc.next(); sc.nextLine();
+								newGenderString = InputValidation.next(); InputValidation.nextLine();
 								continue;
 						}
 						break;
@@ -978,7 +978,7 @@ public class Administrator extends Staff {
 					int year;
 					while (true) {
 						if (sc.hasNextInt()) {
-							newDOBString = sc.nextLine();
+							newDOBString = InputValidation.nextLine();
 							if (newDOBString.length() == 8) {
 								day = Integer.parseInt(newDOBString.substring(0, 2));
 								month = Integer.parseInt(newDOBString.substring(2, 4));
@@ -993,7 +993,7 @@ public class Administrator extends Staff {
 							else System.out.print ("Invalid Date! Try again: ");
 						} else {
 							System.out.print("Invalid input! Try again, With Digits Only: ");
-							sc.nextLine();
+							InputValidation.nextLine();
 						}
 					}
 					System.out.print("Enter HP: ");
@@ -1014,7 +1014,7 @@ public class Administrator extends Staff {
 						}
 					}
 					System.out.print("Enter Email: ");
-					String newEmail = sc.next(); sc.nextLine();
+					String newEmail = InputValidation.next(); InputValidation.nextLine();
 					System.out.println("----List of Blood Types----");
 					System.out.println("0: Unknown\n1: A+\n2: A-\n3: B+\n4: B-\n" +
 							"5: AB+\n6: AB-\n7: O+\n8: O-");
@@ -1071,7 +1071,7 @@ public class Administrator extends Staff {
 						} catch (InputMismatchException e) {
 							bloodTypeFound = false;
 							System.out.print("Invalid input! Try again, With Digit Only: ");
-							sc.nextLine();
+							InputValidation.nextLine();
 						}
 					} while (!bloodTypeFound);
 
