@@ -16,7 +16,7 @@ public class AppointmentScheduler {
     private List<Appointment> pendingAppointments;
 
 
-    public AppointmentScheduler() {
+    private AppointmentScheduler() {
         appointments = new ArrayList<>();
         pendingAppointments = new ArrayList<>();
     }
