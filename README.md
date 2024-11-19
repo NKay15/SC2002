@@ -62,52 +62,52 @@ Hospital Management System Notes by MACS group 3
 
 13. **Update Patient Medical Records (Doctor)**  
     - Doctor adds a new diagnosis and treatment plan to a patient's medical record.  
-    - Verify that the medical record is updated successfully, reflecting the new information.  
+    - Verify that the medical record is updated successfully, reflecting the new information.
+    
+14  **Login with Incorrect Credentials**  
+    - User attempts to log in with an incorrect password and incorrect 2FA.  
+    - Verify that the system displays an error message indicating invalid credentials, and login is denied.
 
-14. **View Patient Medical Records (Doctor)**  
+15. **View Patient Medical Records (Doctor)**  
     - Doctor views medical records of patients under their care.  
-    - Verify that the patient's medical record is displayed, including all relevant medical history.  
+    - Verify that the patient's medical record is displayed, including all relevant medical history.
 
-15. **View Medical Record (Patient)**  
+16. **View Medical Record (Patient)**  
     - Patients view their own medical record.  
     - Verify that the system displays the patient's medical record, including Patient ID, Name, Date of Birth, Gender, Contact Information, Blood Type, and Past Diagnoses and Treatments.  
 
-16. **View Past Appointment Outcome Records (Patient)**  
+17. **View Past Appointment Outcome Records (Patient)**  
     - Patient views outcome records of past appointments.  
     - Verify that the system displays past appointment details, including services provided, prescribed medications, and consultation notes.  
 
-17. **Update Prescription Status (Pharmacist)**  
+18. **Update Prescription Status (Pharmacist)**  
     - Pharmacist updates the status of a prescription to "dispensed."  
     - Verify that the prescription status is updated, and the change is reflected in the patient's records.  
 
-18. **View Appointment Outcome Record (Pharmacist)**  
+19. **View Appointment Outcome Record (Pharmacist)**  
     - Pharmacist views appointment outcome records to process prescriptions.  
     - Verify that the system displays the appointment outcome details, including prescribed medications.  
 
-19. **View Medication Inventory (Pharmacist)**  
+20. **View Medication Inventory (Pharmacist)**  
     - Pharmacist views the current medication inventory.  
     - Verify that the system displays a list of medications, including stock levels.  
 
-20. **Submit Replenishment Request (Pharmacist)**  
+21. **Submit Replenishment Request (Pharmacist)**  
     - Pharmacist submits a replenishment request for low-stock medications.  
     - Verify that the replenishment request is submitted successfully, pending approval from the administrator.  
 
-21. **View and Manage Hospital Staff (Admin)**  
+22. **View and Manage Hospital Staff (Admin)**  
     - Administrators can view the list of hospital staff and add, update or remove staff members.  
     - Verify that the displayed list of staff is updated with any changes.  
 
-22. **View Appointments Details (Admin)**  
+23. **View Appointments Details (Admin)**  
     - Administrator views all appointments.  
     - Verify that the system displays a list of appointments including details like Patient ID, Doctor ID, status, and date/time.  
 
-23. **View and Manage Medication Inventory (Admin)**  
+24. **View and Manage Medication Inventory (Admin)**  
     - Administrator updates the stock level of a medication.  
     - Verify that the medication's stock level is updated in the inventory.  
 
-24. **Approve Replenishment Requests (Admin)**  
+25. **Approve Replenishment Requests (Admin)**  
     - Administrator approves a replenishment request from a pharmacist.  
-    - Verify that the request status changes to "approved," and the medication inventory is updated accordingly.  
-
-25. **Login with Incorrect Credentials**  
-    - User attempts to log in with an incorrect password.  
-    - Verify that the system displays an error message indicating invalid credentials, and login is denied.  
+    - Verify that the request status changes to "approved," and the medication inventory is updated accordingly.    
