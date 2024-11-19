@@ -83,7 +83,7 @@ public class App {
                     System.out.println("Logged in successfully.");
                     break;
                 }
-                System.out.println("Password is incorrect!");
+                System.out.println("Password or Token is incorrect!");
             } while (accessLevel == null);
 
             if (accessLevel == null) break;
