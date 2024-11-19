@@ -49,7 +49,7 @@ public class User {
             return;
         }
         if(!this.password.checkPassword(password)) {
-            System.out.print("Incorrect Password! Returning to Menu...");
+            System.out.print("Incorrect Password or Token! Returning to Menu...");
             return;
         }
         System.out.print("Enter New Password: ");
