@@ -63,9 +63,8 @@ Hospital Management System Notes by MACS group 3
 13. **Update Patient Medical Records (Doctor)**  
     - Doctor adds a new diagnosis and treatment plan to a patient's medical record.  
     - Verify that the medical record is updated successfully, reflecting the new information.
-    
-14  **Login with Incorrect Credentials**  
-    - User attempts to log in with an incorrect password and incorrect 2FA.  
+14. **Login with Incorrect Credentials** 
+    - User attempts to log in with an incorrect password and incorrect 2FA.
     - Verify that the system displays an error message indicating invalid credentials, and login is denied.
 
 15. **View Patient Medical Records (Doctor)**  
