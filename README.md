@@ -2,13 +2,26 @@
 
 Hospital Management System by SMAC group 3
 
-# 
+# Get Started
 
-# Data reset
+## Basic Installation
+
+To set up the project on your local machine, follow these steps:
+
+1. Clone the repository using the following command:
+```bash
+   git clone https://github.com/NKay15/SC2002.git
+```
+2. After cloning the repository, change into the project directory:
+```bash
+   cd SC2002
+```
+
+## Data reset
 
 To reset all the data, copy all the files from the folder "origianl_data" and paste it in the folder "data".
 
-# Compile
+## Compile
 
 Open terminal and run the following command
 > javac -cp HMS/src HMS/src/App.java
