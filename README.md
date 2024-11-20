@@ -34,4 +34,4 @@ Open terminal in this directory and run the following command
 ```bash
     java -cp HMS/src App
 ```
-2. After using the programme, make to enter 0 in the login menu to save all the data properly
+2. After using the programme, make sure to enter 0 in the login menu to save all the data properly
