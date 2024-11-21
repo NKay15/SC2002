@@ -60,7 +60,7 @@ public class DoctorScheduleManager {
      * @param appointment the Appointment object to update.
      */
     public void updateAppointmentOutcomeRecord(Appointment appointment) {
-        if (appointment.getStatus() != 2 || appointment.getStatus() != 4) {
+        if (appointment.getStatus() != 2 && appointment.getStatus() != 4) {
             System.out.println("Appointment is not confirmed/completed.");
             return;
         }
@@ -162,6 +162,16 @@ public class DoctorScheduleManager {
      */
     public Appointment getUpcomingAppointment(int i) {
         if (i < 0 || i >= appointmentList.size()) return null; //Fix index bounds check
-        else return appointmentList.get(i);
+        else {
+            int k = 0;
+            for(int j = 0; j <= appointmentList.size(); j++) {
+                if(appointmentList.get(j).getStatus() == 2) {
+                    if(k == i) return appointmentList.get(j);
+                    else k++;
+                }
+            }
+        }
+
+        return null;
     }
 }
