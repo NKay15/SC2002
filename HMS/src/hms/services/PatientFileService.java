@@ -279,7 +279,18 @@ public class PatientFileService extends InputValidation {
                 f_writer.newLine();
             }
 
-            f_writer.write(patient.getID() + "," + patient.getName() + "," + patient.getDob().year() + "-" + patient.getDob().month() + "-" + patient.getDob().day() + "," + patient.getGenderString() + "," + patient.getBloodTypeString() + "," + patient.getEmail() + "," + patient.getPhone() + "," + patient.getPassword().getPassword());
+            String dob = "";
+            if (String.valueOf(patient.getDob().day()).length() == 1) {
+                dob += "0";
+            }
+            dob += patient.getDob().day() + "-";
+            if (String.valueOf(patient.getDob().month()).length() == 1) {
+                dob += "0";
+            }
+            dob += patient.getDob().month() + "-";
+            dob += patient.getDob().year();
+            
+            f_writer.write(patient.getID() + "," + patient.getName() + "," + dob + "," + patient.getGenderString() + "," + patient.getBloodTypeString() + "," + patient.getEmail() + "," + patient.getPhone() + "," + patient.getPassword().getPassword());
             myReader.close();
             f_writer.close();
 
