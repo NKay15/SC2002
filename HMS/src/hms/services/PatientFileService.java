@@ -280,15 +280,17 @@ public class PatientFileService extends InputValidation {
             }
 
             String dob = "";
-            if (String.valueOf(patient.getDob().day()).length() == 1) {
-                dob += "0";
-            }
-            dob += patient.getDob().day() + "-";
+            dob += patient.getDob().year() + "-";
+            
             if (String.valueOf(patient.getDob().month()).length() == 1) {
                 dob += "0";
             }
             dob += patient.getDob().month() + "-";
-            dob += patient.getDob().year();
+            
+            if (String.valueOf(patient.getDob().day()).length() == 1) {
+                dob += "0";
+            }
+            dob += patient.getDob().day();
             
             f_writer.write(patient.getID() + "," + patient.getName() + "," + dob + "," + patient.getGenderString() + "," + patient.getBloodTypeString() + "," + patient.getEmail() + "," + patient.getPhone() + "," + patient.getPassword().getPassword());
             myReader.close();
@@ -324,15 +326,17 @@ public class PatientFileService extends InputValidation {
 
                 if (dataList[0].equals(patient.getID())) {
                     String dob = "";
-                    if (String.valueOf(patient.getDob().day()).length() == 1) {
-                        dob += "0";
-                    }
-                    dob += patient.getDob().day() + "-";
+                    dob += patient.getDob().year() + "-";
+                    
                     if (String.valueOf(patient.getDob().month()).length() == 1) {
                         dob += "0";
                     }
                     dob += patient.getDob().month() + "-";
-                    dob += patient.getDob().year();
+                    
+                    if (String.valueOf(patient.getDob().day()).length() == 1) {
+                        dob += "0";
+                    }
+                    dob += patient.getDob().day();
                     f_writer.write(patient.getID() + "," + patient.getName() + "," + dob + "," + patient.getGenderString() + "," + patient.getBloodTypeString() + "," + patient.getEmail() + "," + patient.getPhone() + "," + patient.getPassword().getPassword());
                 } else {
                     f_writer.write(data);
